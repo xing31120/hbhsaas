@@ -47,8 +47,8 @@ class Bookcourse extends Base {
         }
         if (isset($param['day']) && $param['day'] != ''){
             $time_day = explode('~', $param['day']);
-            $day_end = date("Y-m-d", strtotime($time_day[1]) + 3600 * 24);
-            $where[] = ['day', 'between', [$time_day[0], $day_end]];
+//            $day_end = date("Y-m-d", strtotime($time_day[1]) + 3600 * 24 - 1);
+            $where[] = ['day', 'between', [trim($time_day[0]), trim($time_day[1])]];
         }
 //pj($where);
         return $where;
@@ -72,9 +72,9 @@ class Bookcourse extends Base {
         $teacher_list = (new HbhUsers())->getAllTeacherList();
         $teacher_name_list = array_column($teacher_list, 'name', 'id');
 
-        $op['doPage'] = false;
-        $op['where'][] = ['id', 'in', $custom_uid_arr];
-        $student_list = (new HbhUsers())->getList($op)['list'];
+        $op_user['doPage'] = false;
+        $op_user['where'][] = ['id', 'in', $custom_uid_arr];
+        $student_list = (new HbhUsers())->getList($op_user)['list'];
 //        $student_list = (new HbhUsers())->getAllStudentList();
         $student_list = array_column($student_list, null, 'id');
 //pj($student_list);
