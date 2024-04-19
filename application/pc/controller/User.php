@@ -128,14 +128,18 @@ class User extends Base {
             return $check_res;
         }
 
-        $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - count($list);
+        $update_book_course['status'] = HbhBookCourse::status_end;
+        $update_book_course['is_unlimited_number'] = $userInfo['is_unlimited_number'];
+        if(!$userInfo['is_unlimited_number']){  //0:有限数量, 1:不限数量
+            $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - count($list);
+        }
         unset($userInfo['create_time']);
         unset($userInfo['update_time']);
         $res = $user_model->saveData($userInfo);
         if(!$res){
             return errorReturn(Lang::get('UserNotFound'));
         }
-        $res = (new HbhBookCourse())->where('day', $day)->where('custom_uid', $userInfo['id'])->update(['status' => HbhBookCourse::status_end]);
+        $res = (new HbhBookCourse())->where('day', $day)->where('custom_uid', $userInfo['id'])->update($update_book_course);
 
 
         $msg = "Your Scheduled {$course_name_string} ".Lang::get('SuccessSignIn');
