@@ -141,6 +141,7 @@ class StatisticsService{
         }
         $where[] = ['create_time','BETWEEN',[$begin_time, $end_time]];
         $where[] = ['status', '=', HbhBookCourse::status_end];
+        $where[] = ['is_unlimited_number', '=', HbhUsers::is_unlimited_number_false];   //有限次数的会员才算课时
         $field = [
             "FROM_UNIXTIME(UNIX_TIMESTAMP(day),'%m-%d') AS day",
             'count(*) as count',
