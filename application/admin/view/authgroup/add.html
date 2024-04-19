@@ -1,0 +1,49 @@
+{layout name="public:layout" /}
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+            <form action="{:url('Authgroup/doAdd')}" method="post" class="layui-form form-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="name" lay-verify="required" lay-reqText="角色名称不能为空" placeholder="请输入角色名称">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">角色描述：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="remark" lay-verify="required" lay-reqText="角色描述不能为空" placeholder="请输入角色描述">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">是否开启：</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="status" lay-skin="primary" value="1" title="开启" checked>
+                        <input type="radio" name="status" lay-skin="primary" value="0" title="关闭">
+                    </div>
+                </div>
+                <div class="layui-form-item form-btn">
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="submit"><i class="iconfont">&#xe645;</i> 提交</button>
+                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);"><i class="iconfont">&#xe9af;</i> 返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(["element", "jquery", "layer", "form"], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+    });
+</script>
+</div>

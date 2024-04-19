@@ -1,0 +1,49 @@
+{layout name="public:layout" /}
+
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+            <form action="{:url('user/edit')}" method="post" class="layui-form form-inline">
+                <input type="hidden" name="uid" value="{$uid|default=''}">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密码：</label>
+                    <div class="layui-input-inline">
+                        <input type="password" class="layui-input" name="password" lay-verify="required" lay-reqText="密码不能为空" placeholder="请输入密码" value="">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户角色：</label>
+                    <div class="layui-input-inline">
+                        <select name="role_id">
+                            <option value="">请选择用户角色</option>
+                            {volist name="roleList" id="role"}
+                            <option {if $access['role_id'] == $role['id'] } selected {/if} value="{$role.id}">{$role.name}</option>
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item form-btn">
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="submit"><i class="iconfont">&#xe645;</i> 提交</button>
+                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);"><i class="iconfont">&#xe9af;</i> 返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(["element", "jquery", "layer", "form"], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+    });
+</script>
+</div>

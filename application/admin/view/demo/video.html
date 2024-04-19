@@ -1,0 +1,82 @@
+<!DOCTYPE html>
+<html style="background:white;">
+<head>
+  <meta charset="utf-8">
+  <title>中装saas</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <!-- <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all"> -->
+  <!-- <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/css/comm.css"> -->
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/lib/uploadvideo/css/upload.css">
+</head>
+<body>
+  <div class="demo clearfix" style="width:600px;margin:120px auto">
+      <a onclick="showVideoUploadBox($('#btn_video'))" id="btn_video" class="item"><i class="icon_emot_photo_video icon_video"></i><span>视频</span></a>
+  </div>
+    
+  <div class="video_box_outside" id="video_box_outside" tabindex="2001">
+      <div class="video_box">
+          <a class="photo_upload_close"href="javascript:void(0);"onclick="fadeout_div('#video_box_outside')"></a>
+          <div id="video_upload_area">
+              <div class="video_notice">支持上传大小在1GB以内的视频，请勿上传色情、反动等违法视频</div>
+              <div class="video_textarea_upload" id="video_textarea_upload">
+                  <textarea id="video_text" onkeyup="checkVideoText(this.value)" placeholder="点击此处输入正文..." autocomplete="off" maxlength="130"></textarea>
+                  <div class="video_upload_words">
+                      <a class="video_upload_btn" id="video_upload_btn">+</a>
+                      <a class="video_name_box" id="video_name_box" href="javascript:void(0)">
+                          <img src="images/icon_video.png" style="width:13.5px;height: 9px"/>
+                          <em id="video_file_name"></em>
+                          <span class="photo_upload_close" onclick="reupload_video()" href="javascript:void(0);"></span>
+                      </a>
+                  </div>
+                  <span id="video_words_num">0</span>
+              </div>
+          </div>
+          <div class="layer_point">
+              <dl id="video_loading" class="point clearfix" style="display: none;padding: 0 0 60px">
+                  <dt style="" id="loading_bar">
+                      <span class="loading_bar"><em id="percent" style="width: 27%;"></em></span>
+                      <span id="percentnum" class="S_txt2 load_num">27%</span>
+                  </dt>
+                  <dd>
+                      <p id="updesc">视频上传中...</p>
+                      <p class="S_txt2"><label id="uploading_tip">上传速度取决于您的网速，请耐心等待。</label><a href="javascript:void(0);" id="video_upload_cancel" onclick="video_upload_cancel()">取消上传</a>
+                      </p>
+                  </dd>
+              </dl>
+              <div id="video_success" style="display: none">
+                  <dl class="point clearfix">
+                      <dt>
+                          <span class="W_icon icon_succB"></span>
+                      </dt>
+                      <dd>
+                          <p id="upload_succ">视频上传成功</p>
+                      </dd>
+                  </dl>
+                  <div class="upload_know">
+                      <a class="btn" href="javascript:void(0);" onclick="fadeout_div('#video_box_outside')">我知道了</a>
+                  </div>
+              </div>
+          </div>
+          <div class="upload_video_area" id="upload_video_area">
+              <a id="upload_video" class="btn disabled" href="javascript:void(0);">开始上传</a>
+          </div>
+          <div class="arrow_layer"><span class="arrow_top_area"><i class="arrow_top_bg"></i><em class="arrow_top"></em></span></div>
+      </div>
+      <div id="video_iput"></div>
+  </div>
+  <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/lib/uploadvideo/"></script>
+  <!-- <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script> -->
+  <!-- <script>
+  layui.config({
+    base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+  }).use(['form'], function () {
+    
+  });
+  </script> -->
+</body>
+
+</html>

@@ -1,0 +1,136 @@
+{include file="public/header"/}
+<!--==============================
+    Breadcumb
+============================== -->
+<div class="breadcumb-wrapper " data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.png">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">My Account</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="index.html">Home</a></li>
+                <li>My Account</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--==============================
+    My Account Area
+    ==============================-->
+<div class="space">
+    <div class="container">
+        <div class="row gy-4" style="justify-content: center;">
+            <div class="col-lg-6 col-xl-5">
+                <form action="" method="POST" class="login-form ajax-contact" onsubmit="false">
+                    <h5 class="form-title">Login</h5>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Username or email address</label>
+                            <input type="text" class="form-control style-white" name="login_name" id="login_name"
+                                placeholder="">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="form-group style-3">
+                            <label>Password *</label>
+                            <input type="password" class="form-control style-white" name="login_password"
+                                id="login_password" placeholder="" require="">
+                            <i class="fa-solid fa-eye-slash" onclick="togglePassword(this)"></i>
+                        </div>
+
+                        <div class="form-group col-12 text-start align-self-center">
+                            <input class="style2" type="checkbox" id="remember">
+                            <label for="remember">Remember Me</label>
+                        </div>
+                        <div class="form-group col-6">
+<!--                            <a class="read-more-btn" style="word-wrap: normal;"-->
+<!--                                href="http://devwww.hbhinstitute.com/forgot.html">Forgot-->
+<!--                                Password?</a>-->
+                        </div>
+                        <div class="form-group col-6 text-end">
+                            <a class="read-more-btn" href="{:url('auth/reg')}">Register</a>
+                        </div>
+
+                        <div class="form-btn col-12 text-center">
+                            <button class="th-btn w-100" id="login_submit2">Login</button>
+                        </div>
+                    </div>
+                    <p class="form-msg form-messages_login mb-0 mt-3"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--==============================
+	Footer Area
+==============================-->
+{include file="public/footer"/}
+
+<script>
+
+    var formMessages_login = $(".form-messages_login");
+    var formMessages_reg = $(".form-messages_reg");
+    $('#login_submit2').on('click', function () {
+        // alert(111)
+        var login_name = $('#login_name').val();
+        var login_password = $('#login_password').val();
+        $.ajax({
+            "url": "{:url('auth/logincheck')}",
+            "data": { "login_name": login_name, "login_password": login_password },
+        }).done(function (rs) {
+            if (rs.result) {
+                window.location.href = rs.url;
+            } else {
+                formMessages_login.removeClass("success");
+                formMessages_login.addClass("error");
+                // Set the message text.
+                formMessages_login.text(rs.msg);
+            }
+        }).fail(function (rs) {
+            layer.msg('error');
+        });
+    });
+    $('#register_submit').on('click', function () {
+        // alert(222)
+        var name = $('#name').val();
+        var phone = $('#phone').val();
+        var email = $('#email').val();
+        var address = $('#address').val();
+        var password = $('#password').val();
+        var confirm_password = $('#confirm_password').val();
+        $.ajax({
+            "url": "{:url('auth/register')}",
+            "data": { "name": name, "phone": phone, "email": email, "address": address, "password": password, "confirm_password": confirm_password },
+        }).done(function (rs) {
+            if (rs.result) {
+                window.location.href = rs.url;
+            } else {
+                formMessages_reg.removeClass("success");
+                formMessages_reg.addClass("error");
+                // Set the message text.
+                formMessages_reg.text(rs.msg);
+            }
+        }).fail(function (rs) {
+            layer.msg('error');
+        });
+    });
+
+    function togglePassword(obj) {
+        // const element = document.getElementById("myElement"); // 获取要操作的元素
+        // element.classList.remove("myClass"); // 移除指定的class
+
+
+        const passwordField = document.getElementById('login_password');
+        // const passwordField = $('#login_password');
+        if (passwordField.type === 'password') {
+            passwordField.type = 'text';
+            obj.classList.remove("fa-eye-slash"); // 移除指定的class
+            obj.classList.add("fa-eye"); // 增加指定的class
+        } else {
+            passwordField.type = 'password';
+            obj.classList.add("fa-eye-slash"); // 移除指定的class
+            obj.classList.remove("fa-eye"); // 增加指定的class
+        }
+
+    }
+
+
+</script>

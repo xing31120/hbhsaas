@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>分账规则查询</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/css/comm.css" media="all">
+</head>
+<body>
+<style>
+    .layui-table-cell {
+        height: unset !important;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <!-- <div class="layui-card-header">商品设置</div> -->
+                <div class="layui-card-body" pad15>
+
+                    <!-- <div class="layui-tab"> -->
+                    <!-- <div class="layui-tab layui-tab-card"> -->
+                    <div class="layui-tab layui-tab-brief" lay-filter="tabFilter">
+
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <!-- 表格 -->
+                                <div class="table-cell-auto">
+                                    <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="barAction">
+    <a class="layui-btn layui-btn-xs" lay-event="edit" lay-text="提现" lay-data="{{d.id}}">提现</a>
+    <!--    <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" lay-data="{{d.id}}">删除</a>-->
+</script>
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        // }).use(['index', 'contlist', 'table'], function(){
+    }).use(['index', 'table'], function () {
+        var table = layui.table, form = layui.form;
+
+        table.render({
+            elem: '#dataTable'
+            , url: '{:url("ccb/ajaxList")}'
+            , cols: [[
+
+                {field: 'id', title: 'ID', width:60}
+                ,{field: 'mkt_nm',title: '公司名称', width:220}
+                ,{field: 'clrg_rule_id',title: '分账规则编号', width:200}
+                ,{field: 'efdt',title: '生效日期'}
+                ,{field: 'expdt',title: '失效日期'}
+                ,{field: 'rule_nm',title: '分账规则名称'}
+                ,{field: 'rule_dsc',title: '规则简要描述'}
+                ,{field: 'is_gather',title: '汇总计算订单金额后分账'}
+                ,{field: 'clrg_mode',title: '分账模式'}
+                ,{field: 'clrg_pctg',title: '固定比例/金额'}
+                ,{field: 'clrg_dlay_dys',title: '清算后延天数'}
+                ,{field: 'sub_acc_cyc',title: '分账周期模式'}
+                // ,{title: '操作', toolbar: '#barAction',width: 80, fixed: 'right'}
+            ]]
+            , page: true
+        });
+
+        function setEdit(id){
+            //弹出即全屏
+            var index = layer.open({
+                type: 2,
+                title: '提现申请编辑',
+                content: '{:url("details")}?id='+id,
+                shadeClose: true, // 点击遮罩层关闭
+                maxmin: true,
+                area: ['860px', '693px'],
+                btnAlign: 'c',
+                btn: ['提交', '取消'],
+                yes: function(index, layero){
+                    let submit = layero.find('iframe').contents().find("#form_submit");
+                    submit.click();
+                }
+            });
+        }
+        //操作事件
+        table.on('tool(dataTable)', function(obj){
+            let data = obj.data; //编辑的数据
+            switch (obj.event) {
+                case 'del':
+                    layer.confirm('您确定要删除吗？', function(index){
+                        $.ajax({
+                            "url":"{:url('del')}",
+                            "data":{"id":obj.data.id},
+                        }).done(function (rs) {
+                            layer.msg(rs.msg);
+                            table.reload('dataTable');
+                        }).fail(function (rs) {
+                            layer.msg('操作失败');
+                        });
+                    });
+                    break;
+                case 'edit':
+                    setEdit(obj.data.id)
+                    break;
+            }
+        })
+
+        // 点击整行表格中的tr将选中单元格的单选框按钮
+        $(document).on("click", ".userl_level_rules tbody tr", function () {
+            $(this).find('input').click();
+        });
+        // 防止事件冒泡
+        $(document).on("click", ".userl_level_rules tbody tr input", function (e) {
+            e.stopPropagation();
+        });
+
+
+    });
+</script>
+</body>
+</html>

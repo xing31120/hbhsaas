@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>账户详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/css/comm.css" media="all">
+</head>
+<body>
+<style>
+    .layui-table-cell {
+        height: unset !important;
+    }
+    .layui-form-label{
+        width: 120px;
+    }
+    .layui-form-item .layui-input-inline {
+        width: 290px;
+    }
+</style>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">提现审核</div>
+                <form action="{:url('details')}" method="post" class="layui-form form-inline" id="goods-type-form"  method="post">
+                    <div class="layui-card-body" pad15>
+                        <div class="layui-form" wid120 lay-filter="">
+                            <input type="hidden" name="id" value="{$info.id}">
+                            <div class="layui-form-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">账户名称：</label>
+                                    <div class="layui-form-mid">
+                                        {$info.name}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">绑定手机：</label>
+                                    <div class="layui-form-mid">
+                                        {$info.mobile}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label" style="font-size: large;font-weight: bold;">账户余额：</label>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">可用余额（元）：</label>
+                                    <div class="layui-form-mid" style="font-weight: bold;">
+                                        {$info.all_amount / 100}
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">提现金额：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="amount" value="" class="layui-input" placeholder="可提现金额{$info.all_amount / 100}">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">提现到：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="account_no" value="{$info.parent_bank_name}（{$info.account_no}）" class="layui-input" readonly>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn layui-hide" id="form_submit" lay-submit lay-filter="submit" type="submit"><i class="iconfont"></i>提现
+                                        </button>
+                                        <!--                                        <button class="layui-btn layui-btn-primary reset" type="reset">重置</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , element = layui.element
+            , form = layui.form;
+
+    });
+</script>

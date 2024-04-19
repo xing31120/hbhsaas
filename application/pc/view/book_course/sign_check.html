@@ -1,0 +1,55 @@
+{include file="public/header"/}
+<style>
+</style>
+<!--==============================
+        Breadcumb
+============================== -->
+
+
+<div class="breadcumb-wrapper" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.png">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Class Schedule</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="/index.html">Home</a></li>
+                <li>Class Schedule</li>
+            </ul>
+        </div>
+    </div>
+</div>
+
+
+<input type="text" name="card_number" id="card_number" value="0002349103">
+<div style="width: 100% ;text-align: center;padding: 20px;">
+    <div style="width: 100%;" class="th-btn" id="submit_mob" name="submit_mob">提交</div>
+</div>
+
+<!-- PC版的js -->
+<script>
+    $(document).ready(function () {
+        card_number = $('#card_number').val()
+        $("#submit_mob").click(function () {
+            //测试
+            $.ajax({
+                url: "{:url('ajaxSignCheck')}",
+                type: 'post',
+                dataType: 'json',
+                data: {"card_number":card_number},
+                success: function (res) {
+                    if (res.code !== 0) {
+                        alert(res.msg);
+                    }
+                    alert(res.msg);
+                },
+                error: function () {
+                    layer.msg('error！！！');
+                }
+            });
+        })
+    })
+</script>
+
+<!--==============================
+	Footer Area
+==============================-->
+{include file="public/footer"/}

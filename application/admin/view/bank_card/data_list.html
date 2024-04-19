@@ -1,0 +1,224 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>银行卡信息</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+      <div class="layui-form-item">
+        <div class="layui-inline">
+          <label class="layui-form-label">BIZ_UID</label>
+          <div class="layui-input-inline">
+            <input type="text" name="biz_uid"" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">公司名称</label>
+          <div class="layui-input-inline">
+            <input type="text" name="name" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">手机</label>
+          <div class="layui-input-inline">
+            <input type="text" name="mobile" placeholder="请输入" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">状态</label>
+          <div class="layui-input-inline">
+            <select name="status">
+              <option value="">请选择状态</option>
+              <option value="10">正常</option>
+              <option value="40">锁定</option>
+            </select>
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <!-- <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
+        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button> -->
+      </div>
+      <table id="member-content-list" lay-filter="member-content-list"></table>
+      <script type="text/html" id="buttonStatus">
+        {{#  if(d.status == 10){ }}
+        <button class="layui-btn layui-btn-xs">成功</button>
+        {{#  } else if(d.status == 40) { }}
+        <button class="layui-btn layui-btn-danger layui-btn-xs">失败/解绑</button>
+        {{#  } else { }}
+        <button class="layui-btn layui-btn-warm layui-btn-xs">请求中</button>
+        {{#  } }}
+      </script>
+      <script type="text/html" id="buttonCardType">
+        {{#  if(d.card_type == 1){ }}
+        
+        <button class="layui-btn layui-btn-xs"><i class="layui-icon layui-icon-rmb"> </i>储蓄卡</button>
+        {{#  } else if(d.card_type == 2) { }}
+        <button class="layui-btn layui-btn-normal layui-btn-xs layui-icon-rmb">信用卡</button>
+        {{#  } }}
+      </script>
+      <script type="text/html" id="table-content-list">
+        <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+      </script>
+      <div class="site-text" style="margin: 5%; display: none" id="window">
+        <form class="layui-form" id="demoUserForm" method="post" lay-filter="example">
+          <div class="layui-form-item">
+            <label class="layui-form-label">标题</label>
+            <div class="layui-input-block">
+              <textarea name="desc" placeholder="请输入内容" class="layui-textarea" id="layui-textarea"></textarea>
+            </div>
+          </div>
+        </form>
+      </div>
+      <script type="text/html" id="barDemo">
+        <!-- <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a> -->
+      </script>
+
+    </div>
+  </div>
+</div>
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+    // }).use(['index', 'contlist', 'table'], function(){
+  }).use(['index', 'table'], function(){
+    var table = layui.table,form = layui.form;
+
+    table.render({
+      elem: '#member-content-list'
+      ,url: '{:url("BankCard/ajaxList")}'
+      ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+      ,cols: [[
+        {field:'id', width:80, type:'checkbox'}
+        ,{field:'id', width:80, title: 'ID', sort: true}
+        ,{field:'app_uid', width:120, title: 'APP_UID', sort: true}
+        ,{field:'biz_uid', width:120, title: 'BIZ_UID', sort: true}
+        ,{field:'name', width:150, title: '姓名', sort: true}
+        ,{field:'card_no', width:150, title: '银行卡号', sort: true}
+        ,{field:'phone', width:150, title: '手机', sort: true}
+        ,{field:'status', title: '状态',templet:"#buttonStatus"}
+        ,{field:'card_type', title: '银行卡类型',templet:"#buttonCardType"}
+        ,{field:'create_time', title: '创建时间', sort: true}
+        ,{field:'update_time', title: '修改时间', sort: true}
+        ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+      ]]
+      ,page: true
+    });
+
+    //监听搜索
+    form.on('submit(LAY-app-contlist-search)', function(data){
+      var field = data.field;
+
+      //执行重载
+      table.reload('member-content-list', {
+        where: field
+      });
+    });
+
+    //监听行工具事件
+    table.on('tool(member-content-list)', function(obj){
+      var params = obj.data;
+      if(obj.event === 'del'){
+        layer.confirm('是否确认删除该信息', function(index){
+          $.ajax({
+            url:"{:url('Demo/del')}",
+            method:'post',
+            data: { id: params.id },
+            dataType:"json",
+            success:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+              if(res.code == 1){
+                layui.table.reload('member-content-list'); //重载表格
+              }
+            },
+            error:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+            }
+          });
+        });
+      } else if(obj.event === 'edit'){
+        setEdit(params.id);
+      }
+    });
+
+    var $ = layui.$, active = {
+      add: function(){
+        setEdit();
+      },
+      batchdel: function () {
+
+        layer.confirm('是否确认删除选中信息', function(index){
+          var checkStatus = table.checkStatus('member-content-list');
+          var arr = new Array();
+          $.each(checkStatus.data,function (n,v) {
+            arr.push(v.id)
+          });
+          $.ajax({
+            url:"{:url('Demo/del')}",
+            method:'post',
+            data: { id: arr.join(',') },
+            dataType:"json",
+            success:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+              if(res.code == 1){
+                layui.table.reload('member-content-list'); //重载表格
+              }
+            },
+            error:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+            }
+          });
+        });
+      }
+    };
+
+    function setEdit(id){
+      layer.open({
+        type: 2,
+        title:id>0?"修改":"新增",
+        btn: ['确定', '取消'],
+        area: ['550px', '550px'],
+        content: "{:url('Demo/add')}?id="+id,
+        yes:function(index,layero){
+          var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+          submit.click();
+        }
+      });
+    }
+
+    $('.layui-btn.layuiadmin-btn-list').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+
+  });
+</script>
+</body>
+</html>

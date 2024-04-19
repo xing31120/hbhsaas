@@ -1,0 +1,10 @@
+准备给4x4life.shop网站开通这个支付网关，这个是woocommerce集成的指南
+https://docs.telr.com/reference/woocommerce
+
+
+Dear Leon,
+Thank you for choosing Telr! 
+Please note that to proceed with your application, the website must be compliant as per the bank’s policies and regulations. The following link and attached are the templates of policies and the website checklist that is required by the bank on the website, for your reference and guidelines https://telr.com/support/article-categories/application-process. Please ask your developer to have a look on the website checklist and samples for ensuring the same are available on the website.
+ 
+Once the website is updated, please do inform us to review and revert with our comments, if any amendments/additions are required. 
+If you need any further information, please do not hesitate to contact me, I am here to help you at any stage.

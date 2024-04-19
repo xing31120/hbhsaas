@@ -1,0 +1,109 @@
+{layout name="public:simple" /}
+<style scoped>
+    .layui-form-label {
+        width: 140px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">{$Think.lang.MemberEdit}</div>
+                <form action="{:url('edit')}" method="post" class="layui-form form-inline" id="goods-type-form"  method="post">
+                    <div class="layui-card-body" pad15>
+                        <div class="layui-form" wid120 lay-filter="">
+                            <input type="hidden" name="id" value="{$info.id}">
+                            <div class="layui-form-item">
+                                <input type="hidden" name="role" value="{$info.role}"  class="layui-input"   placeholder="">
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Name}：</label>
+                                    <div class="layui-form-mid">
+                                        <input type="name" name="name" value="{$info.name}"  class="layui-input"   placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">Email：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="email" name="email" value="{$info.email}"  class="layui-input"   placeholder="">
+                                    </div>
+                                </div>
+<!--                                <div class="layui-form-item">-->
+<!--                                    <label class="layui-form-label">Role：</label>-->
+<!--                                    <div class="layui-input-inline">-->
+<!--                                        <input type="text" name="role" value="{$info.role}"  class="layui-input"  placeholder="">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Phone}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="phone" value="{$info.phone}"  class="layui-input"  placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Password}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="password" value=""  class="layui-input"  placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.CardNumber}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="card_number" value="{$info.card_number}"  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ExpiryDate}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="expiry_date" value="{$info.expiry_date}" id="LAY-component-form-group-date2" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ResidueDegree}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="residue_quantity" value="{$info.residue_quantity}"  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.UnlimitedNumber}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="radio" name="is_unlimited_number" lay-skin="primary" value="1" title="{$Think.lang.Unlimited}" {eq name="$info.is_unlimited_number" value="1"}checked{/eq}>
+                                        <input type="radio" name="is_unlimited_number" lay-skin="primary" value="0" title="{$Think.lang.Limited}" {eq name="$info.is_unlimited_number" value="0"}checked{/eq}>
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn layui-hide" id="form_submit" lay-submit lay-filter="submit" type="submit"><i class="iconfont"></i>提交
+                                        </button>
+                                        <!--                                        <button class="layui-btn layui-btn-primary reset" type="reset">重置</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , element = layui.element
+            , laydate = layui.laydate
+            , form = layui.form;
+
+        laydate.render({
+            elem: '#LAY-component-form-group-date2'
+        });
+    });
+</script>

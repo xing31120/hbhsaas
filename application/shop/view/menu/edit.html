@@ -1,0 +1,112 @@
+{layout name="public:layout" /}
+
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+            <form action="{:url('Menu/doEdit')}" method="post" class="layui-form form-inline">
+                <div class="form-item-list">
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">菜单名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="name" lay-verify="required" lay-reqText="菜单名称不能为空" placeholder="请输入菜单名称" value="{$menuInfo.name}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">菜单英文名：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="name_en" lay-verify="required" lay-reqText="菜单名称不能为空" placeholder="请输入菜单名称">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">模块名称：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="module" lay-verify="required" lay-reqText="模块名称不能为空" placeholder="请输入模块名称" value="{$menuInfo.module}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">控制器名：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="controller" placeholder="请输入控制器名称" value="{$menuInfo.controller}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">方法名：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="action" placeholder="请输入方法名称" value="{$menuInfo.action}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">父级菜单：</label>
+                        <div class="layui-input-inline">
+                            <select name="pid">
+                                <option value="">请选择父级菜单</option>
+                                <option value="0" {eq name="$menuInfo.pid" value="0"}selected{/eq}>顶级菜单</option>
+                                {volist name="menuList" id="menu"}
+                                {eq name="$menu.type" value="0"}
+                                <option value="{$menu.id}" {eq name="$menuInfo.pid" value="$menu.id"}selected{/eq}>{$menu.name}</option>
+                                {else/}
+                                <option value="{$menu.id}" {eq name="$menuInfo.pid" value="$menu.id"}selected{/eq}>&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;{$menu.name}</option>
+                                {/eq}
+                                {/volist}
+                            </select>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">菜单排序：</label>
+                        <div class="layui-input-inline">
+                            <input type="number" class="layui-input" name="sort" lay-verify="required" lay-reqText="排序不能为空" placeholder="请输入菜单排序" value="{$menuInfo.sort}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">菜单类型：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="type" lay-skin="primary" value="1" title="子菜单" {eq name="$menuInfo.type" value="1"}checked{/eq}>
+                            <input type="radio" name="type" lay-skin="primary" value="0" title="顶级菜单" {eq name="$menuInfo.type" value="0"}checked{/eq}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">菜单状态：</label>
+                        <div class="layui-input-inline">
+                            <input type="radio" name="status" lay-skin="primary" value="1" title="启用" {eq name="$menuInfo.status" value="1"}checked{/eq}>
+                            <input type="radio" name="status" lay-skin="primary" value="0" title="禁用" {eq name="$menuInfo.status" value="0"}checked{/eq}>
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">图标字体：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="iconfont" placeholder="请输入图标字体" value="{$menuInfo.iconfont}">
+                        </div>
+                    </div>
+                    <div class="layui-form-item">
+                        <label class="layui-form-label">图标：</label>
+                        <div class="layui-input-inline">
+                            <input type="text" class="layui-input" name="icon" placeholder="请输入图标" value="{$menuInfo.icon}">
+                        </div>
+                    </div>
+                </div>
+                <input type="hidden" name="id" value="{$menuInfo.id}">
+                <div class="layui-form-item form-btn-scroll">
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="submit"><i class="iconfont">&#xe645;</i> 提交</button>
+                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);"><i class="iconfont">&#xe9af;</i> 返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(["element", "jquery", "layer", "form"], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+    });
+</script>
+</div>

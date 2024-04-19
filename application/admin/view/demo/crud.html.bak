@@ -1,0 +1,134 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>crud</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <!-- <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button> -->
+        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button>
+      </div>
+      <table class="layui-hide" id="test-table-cellEdit" lay-filter="test-table-cellEdit"></table>
+    </div>
+  </div>
+</div>
+
+ 
+<script type="text/html" id="barDemo">
+  <a class="layui-btn layui-btn-xs" lay-event="edit">编辑</a>
+  <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+</script>
+              
+          
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>  
+ 
+<script>
+layui.config({
+    base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+  }).use(['index', 'table'], function(){
+    var table = layui.table;
+    
+    table.render({
+        elem: '#test-table-cellEdit'
+        ,url: layui.setter.base+"json/content/list.js"
+        ,cols:[[
+            {type:"checkbox",fixed:"left"},
+            {field:"id",width:100,title:"文章ID",sort:!0},
+            {field:"label",title:"文章标签",minWidth:100},
+            {field:"title",title:"文章标题"},
+            {field:"uploadtime",title:"上传时间",sort:!0},
+            {field:"status",title:"发布状态",templet:"#buttonTpl",minWidth:80,align:"center"},
+            {title:"操作",minWidth:150,align:"center",fixed:"right",toolbar:"#barDemo"}
+        ]],
+        page:!0,
+        limit:10,
+        limits:[10,15],
+        text:"对不起，加载出现异常！"
+    });
+
+    //监听行工具事件
+    table.on('tool(test-table-cellEdit)', function(obj){
+      var data = obj.data;
+      if(obj.event === 'del'){
+        layer.confirm('真的删除行么', function(index){
+          $.ajax({
+              url:"传",
+              method:'post',
+              data: { id: data.id },
+              dataType:"json",
+              success:function (res) {
+                  layer.close(index);
+              },
+              error:function (res) {
+                  layer.msg(res.msg);
+              }
+          });
+          layer.close(index);
+        });
+      } else if(obj.event === 'edit'){
+        layer.prompt({
+          formType: 2
+          ,value: data.title
+        }, function(value, index){
+          obj.update({
+            title: value
+          });
+          // console.log({ id: data.id, title: value })
+          $.ajax({
+              url:"传",
+              method:'post',
+              data: { id: data.id, title: data.title },
+              dataType:"json",
+              success:function (res) {
+                  layer.close(index);
+              },
+              error:function (res) {
+                  layer.msg(res.msg);
+              }
+          });
+          layer.close(index);
+        });
+      }
+    });
+
+    var $ = layui.$, active = {
+      add: function(){ 
+        layer.open({
+          type: 2
+          ,title: '添加文章'
+          ,content: 'listform.html'
+          ,maxmin: true
+          ,area: ['550px', '550px']
+          ,btn: ['确定', '取消']
+          ,yes: function(index, layero){
+            //点击确认触发 iframe 内容中的按钮提交
+            var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+            submit.click();
+          }
+        });  
+        
+      }
+    };
+    
+
+    $('.layui-btn').on('click', function(){
+      var type = $(this).data('type');
+      active[type] ? active[type].call(this) : '';
+    });
+    
+});
+</script>
+
+</body>
+</html>

@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>代付订单列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+          content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<style>
+    .layui-table-cell {
+        height: unset !important;
+    }
+</style>
+
+{include file="order_process/header"/}
+
+<div class="layui-fluid">
+    <div class="layui-card">
+        <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+            <div class="layui-form-item">
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">商家名称</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="shop_search" placeholder="商家名称" autocomplete="off" class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">收款人</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="user_search" placeholder="手机号码|姓名" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <!--<div class="layui-inline">
+                  <label class="layui-form-label">收款姓名</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="biz_uid" placeholder="收款人姓名" autocomplete="off" class="layui-input">
+                  </div>
+                </div>-->
+
+                <!--<div class="layui-inline">
+                  <label class="layui-form-label">渠道交易流水号</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="allinpay_pay_no" placeholder="请输入代收订单号" autocomplete="off" class="layui-input">
+                  </div>
+                </div>-->
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">原商家交易单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="order_entry_no" placeholder="订单号码" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">通商云订单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="allinpay_order_no" placeholder="订单号码" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">业务订单号</label>
+                    <div class="layui-input-inline">
+                        <input type="text" name="show_order_no" placeholder="订单号码" autocomplete="off"
+                               class="layui-input">
+                    </div>
+                </div>
+
+                <!--<div class="layui-inline">
+                  <label class="layui-form-label">付款人</label>
+                  <div class="layui-input-inline">
+                    <input type="text" name="receiver_id" placeholder="请输入付款人" autocomplete="off" class="layui-input">
+                  </div>
+                </div>-->
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">分账时间:</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" id="update_time" name="update_time"
+                               autocomplete="off" placeholder="时间" value="{$time|default=''}">
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">订单状态:</label>
+                    <div class="layui-input-inline">
+                        <select name="order_process_status">
+                            <option value="">全部</option>
+                            {foreach $order_process_status as $key=>$vo }
+                            <option value="{$key}">{$vo}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <label class="layui-form-label">入款状态:</label>
+                    <div class="layui-input-inline">
+                        <select name="confirm_status">
+                            <option value="">全部</option>
+                            {foreach $confirm_status as $key=>$vo }
+                            <option value="{$key}">{$vo}</option>
+                            {/foreach}
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-inline">
+                    <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+                        <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                    </button>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="layui-card-body">
+            <div style="padding-bottom: 10px;">
+            </div>
+            <table id="member-content-list" lay-filter="member-content-list"></table>
+            <script type="text/html" id="buttonTpl">
+                {{#  if(d.status == 10){ }}
+                <button class="layui-btn layui-btn-xs">正常</button>
+                {{#  } else { }}
+                <button class="layui-btn layui-btn-primary layui-btn-xs">锁定</button>
+                {{#  } }}
+            </script>
+            <!-- <script type="text/html" id="table-content-list">
+              <a class="layui-btn layui-btn-normal layui-btn-xs" lay-event="edit"><i class="layui-icon layui-icon-edit"></i>编辑</a>
+              <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del"><i class="layui-icon layui-icon-delete"></i>删除</a>
+            </script> -->
+            <script type="text/html" id="barDemo">
+                {{#  if(d.order_process_status == 0){ }}
+                <a class="layui-btn layui-btn-xs" lay-event="confirmProcess" lay-data="{{d.id}}"
+                  >确认分账</a>
+                {{#  } else { }}
+                {{#  } }}
+                       <!-- <a class="layui-btn layui-btn-xs" lay-event="read">查看</a> -->
+                <!-- {{#  if(d.confirm_button == 1){ }} -->
+                <!-- <div id="do_{{d.id}}"> -->
+                <!-- </div> -->
+                <!-- {{#  } else { }} -->
+                <!-- <div style="height:85px;"></div> -->
+                <!-- {{#  } }} -->
+            </script>
+        </div>
+    </div>
+</div>
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <a class="layui-btn layui-btn-sm" lay-event="Export">excel导出</a>
+    </div>
+</script>
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        // }).use(['index', 'contlist', 'table'], function(){
+    }).use(['index', 'table'], function () {
+        var table = layui.table, form = layui.form;
+
+        table.render({
+            elem: '#member-content-list'
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , url: '{:url("OrderProcess/ajaxList")}'
+            , cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+            , cols: [[
+                {field: 'id', width: 80, type: 'checkbox'}
+                , {field: 'id', width: 80, title: 'ID', sort: true}
+                , {field: 'appName', width: 120, title: '商家', sort: true}
+                //,{field:'biz_uid', width:120, title: 'BIZ_UID', sort: true}
+                //,{field:'show_user_name', width:120, title: '收款人', sort: true}
+                //, {field: 'user_info', width: 320, title: '收款人', sort: true}
+                //,{field:'show_user_name', width:120, title: '收款人姓名', sort: true}
+                , {field: 'biz_order_process_no', width: 220, title: '分账订单号'}
+                // ,{field:'allinpay_pay_no', width:220, title: '渠道交易流水号', sort: true}
+                , {field: 'allinpay_order_no', width: 220, title: '通商云订单号'}
+                , {field: 'order_entry_no', width: 220, title: '原商家交易单号'}
+                , {field: 'show_order_no', width: 220, title: '业务订单号'}
+                , {field: 'amount', width: 320, title: '分账金额'}
+                , {field: 'orderProcessStatusVal', width: 144, title: '订单状态'}
+                ,{field:'confirm_status_text', width:144,title: '入款状态'}
+                //,{field:'remark', width:80,title: '备注'}
+                , {field: 'create_time', width: 180, title: '创建时间', sort: true}
+                , {field: 'update_time', width: 180, title: '分账时间', sort: true}
+                // , { title: '操作', toolbar: '#barDemo', width: 120}
+                , { title: '操作', toolbar: '#barDemo', width: 120, fixed: 'right'}
+            ]]
+            , page: true,
+            done: function (res, curr, count) {
+                $(".layui-table-main tr").each(function(index, val) {
+                    $($(".layui-table-fixed .layui-table-body tbody tr")[index]).height($(val).height())
+                })
+                merge(res);//调用
+            }
+        });
+
+        /**
+         * 合并单元格（列）
+         * @param res 表格数据
+         * @desc columsName 合并字段
+         * @desc columsIndex 合并列的索引
+         */
+        function merge(res) {
+            var data = res.data;
+            var mergeIndex = 0;//定位需要添加合并属性的行数
+            var mark = 1; //这里涉及到简单的运算，mark是计算每次需要合并的格子数
+            var columsName = ['biz_order_process_no'];//根据该字段合并, 【需手动修改】
+            var columsIndex = [12];//根据字段合并的列索引值, 【需手动修改】
+
+            for (var k = 0; k < columsName.length; k++) { //这里循环所有要合并的列
+                var trArr = $(".layui-table-body>.layui-table").find("tr");//所有行
+                var fixedTrArr = $(".layui-table-fixed .layui-table-body tbody tr"); //固定右侧的所有行
+                for (var i = 1; i < res.data.length; i++) { //这里循环表格当前的数据
+                    var tdCurArr = trArr.eq(i).find("td").eq(columsIndex[k]);//获取当前行的当前列
+                    var tdPreArr = trArr.eq(mergeIndex).find("td").eq(columsIndex[k]);//获取相同列的第一列
+                    var fixedTdCurArr = fixedTrArr.eq(i).find("td");//固定表格获取当前行的当前列
+                    var fixedTdPreArr = fixedTrArr.eq(mergeIndex).find("td");//固定表格获取相同列的第一列
+                    if (data[i][columsName[k]] === data[i-1][columsName[k]]) { //后一行的值与前一行的值做比较，相同就需要合并
+                        mark += 1;
+                        tdPreArr.each(function () {
+                            //相同列的第一列增加rowspan属性
+                            $(this).attr("rowspan", mark);
+                        });
+                        fixedTdPreArr.each(function() {
+                            //固定表格相同列的第一列增加rowspan属性
+                            $(this).attr("rowspan", mark);
+                        })
+                        tdCurArr.each(function () {
+                            //当前行隐藏
+                            $(this).css("display", "none");
+                        });
+                        fixedTdCurArr.each(function () {
+                            //固定表格当前行隐藏
+                            $(this).css("display", "none");
+                        });
+                    }else {
+                        mergeIndex = i;
+                        mark = 1;//一旦前后两行的值不一样了，那么需要合并的格子数mark就需要重新计算
+                    }
+                }
+                mergeIndex = 0;
+                mark = 1;
+            }
+        }
+
+        //监听搜索
+        form.on('submit(LAY-app-contlist-search)', function (data) {
+            var field = data.field; //检索参数
+            //执行重载
+            table.reload('member-content-list', {
+                where: field,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
+
+        window.clickTimes = 0;
+        //监听行工具事件
+        table.on('tool(member-content-list)', function (obj) {
+            var params = obj.data;
+            if (obj.event === 'confirmProcess') {
+                layer.confirm('是否确认分账', function (index) {
+                    if (window.clickTimes == 1) {
+                        return true;
+                    }
+                    window.clickTimes = 1;
+                    $.ajax({
+                        "url": "{:url('OrderProcess/confirmProcess')}",
+                        "data": {"id": obj.data.id},
+                    }).done(function (rs) {
+                        layer.msg(rs.msg);
+                        table.reload('member-content-list');
+                        setTimeout(function () {
+                            window.clickTimes = 0;
+                        }, 3000);
+                    }).fail(function (rs) {
+                        window.clickTimes = 0;
+                        layer.msg('操作失败');
+                    });
+
+
+                });
+            } else if (obj.event === 'read') {
+                setRead(params.id);
+            }
+        });
+
+        var $ = layui.$, active = {
+            add: function () {
+                setEdit();
+            },
+            batchdel: function () {
+
+                layer.confirm('是否确认删除选中信息', function (index) {
+                    var checkStatus = table.checkStatus('member-content-list');
+                    var arr = new Array();
+                    $.each(checkStatus.data, function (n, v) {
+                        arr.push(v.id)
+                    });
+                    $.ajax({
+                        url: "{:url('Demo/del')}",
+                        method: 'post',
+                        data: {id: arr.join(',')},
+                        dataType: "json",
+                        success: function (res) {
+                            layer.close(index);
+                            layer.msg(res.msg);
+                            if (res.code == 1) {
+                                layui.table.reload('member-content-list'); //重载表格
+                            }
+                        },
+                        error: function (res) {
+                            layer.close(index);
+                            layer.msg(res.msg);
+                        }
+                    });
+                });
+            }
+        };
+
+        function setRead(id) {
+            layer.open({
+                type: 2,
+                title: '查看',
+                btn: ['确定', '取消'],
+                area: ['550px', '550px'],
+                content: "{:url('OrderProcess/read')}?id=" + id,
+                yes: function (index, layero) {
+                    var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+                    submit.click();
+                }
+            });
+        }
+        //头工具栏事件
+        table.on('toolbar(member-content-list)', function (obj) {
+            switch (obj.event) {
+                case 'Export':
+                    var shop_search = $('input[name=shop_search]').val()
+                    var user_search = $('input[name=user_search]').val()
+                    var order_entry_no = $('input[name=order_entry_no]').val()
+                    var allinpay_order_no = $('input[name=allinpay_order_no]').val()
+                    var update_time = $('input[name=update_time]').val()
+                    var order_process_status = $('select[name=order_process_status]').val()
+                    var confirm_status = $('select[name=confirm_status]').val()
+                    var param = "shop_search="+ shop_search
+                        + "&user_search="+ user_search
+                        + "&order_entry_no="+ order_entry_no
+                        + "&allinpay_order_no=" + allinpay_order_no
+                        + "&update_time=" + update_time
+                        + "&order_process_status=" + order_process_status
+                        + "&confirm_status=" + confirm_status;
+
+                    location.href = "{:url('orderProcess/exportProcess')}?" + param;
+                    break;
+            }
+        });
+    });
+
+    layui.use('laydate', function () {
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#update_time',//指定元素
+            range: '~'
+        });
+    });
+</script>
+</body>
+</html>

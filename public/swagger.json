@@ -1,0 +1,153 @@
+{
+    "openapi": "3.0.0",
+    "info": {
+        "title": "Saas项目",
+        "version": "1.0.0"
+    },
+    "paths": {
+        "/web/user/login": {
+            "post": {
+                "tags": [
+                    "测试分类"
+                ],
+                "summary": "测试接口",
+                "description": "token测试接口description",
+                "operationId": "app\\web\\controller\\User::login",
+                "parameters": [
+                    {
+                        "name": "username",
+                        "in": "query",
+                        "description": "用户名",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "aaa"
+                    },
+                    {
+                        "name": "password",
+                        "in": "query",
+                        "description": "密码",
+                        "required": true,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "123456"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "boolean"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "用户id",
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "description": "用户名",
+                                                        "type": "string"
+                                                    },
+                                                    "email": {
+                                                        "description": "email地址",
+                                                        "type": "string"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        },
+        "/web/user/userList": {
+            "post": {
+                "tags": [
+                    "测试分类"
+                ],
+                "summary": "用户列表",
+                "description": "token测试用户列表接口",
+                "operationId": "app\\web\\controller\\User::userList",
+                "parameters": [
+                    {
+                        "name": "keywords",
+                        "in": "query",
+                        "description": "模糊搜索",
+                        "required": false,
+                        "schema": {
+                            "type": "string"
+                        },
+                        "example": "aa"
+                    }
+                ],
+                "responses": {
+                    "200": {
+                        "description": "success",
+                        "content": {
+                            "application/json": {
+                                "schema": {
+                                    "properties": {
+                                        "result": {
+                                            "type": "boolean"
+                                        },
+                                        "msg": {
+                                            "type": "string"
+                                        },
+                                        "code": {
+                                            "type": "integer"
+                                        },
+                                        "data": {
+                                            "type": "array",
+                                            "items": {
+                                                "properties": {
+                                                    "id": {
+                                                        "description": "用户id, uid",
+                                                        "type": "integer"
+                                                    },
+                                                    "name": {
+                                                        "description": "用户名",
+                                                        "type": "string"
+                                                    },
+                                                    "loginip": {
+                                                        "description": "登录IP",
+                                                        "type": "string"
+                                                    },
+                                                    "status": {
+                                                        "description": "是否启用 1:正常 0:禁用",
+                                                        "type": "integer"
+                                                    }
+                                                },
+                                                "type": "object"
+                                            }
+                                        }
+                                    },
+                                    "type": "object"
+                                }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+}

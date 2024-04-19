@@ -1,0 +1,39 @@
+{layout name="public:layout" /}
+    <div id="login">
+        <div class="login-wrap">
+            <h1>用户登录</h1>
+            <form action="{:url('common/checkLogin')}" method="post" class="layui-form">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">用户名：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" name="username" lay-verify="required" lay-reqText="用户名不能为空" value="admin">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">密&nbsp;&nbsp;&nbsp;&nbsp;码：</label>
+                    <div class="layui-input-block">
+                        <input type="text" class="layui-input" name="password" lay-verify="required" lay-reqText="密码不能为空" value="123456">
+                    </div>
+                </div>
+                <div class="layui-form-item form-btn">
+                    <div class="layui-input-block">
+                        <input type="submit" class="layui-btn" lay-submit lay-filter="submit" value="登录">
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script>
+        //JavaScript代码区域
+        layui.config({
+            base: '/static/layui/lay/modules/'
+        });
+        layui.use(["element", "jquery", "layer", "form"], function(){
+            var element = layui.element,
+                $ = layui.jquery,
+                layer = layui.layer,
+                form = layui.form;
+        });
+    </script>
+</div>

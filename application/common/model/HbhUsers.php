@@ -1,0 +1,108 @@
+<?php
+namespace app\common\model;
+use app\common\model\basic\SingleSubData;
+use think\facade\Lang;
+
+class HbhUsers extends SingleSubData {
+    public $mcName = 'hbh_users_';
+//    public $selectTime = 600;
+    public $mcTimeOut = 600;
+    public $status = [1=> '正常', 4=>'已锁定/禁用'];
+
+    const Status_Disabled = 4;  //用户禁用
+    const Status_Enable = 1;
+    const is_unlimited_number_false = 0;    // 0:有限数量,
+    const is_unlimited_number_true = 1;    // 1:无限数量,
+
+
+
+    function info($id,  $field = ''){
+        $info = parent::info($id, $field);
+        unset($info['pay_password']);
+        return $info;
+    }
+
+    function getAllTeacherList(){
+        $op['where'][] = ['role','=','teacher'];
+        $op['doPage'] = false;
+        $op['field'] = '*';
+        $op['order'] = 'id desc';
+        $list = model('HbhUsers')->getList($op);
+        return $list['list'];
+    }
+
+    function getAllStudentList(){
+        $op['where'][] = ['role','=','student'];
+        $op['doPage'] = false;
+        $op['field'] = '*';
+        $op['order'] = 'id desc';
+        $list = model('HbhUsers')->getList($op);
+        return $list['list'];
+    }
+
+    /**
+     * 检测用户 是否能够预约课程, 禁用? 过期? 次数?
+     * @param int $uid
+     * @param int $num
+     * @return array|void
+     */
+    function checkResidueQuantity(int $uid, int $num = 0){
+        if(empty($uid)){
+            return errorReturn(Lang::get('UserError'));
+        }
+        $userInfo = (new HbhUsers())->where('id', $uid)->findOrEmpty()->toArray();
+        if(empty($userInfo)){
+            return errorReturn(Lang::get('UserNotFound'));
+        }
+        // 会员是否禁用
+        if($userInfo['status'] == self::Status_Disabled){
+            return errorReturn(Lang::get('UserDisabled'));
+        }
+        // 会员是否过期
+        $expiry_time = strtotime($userInfo['expiry_date'].' 00:00:00');
+        if(time() > $expiry_time){
+            return errorReturn(Lang::get('MembershipExpiration'));
+        }
+
+        // 非无限卡用户, 要验证次数
+        if($userInfo['is_unlimited_number'] == self::is_unlimited_number_false){
+            $residue_quantity = $userInfo['residue_quantity'] ?? 0;
+            if($num > $residue_quantity){
+                return errorReturn(Lang::get('InsufficientRemainingClassHours'));
+            }
+        }
+
+        return successReturn('check success');
+
+    }
+
+
+    /**
+     * 扣除用户额度
+     * @param int $uid
+     * @param int $num
+     * @return void
+     */
+    function reduceWallet(int $uid, int $num = 0){
+        $check_res = $this->checkResidueQuantity($uid, $num);
+        if(!$check_res['result']){
+            return $check_res;
+        }
+        // 无限卡用户, 直接通过验证
+        $userInfo = (new HbhUsers())->where('id', $uid)->findOrEmpty()->toArray();
+        if($userInfo['is_unlimited_number'] == self::is_unlimited_number_true){
+            return successReturn('reduce success');
+        }
+        // 扣除额度,  后期改成扣除钱包
+        $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
+        unset($userInfo['create_time']);
+        unset($userInfo['update_time']);
+        $res = $this->saveData($userInfo);
+        if(!$res){
+            return errorReturn(Lang::get('FailedToDeductUserBalance'));
+        }
+        return successReturn(['data' => $res, 'msg' => 'success']);
+
+    }
+
+}

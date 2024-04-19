@@ -1,0 +1,21 @@
+
+
+
+
+Mail Client Manual Settings
+If you do not see an auto-configuration script for your client in the list above,
+you can manually configure your mail client using the settings below.
+We recommend that you use IMAP and SMTP for your email account
+rather than ActiveSync unless you are on Android and need calendar and contacts support or push updates.
+
+
+显示的发件人  info@hbhinstitute.com
+
+Secure SSL/TLS Settings (推荐)
+用户名:	support@hbhinstitute.com
+密码:	使用电子邮件帐户的密码。
+接收服务器:	mail.hbhinstitute.com
+IMAP Port: 993 POP3 Port: 995
+发送服务器:	mail.hbhinstitute.com
+SMTP Port: 465
+IMAP、POP3和SMTP requires authentication.

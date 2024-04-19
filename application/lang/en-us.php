@@ -1,0 +1,96 @@
+<?php
+
+return [
+    'ParameterError' =>'Parameter Error!',
+    'DuplicateName' =>'Duplicate Name!',
+    'OperateSuccess' =>'Operation Successful!',
+    'OperateFailed' =>'Operation Failed!',
+    'AreYouSureDel' =>'Are You Sure Del?',
+    'Confirm' =>'Confirm',
+    'Save' =>'Save',
+    'SaveSuccess' =>'Save Success!',
+    'SaveFailed' =>'Save Failed!',
+    'Cancel' =>'Cancel',
+    'Status' =>'Status',
+    'CreateTime' =>'Create Time',
+    'StartTime' =>'Start Time',
+    'EndTime' =>'End Time',
+    'Open' =>'Open',
+    'Close' =>'Close',
+    'Edit' =>'Edit',
+    'Operate' =>'Operate',
+    'Del' =>'Del',
+    'Delete' =>'Delete',
+    'PleaseSelect' =>'Please Select',
+    'Day' =>'Day',
+    'NoPermission' =>'No permission',
+    'Sort' =>'Sort',
+    //member
+    'dataListCTitle' => 'Member Info',
+    'realName' =>'Full Name',
+    'MemberEdit' =>'Member Edit',
+    'MemberAdd' =>'Add Member',
+    'TeacherAdd' =>'Add Teacher',
+    'Name' =>'Name',
+    'Phone' =>'Phone',
+    'CardNumber' =>'Card Number',
+    'ExpiryDate' =>'Expiry Date',
+    'TeacherEdit' =>'Teacher Edit',
+    'LessonSelection' =>'Lesson Selection',
+    'LessonSelectionPlease' =>'Please Select Class Hours!',
+    'AlreadyAddedThisLesson' =>'You Have Already Added This Lesson!',
+    'LessonAdd' =>'Lesson Add',
+    'ResidueDegree' =>'Residue Degree',
+    'Course' =>'Course',
+    'Teacher' =>'Teacher',
+    'UserError' =>'User Error',
+    'UserNotFound' =>'User Not Found',
+    'NoScheduledCourses' => 'There were no scheduled courses on that day', //当天并无预约课程
+    'InsufficientRemainingClassHours' => 'Insufficient remaining class hours', //剩余课时不足
+    'DeductingUserClassHoursFailed' => 'Deducting user class hours failed', //扣除用户课时失败
+    'SuccessSignIn' =>'Have Been Successfully Signed In', //have been successfully signed in
+    'Password' =>'Password',
+    'ConfirmPassword' =>'Confirm Password',
+    'UserDisabled' =>'User Disabled',
+    'MembershipExpiration' =>'Membership Expiration',
+    'FailedToDeductUserBalance' =>'Failed to deduct user balance',
+    'UnlimitedNumber' =>'Unlimited Number',
+    'Unlimited' =>'Unlimited',
+    'Limited' =>'Limited',
+    //Course
+    'CourseName' =>'Course Name',
+    'AddCourse' =>'Add Course',
+    'Description' =>'Description',
+    'TotalPeople' =>'Total People',
+    //Course Classify
+    'ClassifyName' =>'Classify Name',
+    'AddClassify' =>'Add Classify',
+    //课时 Class Detail
+    'ClassDate' =>'Class Date',
+    'ClassTime' =>'Class Time',
+    'AddClassDetail' =>'Add Class Detail',
+    'Week' => 'Week',
+    //预约  Book Course
+    'Booked' =>'Booked',
+    'AddBooked' =>'Add Booked',
+    'SignIn' =>'Sign In',
+    'Student' =>'Student',
+    'AppointmentTime' =>'Appointment Time',
+    'PleaseSelectAppointmentRecord' =>'Please Select Appointment Record',
+    //联系表单管理
+    'IsCall' =>'Is Contact',
+    'IsCallWait' =>'Not Contacted',
+    'IsCallEnd' =>'Contacted',
+    //Seo
+    'PageNameZh' => 'Page Name CN',
+    'PageNameEn' => 'Page Name EN',
+    'PagePath' => 'Page Path',
+    'AddPage' => 'Add Page',
+    'DuplicatePagePath' => 'Duplicate Page Path!',
+    //class time config
+    'AddTimeConfig' => 'Add Time Config',
+    //Plan config
+    'AddPlanConfig' => 'Add Plan Config',
+    'MemberSelection' => 'Member Selection',
+
+];

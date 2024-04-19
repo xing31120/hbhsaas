@@ -1,0 +1,212 @@
+{layout name="public:simple" /}
+<style scoped>
+    .layui-form-label {
+        width: 150px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header"></div>
+                <form action="{:url('editTeacher')}" method="post" class="layui-form form-inline" id="goods-type-form"  method="post">
+                    <div class="layui-card-body" pad15>
+                        <div class="layui-form" wid120 lay-filter="">
+                            <input type="hidden" name="id" value="{$info.id}">
+                            <div class="layui-form-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Name}：</label>
+                                    <div class="layui-form-mid">
+                                        <input type="name" name="name" value="{$info.name}"  class="layui-input"   placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">Email：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="email" name="email" value="{$info.email}"  class="layui-input"   placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Phone}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="phone" value="{$info.phone}"  class="layui-input"  placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Password}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" name="password" value=""  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+<!--                                <div class="layui-form-item">-->
+<!--                                    <label class="layui-form-label">{$Think.lang.ConfirmPassword}：</label>-->
+<!--                                    <div class="layui-input-inline">-->
+<!--                                        <input type="password" name="confirm_password" value="{$info.confirm_password|default=''}"  class="layui-input " placeholder="">-->
+<!--                                    </div>-->
+<!--                                </div>-->
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ExpiryDate}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="expiry_date" value="{$info.expiry_date|default=''}" id="LAY-component-form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                        <!--                                        <input type="text" name="date" id="LAY-component-form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ResidueDegree}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="residue_quantity" value="{$info.residue_quantity|default='0'}"  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+
+
+
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn layui-hide" id="form_submit" lay-submit lay-filter="submit" type="submit"><i class="iconfont"></i>提交
+                                        </button>
+                                        <!--                                        <button class="layui-btn layui-btn-primary reset" type="reset">重置</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="layui-form" id="show_region" style="display: none;padding-top: 15px;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">{$Think.lang.LessonSelection}</label>
+        <div class="layui-input-block">
+            <!-- 省市区 -->
+            <div class="layui-col-md12" id="ssqselect">
+                <div class="layui-inline layui-show-xs-block">
+                    <select lay-filter="selectMore" class="ssq-1" data-target="2" lay-verify="required" name="week">
+                        <option value="">please select</option>
+                        <option value="Sunday">Sunday</option>
+                        <option value="Monday">Monday</option>
+                        <option value="Tuesday">Tuesday</option>
+                        <option value="Wednesday">Wednesday</option>
+                        <option value="Thursday">Thursday</option>
+                        <option value="Friday">Friday</option>
+                        <option value="Saturday">Saturday</option>
+                    </select>
+                </div>
+                <div class="layui-inline layui-show-xs-block">
+                    <select lay-filter="selectMore" class="ssq-2" data-target="3" lay-verify="required">
+                        <option value="">please select start time</option>
+                        {volist name="classTimeList" id="classTime"}
+                        <option value="{$classTime.id}">{$classTime.start_time}-{$classTime.end_time}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+            <!-- 省市区 end -->
+        </div>
+    </div>
+</div>
+
+
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'form', 'laydate'], function () {
+        var $ = layui.$
+            , admin = layui.admin
+            , element = layui.element
+            , form = layui.form;
+
+        function getClassTime(){
+            var arr = []
+            $('#ssqselect').find("select[lay-filter='selectMore']").each(function(index ,item){
+                let id = $(item).val()
+                if(id) arr.push(id)
+            })
+            return arr
+        }
+
+        $(".add_region").on('click',function () {
+            var index = layer.open({
+                type: 1,  //可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                title: ['{$Think.lang.LessonAdd}', 'font-size:18px; color:orange;'],//数组第二项可以写任意css样式；如果你不想显示标题栏，你可以title: false
+                area: ["850px", "400px"],
+                content: $('#show_region'),
+                btn: ['{$Think.lang.Confirm}','{$Think.lang.Cancel}'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    let chooseArr = getClassTime();
+                    // console.log(chooseArr)
+                    if(chooseArr.length<2) {
+                        layer.msg('{$Think.lang.LessonSelectionPlease}');
+                        return false;
+                    }
+
+                    let region_status = 1;
+                    $('.select_region').each(function () {
+                        if($(this).val()==chooseArr.join(',')){
+                            region_status =0;
+                            return false;
+                        }
+                    });
+
+                    if (region_status == 0) {
+                        layer.msg('{$Think.lang.AlreadyAddedThisLesson}');
+                        return false;
+                    }
+
+                    let week = $(".ssq-1 option:selected").text();
+                    let timeStr = $(".ssq-2 option:selected").text();
+                    let region_text = week + '-' + timeStr;
+
+                    let html = '<button type="button" class="layui-btn layui-btn-sm layui-btn-primary corner-mark">\n' +
+                        ''+region_text+'<i class="layui-icon layui-icon-close-fill"></i>\n' +
+                        '<input type="hidden" class="region_input select_region" name="select_region[]" value="'+chooseArr+'">\n' +
+                        '</button>'
+                    $('.region_container').append(html);
+                    layer.close(index);
+
+                    /*
+                    $.ajax({
+                        "url": "{:url('agentRegionIsExist')}",
+                        "data": {
+                            "district_id": chooseArr[2],
+                            "users_agent_id": $('#id').val()
+                        },
+                    }).done(function (rs) {
+                        if(rs['code']!=0){
+                            layer.msg(rs.msg);
+                            return false;
+                        }
+
+                        let province = $(".ssq-1 option:selected").text();
+                        let city = $(".ssq-2 option:selected").text();
+                        let district = $(".ssq-3 option:selected").text();
+                        let region_text = province + '-' + city + '-' + district;
+
+                        // console.log(province);
+                        let html = '<button type="button" class="layui-btn layui-btn-sm layui-btn-primary corner-mark">\n' +
+                            ''+region_text+'<i class="layui-icon layui-icon-close-fill"></i>\n' +
+                            '<input type="hidden" class="region_input select_region" name="select_region[]" value="'+chooseArr+'">\n' +
+                            '</button>'
+                        $('.region_container').append(html);
+                        layer.close(index);
+
+                    }).fail(function (rs) {
+                        layer.msg('操作失败');
+                    });
+                    */
+                }
+            });
+        });
+
+        $('.region_container').on('click', 'i', function () {
+            $(this).closest('button').remove()
+        })
+    });
+</script>

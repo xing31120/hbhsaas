@@ -1,0 +1,267 @@
+{layout name="public:simple" /}
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <!-- <div class="layui-card-header">商品设置</div> -->
+                <div class="layui-card-body" pad15>
+
+                    <!-- <div class="layui-tab"> -->
+                    <!-- <div class="layui-tab layui-tab-card"> -->
+                    <div class="layui-tab layui-tab-brief" lay-filter="tabFilter">
+                        <div class="layui-tab-content">
+                            <div class="layui-tab-item layui-show">
+                                <!-- 检索 -->
+                                <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+                                    <div class="layui-form-item">
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">{$Think.lang.Course}</label>
+                                            <div class="layui-input-inline">
+                                                <select name="course_id"  lay-reqText="Please Select Course" lay-search>
+                                                    <option value="">{$Think.lang.PleaseSelect}</option>
+                                                    {foreach $course_list as $key=>$value}
+                                                    <option value="{$value.id}" >{$value.name}</option>
+                                                    {/foreach}
+                                                </select>
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">{$Think.lang.phone}</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="phone" placeholder="Phone" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">{$Think.lang.email}</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" name="email" placeholder="Email" autocomplete="off" class="layui-input">
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-inline">
+                                            <label class="layui-form-label">{$Think.lang.CreateTime}:</label>
+                                            <div class="layui-input-inline">
+                                                <input type="text" class="layui-input" id="create_time" name="create_time"
+                                                       autocomplete="off" placeholder="时间" value="{$time|default=''}">
+                                            </div>
+                                        </div>
+
+
+                                        <div class="layui-inline" wid120>
+                                            <button class="layui-btn layuiadmin-btn-forum-list" lay-submit
+                                                    lay-filter="LAY-app-contlist-search">
+                                                <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+                                            </button>
+                                        </div>
+                                    </div>
+                                </div>
+                                <!-- 表格 -->
+                                <div class="table-cell-auto">
+                                    <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+    <div class="layui-btn-container">
+        <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="Add Category">Add Category</button>
+    </div>
+</script>
+<script type="text/html" id="recommendTpl">
+    <input type="checkbox" lay-filter="isRecommendSwitch" name="is_recommend" value="{{d.id}}" lay-skin="switch"
+           lay-text="√|×" {{ d.is_recommend== 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="showTpl">
+    <input type="checkbox" lay-filter="isShowSwitch" name="is_call" value="{{d.id}}" lay-skin="switch" lay-text="{$Think.lang.IsCallEnd}|{$Think.lang.IsCallWait}" {{
+           d.is_call== 1 ? 'checked' : '' }}>
+</script>
+<script type="text/html" id="importTpl">
+    <input type="checkbox" lay-filter="isImportSwitch" name="is_import" value="{{d.id}}" lay-skin="switch"
+           lay-text="√|×" {{ d.is_import== 1 ? 'checked' : '' }}>
+</script>
+
+
+<script type="text/html" id="barAction">
+<!--    <a class="layui-btn layui-btn-xs" lay-event="edit" lay-text="编辑" lay-data="{{d.id}}">{$Think.lang.Edit}</a>-->
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-text="删除" lay-data="{{d.id}}">{$Think.lang.Del}</a>
+</script>
+
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+        // , ssqselect: 'temp/ssq-select/ssqselect'
+    }).use([ 'index', 'form', 'table', 'element', 'admin', 'laydate'], function () {    //'ssqselect',
+        var $ = layui.$;
+        var table = layui.table,
+            form = layui.form,
+            admin = layui.admin,
+            element = layui.element;
+        var laydate = layui.laydate;
+
+        //执行一个laydate实例
+        laydate.render({
+            elem: '#create_time',//指定元素
+            range: '~'
+        });
+        laydate.render({
+            elem: '#day',//指定元素
+            range: '~'
+        });
+        //表格数据
+        table.render({
+            elem: '#dataTable'
+            , url: '{:url("ajaxList")}'
+            // , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            // , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
+            //     title: '提示'
+            //     , layEvent: 'LAYTABLE_TIPS'
+            //     , icon: 'layui-icon-tips'
+            // }]
+            , title: 'Course List'
+            , cols: [[
+                // {type: 'checkbox'},
+                {field: 'id', title: 'ID', unresize: true, sort: true, width: 100},
+                // {
+                //     field: 'user_picture', title: '头像', width: 90, templet: function (res) {
+                //         return '<img src="' + res.user_picture + '" width="60" height="60" onClick="bigImg()">'
+                //     }
+                // },
+                {field: 'course_name', title: '{$Think.lang.Course}', minWidth: 120,},
+                {field: 'name', title: '{$Think.lang.Name}', minWidth: 120,},
+                {field: 'phone', title: '{$Think.lang.Phone}', minWidth: 120,},
+                // {field: 'day', title: '{$Think.lang.Day}', minWidth: 120,},
+                {field: 'is_call', title: '{$Think.lang.IsCall}', templet: '#showTpl', minWidth: 150,},
+                // {field: 'is_call_text', title: '{$Think.lang.IsCall}', minWidth: 120, templet: function (res) {
+                //     if(res.is_call == 1){
+                //         return res.is_call_text;
+                //     }else {
+                //         return "<font color='red'>"+res.is_call_text+"</font>";
+                //     }
+                // }},
+                // {field: 'create_time', title: '{$Think.lang.StartTime}', minWidth: 120,},
+                // {field: 'end_time', title: '{$Think.lang.EndTime}', minWidth: 120,},
+                // {field: 'status', title: '状态', templet: '#showTpl', width: 100,},
+                // {field: 'description', title: 'Description', minWidth: 120,},
+                // {field: 'user_level_name', title: '会员等级', width: 100,},
+                // {field: 'user_name', title: '姓名', minWidth: 120,},
+                // {
+                //     field: 'full_region', title: '所在区域', minWidth: 250, templet: function (res) {
+                //         let html = '';
+                //         for (let i = 0; i < res.full_region.length; i++) {
+                //             html += '<div class="table-two-line">' + res.full_region[i] + '</div>'
+                //         }
+                //         return html;
+                //     }
+                // },
+                // {field: 'is_multi_region', title: '是否多区域', width: 100,},
+                {field: 'create_time', title: '{$Think.lang.CreateTime}', width: 200,},
+                {title: '{$Think.lang.Open}', toolbar: '#barAction', width: 120, fixed: 'right'}
+            ]]
+            , page: true
+        });
+
+        // layui.ssqselect.init({'url': "{:url('Tools/ajaxGetRegion')}", 'el': $("#ssqselect")})
+
+        //监听搜索
+        form.on('submit(LAY-app-contlist-search)', function (data) {
+            var field = data.field; //检索参数
+            //执行重载
+            table.reload('dataTable', {
+                where: field,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
+
+        //头工具栏事件
+        table.on('toolbar(dataTable)', function (obj) {
+            var checkStatus = table.checkStatus(obj.config.id); //选中的数据数组等对象
+            switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data; //选中的数据数组
+                    layer.alert(JSON.stringify(data));
+                    break;
+            }
+            ;
+        });
+
+        table.on('tool(dataTable)', function (obj) {
+            // console.log(obj.data) //编辑的数据
+            switch (obj.event) {
+                case 'edit':
+                    var index = layer.open({
+                        type: 2,
+                        title: '编辑',
+                        content: '{:url("Bookcourse/form")}?id=' + obj.data.id,
+                        shadeClose: true, // 点击遮罩层关闭
+                        maxmin: true,
+                        area: ['55%', '650px'],
+                        btn: ['保存', '取消'],
+                        btnAlign: 'c',
+                        yes: function (index, layero) {
+                            let submit = layero.find('iframe').contents().find("#form_submit");
+                            submit.click();
+                        }
+                    });
+                    // 弹层全屏, 如无需弹层全屏, 请注释layer.full();
+                    layer.full(index);
+                    break;
+                case 'del':
+                    layer.confirm('确定删除数据?', function(index){
+                        //向服务端发送删除指令
+                        $.ajax({
+                            "url":"{:url('del')}",
+                            "data":{"id":obj.data.id},
+                        }).done(function (rs) {
+                            layer.msg(rs.msg);
+                            if(rs.code==0){
+                                obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                                layer.close(index);
+                                table.reload('dataTable');
+                            }
+                        }).fail(function (rs) {
+                            layer.msg(rs.msg);
+                        });
+                    });
+                    break;
+            }
+            ;
+        });
+
+
+        form.on('switch(isShowSwitch)', function (obj) {
+            let status = 0;
+            if (obj.elem.checked) {
+                status = 1;
+            }
+            $.ajax({
+                "url": "{:url('ajaxSetShow')}",
+                "data": {"id": obj.value, "is_call": status},
+            }).done(function (rs) {
+                layer.msg(rs.msg);
+            }).fail(function (rs) {
+                layer.msg('操作失败');
+            });
+        });
+
+
+        //顶部tab切换触发效果
+        element.on('tab(tabFilter)', function (data) {
+            $("#search_tab_type").val(data.index + 1);
+            $("[lay-filter='LAY-app-contlist-search']").click();
+        });
+
+    });
+</script>

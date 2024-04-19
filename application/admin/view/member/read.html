@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>会员详情</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+</head>
+<body>
+
+<div class="layui-form" lay-filter="layuiadmin-app-form-list" id="layuiadmin-app-form-list" style="padding: 20px 30px 0 0;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">APP_UID:</label> 
+        <label class="layui-form-label">{$info.app_uid}</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">BIZ_UID: </label>
+        <label class="layui-form-label">{$info.biz_uid}</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">会员类型: </label>
+        <label class="layui-form-label">{$info.member_type_name}</label>
+    </div>
+    <div class="layui-form-item">
+        {if $info.member_type == 2}
+        <label class="layui-form-label">公司名称: </label>
+        {else/}
+        <label class="layui-form-label">姓名: </label>
+        {/if}
+        <label class="layui-form-label">{$info.name}</label>
+    </div>
+
+    <div class="layui-form-item">
+        <label class="layui-form-label">手机: </label>
+        <label class="layui-form-label">{$info.mobile}</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">状态: </label>
+        <label class="layui-form-label">{$status[$info.status]}</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">实名状态: </label>
+        <label class="layui-form-label">{$realAuthStatus[$info.real_auth_status]}</label>
+    </div>
+    <div class="layui-form-item">
+        <label class="layui-form-label">签约状态: </label>
+        <label class="layui-form-label">{$signContractStatus[$info.sign_contract_status]}</label>
+    </div>
+    {present name="info.contract_no"}
+    <div class="layui-form-item">
+        <label class="layui-form-label">电子协议编号: </label>
+        <label class="layui-form-label">{$info.contract_no}</label>
+    </div>
+    {/present}
+
+</div>
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+
+</script>
+</body>
+</html>

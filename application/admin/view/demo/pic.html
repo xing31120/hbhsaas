@@ -1,0 +1,102 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>商品列表</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/template.css" media="all">
+</head>
+
+<body>
+    <div class="layui-fluid">
+        <div class="layui-upload-list">
+            <div class="img" style="height: 106px;width: 106px;float: left;">
+                <img class="layui-upload-img" id="upload-normal-img" style="height: 106px;width: 106px;">
+                <p id="upload-err-msg"></p>
+            </div>
+            <div style="line-height: 28px;font-size: 12px;float: left;margin-left: 10px;">
+                <p>尺寸：800px * 800px</p>
+                <p>大小：不限，根据实际自行确定大小</p>
+                <p>格式：jpg，gif，png，jpeg</p>
+            </div>
+            <div style="clear: both;"></div>
+        </div>
+        <button type="button" class="layui-btn" id="photo-gallery">图片库选择</button>
+    </div>
+    <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+    <script>
+        // document.getElementById('upload-normal-img').src = imgSrc 图片地址
+        
+        layui.config({
+				base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['upload'], function () {
+                var imgSrc = '' // 上传图片默认图片地址
+                document.getElementById('upload-normal-img').src = imgSrc
+                var upload = layui.upload;
+                var data = {} // 请求上传接口的额外参数。如：data: {id: 'xxx'}
+                var headers = {} // 接口的请求头。如：headers: {token: 'sasasas'}。注：该参数为 layui 2.2.6 开始新增
+                var accept = 'images' // 指定允许上传时校验的文件类型，可选值有：images（图片）、file（所有文件）、video（视频）、audio（音频）
+                var auto = true // 是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
+                var bindAction = '' // 指向一个按钮触发上传，一般配合 auto: false 来使用。值为选择器或DOM对象，如：bindAction: '#btn'
+                var field = 'file' // 设定文件域的字段名
+                var size = 0 // 设置文件最大可允许上传的大小，单位 KB。不支持ie8/9 number
+                var multiple = false // 是否允许多文件上传。设置 true即可开启。不支持ie8/9
+                var number = 1 // 设置同时可上传的文件数量，一般配合 multiple 参数出现。 number
+                var drag = true // 是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
+                //执行实例
+                var uploadInst = upload.render({
+                    elem: '#upload-normal-img', //绑定元素
+                    url: '/upload/', //上传接口
+                    data,
+                    headers,
+                    accept,
+                    auto,
+                    bindAction,
+                    field,
+                    size,
+                    multiple,
+                    number,
+                    drag,
+                    before: function () {
+                        // 文件提交上传前的回调。返回一个object参数（同上），详见下文
+                        // document.getElementById('upload-normal-img').src = imgSrc 图片地址
+                    },
+                    done: function (res) {
+                        //上传完毕回调
+                        // document.getElementById('upload-normal-img').src = imgSrc 图片地址
+                    },
+                    error: function () {
+                        //请求异常回调 dom元素id: upload-err-msg
+                    },
+                    choose: function () {
+                        //选择文件后的回调函数。返回一个object参数，详见下文
+                    }
+                });
+                document.getElementById('photo-gallery').onclick = function () {
+                    layer.open({
+                        type: 2,
+                        title: '图片编辑器',
+                        content: 'photo_gallery.html',
+                        shadeClose: true, // 点击遮罩层关闭
+                        maxmin: true,
+                        area: ['60%', '550px'],
+                        btn: ['确定', '取消'],
+                        yes: function(index, layero){
+                            // layero.close(index)
+                            layer.close(index)
+                        }
+                    });
+                }
+        });
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,186 @@
+{layout name="public:layout" /}
+
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+
+            <form action="{:url('test/doTest')}" method="post" class="layui-form form-inline">
+            <div class="form-item-list">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">接口类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="method" id="method" lay-filter="method">
+                            <option {if !isset($data) || isset($data) && $data.method == 'createMember' } selected {/if} value="createMember">创建用户</option>
+                            <option {if isset($data) && $data.method == 'sendVerificationCode' } selected{/if} value="sendVerificationCode">绑定手机发送验证码</option>
+                            <option {if isset($data) && $data.method == 'bindPhone' } selected{/if} value="bindPhone">绑定手机</option>
+                            <option {if isset($data) && $data.method == 'setRealName' } selected{/if} value="setRealName">实名认证</option>
+                            <option {if isset($data) && $data.method == 'signContract' } selected{/if} value="signContract">电子会员签约</option>
+                            <option {if isset($data) && $data.method == 'applyBindBankCard' } selected{/if} value="applyBindBankCard">申请绑银行卡</option>
+                            <option {if isset($data) && $data.method == 'bindBankCard' } selected{/if} value="bindBankCard">绑定银行卡</option>
+                            <option {if isset($data) && $data.method == 'unbindBankCard' } selected{/if} value="unbindBankCard">解绑银行卡</option>
+                            <option {if isset($data) && $data.method == 'queryBalance' } selected{/if} value="queryBalance">查询用户余额</option>
+                            <option {if isset($data) && $data.method == 'getMemberInfo' } selected{/if} value="getMemberInfo">查询用户信息</option>
+                            <option {if isset($data) && $data.method == 'queryMerchantBalance' } selected{/if} value="queryMerchantBalance">查询平台余额</option>
+                            <option {if isset($data) && $data.method == 'queryReserveFundBalance' } selected{/if} value="queryReserveFundBalance">查询平台头寸</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">appUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="appUid"   placeholder="请输入appUid" value="{$data.appUid|default='1000'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">bizUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="bizUid" lay-verify="required" lay-reqText="bizUid不能为空" placeholder="请输入bizUid" value="{$data.bizUid|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">手机号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="phone" placeholder="请输入手机号" value="{$data.phone|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">验证码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="verificationCode" placeholder="请输入验证码" value="{$data.verificationCode|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">姓名：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="identityName" placeholder="请输入身份证姓名" value="{$data.identityName|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">身份证：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="identityNo" placeholder="请输入身份证" value="{$data.identityNo|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">银行卡：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="bankCardNo" placeholder="请输入银行卡" value="{$data.bankCardNo|default='6228480078086570476'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">绑定银行卡流水号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="tranceNum" placeholder="请输入流水号" value="{$data.tranceNum|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">接口类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="fundAcctSys" id="fundAcctSys" lay-filter="fundAcctSys">
+                            <option {if (isset($data) && $data.fundAcctSys == 1) || !isset($data.fundAcctSys) } selected{/if} value="1">通联通</option>
+                            <option {if isset($data) && $data.fundAcctSys == 2 } selected{/if} value="2">电子账户</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item testClass form-btn-scroll">
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="submit"><i class="iconfont">&#xe645;</i> 提交</button>
+                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);"><i class="iconfont">&#xe9af;</i> 返回</button>
+                    </div>
+                </div>
+
+            <h2 >--------------------------------------------------------------------------------------------------------------</h2>
+            {if isset($returnData) && !empty($returnData)}
+            {foreach $returnData as $key=>$item }
+            <div class="layui-form-item">
+                <label class="layui-form-label">{$key}</label>
+                <div class="layui-input-inline">{$item|json_encode}</div>
+            </div>
+            {/foreach}
+            {/if}
+
+            {if isset($result) && !empty($result)}
+            {php}var_dump($result){/php}
+            {/if}
+
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(["element", "jquery", "layer", "form"], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+
+        form.on('select(method)', function(data){
+
+            // layer.msg(data.value);
+
+        // <option {if isset($data) && $data.method == 'createMember' } selected {/if} value="createMember">创建用户</option>
+        //     <option {if isset($data) && $data.method == 'sendVerificationCode' } selected{/if} value="sendVerificationCode">绑定手机发送验证码</option>
+        //     <option {if isset($data) && $data.method == 'bindPhone' } selected{/if} value="bindPhone">绑定手机</option>
+        //     <option {if isset($data) && $data.method == 'setRealName' } selected{/if} value="setRealName">实名认证</option>
+        //     <option {if isset($data) && $data.method == 'signContract' } selected{/if} value="signContract">电子会员签约</option>
+        //     <option {if isset($data) && $data.method == 'applyBindBankCard' } selected{/if} value="applyBindBankCard">申请绑银行卡</option>
+        //     <option {if isset($data) && $data.method == 'bindBankCard' } selected{/if} value="bindBankCard">绑定银行卡</option>
+        //     <option {if isset($data) && $data.method == 'unbindBankCard' } selected{/if} value="unbindBankCard">解绑银行卡</option>
+        //     <option {if isset($data) && $data.method == 'queryBalance' } selected{/if} value="queryBalance">查询用户余额</option>
+        //     <option {if isset($data) && $data.method == 'getMemberInfo' } selected{/if} value="getMemberInfo">查询用户信息</option>
+
+            $(".testClass").hide();
+            $("input[name='appUid']").parents('.testClass').show();
+            $("input[name='bizUid']").parents('.testClass').show();
+            $("button[type='submit']").parents('.testClass').show();
+
+            if(data.value == 'sendVerificationCode'){
+                $("input[name='phone']").parents('.testClass').show();
+            }
+            else if(data.value == 'bindPhone'){
+                $("input[name='phone']").parents('.testClass').show();
+                $("input[name='verificationCode']").parents('.testClass').show();
+            }
+            else if(data.value == 'setRealName'){
+                $("input[name='identityName']").parents('.testClass').show();
+                $("input[name='identityNo']").parents('.testClass').show();
+            }
+            else if(data.value == 'applyBindBankCard'){
+                $("input[name='phone']").parents('.testClass').show();
+                $("input[name='bankCardNo']").parents('.testClass').show();
+                $("input[name='identityName']").parents('.testClass').show();
+                $("input[name='identityNo']").parents('.testClass').show();
+            }
+            else if(data.value == 'bindBankCard'){
+                $("input[name='phone']").parents('.testClass').show();
+                $("input[name='verificationCode']").parents('.testClass').show();
+                $("input[name='tranceNum']").parents('.testClass').show();
+                $("input[name='identityNo']").parents('.testClass').show();
+            }
+            else if(data.value == 'unbindBankCard'){
+                $("input[name='bankCardNo']").parents('.testClass').show();
+            }
+            else if(data.value == 'queryReserveFundBalance'){
+                $("input[name='fundAcctSys']").parents('.testClass').show();
+            }
+
+        });
+        var methonVal = '{if isset($data)}{$data.method}{else /}createMember{/if}';
+        $("#method").next().find('.layui-anim').children('dd[lay-value='+methonVal+']').click();
+
+    });
+
+
+</script>
+</div>

@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>crud</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/css/comm.css">
+</head>
+<body>
+  <div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <div class="layui-card-header">商品设置</div>
+          <div class="layui-card-body" pad15>
+            <div class="layui-form" wid120 lay-filter="">
+
+              <div class="layui-form-item">
+                <label class="layui-form-label">市场价格比例</label>
+                <div class="layui-input-block">
+                  <input type="text" name="sitename" value="" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">商品货号前缀</label>
+                <div class="layui-input-block">
+                  <input type="text" name="sitename" value="" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">默认库存</label>
+                <div class="layui-input-block">
+                  <input type="text" name="sitename" value="" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">商品名称的长度</label>
+                <div class="layui-input-block">
+                  <input type="text" name="sitename" value="" class="layui-input">
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">是否启动商品审批</label>
+                <div class="layui-input-block">
+                  <input type="radio" name="sex" value="启动" title="启动">
+                  <input type="radio" name="sex" value="关闭" title="关闭" checked>
+                </div>
+              </div>
+              <div class="layui-form-item">
+                <label class="layui-form-label">热门搜索标签</label>
+                <div class="layui-input-block">
+
+                  <div id="tagValue" class="label-selected"  style="display:inline-block">
+                      <button type="button" class="layui-btn layui-btn-sm layui-btn-primary corner-mark">电磁炉<i class="layui-icon layui-icon-close-fill"></i>
+                      </button>
+                      <button type="button" class="layui-btn layui-btn-sm layui-btn-primary corner-mark">电磁炉<i class="layui-icon layui-icon-close-fill"></i>
+                      </button>
+                      <!-- <button type="button" class="layui-btn layui-btn-sm layui-btn-normal layui-btn-radius corner-mark">电磁炉<i class="layui-icon layui-icon-close-fill"></i>
+                      </button> -->
+                  </div>
+                  <div class="add-label" style="display:inline-block; margin-left:10px;">
+                    <!-- <input type="text" id="labelName" value="" class="layui-input"> -->
+                    <button class="layui-btn layui-btn-sm" id="label-self">添加标签</button>
+                  </div>
+
+                </div>
+              </div>
+
+              <div class="layui-form-item">
+                <div class="layui-input-block">
+                  <button class="layui-btn" lay-submit lay-filter="set_website">提交</button>
+                  <button class="layui-btn layui-btn-primary">重置</button>
+                </div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+      index: 'lib/index' //主入口模块
+    }).use(['index', 'form'], function () {
+
+      var $ = layui.$,
+          selectedText = new Array();
+      //添加自定义标签
+      $("#label-self").on("click", function () {      // 3情况：重复、标签库、新增
+
+        var labelName = $("#labelName").val();
+        if (labelName != null && labelName != "") {
+
+          var indexOfselected = selectedText.indexOf(labelName);
+
+          if (indexOfselected !== -1)     //已经存在于已选择，不添加
+          {
+            tips("标签已存在！");
+            return;
+          }
+          else {
+            addLabel(0, labelName)
+          }
+        }
+        else {
+          tips("请填写标签名！");
+        }
+      });
+
+      //添加标签到最上面                                    
+      function addLabel(id, text) {
+        var num = 8;              //标签最多个数
+        if ($(".label-selected").children("li").length >= num) {
+          tips("最多可以选择" + num + "个哦");
+          return false;
+        }
+
+        var labelHTML = getappendHTML(id, text);
+        $(".label-selected").append(labelHTML);
+
+        //新增，刷新 1、3
+        // resetDataValue();
+        resetSelectedText();
+
+        return true;
+      };
+
+      function getappendHTML(id, text) {
+        return "<button type='button' class='layui-btn layui-btn-sm layui-btn-normal layui-btn-radius corner-mark'>" + text + "<i class='layui-icon layui-icon-close-fill'></i></button>";
+      }
+
+      //存在的标签数组
+      function resetSelectedText() {
+        selectedText = [];   //首先要清空
+        valtext = '';
+        for (i = 0; i < $(".label-selected").children("li").length; i++) {
+          var text = $(".label-selected").children("li").eq(i).text();
+          selectedText[i] = text;
+          valtext += selectedText[i] + ',';
+        }
+        $("input[name='selectedtext']").val(valtext);
+      };
+
+      //提示:标签已存在
+      function tips(content) {
+        layer.open({
+          type: 1,
+          offset: 'auto', //具体配置参考：offset参数项
+          title: '提示',
+          content: '<div style="padding: 20px 80px;">' + content + '</div>',
+          btn: '确定',
+          btnAlign: 'c', //按钮居中
+          yes: layer.closeAll()
+        });
+      };
+
+    });
+  </script>
+
+</body>
+
+</html>

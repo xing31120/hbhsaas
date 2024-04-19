@@ -1,0 +1,372 @@
+{layout name="public:layout" /}
+<div class="layui-layout layui-layout-admin">
+    <div class="layui-header">
+        <div class="layui-logo">管理系统</div>
+        <!-- 头部区域（可配合layui已有的水平导航） -->
+        <ul class="layui-nav layui-layout-right">
+            <li class="layui-nav-item">
+                <a href="javascript:;">
+                    <img src="http://t.cn/RCzsdCq" class="layui-nav-img" /> {$Think.session.username}
+                </a>
+            </li>
+            <li class="layui-nav-item">
+                <a href="{:url('user/logout')}">退出登录</a>
+            </li>
+        </ul>
+    </div>
+    <div class="layui-side layui-bg-black">
+        <div class="layui-side-scroll">
+            <!-- 左侧导航区域（可配合layui已有的垂直导航） -->
+            <ul class="layui-nav layui-nav-tree" lay-filter="test" id="">
+                {if !empty($menu)}
+                {volist name="menu" id="vo"}
+                <li class="layui-nav-item layui-nav-itemed" lay-id="{$vo.id}">
+                    <a href="javascript:;">
+                        <i class="layui-icon layui-icon-template"></i>
+                        {$vo.name}
+                    </a>
+                    {if !empty($vo.children)}
+                    <dl class="layui-nav-child">
+                        {volist name="$vo.children" id="v"}
+                        <dd lay-id="{$v.id}" data-url="/{$v.controller}/{$v.action}" style="text-indent: 1em;">
+                            <a href="javascript:;">{$v.name}</a>
+                        </dd>
+                        {/volist}
+                    </dl>
+                    {/if}
+                </li>
+                {/volist}
+                {/if}
+            </ul>
+        </div>
+    </div>
+    <div class="layui-body">
+        <!-- 内容主体区域 -->
+        <div class="tab-container">
+            <div class="tab-title-container">
+                <div  id="tab-title-body" class="layui-tab layui-tab-brief tab-title-body">
+                    <!--可以通过减小tab宽度实现增多页面，规定超过20个后就不让更多了-->
+                    <div id="refresh" class="icon-container refresh">
+                        <i class="layui-icon  layui-icon-refresh icon-box icon-refresh" ></i>
+                    </div>
+                    <div id="to-left" class="icon-container to-left " >
+                        <i class="layui-icon layui-icon-left icon-box" ></i>
+                    </div>
+                    <div id="to-right" class="icon-container to-right">
+                        <i class="layui-icon layui-icon-right icon-box " ></i>
+                    </div>
+                    <div  class="icon-container tab-op">
+                        <ul id="tabHeader" class="layui-nav icon-container" lay-filter="tab-op"  >
+                            <li class="layui-nav-item layui-unselect icon-container tab-op" lay-unselect=""
+                            >
+                                <a href="javascript:;" class="icon-container">
+                                    <i class="layui-icon layui-icon-down icon-box" ></i>
+                                </a>
+                                <dl class="layui-nav-child tab-more" >
+                                    <dd lay-id="closeAll" op-type="closeAll">
+                                        <a href="javascript:;">关闭全部</a>
+                                    </dd>
+                                    <dd lay-id="closeOther" op-type="closeOther">
+                                        <a href="javascript:;" >关闭其它</a>
+                                    </dd>
+                                    <dd lay-id="all" op-type="all">
+                                        <a href="javascript:;">一键清理缓存</a>
+                                    </dd>
+                                    <dd lay-id="data" op-type="data">
+                                        <a href="javascript:;">清理数据缓存</a>
+                                    </dd>
+                                    <dd lay-id="template" op-type="template">
+                                        <a href="javascript:;">清理模板缓存</a>
+                                    </dd>
+                                    <dd lay-id="closeSelf" op-type="closeSelf">
+                                        <a href="javascript:;">关闭当前</a>
+                                    </dd>
+                                </dl>
+                            </li>
+                        </ul>
+                    </div>
+                    <div id="lay-tab" class="layui-tab layui-tab-brief  title-box"  lay-filter="docDemoTabBrief" lay-allowclose="true">
+                        <ul class="layui-tab-title" id="tab-title" >
+                            <!--<li lay-id="22" class="layui-this">网站设置</li>-->
+                            <li id="console" class="layui-this">我的控制台</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+
+            <div id="tab-content-iframe-main" class="tab-content-iframe-main" >
+                <iframe class="zlq-this" iframe_id="iframe_main_28" src='{:url('console')}' scrolling="auto" seamless frameborder='0'></iframe>
+            </div>
+        </div>
+    </div>
+    <div class="layui-footer">
+        <!-- 底部固定区域 -->
+        © layui.com - 底部固定区域
+    </div>
+
+    <script>
+        //JavaScript代码区域
+        layui.config({
+            base: '/static/layui/lay/modules/'
+        });
+        layui.use(["element","jquery","layer"], function(){
+            var element = layui.element,
+                $=layui.jquery,
+                layer=layui.layer;
+
+            // element.tab({
+            //   headerElem: '#tabHeader>li' //指定tab头元素项
+            //   ,bodyElem: '#tabBody>.zlq-tab-content' //指定tab主体元素项
+            // });
+
+            element.render('tab');
+
+            // tab-title元素数量较少，而又点击又对齐按钮时或者删除按钮时需要判断是否足够，否则不右移动
+              //触发事件
+              // var active = {
+              //   tabAdd: function(){
+              //     //新增一个Tab项
+              //     element.tabAdd('demo', {
+              //       title: '新选项'+ (Math.random()*1000|0) //用于演示
+              //       ,content: '内容'+ (Math.random()*1000|0)
+              //       ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+              //     })
+              //   }
+              //   ,tabDelete: function(othis){
+              //     //删除指定Tab项
+              //     element.tabDelete('demo', '44'); //删除：“商品管理”
+              //     othis.addClass('layui-btn-disabled');
+              //   }
+              //   ,tabChange: function(){
+              //     //切换到指定Tab项
+              //     element.tabChange('demo', '22'); //切换到：用户管理
+              //   }
+              // };
+              //
+              // $('.site-demo-active').on('click', function(){
+              //   var othis = $(this), type = othis.data('type');
+              //   active[type] ? active[type].call(this, othis) : '';
+              // });
+
+            // 判断是否关闭事件，如果是，则判断剩余窗口是否小，否则，不靠右补
+            $(".layui-tab ").on("click",function(e){
+                elem = $(".layui-tab li.layui-this");
+                if($(e.target).is(".layui-tab-close")){
+                    //iframe内容页的切换
+                    $("#tab-content-iframe-main iframe").removeClass('zlq-this');
+                    $("#tab-content-iframe-main iframe[iframe_id='iframe_main_"+elem.attr("lay-id")+"']").addClass('zlq-this');
+                    if($('#lay-tab ul li:last-child').offset().left>$("#lay-tab").offset().left+$("#tab-title-body").width()){
+                        $("#lay-tab").css('left','unset');
+                        $("#lay-tab").css('right','0');
+                        //$("#lay_tab").removeAttr("style");
+                        //	$("#lay_tab").attr("style","position:absolute;right:0; height:40px; font-size:16px;line-height:40px; margin:0px;text-align:center;border-left:1px solid #e2e2e2;background-color:#FFF;margin-right:80px;");
+                    } else {
+                        $("#lay-tab").css('right','unset');
+                        $("#lay-tab").css('left','0');
+                    }
+                } else {
+                    //console.log(this);
+                }
+            });
+
+
+
+            // 点击刷新按钮
+            $('#refresh').on('click',function(){
+                $("#tab-content-iframe-main iframe.zlq-this").attr('src', $('#tab-content-iframe-main iframe.zlq-this').attr('src'));
+                layer.msg('refresh');
+            });
+
+            // 点击放到左侧
+            $('#to-left').on('click',function(){
+                $("#lay-tab").css('right','unset');
+                $("#lay-tab").css('left','0');
+            });
+
+            // 需要判断当前lay-this节点是否在可视区域，若在则不执行右对齐，否则执行
+            $('#to-right').on('click',function(e){
+
+                if($('#lay-tab ul li:last-child').offset().left>$("#tab-title-body").offset().left+$("#tab-title-body").width()+81){
+                    $("#lay-tab").css('left','unset');
+                    $("#lay-tab").css('right','0');
+                }else{
+
+                }
+            });
+
+            // 监听tab操作按钮
+            element.on('nav(tab-op)', function(elem){
+                tabids=getTabIDs(".layui-tab .layui-tab-title li");
+                thisTabID=$(".layui-tab li.layui-this").attr('lay-id');
+                console.log(elem.parent().attr('op-type'));
+                switch(elem.parent().attr('op-type')){
+                    case "closeAll":
+                        deleteTab('docDemoTabBrief',tabids);
+                        break;
+                    case "closeOther":
+                        tabids.splice($.inArray(thisTabID,tabids),1);
+                        deleteTab('docDemoTabBrief',tabids);
+                        break;
+                    case "closeSelf":
+                        deleteTab('docDemoTabBrief',thisTabID);
+                        break;
+                    default:
+                        layer.msg('功能待添加');
+
+                        break;
+                }
+            });
+
+            // 删除tabs
+            // fliter 要删除的标签所在的tab过滤器
+            // IDS 要删除的ID集合可以为单个元素或者数组
+            function deleteTab(fliter,IDS){
+                if($.isArray(IDS)){
+                    tabids.forEach(function(v){
+                        //后台主页ID不删除
+                        if(v!=0){
+                            element.tabDelete(fliter,v);
+                            console.log(IDS);
+                        }
+                    });
+                }else{
+                    if(IDS!=0){
+                        element.tabDelete(fliter,IDS);
+                    }else{
+                        layer.msg('没有可删除或者后台主页不可删除');
+                    }
+                }
+            }
+
+            // elem-selector jquery 元素选择器
+            // @return  元素选择器返回的ID集合
+            function getTabIDs(elem_selector){
+                //待添加非JQuery支持
+                var tabids=[];
+                tabs=$(elem_selector);
+                //console.log(tabs);
+                for(var tab=0;tab<tabs.length;tab++){
+                    tabids.push(tabs[tab].getAttribute('lay-id'));
+                }
+                return tabids;
+            }
+
+            // 监听导航点击
+            element.on('nav(test)', function(elem){
+                //console.log(elem.parent().attr('lay-id'))
+                //element.tabChange('docDemoTabBrief',
+                elem.parent().attr('lay-id');//获取<a>节点的父节点<dd>的lay-id 属性
+                var tabids=[];
+                tabs=$(".layui-tab .layui-tab-title li");
+                //console.log(tabs);
+                for(var tab=0;tab<tabs.length;tab++){
+                    //console.log(tabs[tab].getAttribute('lay-id'));
+                    tabids.push(tabs[tab].getAttribute('lay-id'));
+                    //console.log(tabids);
+                    //console.log(tabs.attr('lay-id'));
+                }
+
+                //-----------------------------------------------------
+                //点击判断是否已经在tab中存在，若是则跳转，否则新建
+                if($.inArray(elem.parent().attr('lay-id'),tabids)>=0){
+                    element.tabChange('docDemoTabBrief', elem.parent().attr('lay-id'));
+                    //切换框架显示
+                    $("#tab-content-iframe-main iframe").removeClass('zlq-this');
+                    $("#tab-content-iframe-main iframe[iframe_id='iframe_main_"+elem.parent().attr('lay-id')+"']").addClass('zlq-this');
+
+                    //当前tab标签最左侧如果超出可视区域之外则，靠左侧显示且显示最左侧
+                    if($('#lay-tab ul li.layui-this').offset().left<$("#tab-title-body").offset().left+81){
+                        //81为刷新按钮和向左对齐的宽度
+                        $("#lay-tab").css('right','unset');
+                        //$("#lay-tab").css('left','0');
+                        $("#lay-tab").css('left',$('#lay-tab').offset().left-$('#lay-tab ul li.layui-this').offset().left);
+
+                    }else if($('#lay-tab ul li.layui-this').offset().left+$('#lay-tab ul li.layui-this').width()>$('#tab-title-body').offset().left+$('#tab-title-body').width()+81){
+                        //	//81为刷新按钮和向左对齐的宽度
+                        $("#lay-tab").css('left','unset');
+                        //$("#lay-tab").css('right','0');
+                        $("#lay-tab").css('right',($('#lay-tab ul li.layui-this').offset().left+$('#lay-tab ul li.layui-this').width())-($('#lay-tab').offset().left+$('#lay-tab').width())+15);
+                        //	15为padding宽度，方便显示关闭按钮
+                    }else{
+                    }
+
+                }else{
+
+                    //判断是否有layui-nav-child,如果不是方能打开，否则不能打开
+                    if(elem.parent().find('.layui-nav-child').length>0){
+                    }else{
+                        tab=element.tabAdd('docDemoTabBrief', {
+                            title: $(this).text()
+                            ,content: '选项卡的内容' //支持传入html
+                            ,id: elem.parent().attr('lay-id')
+                            ,data:'last-child'
+                        });
+                        $(tab).addClass('last-child');
+                        // console.log('tab');
+                        element.render('tab');
+                        element.tabChange('docDemoTabBrief', elem.parent().attr('lay-id'));
+                        //新添加的tab标签宽度如果超出右侧可视区域之外则，靠右侧显示
+                        if($('#lay-tab ul li.layui-this').offset().left+$('#lay-tab ul li.layui-this').width()>$("#lay-tab").offset().left+$("#tab-title-body").width()){
+                            $("#lay-tab").css('left','unset');
+                            $("#lay-tab").css('right','0');
+                        }else{
+                        }
+                        //添加iframe
+                        //console.log(elem.parent().attr('lay-id'));
+                        $("#tab-content-iframe-main iframe").removeClass('zlq-this');
+                        iframstr="<iframe class='zlq-this' iframe_id='iframe_main_"+elem.parent().attr('lay-id')+"' src='"+elem.parent().data('url')+"'scrolling='auto' seamless frameborder='0'></iframe>";
+
+                        $("#tab-content-iframe-main").append(iframstr);
+                    }
+                }
+            });
+
+            // 监听tab单击事件
+            element.on('tab(docDemoTabBrief)', function(data){
+                // console.log(this.getAttribute('lay-id')); //当前Tab标题所在的原始DOM元素  js原生写法
+                navLiItemedId=$(".layui-nav li[class='layui-nav-item layui-nav-itemed']").attr('lay-id');
+                navDlItemedID=$(".layui-nav dl[class='layui-nav-child layui-nav-itemed']").attr('lay-id');
+                navDdThisID=$(".layui-nav dd[class='layui-this']").attr('lay-id');
+                if(navDdThisID==$(this).attr('lay-id')){
+                    console.log('nothing');
+                }else{
+                    //console.log('navDdThisID='+navDdThisID);
+                }
+                $("#tab-content-iframe-main iframe").removeClass('zlq-this');
+                $("#tab-content-iframe-main iframe[iframe_id='iframe_main_"+$(this).attr('lay-id')+"']").addClass('zlq-this');
+
+                //------------------------------------------------------------ 处理侧边导航
+                //此处判断是否为父节点，若是就不删除layui-this类，否则删除添加
+                $('.layui-nav li dd').removeClass('layui-this');
+                $(".layui-nav li dd[lay-id="+$(this).attr('lay-id')+"]").addClass('layui-this');
+            });
+
+            // 触发事件
+            var active = {
+                tabAdd: function(){
+                    //新增一个Tab项
+                    element.tabAdd('docDemoTabBrief', {
+                        title: '新选项'+ (Math.random()*1000|0) //用于演示
+                        ,content: '内容'+ (Math.random()*1000|0)
+                        ,id: new Date().getTime() //实际使用一般是规定好的id，这里以时间戳模拟下
+                    })
+                }
+                ,tabDelete: function(othis){
+                    //删除指定Tab项
+                    element.tabDelete('docDemoTabBrief', '44'); //删除：“商品管理”
+                    othis.addClass('layui-btn-disabled');
+                }
+                ,tabChange: function(){
+                    //切换到指定Tab项
+                    element.tabChange('docDemoTabBrief', '23'); //切换到：用户管理
+                }
+            };
+
+            $('.site-demo-active').on('click', function(){
+                var othis = $(this), type = othis.data('type');
+                active[type] ? active[type].call(this, othis) : '';
+                console.log(this);
+            });
+        });
+    </script>
+</div>

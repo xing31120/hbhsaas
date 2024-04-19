@@ -1,0 +1,83 @@
+{layout name="public:layout" /}
+
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+            <form action="{:url('Authrule/doAdd')}" method="post" class="layui-form form-inline">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">权限节点：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="name" lay-verify="required" lay-reqText="权限节点不能为空" placeholder="请输入权限节点">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">中文名称：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="title" lay-verify="required" lay-reqText="权限中文名称不能为空" placeholder="请输入权限节点中文名称">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">权限状态：</label>
+                    <div class="layui-input-inline">
+                        <input type="radio" name="status" lay-skin="primary" value="1" title="启用" checked>
+                        <input type="radio" name="status" lay-skin="primary" value="0" title="禁用">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">排序：</label>
+                    <div class="layui-input-inline">
+                        <input type="number" class="layui-input" name="sort" lay-verify="required" lay-reqText="排序不能为空" placeholder="请输入权限节点排序">
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">父节点：</label>
+                    <div class="layui-input-inline">
+                        <select name="pid">
+                            <option value="">请选择父节点</option>
+                            <option value="0">根节点</option>
+                            {volist name="nodeList" id="node"}
+                                {eq name="$node.level" value="1"}
+                                <option value="{$node.id}">{$node.title}</option>
+                                {else/}
+                                <option value="{$node.id}">&nbsp;&nbsp;&nbsp;&nbsp;|-&nbsp;{$node.title}</option>
+                                {/eq}
+                            {/volist}
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item">
+                    <label class="layui-form-label">权限类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="level">
+                            <option value="">请选择权限类型</option>
+                            <option value="1">模块</option>
+                            <option value="2">控制器</option>
+                            <option value="3">方法</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item form-btn">
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="submit"><i class="iconfont">&#xe645;</i> 提交</button>
+                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);"><i class="iconfont">&#xe9af;</i> 返回</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(["element", "jquery", "layer", "form"], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+    });
+</script>
+</div>

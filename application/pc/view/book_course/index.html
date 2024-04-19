@@ -1,0 +1,658 @@
+{include file="public/header"/}
+<style>
+    .pc {
+        display: block;
+    }
+
+    .h5 {
+        display: none;
+    }
+
+    .date-list {
+        display: flex;
+        overflow-x: auto;
+        padding: 8px;
+    }
+
+    .date-item {
+        border-radius: 8px;
+        text-align: center;
+        padding: 8px 20px;
+        margin-right: 8px;
+    }
+
+    .date-tips {
+        font-size: 12px;
+    }
+
+    .select-item {
+        color: white;
+        background: #feab05;
+    }
+
+    @media screen and (max-width: 600px) {
+        .h5 {
+            display: block;
+        }
+
+        .pc {
+            display: none;
+        }
+    }
+
+    .class-list {
+        background: #f2f0f3;
+        padding: 16px;
+    }
+
+    .class-time {
+        color: #676567;
+    }
+
+    .class-item {
+        background: white;
+        border-radius: 8px;
+        padding: 16px;
+        margin-top: 8px;
+        margin-bottom: 8px;
+        position: relative;
+    }
+
+    .class-cate {
+        color: #6c6c6c;
+        font-size: 14px;
+    }
+
+    .class-name {
+        margin: 8px 0 4px 0;
+    }
+
+    .class-teacher {
+        color: #aeacaf;
+        font-size: 12px;
+    }
+
+    .line {
+        width: 100%;
+        height: 1px;
+        background: #f2f0f3;
+        margin: 8px 0;
+    }
+
+    /* 按钮样式, 点击选中状态(多选), 然后提交 */
+    .class-schedule-area tbody .schedule-title {
+        padding: 0;
+        height: 1px;
+    }
+
+    .class_detail_btn {
+        padding: 20px 10px;
+    }
+
+    .detail_select {
+        background: #f53f3f !important;
+        color: white !important;
+    }
+
+    .detail_select .schedule-time {
+        color: #ffd7d7 !important;
+    }
+
+    td {}
+
+    td>.td-h {
+        height: 100%;
+        display: flex;
+        flex-flow: column;
+        justify-content: center;
+    }
+
+    /** td-h 在只有一个的情况下给 div 设置 td-h 这个class类 **/
+
+    /** 手机版的选中效果 **/
+    .detail_select_mob {
+        background: #6b29e6 !important;
+    }
+
+    .detail_select_mob .class-name {
+        color: white !important;
+    }
+
+    .detail_select_mob .class-teacher {
+        color: #c2c2c2 !important
+    }
+    .sticky-left {
+        min-width: 120px;
+        position: sticky !important;
+        left: 0;
+        background-color: rgba(22, 25, 33,1) !important;
+        z-index: 3;
+    }
+
+    .class-schedule-table .schedule-day td {
+        font-size: 14px;
+    }
+    .class-schedule-area tbody .schedule-title {
+        font-size: 12px;
+    }
+    .class_detail_btn {
+        padding: 10px;
+    }
+    .class-schedule-area tbody .schedule-title:before {
+        inset: 1px;
+            background-color: #ffffff2b;
+    }
+    .class-schedule-table .schedule-day td:before {
+        inset: 1px
+    }
+    .overflow-hidden{
+        font-weight: bold;
+        font-size: 14px;
+        color: white;
+        width: 120px;
+        white-space: nowrap; /* 确保文本在一行内显示 */
+        overflow: hidden; /* 隐藏超出指定宽度的文本 */
+        text-overflow: ellipsis; /* 添加省略号表示文本被截断 */
+    }
+    .overflow-hidden:hover {
+        overflow: visible;
+        white-space: normal;
+        text-overflow: none;
+    }
+    .class-schedule-area tbody .schedule-time {
+            color: #b9b9b9;
+    }
+    .modal {
+        top: 200px;
+        z-index: 100;
+    }
+</style>
+<!--==============================
+        Breadcumb
+============================== -->
+
+
+<div class="breadcumb-wrapper" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.png">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">Class Schedule</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="/index.html">Home</a></li>
+                <li>Class Schedule</li>
+            </ul>
+        </div>
+    </div>
+
+
+</div>
+  <div style="padding: 50px 10%">
+      操作步骤: </br>
+1、选择课程分类，点击搜索 </br>
+2、选择所需时间段和课程，点击提交 </br>
+3、显示上课须知内容，点击同意 </br>
+4、约课成功，返回主页，点击QRCODE，显示个人资料及上课信息，到达后向工作人员展示二维码，签到，等待上课
+</div>
+    <!-- Modal -->
+    <div class="modal fade" id="exampleModal" tabindex="999" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">试课规范文档</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+                <div class="modal-body">
+                    操作步骤:
+1、选择课程分类，点击搜索
+2、选择所需时间段和课程，点击提交
+3、显示上课须知内容，点击同意
+4、约课成功，返回主页，点击QRCODE，显示个人资料及上课信息，到达后向工作人员展示二维码，签到，等待上课
+                     <input id="reviewcheck" name="reviewcheck" type="checkbox">
+  <label for="reviewcheck">同意协议<span
+      class="checkmark"></span></label>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-light" data-bs-dismiss="modal">取消</button>
+                    <button type="button" class=" btn" style="background-color: var(--theme-color);color: white" id="confim_btn">确认</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+<form method="post" id="pc_form" onsubmit="return false">
+    <div class="class-schedule-area pc" style="margin-top: 0px" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/schedule.jpg">
+        <h5 class="form-title" style="color: white;">课程</h5>
+        <div class="row">
+            <div class="form-group">
+                <label style="color: white;">课程分类</label>
+                <div style="display:flex">
+                    <select multip id="cat_more">
+                         <option value="-1">All</option>
+                        {foreach $course_cat_list as $key=>$value}
+                        <option value="{$value.id}" {if in_array($value['id'], $cat_more)} selected {/if}>
+                            {$value.name}</option>
+                        {/foreach}
+                    </select>
+                    <div style="width: 200px;margin-left: 20px" class="th-btn" id="search-btn" name="submit_mob">搜索</div>
+                </div>
+                <!--<select name="cat_id" id="cat_id" class="form-select nice-select">-->
+                <!--    <option value="-1">All</option>-->
+                <!--    {foreach $course_cat_list as $key=>$value}-->
+                <!--    <option value="{$value.id}" {if $value['id']==$cat_more} selected {/if}>-->
+                <!--        {$value.name}</option>-->
+                <!--    {/foreach}-->
+                <!--</select>-->
+            </div>
+            <div class="form-group style-3">
+                <label style="color: white;">课程表</label>
+                <div style="overflow:auto;position:relative">
+                    <table class="class-schedule-table table">
+                    <tr class="schedule-day">
+                        <th scope="col" class="time sticky-left"></th>
+                        {foreach $new_data_mob as $key => $val_mob}
+                        <td style="min-width: 140px" scope="col">{$val_mob.nd}<br>{$val_mob.week}</td>
+                        {/foreach}
+                    </tr>
+                    {foreach $new_data_pc as $key => $val}
+                        {if !$val['is_hidden'] }
+                        <tr>
+                            <th scope="row" class="time sticky-left">{$val.start_time}<br>~<br>{$val.end_time}</th>
+                            {foreach $new_data_mob as $ke => $val_mob}
+                                {if !empty($val[$ke]) }
+                                <td style="width: 141px" scope="col" class="schedule-title  {$ke}_1">
+                                    {foreach $val[$ke] as $k => $row}
+                                    <div data-detailid="{$row.id}" class="class_detail_btn
+                                        {if in_array($row['id'], $book_detail_id_arr) } detail_select {/if}
+                                        {if count($val[$ke]) == 1 } td-h {/if}
+                                    ">
+                                        <div class="overflow-hidden" a>{$row.course_name}({$row.course_description})</div>
+<!--                                        <span class="schedule-time"></span>-->
+                                        <span class="schedule-time">{$row.teacher_name}({$row.book_course_people}/{$row.total_people})</span>
+                                    </div>
+                                    {/foreach}
+                                </td>
+                                {else/}
+                                <td style="width: 141px" scope="col" class="schedule-title  {$ke}_2"></td>
+                                {/if}
+                            {/foreach}
+                        </tr>
+                        {/if}
+                    {/foreach}
+                </table>
+
+                </div>
+
+            </div>
+
+            <div class="form-btn col-12 text-center">
+                <button class="th-btn w-100 red-btn" id="submit_pc" name="submit_pc">提交</button>
+            </div>
+        </div>
+        <p class="form-messages mb-0 mt-3"></p>
+
+    </div>
+    <input type="hidden" name="select_detail_ids" id="select_detail_ids" value="{$book_detail_id_str}">
+    <input type="hidden" name="old_detail_ids" id="old_detail_ids" value="{$book_detail_id_str}">
+</form>
+
+<div class="h5">
+    <form method="post" id="mob_form" onsubmit="return false">
+        <input type="text" name="today" id="today" value="{$today}">
+        <!-- 课程分类下拉框 -->
+        <div class="widget widget_categories th-comment-form">
+            <h3 class="widget_title">课程分类<span class="shape"></span></h3>
+            <select name="cat_id_mob" id="cat_id_mob" class="form-select nice-select">
+                {foreach $course_cat_list as $key=>$value}
+                <option value="{$value.id}" {if in_array($value['id'], $cat_more)} selected {/if}>{$value.name}</option>
+                {/foreach}
+            </select>
+        </div>
+        <!-- 日期+星期几+可约的课程 -->
+        <div class="date-list">
+            {foreach $new_data_mob as $key => $val_mob}
+            <div data-detailday="{$key}" class="date-item {if $today == $key } select-item {/if}">
+                <div class="date-title">{$val_mob.nd}</div>
+                <div class="date-label">{$val_mob.week}</div>
+                <div class="date-tips" data-detailcount="{$val_mob.count}">可约{$val_mob.count}节</div>
+            </div>
+            {/foreach}
+        </div>
+
+        {foreach $new_data_mob as $key => $val_mob}
+        <div class="class-list {$key}" style="{if $key != $today } display:none {/if}" data-detailday="{$key}">
+            {foreach $val_mob['data'] as $key => $val_detail}
+            <div class="class-time">{$val_detail.start_time}-{$val_detail.end_time}</div>
+            <div data-detailid="{$val_detail.id}"
+                class="class-item {if in_array($val_detail['id'], $book_detail_id_arr_mob) } detail_select_mob {/if}">
+                <!--                <div class="class-cate">{$cat_name}</div>-->
+                <div class="class-name">{$val_detail.course_name} ></div>
+                <div class="class-teacher">{$val_detail.course_description}</div>
+                <div class="class-teacher">{$val_detail.teacher_name}</div>
+                <div class="line"></div>
+                <img style="    width: 25px;
+                                height: 20px;
+                                position: absolute;
+                                right: 30px;
+                                top: 30px;
+                            "
+                    src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFUAAABACAYAAABr7jtyAAAAAXNSR0IArs4c6QAABJVJREFUeF7t3Euo3FQcx/Hvz5WooOhC3ajgWqhv8G3pQgQXuqkPFFER1IIWwVoVVHyVYrXgayPVhYKCKAgiokjFt+Kj6sKti+pCEBVXgv7M/5pc5s7cuZPMJGeSzBy4Xdzm5CSf/PM/JycnVyzLWAHblwFnAJuA04DDga+Ab4Fvst+9Kemv4R1oaToqYPsk4BXg7Ak+PwFXS/pkcLsl6pCa7duA3dnPYSUD7l/gSeAeSX9HnSVqLmc7LJ4HbiiJObxZROvFAbtEBWoALYB3S9qxRP0f9VnglikjdLjaiQuPWjNoAO9ZaFTbTwPRMdVZDi4sagMRunphFhK1SdCFHFLZfgrYVuf9vtBPVE1HaIG7MLe/7SeA7U1G6EKh2o7HyDtSgAL7ex+piUHjul3Za1TbjwN3JorQaOaApE29RZ0DaKCeJenLXqLa3gXsSBih0dQVkt7o5TjV9mPA3QlB/1nJo9Jrvez92wDaq0htC2hpVNsnAMdIipddrSu2HwLuS3xgV0mK91gjZd2OyvZRwF3RmwGnAkcP1DwAfA3sk/RR4hMZac72w8C9iY8jcuir49ocQbW9BXgJOHbCgY688Ep8YjFjf3/W5gMJ241zvk7Syxu1uQbV9gvA9RUP8kdgq6TvKtabaXPbcbvHbZ+yXCspAm7Dsopq+5F4zTqpwpj/jwUFWyR9PmX9StVsx5Aphk6pSqkILQ5mBdX26cAXwCEzHGXAXigp8m1jpe2gceLKnj4OBX4ATq5B4g9gc1OwXQAtUC8HXq8BtNhFI7BzADUQOXTDTmk9t4jUJsZ4tcLajrnQmBNNVQL0Jkn7pmkwUN/K8uml01SeUKcW2K6BFrf/z8DxDaDGLgP2fEnfT7P/LoIWqL8Ax01z0iXr/Ja9YrioKmxXQQvUt4FLSgJNu1kl2C6DFqip5h9Lwc4BNBxunLZTGtf7b81XDU8bhVXqBey5kuLRdqTYjpV3sQIvZblV0nN1Nlj34L/Msf0KXDAM2xfQlds//smGVWdmefWzGR9Ty4AW26yB7RPoKmoO+yiws4rMjNuuwMaS7j7c8oMWw1N/78Zs04xYVar/DsSEeMqyTdIzTTY4jBqTK/GEtbnJRue47+2S9jbd/noz/32FTQK6JqcOXr18OjBSwXlNX9VE+08GOhY177ji46x3egCbFHRD1J7AJgediNpx2LmAlkLtKOxOSbFIbS6l9Ko/213JsXMFLR2pxeXOYd8v8cn2XCIkngjnGaHFSZeO1AHYI7IRwXsthG0FaOVIbTFsa0CnRs07r7ZE7IOSUq6nmpjaKt/+Q09e84bdJSnlzNpE0JkidSgVfJD/4ZZSjda0UStBa0HNU8GR2dxojAriL+KkKK0FrQ01MWyrQWtFTQTbetDaURuG3SspyQe7s+avmXr/cY1n34NGjv0QOGXWA8zrdwa0kUgdGBXExxf7a4DtFGijqHkqmBW2c6CNow48ee0Bbq6QCv4Ebpf0YoU6rdm0kZy63tnZjkVw8fXLpBWGkTKukRRLPDtZkqEO5NpzYj1VrFvN33/FUs6PgU/jZ9w6qy7p/gctprrRGrC0uAAAAABJRU5ErkJggg==" />
+            </div>
+            {/foreach}
+        </div>
+        {/foreach}
+        <div style="width: 100% ;text-align: center;padding: 20px;">
+            <div style="width: 100%;" class="th-btn" id="submit_mob" name="submit_mob">提交</div>
+        </div>
+        <input type="hidden" name="card_number" id="card_number" value="0002349103">
+        <input type="hidden" name="select_detail_ids_m" id="select_detail_ids_m" value="{$book_detail_id_str_mob}">
+        <input type="hidden" name="book_detail_id_str_mob_today" id="book_detail_id_str_mob_today"
+            value="{$book_detail_id_str_mob_today}">
+    </form>
+</div>
+<script>
+
+    (function() {
+		selectMultip = {
+			register: function(id) {
+				//大致思路是：为下拉选创建一个隐藏的子选项，每次单选之后将单选的值追加到隐藏的子选项中，并将子选项选中显示即可
+				//全局查找所有标记multip的select
+				document.querySelectorAll("[multip]").forEach(function(e) {
+					render(e);
+				})
+			},
+			reload: function(id, data, setData) {
+				var htm = "";
+				for(var i = 0; i < data.length; i++) {
+					htm += '<option value="' + data[i].value + '">' + data[i].text + '</option>'
+				}
+				var e = document.getElementById(id);
+				e.innerHTML = htm;
+				render(e);
+				this.setVal(id, setData);
+			},
+			setVal: function(id, str) {
+				var type = Object.prototype.toString.call(str);
+				switch(type) {
+					case "[object String]":
+						document.getElementById(id).val = str;
+						break;
+					case "[object Array]":
+						document.getElementById(id).val = str.toString();
+						break;
+					default:
+						break;
+				}
+			},
+			getVal: function(id) {
+				return document.getElementById(id).val;
+			},
+
+		}
+
+		function render(e) {
+			e.param = {
+				arr: [],
+				valarr: [],
+				opts: []
+			};
+			var choosevalue = "",
+				op;
+
+			for(var i = 0; i < e.length; i++) {
+				op = e.item(i);
+				e.param.opts.push(op);
+				if(op.hasAttribute("choose")) {
+					if(choosevalue == "") {
+						choosevalue = op.value
+					} else {
+						choosevalue += "," + op.value;
+					}
+
+				}
+			}
+
+			//创建一个隐藏的option标签用来存储多选的值，其中的值为一个数组
+			var option = document.createElement("option");
+			option.hidden = true;
+			e.appendChild(option);
+			e.removeEventListener("input", selchange);
+			e.addEventListener("input", selchange);
+
+			//重新定义标签基础属性的get和set方法，实现取值和赋值的功能
+			Object.defineProperty(e, "val", {
+				get: function() {
+					return this.querySelector("[hidden]").value;
+				},
+				set: function(value) {
+					e.param.valarr = [];
+					var valrealarr = value == "" ? [] : value.split(",");
+					e.param.arr = [];
+					e.param.opts.filter(function(o) {
+						o.style = "";
+					});
+					if(valrealarr.toString()) {
+						for(var i = 0; i < valrealarr.length; i++) {
+							e.param.opts.filter(function(o) {
+								if(o.value == valrealarr[i]) {
+									o.style = "color: blue;";
+									e.param.arr.push(o.text);
+									e.param.valarr.push(o.value)
+								}
+							});
+						}
+						this.options[e.length - 1].text = e.param.arr.toString();
+						this.options[e.length - 1].value = e.param.valarr.toString();
+						this.options[e.length - 1].selected = true;
+					} else {
+						this.options[0].selected = true;
+					}
+
+				},
+				configurable: true
+			})
+			//添加属性choose 此属性添加到option中用来指定默认值
+			e.val = choosevalue;
+			//添加属性tip 此属性添加到select标签上
+			if(e.hasAttribute("tip") && !e.tiped) {
+				e.tiped = true;
+				e.insertAdjacentHTML('afterend', '<i style="color: red;font-size: 12px">*可多选</i>');
+			}
+		}
+
+		function selchange() {
+			var text = this.options[this.selectedIndex].text;
+			var value = this.options[this.selectedIndex].value;
+			this.options[this.selectedIndex].style = "color: blue;";
+			var ind = this.param.arr.indexOf(text);
+			if(ind > -1) {
+				this.param.arr.splice(ind, 1);
+				this.param.valarr.splice(ind, 1);
+				this.param.opts.filter(function(o) {
+					if(o.value == value) {
+						o.style = "";
+					}
+				});
+			} else {
+				this.param.arr.push(text);
+				this.param.valarr.push(value);
+			}
+			this.options[this.length - 1].text = this.param.arr.toString();
+			this.options[this.length - 1].value = this.param.valarr.toString();
+			if(this.param.arr.length > 0) {
+				this.options[this.length - 1].selected = true;
+			} else {
+				this.options[0].selected = true;
+			}
+		}
+	})();
+</script>
+<!-- PC版的js -->
+<script>
+    $(document).ready(function () {
+        // $("#cat_id").change(function () {
+        //     cat_id = $("#cat_id").val();
+        //     window.location.href = '{:url("index")}?cat_id=' + cat_id;
+        // })
+
+        selectMultip.register()
+        var array = <?php echo json_encode($cat_more); ?>;
+        selectMultip.setVal('cat_more', array);
+
+        //选择课程分类
+         $("#search-btn").click(function () {
+             cat_more = selectMultip.getVal('cat_more');
+             window.location.href = '{:url("index")}?cat_more=' + cat_more;
+         })
+        // 课时点击选中时触发,  addClass = 'detail_select'
+        // var detail_ids = '';
+        $(".class_detail_btn").click(function () {
+            if ($(this).hasClass("detail_select")) {
+                $(this).removeClass("detail_select");
+            } else {
+                $(this).addClass("detail_select");
+            }
+
+            // 选中的id 赋值
+            detail_ids = '';
+            $(".class_detail_btn").each(function () {
+                if ($(this).hasClass("detail_select")) {
+                    var detail_id = $(this).data('detailid')
+                    detail_ids = detail_ids + detail_id + ",";
+                }
+            });
+            console.log(detail_ids)
+            $('#select_detail_ids').val(detail_ids)
+        })
+
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {keyboard: false})
+        $("#submit_pc").click(function () {
+            // 弹窗协议
+            myModal.show()
+        })
+
+        $("#confim_btn").click(function (){
+
+            // 请勾选同意协议
+            if (!$('#reviewcheck').is(':checked')) {
+                alert("Please check the box to agree to the agreement");
+                return;
+            }
+
+            $.ajax({
+                url: "{:url('ajaxSubmit')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('#pc_form').serializeArray(),
+                success: function (res) {
+                    myModal.hide()
+                    alert(res.msg);
+                },
+                error: function () {
+                    layer.msg('error！！！');
+                }
+            });
+
+
+        })
+
+
+    })
+</script>
+
+<!-- 手机版的js -->
+<script>
+    $(document).ready(function () {
+
+        $("#cat_id_mob").change(function () {
+            cat_id_mob = $("#cat_id_mob").val();
+            window.location.href = '{:url("index")}?cat_id=' + cat_id_mob;
+        })
+
+        // 日期点击选中
+        $(".date-item").click(function () {
+            var detail_day = $(this).data('detailday')
+            $('#today').val(detail_day);
+            $(".date-item").removeClass("select-item");
+            $(this).addClass("select-item");
+            $('.class-list').hide();
+            $('.' + detail_day).show();
+
+            var cat_id = $("#cat_id_mob").val();
+            $.ajax({
+                url: "{:url('ajaxTodayDetailId')}",
+                type: 'post',
+                dataType: 'json',
+                data: { "cat_id": cat_id, "day": detail_day },
+                success: function (res) {
+                    if (res.code !== 0) {
+                        alert(res.msg);
+                    }
+                    $('#book_detail_id_str_mob_today').val(res.detail_id_str)
+                },
+                error: function () {
+                    layer.msg('error！！！');
+                }
+            });
+        })
+        // 课程点击选中
+        $(".class-item").click(function () {
+            if ($(this).hasClass("detail_select_mob")) {
+                $(this).removeClass("detail_select_mob");
+            } else {
+                $(this).addClass("detail_select_mob");
+            }
+
+            // 选中的id 赋值
+            detail_ids = '';
+            $(this).parent().children(".class-item").each(function () {
+                if ($(this).hasClass("detail_select_mob")) {
+                    var detail_id = $(this).data('detailid')
+                    detail_ids = detail_ids + detail_id + ",";
+                }
+            });
+            console.log(detail_ids)
+            $('#book_detail_id_str_mob_today').val(detail_ids)
+        })
+
+
+
+        $("#submit_mob").click(function () {
+            $.ajax({
+                url: "{:url('ajaxSubmitMob')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('#mob_form').serializeArray(),
+                success: function (res) {
+                    // if (res.code !== 0) {
+                    //     alert(res.msg);
+                    // }
+                    alert(res.msg);
+                },
+                error: function () {
+                    layer.msg('error！！！');
+                }
+            });
+            //测试
+            // $.ajax({
+            //     url: "{:url('ajaxSignCheck')}",
+            //     type: 'post',
+            //     dataType: 'json',
+            //     data: $('#mob_form').serializeArray(),
+            //     success: function (res) {
+            //         if (res.code !== 0) {
+            //             alert(res.msg);
+            //         }
+            //         alert(res.msg);
+            //     },
+            //     error: function () {
+            //         layer.msg('error！！！');
+            //     }
+            // });
+        })
+    })
+</script>
+
+
+<!--==============================
+	Footer Area
+==============================-->
+{include file="public/footer"/}

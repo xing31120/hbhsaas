@@ -1,0 +1,107 @@
+{include file="public/header"/}
+<style>
+.th-btn.btn-sx{
+    width: 48%;
+}
+.hero-style3 {
+    max-width: max-content;
+}
+</style>
+<!--==============================
+Hero Area
+==============================-->
+<div class="th-hero-wrapper hero-3" id="hero">
+    <div class="th-hero-bg" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/hero_bg_1.jpg">
+
+    </div>
+    <div class="container">
+        <div class="hero-img jump">
+            <img src="__YUN_PUBLIC_DIR__/static/assets/img/hero/nenya-1.png" alt="">
+        </div>
+        <div class="hero-style3">
+<!--            <span class="hero-subtitle"> Dance With Us </span>-->
+            <h1 class="hero-title">
+            Connecting Dreams,  </br>
+            Guiding Paths:  </br>
+            Your Future， </br>
+            Your Decision.</h1>
+            <div class="btn-group">
+<!--                <a href="about.html" class="th-btn blue-btn">Apply Now</a>-->
+                <div class="hero-btn">
+<!-- {$domain}__YUN_PUBLIC_DIR__/static/assets/video/vido.mov -->
+                    <a href="javascript:_escape()" class="play-btn border-play-btn popup-video2"><i class="fas fa-play"></i></a>
+                    <div class="media-body">
+                        <a href="javascript:_escape()" class="btn-title popup-video2">Play Video
+                            Now</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="hero-anime-img">
+        <img src="__YUN_PUBLIC_DIR__/static/assets/img/shape/hero_shape.png" alt="">
+    </div>
+</div>
+<link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/zeroModal.css">
+<script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
+<script>
+    function _escape() {
+        zeroModal.show({
+            // title: 'hello world',
+            content: '<video id="video"  width="450" height="800" muted controls autoplay="autoplay" preload="auto" >\n' +
+                '    <source src="__YUN_PUBLIC_DIR__/static/assets/video/vido.mov" />\n' +
+                '    您的浏览器不支持 HTML5 video 标签。\n' +
+                '</video>',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: '450px',
+            height: '800px'
+        });
+    }
+</script>
+<!--<video src="__YUN_PUBLIC_DIR__/static/assets/video/vido.mov"></video>-->
+<!--<video id="video"  width="640" height="480" muted controls autoplay="autoplay" preload="auto" >-->
+<!--    <source src="__YUN_PUBLIC_DIR__/static/assets/video/vido.mov" />-->
+<!--    您的浏览器不支持 HTML5 video 标签。-->
+<!--</video>-->
+
+
+<div class="bg-dark space-top">
+    <div class="container">
+<!--        <a href="account.html" class="th-btn blue-btn">Login Now</a>-->
+    {if empty($userName)}
+        <a href="{:url('auth/login')}"><button class="th-btn btn-fw blue-btn">Login Now</button></a>
+    {elseif $userInfo['role'] == 'teacher' }
+        <a href="{:url('Teacher/bookCourse')}"><button class="th-btn btn-fw blue-btn">Reservation</button></a>
+    {else}
+        <a href="{:url('BookCourse/index')}"><button class="th-btn btn-sx blue-btn">Reservation</button></a>
+        <a href="{:url('User/qrcode')}"><button class="th-btn btn-sx blue-btn">QrCode</button></a>
+    {/if}
+
+    </div>
+</div>
+
+<section class="bg-dark">
+    <div class="container">
+        <div class="cta-area-three" data-pos-for=".team-sec-wrapper" data-sec-pos="bottom-half" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/cta_1_2.png">
+            <div class="row justify-content-between">
+                <div class="col-md-6 col-lg-6">
+                    <div class="cta-content">
+                        <h2 class="sec-title text-white mt-n2">Sign Up For Your Interest Classes</h2>
+                        <p class="cta-text">In this world full of opportunities, everyone has their own dreams. Our educational internet platform is dedicated to connecting these dreams and providing guidance to help you find your path forward. Each person's future depends on their decisions, and our platform will provide you with the necessary tools and resources to take control of your future.</p>
+                    </div>
+                    <div class="cta-btn2">
+                        <a href="{:url('auth/reg')}" class="th-btn blue-btn">Sign Up</a>
+                        <a href="{:url('auth/login')}" class="th-btn white-btn">Sign In</a>
+                    </div>
+                </div>
+                <div class="col-md-6 col-lg-6">
+                    <div class="cta-image movingX">
+                        <img src="__YUN_PUBLIC_DIR__/static/assets/img/normal/cta_1.png" alt="">
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{include file="public/footer"/}

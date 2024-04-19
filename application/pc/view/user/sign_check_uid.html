@@ -1,0 +1,21 @@
+{include file="public/header"/}
+<section class="th-blog-wrapper space-top space-extra-bottom">
+    <div class="container">
+        <h2 class="blog-title">{$res.msg}</h2>
+    </div>
+</section>
+<!--==============================
+Footer Area
+==============================-->
+{include file="public/footer"/}
+<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
+<script>
+    jQuery(function () {
+        jQuery('#qrcode').qrcode({
+            width: 260,
+            height: 260,
+            text: "http://www.baidu.com"
+        });
+    })
+
+</script>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>代收订单列表</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<style>
+  .layui-table-cell {
+    height: unset!important;
+  }
+</style>
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+      <div class="layui-form-item">
+
+        <div class="layui-inline">
+          <label class="layui-form-label">商家名称</label>
+          <div class="layui-input-inline">
+            <input type="text" name="rcvprt_mkt_mrch_nm" placeholder="商家名称" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <div class="layui-inline">
+          <label class="layui-form-label">订单号</label>
+          <div class="layui-input-inline">
+            <input type="text" name="main_ordr_no" placeholder="订单号" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">支付流水号</label>
+          <div class="layui-input-inline">
+            <input type="text" name="py_ordr_no" placeholder="支付流水号" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+
+        <div class="layui-inline">
+          <label class="layui-form-label">分账状态:</label>
+          <div class="layui-input-inline">
+            <select name="clrg_stcd">
+              <option value="">全部</option>
+              {foreach $clrg_stcd as $key=>$vo }
+              <option value="{$key}">{$vo}</option>
+              {/foreach}
+            </select>
+          </div>
+        </div>
+
+
+
+
+        <div class="layui-inline">
+          <label class="layui-form-label">分账日期:</label>
+          <div class="layui-input-inline">
+            <input type="text" class="layui-input" id="check_time" name="clrg_dt"
+                   autocomplete="off" placeholder="时间" value="{$time|default=''}">
+          </div>
+        </div>
+
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+<style>
+  .button_status{
+    height: 28px !important;
+    line-height: 28px !important;
+    padding: 0 18px !important;
+    font-size: 14px !important;
+    margin-top: 25px !important;
+    margin-left: 14px !important;
+  }
+</style>
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <!-- <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
+        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button> -->
+      </div>
+      <table id="member-content-list" lay-filter="member-content-list"></table>
+      <script type="text/html" id="buttonTpl">
+        {{#  if(d.status == 10){ }}
+        <button class="layui-btn layui-btn-xs">正常</button>
+        {{#  } else { }}
+        <button class="layui-btn layui-btn-primary layui-btn-xs">锁定</button>
+        {{#  } }}
+      </script>
+      <script type="text/html" id="barDemo">
+        {{#  if(d.confirm_status == 0 && d.order_entry_status != 0){ }}
+        <div style="height:85px;">
+          <a class="layui-btn layui-btn-xs button_status" lay-event="confirmStatus" lay-data="{{d.id}}"
+          >确认入款</a>
+        </div>
+        {{#  } else { }}
+        <div style="height:85px;"></div>
+        {{#  } }}
+     </script>
+    </div>
+  </div>
+</div>
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+  layui.config({
+    base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+  }).extend({
+    index: 'lib/index' //主入口模块
+    // }).use(['index', 'contlist', 'table'], function(){
+  }).use(['index', 'table'], function(){
+    var table = layui.table,form = layui.form;
+
+    table.render({
+      elem: '#member-content-list'
+      ,url: '{:url("FinanceSummaryDetail/ajaxList")}'
+      ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+      ,cols: [[
+        {field:'id', width:80, type:'checkbox'}
+        ,{field:'id', width:80, title: 'ID', sort: true}
+        ,{field:'main_ordr_no', width:220, title: '订单号'}
+        ,{field:'py_ordr_no', width:220, title: '支付流水号'}
+        ,{field:'rcvpymt_accno', width:220, title: '收款账户'}
+        ,{field:'rcvprt_mkt_mrch_id', width:200, title: '商家编号'}
+        ,{field:'rcvprt_mkt_mrch_nm', width:220, title: '商家名称'}
+        ,{field:'clrgamt', width:120, title: '分账金额'}
+        ,{field:'clrg_stcd_txt', width:220, title: '分账状态'}
+        ,{field:'clrg_date', width:120,title: '分账日期'}
+        ,{field:'hdcg_amt', width:120,title: '交易手续费'}
+        ,{field:'sub_ordr_no', width:120,title: '子订单编号'}
+        ,{field:'shld_subacc_amt', width:120,title: '原始分账金额'}
+        ,{field:'create_time',width:180, title: '创建时间'}
+      ]]
+      ,page: true,
+      done:function(res){
+            tdTitle();
+        }
+    });
+
+    //监听搜索
+    form.on('submit(LAY-app-contlist-search)', function(data){
+        var field = data.field; //检索参数
+        //执行重载
+        table.reload('member-content-list', {
+            where: field,
+            page: {
+                curr: 1 //重新从第 1 页开始
+            }
+        });
+    });
+      window.clickTimes = 0 ;
+    //监听行工具事件
+    table.on('tool(member-content-list)', function(obj){
+      var params = obj.data;
+      if(obj.event === 'del'){
+        layer.confirm('是否确认删除该信息', function(index){
+            if(window.clickTimes == 1){
+                return true;
+            }
+            window.clickTimes = 1;
+          $.ajax({
+            url:"{:url('Demo/del')}",
+            method:'post',
+            data: { id: params.id },
+            dataType:"json",
+            success:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+              if(res.code == 1){
+                  setTimeout(function () {
+                      layui.table.reload('member-content-list'); //重载表格
+                  },1000);
+              }
+              setTimeout(function () {
+                  window.clickTimes = 0;
+              },3000);
+            },
+            error:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+            }
+          });
+        });
+      } else if(obj.event === 'read'){
+        // setEdit(params.id);
+        setRead(params.id);
+      }
+    });
+
+    var $ = layui.$, active = {
+      add: function(){
+        setEdit();
+      },
+      batchdel: function () {
+        layer.confirm('是否确认删除选中信息', function(index){
+          var checkStatus = table.checkStatus('member-content-list');
+          var arr = new Array();
+          $.each(checkStatus.data,function (n,v) {
+            arr.push(v.id)
+          });
+          $.ajax({
+            url:"{:url('Demo/del')}",
+            method:'post',
+            data: { id: arr.join(',') },
+            dataType:"json",
+            success:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+              if(res.code == 1){
+                layui.table.reload('member-content-list'); //重载表格
+              }
+            },
+            error:function (res) {
+              layer.close(index);
+              layer.msg(res.msg);
+            }
+          });
+        });
+      }
+    };
+
+      function tdTitle(){
+
+          $('th').each(function(index,element){
+
+              $(element).attr('title',$(element).text());
+
+          });
+
+          $('td').each(function(index,element){
+
+              $(element).attr('title',$(element).text());
+
+          });
+
+      };
+    // function setEdit(id){
+    //   layer.open({
+    //     type: 2,
+    //     title:id>0?"修改":"新增",
+    //     btn: ['确定', '取消'],
+    //     area: ['550px', '550px'],
+    //     content: "{:url('Demo/add')}?id="+id,
+    //     yes:function(index,layero){
+    //       var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+    //       submit.click();
+    //     }
+    //   });
+    // }
+
+    // $('.layui-btn.layuiadmin-btn-list').on('click', function(){
+    //   var type = $(this).data('type');
+    //   active[type] ? active[type].call(this) : '';
+    // });
+
+
+    function setRead(id){
+      layer.open({
+        type: 2,
+        title:'查看',
+        btn: ['确定', '取消'],
+        area: ['550px', '550px'],
+        content: "{:url('OrderEntry/read')}?id="+id,
+        yes:function(index,layero){
+          var submit = layero.find('iframe').contents().find("#layuiadmin-app-form-submit");
+          submit.click();
+        }
+      });
+    }
+
+      window.clickTimes = 0;
+      //监听行工具事件
+      table.on('tool(member-content-list)', function (obj) {
+          var params = obj.data;
+          if (obj.event === 'confirmStatus') {
+              layer.confirm('是否确认入款', function (index) {
+                  if (window.clickTimes == 1) {
+                      return true;
+                  }
+                  window.clickTimes = 1;
+                  $.ajax({
+                      "url": "{:url('OrderEntry/confirmStatus')}",
+                      "data": {"id": obj.data.id},
+                  }).done(function (rs) {
+                      layer.msg(rs.msg);
+                      setTimeout(function () {
+                          layui.table.reload('member-content-list'); //重载表格
+                      },1000);
+                      setTimeout(function () {
+                          window.clickTimes = 0;
+                      }, 3000);
+                  }).fail(function (rs) {
+                      window.clickTimes = 0;
+                      layer.msg('操作失败');
+                  });
+              });
+          } else if (obj.event === 'read') {
+              setRead(params.id);
+          }
+      });
+
+  });
+
+  layui.use('laydate', function () {
+      var laydate = layui.laydate;
+
+      //执行一个laydate实例
+      laydate.render({
+          elem: '#check_time',//指定元素
+          range: '~'
+      });
+  });
+</script>
+</body>
+</html>

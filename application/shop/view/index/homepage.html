@@ -1,0 +1,234 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>layuiAdmin 主页示例模板二</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+</head>
+<body>
+<style>
+.layui-input-inline{
+    width: 140px;
+}
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    不限数量会员
+                    <span class="layui-badge layui-bg-blue layuiadmin-badge">∞</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">{$memberInfo.unlimited_student}</p>
+                    <p>
+                        &nbsp
+                        <span class="layuiadmin-span-color"><i class="layui-inline layui-icon layui-icon-group"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    总会员
+                    <!-- <span class="layui-badge layui-bg-blue layuiadmin-badge">周</span> -->
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">{$memberInfo.member_type_student}</p>
+                    <p>
+                        &nbsp
+                        <span class="layuiadmin-span-color"><i class="layui-inline layui-icon layui-icon-user"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    在读会员数量
+<!--                    <span class="layui-badge layui-bg-cyan layuiadmin-badge"></span>-->
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+                    <p class="layuiadmin-big-font">{$memberInfo.active_student}</p>
+                    <p>
+                        &nbsp
+                        <span class="layuiadmin-span-color"><i class="layui-inline layui-icon layui-icon-user"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+        <div class="layui-col-sm6 layui-col-md3">
+            <div class="layui-card">
+                <div class="layui-card-header">
+                    总剩余课时
+                    <span class="layui-badge layui-bg-green layuiadmin-badge">节</span>
+                </div>
+                <div class="layui-card-body layuiadmin-card-list">
+
+                    <p class="layuiadmin-big-font">{$memberInfo.lesson_hours_all}</p>
+                    <p>
+                        有效课时
+                        <span class="layuiadmin-span-color">{$memberInfo.lesson_hours_enable}<i class="layui-inline layui-icon layui-icon-user"></i></span>
+                    </p>
+                </div>
+            </div>
+        </div>
+
+        <div class="layui-col-sm12">
+            <div class="layui-card">
+                <form action="" method="post" class="layui-form form-inline" id="goods-type-form" >
+                <div class="layui-card-header">
+<!--                    LAY-component-form-group-date-->
+                    <div class="layui-input-inline">
+                        <input type="text" name="start_date" value="" id="start_date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" lay-filter="input_date">
+                    </div>
+                        -
+                    <div class="layui-input-inline">
+                        <input type="text" name="end_date" value="" id="end_date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" lay-filter="input_date">
+                    </div>
+                </div>
+                <div class="layui-card-body">
+                    <div class="layui-row">
+                        <div class="layui-col-sm12">
+                            <div id="echartsOrder" style="height: 360px;" ></div>
+                        </div>
+                    </div>
+                </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+</div>
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use(['index', 'sample','echarts', 'laydate', 'form'],function(){
+        var $ = layui.$,
+            form = layui.form,
+            laydate = layui.laydate,
+            echarts = layui.echarts;
+
+
+        function OrderDay(start_date, end_date){
+            $.ajax({
+                url:"{:url('Index/ajaxBookDay')}",
+                method:'post',
+                dataType:"json",
+                data:{"start_date":start_date, "end_date":end_date},
+                success:function (res) {
+                    var orderSeven = res.data;
+
+                    const echartsOrder = echarts.init(document.getElementById('echartsOrder'));
+                    option = {
+                        tooltip: {
+                            trigger: 'axis',
+                            axisPointer: {
+                                type: 'cross',
+                                crossStyle: {
+                                    color: '#999'
+                                }
+                            }
+                        },
+                        toolbox: {
+                            feature: {
+                                dataView: {show: true, readOnly: false},
+                                magicType: {show: true, type: ['line', 'bar']},
+                                restore: {show: true},
+                                saveAsImage: {show: true}
+                            }
+                        },
+                        legend: {
+                            data: ['消耗课时']  //,'入账金额'
+                        },
+                        xAxis: [
+                            {
+                                type: 'category',
+                                data: orderSeven.day_arr,
+                                axisPointer: {
+                                    type: 'shadow'
+                                }
+                            }
+                        ],
+                        yAxis: [
+                            {
+                                type: 'value',
+                                name: '消耗课时数',
+                                interval: 50,
+                                axisLabel: {
+                                    formatter: '{value} 节'
+                                }
+                            },
+                        ],
+                        series: [
+                            {
+                                name: '消耗课时',
+                                type: 'bar',
+                                data: orderSeven.count_arr,
+                            },
+                        ]
+                    };
+
+                    echartsOrder.setOption(option);
+                },
+                error:function (res) {
+                    console.log(res);
+                    layer.msg(res.msg);
+                }
+            });
+        }
+
+        var lw = new Date(new Date() - 30 * 1000 * 60 * 60 * 24 );
+        var startY = lw.getFullYear();
+        var startM = lw.getMonth()+1;
+        var startD = lw.getDate();
+        var startDate =startY+"-"+(startM<10 ? "0" + startM : startM)+"-"+(startD<10 ? "0"+ startD : startD);//三十天之前日期
+
+        var lw2 = new Date();
+        var endY = lw2.getFullYear();
+        var endM = lw2.getMonth()+1;
+        var endD = lw2.getDate();
+        var endDate =endY+"-"+(endM<10 ? "0" + endM : endM)+"-"+(endD<10 ? "0"+ endD : endD);//当天日期
+
+        laydate.render({
+            elem: '#start_date',
+            value: startDate,
+            done: function(value){
+                var end = $("#end_date").val()
+                console.log(value, end)
+                OrderDay(value, end);
+            }
+        });
+
+
+        laydate.render({
+            elem: '#end_date',
+            value: endDate,
+            done: function(value){
+                var start = $("#start_date").val()
+                console.log(start, value)
+                OrderDay(start, value);
+            }
+        });
+
+        OrderDay(startDate, endDate);
+
+        form.on('change', 'input_date', function(data){
+            // 处理change事件
+            console.log(data)
+        });
+    });
+
+
+</script>
+</body>
+</html>

@@ -1,0 +1,322 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="utf-8">
+		<title>品牌下拉+阶梯价格+列表上传</title>
+		<meta name="renderer" content="webkit">
+		<meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+		<link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+		<link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+		<link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/zzsp.css" media="all">
+	</head>
+	<body>
+		<div class="layui-fluid">
+			<div class="layui-row layui-col-space15">
+				<div class="layui-col-md12">
+					<div class="layui-card">
+						<div class="layui-card-header">品牌下拉框+阶梯价格+列表上传</div>
+						<div class="layui-card-body">
+							<div class="layui-form">
+								<div class="layui-form-item layui-form-text">
+									<label class="layui-form-label">商品分类</label>
+									<div class="layui-input-inline">
+										<div class="layui-brand-box">
+											<div class="layui-brand-select">
+												<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请选择商品分类" class="layui-input"
+												 readonly />
+											</div>
+											<div class="layer-brand-drop">
+												<div class="layer-brand-header">
+													<a class="reset" href="javascript:;">重选</a>
+													&gt;
+													<span class="txt">请选择分类</span>
+												</div>
+												<div class="layer-brand-list">
+													<ul>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+													</ul>
+												</div>
+												<div class="layer-brand-not" style="display: none;">没有符合"<strong>J</strong>"条件的品牌</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="layui-form-item layui-form-text">
+									<label class="layui-form-label">阶梯价格</label>
+									<div class="layui-input-block">
+										<div class="layui-col-md12">
+											<input type="radio" name="price" value="0" title="无">
+											<input type="radio" name="price" value="1" title="有" checked>
+										</div>
+										<div class="layui-col-md12">
+											<table class="layer-table-ladder">
+												<tbody>
+													<tr class="first_tr">
+														<td class="first_td">数量</td>
+														<td>
+															<input type="text" name="volume_number" value="" class="layui-input">
+															<input type="hidden" name="id" value="0" autocomplete="off">
+														</td>
+														<td>
+															<input type="text" name="volume_number" value="" class="layui-input">
+															<input type="hidden" name="id" value="0" autocomplete="off">
+														</td>
+														<td>
+															<input type="text" name="volume_number" value="" class="layui-input">
+															<input type="hidden" name="id" value="0" autocomplete="off">
+														</td>
+														<td class="last_td" rowspan="3">
+															<i class="layui-icon layui-icon-add-circle"></i>
+														</td>
+													</tr>
+													<tr class="first_tr">
+														<td class="first_td">价格</td>
+														<td>
+															<input type="text" name="volume_price" value="" class="layui-input">
+														</td>
+														<td>
+															<input type="text" name="volume_price" value="" class="layui-input">
+														</td>
+														<td>
+															<input type="text" name="volume_price" value="" class="layui-input">
+														</td>
+													</tr>
+													<tr>
+														<td class="first_td">操作</td>
+														<td><button class="layui-btn layui-btn-xs layui-btn-normal">删除</button></td>
+														<td><button class="layui-btn layui-btn-xs layui-btn-normal">删除</button></td>
+														<td><button class="layui-btn layui-btn-xs layui-btn-normal">删除</button></td>
+													</tr>
+												</tbody>
+											</table>
+										</div>
+									</div>
+								</div>
+
+								<div class="layui-form-item layui-form-text">
+									<label class="layui-form-label">商品品牌</label>
+									<div class="layui-input-inline">
+										<div class="layui-brand-box">
+											<div class="layui-brand-select">
+												<input type="text" name="title" lay-verify="title" autocomplete="off" placeholder="请选择商品品牌" class="layui-input"
+												 readonly />
+											</div>
+											<div class="layer-brand-drop">
+												<div class="layer-brand-header">
+													<div class="layer-brand-letter">
+														<ul>
+															<li><a href="javascript:void(0);" data-letter="">全部品牌</a></li>
+															<li><a href="javascript:void(0);" data-letter="A">A</a></li>
+															<li><a href="javascript:void(0);" data-letter="B">B</a></li>
+															<li><a href="javascript:void(0);" data-letter="C">C</a></li>
+															<li><a href="javascript:void(0);" data-letter="D">D</a></li>
+															<li><a href="javascript:void(0);" data-letter="E">E</a></li>
+															<li><a href="javascript:void(0);" data-letter="F">F</a></li>
+															<li><a href="javascript:void(0);" data-letter="G">G</a></li>
+															<li><a href="javascript:void(0);" data-letter="H">H</a></li>
+															<li><a href="javascript:void(0);" data-letter="I">I</a></li>
+															<li><a href="javascript:void(0);" data-letter="J">J</a></li>
+															<li><a href="javascript:void(0);" data-letter="K">K</a></li>
+															<li><a href="javascript:void(0);" data-letter="L">L</a></li>
+															<li><a href="javascript:void(0);" data-letter="M">M</a></li>
+															<li><a href="javascript:void(0);" data-letter="N">N</a></li>
+															<li><a href="javascript:void(0);" data-letter="O">O</a></li>
+															<li><a href="javascript:void(0);" data-letter="P">P</a></li>
+															<li><a href="javascript:void(0);" data-letter="Q">Q</a></li>
+															<li><a href="javascript:void(0);" data-letter="R">R</a></li>
+															<li><a href="javascript:void(0);" data-letter="S">S</a></li>
+															<li><a href="javascript:void(0);" data-letter="T">T</a></li>
+															<li><a href="javascript:void(0);" data-letter="U">U</a></li>
+															<li><a href="javascript:void(0);" data-letter="V">V</a></li>
+															<li><a href="javascript:void(0);" data-letter="W">W</a></li>
+															<li><a href="javascript:void(0);" data-letter="X">X</a></li>
+															<li><a href="javascript:void(0);" data-letter="Y">Y</a></li>
+															<li><a href="javascript:void(0);" data-letter="Z">Z</a></li>
+															<li><a href="javascript:void(0);" data-letter="QT">其他</a></li>
+														</ul>
+													</div>
+													<div class="layer-brand-search">
+														<input name="search_brand_keyword" type="text" placeholder="品牌名称关键字查找" autocomplete="off">
+														<a href="javascript:void(0);" class="btn-mini">
+															<i class="layui-icon layui-icon-search"></i>
+														</a>
+													</div>
+												</div>
+												<div class="layer-brand-list">
+													<ul>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+														<li><em>J</em>嘉俊瓷砖</li>
+														<li><em>J</em>金丝玉玛瓷砖</li>
+													</ul>
+												</div>
+												<div class="layer-brand-not">没有符合"<strong>J</strong>"条件的品牌</div>
+											</div>
+										</div>
+									</div>
+								</div>
+
+								<div class="layui-form-item">
+									<table class="layui-hide" id="test-table-cellEdit" lay-filter="test-table-cellEdit"></table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+		<script type="text/html" id="imgTpl">
+			{{#  if(d.img){  }}
+				<img class="upload-btn layui-thumbnail{{d.LAY_INDEX}}" width="60" height="60" src="{{d.img}}" data-id="{{d.id}}" />
+			{{#  } else { }}
+				<img class="upload-btn layui-thumbnail{{d.LAY_INDEX}}" width="60" height="60" data-id="{{d.id}}" />
+			{{#  } }}  
+		</script>
+
+		<script type="text/html" id="inputTpl">
+			<input type="text" placeholder="请输入规格名称" class="layui-input w200"/>
+		</script>
+		<script type="text/html" id="barDemo">
+			<a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del">删除</a>
+		</script>
+
+		<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+		<script>
+			layui.config({
+				base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+			}).extend({
+				index: 'lib/index' //主入口模块
+			}).use(['index', 'table', 'form', 'upload'], function() {
+				var $ = layui.$,
+					admin = layui.admin,
+					element = layui.element,
+					form = layui.form,
+					table = layui.table,
+					laytpl = layui.laytpl,
+					upload = layui.upload;
+
+				table.render({
+					elem: '#test-table-cellEdit',
+					url: layui.setter.base + "json/content/list.js",
+					height: 400,
+					cols: [
+						[{
+								field: "img",
+								title: "规格图片",
+								fixed: 'left',
+								templet: '#imgTpl'
+							},
+							{
+								field: "label",
+								title: "规格名称一"
+							},
+							{
+								field: "title",
+								title: "规格名称二"
+							},
+							{
+								field: "author",
+								title: "其他规格名称",
+								templet: '#inputTpl',
+								width: 250
+							},
+							{
+								field: "uploadtime",
+								title: "*成本价"
+							},
+							{
+								field: "status",
+								title: "*售价"
+							},
+							{
+								field: "status",
+								title: "*促销价"
+							},
+							{
+								field: "status",
+								title: "*售价"
+							},
+							{
+								field: "status",
+								title: "会员等级一"
+							},
+							{
+								field: "status",
+								title: "会员等级二"
+							},
+							{
+								field: "status",
+								title: "*库存"
+							},
+							{
+								field: "status",
+								title: "*预警值"
+							},
+							{
+								title: "操作",
+								minWidth: 150,
+								align: "center",
+								fixed: "right",
+								toolbar: "#barDemo"
+							}
+						]
+					],
+					page: !0,
+					limit: 10,
+					limits: [10, 15],
+					text: "对不起，加载出现异常！", 
+					done: function(res){
+						var curId = '';
+						upload.render({
+							elem: '.upload-btn',
+							url: 'https://httpbin.org/post',
+							data:{
+								id: function(){
+								    return curId;
+								}
+							},
+							before:function(){
+								curId = this.item.attr('data-id');
+								layer.load(); //上传loading
+							},
+							done: function(res, index, upload){
+								var tableElem = this.item;
+								tableElem.attr('src', res.files.file);
+								layer.closeAll('loading'); //关闭loading
+								layer.msg('上传成功');
+								curId = '';
+							},
+							error: function(index, upload){
+								layer.closeAll('loading'); //关闭loading
+								layer.msg('上传失败，请重试');
+							}
+						});
+					}
+				});
+			});
+		</script>
+		<style>
+			.layui-table-cell {
+				height: auto;
+				line-height: 30px;
+			}
+			.layui-table-cell .upload-btn{ background: #f2f2f2;}
+		</style>
+	</body>
+</html>

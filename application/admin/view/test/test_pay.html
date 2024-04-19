@@ -1,0 +1,194 @@
+{layout name="public:layout" /}
+<style>
+.layui-form-label{
+    width: 120px;
+}
+</style>
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+
+            <form action="{:url('Test/doTestPay')}" method="post" class="layui-form form-inline">
+            <div class="form-item-list">
+                <div class="layui-form-item">
+                    <label class="layui-form-label">接口类型：</label>
+                    <div class="layui-input-inline">
+                        <select name="method" id="method" lay-filter="method">
+                            <option {if isset($data.method) && $data.method == 'agentCollectApply' } selected {/if} value="agentCollectApply">托管代收申请(收款)</option>
+                            <option {if isset($data.method) && $data.method == 'payByBackSMS' } selected{/if} value="payByBackSMS">后台确认支付</option>
+                            <option {if isset($data.method) && $data.method == 'payBySMS' } selected{/if} value="payBySMS">前台确认支付</option>
+                            <option {if isset($data.method) && $data.method == 'signalAgentPay' } selected{/if} value="signalAgentPay">单笔托管代付(分账)</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">appUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="appUid" lay-verify="required" lay-reqText="appUid不能为空" placeholder="请输入appUid" value="{$data.appUid|default='2002'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">付款人bizUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="payerBizUid" lay-verify="required" lay-reqText="付款人bizUid不能为空" placeholder="请输入付款人bizUid" value="{$data.payerBizUid|default='3'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">付款人uid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="payerBizUid" lay-verify="required" lay-reqText="付款人uid不能为空" placeholder="请输入付款人uid" value="{$data.payerUid|default='14'}">
+                    </div>
+                </div>
+
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">收款中间账户bizUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="public_account_id" lay-verify="required" value="721" >(收款中间账户,暂时不允许修改)
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">代收订单号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="bizOrderNo" placeholder="请输入订单号 " value="{$data.bizOrderNo|default='SX20201128102918'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">总金额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="amount" placeholder="请输入金额 " value="{$data.amount|default='3'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">银行卡号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="bankCardNo" placeholder="请输入银行卡号" value="{$data.bankCardNo|default='6222021402000015088'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">验证码：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="verificationCode" placeholder="请输入验证码" value="{$data.verificationCode|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">支付方式：</label>
+                    <div class="layui-input-inline">
+                        <select name="payMethodKey">
+                            <option {if isset($data.method) && $data.method == 'QUICKPAY_VSP' } selected {/if} value="QUICKPAY_VSP">快捷支付</option>
+                            <option {if isset($data.method) && $data.method == 'WECHATPAY_MINIPROGRAM' } selected{/if} value="WECHATPAY_MINIPROGRAM_ORG">微信小程序支付</option>
+                            <option {if isset($data.method) && $data.method == 'GATEWAY_VSP' } selected{/if} value="GATEWAY_VSP_ORG">网关支付(前台认证)</option>
+                        </select>
+                    </div>
+                </div>
+
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">分账订单号：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="bizOrderProcessNo" placeholder="请输入分账订单号" value="{$data.bizOrderProcessNo|default=''}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">分账人-1bizUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="splitBizUid" lay-verify="required" lay-reqText="被分账人-1bizUid不能为空" placeholder="请输入被分账人-1bizUid" value="{$data.splitBizUid|default='9'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">分账人-1金额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="splitAmount" lay-verify="required" lay-reqText="被分账人-1bizUid不能为空" placeholder="请输入被分账人-1金额" value="{$data.splitAmount|default='2'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">分账人-2bizUid：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="splitBizUid2" placeholder="请输入被分账人-2bizUid" value="{$data.splitBizUid2|default='50'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass">
+                    <label class="layui-form-label">分账人-2金额：</label>
+                    <div class="layui-input-inline">
+                        <input type="text" class="layui-input" name="splitAmount2" placeholder="请输入被分账人-2金额" value="{$data.splitAmount2|default='1'}">
+                    </div>
+                </div>
+                <div class="layui-form-item testClass form-btn-scroll">
+                    <div class="layui-input-inline">
+                        <button type="submit" class="layui-btn" lay-submit lay-filter="submit"><i class="iconfont">&#xe645;</i> 提交</button>
+                        <button type="button" class="layui-btn layui-btn-normal" onclick="javascript:history.back(-1);"><i class="iconfont">&#xe9af;</i> 返回</button>
+                    </div>
+                </div>
+
+            <h2 >--------------------------------------------------------------------------------------------------------------</h2>
+
+
+            {if isset($result) && !empty($result)}
+                {php}var_dump($result);{/php}
+                {php}var_dump('@@@@@@@@@@@@@');{/php}
+                {$result|json_encode}
+            {/if}
+
+            {if isset($returnData) && !empty($returnData)}
+            {foreach $returnData as $key=>$item }
+            <div class="layui-form-item">
+                <label class="layui-form-label">{$key}</label>
+                <div class="layui-input-inline">{$item|json_encode}</div>
+            </div>
+            {/foreach}
+            {/if}
+
+            </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(["element", "jquery", "layer", "form"], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form;
+
+        form.on('select(method)', function(data){
+            // layer.msg(data.value);
+            $(".testClass").hide();
+            $("input[name='appUid']").parents('.testClass').show();
+            $("input[name='payerBizUid']").parents('.testClass').show();
+            $("input[name='public_account_id']").parents('.testClass').show();
+            $("input[name='bizOrderNo']").parents('.testClass').show();
+            $("button[type='submit']").parents('.testClass').show();
+
+            if(data.value == 'agentCollectApply'){
+                $("input[name='amount']").parents('.testClass').show();
+                $("input[name='bankCardNo']").parents('.testClass').show();
+                $("select[name='payMethodKey']").parents('.testClass').show();
+            }
+            else if(data.value == 'payByBackSMS'){
+                $("input[name='verificationCode']").parents('.testClass').show();
+            }
+            else if(data.value == 'payBySMS'){
+                $("input[name='verificationCode']").parents('.testClass').show();
+            }
+            else if(data.value == 'signalAgentPay'){
+                $("input[name='amount']").parents('.testClass').show();
+                $("input[name='bizOrderProcessNo']").parents('.testClass').show();
+                $("input[name='splitBizUid']").parents('.testClass').show();
+                $("input[name='splitAmount']").parents('.testClass').show();
+                $("input[name='splitBizUid2']").parents('.testClass').show();
+                $("input[name='splitAmount2']").parents('.testClass').show();
+            }
+
+        });
+        var methonVal = '{if isset($data.method)}{$data.method}{else /}agentCollectApply{/if}';
+        $("#method").next().find('.layui-anim').children('dd[lay-value='+methonVal+']').click();
+
+    });
+</script>
+</div>

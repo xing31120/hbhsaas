@@ -1,0 +1,315 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+    <meta charset="utf-8">
+    <title>layuiAdmin 文章管理 iframe 框</title>
+    <meta name="renderer" content="webkit">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="viewport"
+        content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+    <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/template.css" media="all">
+    <style>
+        .site-demo-flow {
+            padding: 10px 0;
+            margin: 0 -10px;
+            font-size: 0;
+        }
+
+        .site-demo-flow .item {
+            display: inline-block;
+            width: calc(100% / 5 - 20px - 12px);
+            padding: 5px;
+            padding-bottom: calc(100% / 5 - 20px - 12px);
+            position: relative;
+            border: solid 1px #e2e2e2;
+            margin: 10px;
+            background-color: #fff;
+            transition: all .3s;
+            height: 0;
+            cursor: pointer;
+        }
+
+        .site-demo-flow img {
+            max-width: calc(100% - 10px);
+            max-height: calc(100% - 10px);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+        }
+
+        .site-demo-flow .item.active {
+            border-color: #FF5722;
+        }
+
+        .site-demo-flow .item::before {
+            font-size: 14px;
+            font-family: layui-icon !important;
+            position: absolute;
+            top: 0;
+            right: 0;
+            height: 20px;
+            width: 20px;
+            color: #fff;
+            content: "";
+            z-index: 20;
+            transition: all .3s;
+            text-align: center;
+            line-height: 20px;
+            display: inline;
+        }
+
+        .site-demo-flow .item.active::before {
+            color: #fff;
+            content: "\e605";
+            z-index: 20;
+            ;
+            background-color: #FF5722;
+        }
+
+        .photo_gallery-hide {
+            display: none;
+        }
+    </style>
+</head>
+
+<body>
+    <div class="layui-fluid">
+        <div class="photo_gallery-show">
+            <form class="layui-form photo_gallery-show" action="">
+                <div class="layui-inline">
+                    <select name="city" lay-verify="">
+                        <option value="home">首页可视化</option>
+                        <option value="010">移动端首页</option>
+                    </select>
+                </div>
+                <div class="layui-btn-group">
+                    <button type="button" class="layui-btn layui-btn-danger" id="photo_gallery-album">添加相册</button>
+                    <button type="button" class="layui-btn layui-btn-danger" id="photo_gallery-upload-img">上传图片</button>
+                </div>
+            </form>
+            <div class="site-demo-flow" id="test-flow-lazyimg">
+                <div class="item active">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i2/701696736/TB2PNl5ahQa61Bjy0FhXXaalFXa_!!701696736.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i2/162734861/TB2V5rsX_gc61BjSZFkXXcTkFXa_!!162734861.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i4/69476562/TB2htq4XTka61BjSszfXXXN8pXa_!!69476562.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i1/180558071/TB2sy6jXMQc61BjSZFGXXa1DFXa_!!180558071.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i2/701696736/TB2PNl5ahQa61Bjy0FhXXaalFXa_!!701696736.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/285892163/TB2qu2HX9Zb61BjSZPfXXaU.pXa_!!285892163.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i2/704998060/TB2S.gAXTgc61BjSZFkXXcTkFXa_!!704998060.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/117202952/TB25lckX_AX61Bjy0FcXXaSlFXa_!!117202952.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i2/162734861/TB2qijoX9Zb61BjSZPfXXaU.pXa_!!162734861.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+                <div class="item">
+                    <img
+                        src="https://gw.alicdn.com/bao/uploaded/i3/96216586/TB2S7EfXHMc61BjSZFFXXaDLFXa_!!96216586.jpg_400x400q90.jpg?t=1523290753265">
+                </div>
+            </div>
+        </div>
+
+
+        <!-- 添加相册 -->
+        <div class="layui-form photo_gallery-hide" lay-filter="layuiadmin-app-form-list"
+            style="padding: 20px 30px 0 0;">
+            <div class="layui-form-item">
+                <label class="layui-form-label">相册名称</label>
+                <div class="layui-input-inline">
+                    <input type="text" name="title" lay-verify="required" placeholder="请输入相册名称" autocomplete="off"
+                        class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">上级相册</label>
+                <div class="layui-input-inline">
+                    <div class="layui-inline">
+                        <select name="city" lay-verify="">
+                            <option value="home">首页可视化</option>
+                            <option value="010">移动端首页</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">封面</label>
+                <div class="layui-input-inline">
+                    <button type="button" class="layui-btn" id="photo_gallery-album-img">
+                        <i class="layui-icon">&#xe67c;</i>上传图片
+                    </button>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">描述</label>
+                <div class="layui-input-inline">
+                    <textarea name="content" style="width: 400px; height: 150px;" autocomplete="off"
+                        class="layui-textarea"></textarea>
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <label class="layui-form-label">排序</label>
+                <div class="layui-input-inline">
+                    <input type="number" name="title" placeholder="请输入排序" autocomplete="off" class="layui-input">
+                </div>
+            </div>
+            <div class="layui-form-item">
+                <div class="layui-input-block">
+                    <button class="layui-btn" lay-submit lay-filter="photo_gallery-form-submit" id="photo_gallery-form-submit">确认添加</button>
+                    <button class="layui-btn layui-btn-primary" id="photo_gallery-back">返回</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+
+    <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+    <script>
+        layui.config({
+            base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+        }).extend({
+            index: 'lib/index' //主入口模块
+        }).use(['form', 'upload'], function () {
+            var $ = layui.$,
+                form = layui.form;
+            var upload = layui.upload;
+            var data = {} // 请求上传接口的额外参数。如：data: {id: 'xxx'}
+            var headers = {} // 接口的请求头。如：headers: {token: 'sasasas'}。注：该参数为 layui 2.2.6 开始新增
+            var accept = 'images' // 指定允许上传时校验的文件类型，可选值有：images（图片）、file（所有文件）、video（视频）、audio（音频）
+            var auto = true // 是否选完文件后自动上传。如果设定 false，那么需要设置 bindAction 参数来指向一个其它按钮提交上传
+            var bindAction = '' // 指向一个按钮触发上传，一般配合 auto: false 来使用。值为选择器或DOM对象，如：bindAction: '#btn'
+            var field = 'file' // 设定文件域的字段名
+            var size = 0 // 设置文件最大可允许上传的大小，单位 KB。不支持ie8/9 number
+            var multiple = false // 是否允许多文件上传。设置 true即可开启。不支持ie8/9
+            var number = 1 // 设置同时可上传的文件数量，一般配合 multiple 参数出现。 number
+            var drag = true // 是否接受拖拽的文件上传，设置 false 可禁用。不支持ie8/9
+            $('#test-flow-lazyimg .item').on('click', function () { // 点击选中
+                $('#test-flow-lazyimg .item').removeClass('active')
+                $(this).addClass('active')
+            })
+            // 添加相册显示切换
+            $('#photo_gallery-album').on('click', function () {
+                $('.photo_gallery-hide').fadeIn()
+                $('.photo_gallery-show').fadeOut()
+                addPhoto()
+
+            })
+            //执行实例
+            var uploadInst = upload.render({
+                elem: '#photo_gallery-upload-img', //绑定元素
+                url: '/upload/', //上传接口
+                data,
+                headers,
+                accept,
+                auto,
+                bindAction,
+                field,
+                size,
+                multiple,
+                number,
+                drag,
+                before: function () {
+                    // 文件提交上传前的回调。返回一个object参数（同上），详见下文
+                },
+                done: function (res) {
+                    //上传完毕回调
+                },
+                error: function () {
+                    //请求异常回调
+                },
+                choose: function () {
+                    //选择文件后的回调函数。返回一个object参数，详见下文
+                }
+            });
+
+            function addPhoto() {
+                var uploadInst = upload.render({
+                    elem: '#photo_gallery-album-img', //绑定元素
+                    url: '/upload/', //上传接口
+                    data,
+                    headers,
+                    accept,
+                    auto,
+                    bindAction,
+                    field,
+                    size,
+                    multiple,
+                    number,
+                    drag,
+                    before: function () {
+                        // 文件提交上传前的回调。返回一个object参数（同上），详见下文
+                    },
+                    done: function (res) {
+                        //上传完毕回调
+                    },
+                    error: function () {
+                        //请求异常回调 dom元素id: photo_gallery-upload-err
+                    },
+                    choose: function () {
+                        //选择文件后的回调函数。返回一个object参数，详见下文
+                    }
+                });
+                //监听提交
+                form.on('submit(photo_gallery-form-submit)', function (data) {
+                    // 关闭
+                    $('.photo_gallery-show').fadeIn()
+                    $('.photo_gallery-hide').fadeOut()
+                });
+                $('#photo_gallery-back').on('click',function(){
+                    // 关闭
+                    $('.photo_gallery-show').fadeIn()
+                    $('.photo_gallery-hide').fadeOut()
+                })
+            }
+
+
+        })
+    </script>
+</body>
+
+</html>

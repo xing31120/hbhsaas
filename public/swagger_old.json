@@ -1,0 +1,3645 @@
+{
+  "openapi": "3.0.0",
+  "info": {
+    "title": "广州项目",
+    "version": "1.0.0"
+  },
+  "paths": {
+    "/xb/Analysis/getUserExamData": {
+      "post": {
+        "tags": [
+          "分析接口"
+        ],
+        "summary": "新兵训练 个人分析  获取左边数据（课目，雷达图等）",
+        "description": "新增or修改题库",
+        "operationId": "apps\\xb\\controllers\\AnalysisController::getUserExamDataAction",
+        "parameters": [
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "xb_stage_id",
+            "in": "query",
+            "description": "阶段id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Analysis/getUserExamDataByDepart": {
+      "post": {
+        "tags": [
+          "分析接口"
+        ],
+        "summary": "新兵训练 个人分析  单位 （进步前10名，不及格突破到及格等）",
+        "description": "",
+        "operationId": "apps\\xb\\controllers\\AnalysisController::getUserExamDataByDepartAction",
+        "parameters": [
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6760"
+          },
+          {
+            "name": "xb_stage_id",
+            "in": "query",
+            "description": "阶段id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Analysis/getSubjectAnalysis": {
+      "post": {
+        "tags": [
+          "分析接口"
+        ],
+        "summary": "新兵训练 课目分析  ",
+        "description": "新兵训练 课目分析 ",
+        "operationId": "apps\\xb\\controllers\\AnalysisController::getSubjectAnalysisAction",
+        "parameters": [
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "141"
+          },
+          {
+            "name": "xb_stage_id",
+            "in": "query",
+            "description": "阶段id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "2"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Analysis/getDepartExamData": {
+      "post": {
+        "tags": [
+          "分析接口"
+        ],
+        "summary": "新兵训练 单位分析  获取左边数据（等）",
+        "description": "",
+        "operationId": "apps\\xb\\controllers\\AnalysisController::getDepartExamDataAction",
+        "parameters": [
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6760"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Analysis/getDepartChart": {
+      "post": {
+        "tags": [
+          "分析接口"
+        ],
+        "summary": "新兵训练 单位分析  获取右边图表数据",
+        "description": "",
+        "operationId": "apps\\xb\\controllers\\AnalysisController::getDepartChartAction",
+        "parameters": [
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6760"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/bank/getList": {
+      "post": {
+        "tags": [
+          "题库接口"
+        ],
+        "summary": "获取题库列表",
+        "description": "获取题库列表",
+        "operationId": "apps\\xb\\controllers\\BankController::getListAction",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "34"
+          },
+          {
+            "name": "question_category",
+            "in": "query",
+            "description": "题目类型",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "单选题"
+          },
+          {
+            "name": "dopage",
+            "in": "query",
+            "description": "是否分页 0:不分 1:分页",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "第几页",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "description": "每页大小",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "id": 1,
+                        "question": "题目标题"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/bank/save": {
+      "post": {
+        "tags": [
+          "题库接口"
+        ],
+        "summary": "新增or修改题库",
+        "description": "新增or修改题库",
+        "operationId": "apps\\xb\\controllers\\BankController::saveAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "题库ID,新增时为0",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "question",
+            "in": "query",
+            "description": "题目",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "连队首长每周组织（）次内务卫生检查。"
+          },
+          {
+            "name": "bio_train_subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "34"
+          },
+          {
+            "name": "bio_train_subject_category_id",
+            "in": "query",
+            "description": "课目内容类型id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "99"
+          },
+          {
+            "name": "question_category",
+            "in": "query",
+            "description": "课目内容类型",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "单选题"
+          },
+          {
+            "name": "answer_json",
+            "in": "query",
+            "description": "答案json",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "[{'option':'A','content':'4次','pic':'','right':true},{'option':'B','content':'5次','pic':'','right':false}]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/bank/softDelete": {
+      "post": {
+        "tags": [
+          "题库接口"
+        ],
+        "summary": "删除题库",
+        "description": "删除题库",
+        "operationId": "apps\\xb\\controllers\\BankController::softDeleteAction",
+        "parameters": [
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "题库ID字符串",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1,2,3"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/bank/importTheory": {
+      "post": {
+        "tags": [
+          "题库接口"
+        ],
+        "summary": "导入题库",
+        "description": "导入题库",
+        "operationId": "apps\\xb\\controllers\\BankController::importTheoryAction",
+        "parameters": [
+          {
+            "name": "file",
+            "in": "query",
+            "description": "不需要参数，直接传文件",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Category/get": {
+      "post": {
+        "tags": [
+          "课目类别接口"
+        ],
+        "summary": "获取内容类别",
+        "description": "获取内容类别",
+        "operationId": "apps\\xb\\controllers\\CategoryController::getAction",
+        "parameters": [
+          {
+            "name": "bio_train_subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "16"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Category/save": {
+      "post": {
+        "tags": [
+          "课目类别接口"
+        ],
+        "summary": "增加/修改 内容类别",
+        "description": "增加/修改 内容类别",
+        "operationId": "apps\\xb\\controllers\\CategoryController::saveAction",
+        "parameters": [
+          {
+            "name": "bio_train_subject_id",
+            "in": "query",
+            "description": "课目ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "34"
+          },
+          {
+            "name": "subject_category",
+            "in": "query",
+            "description": "评分标准是json 参考战术基础动作需求文档 sex->0:男 1:女 没有就传空字符串",
+            "required": false,
+            "schema": {
+              "type": "json"
+            },
+            "example": "\r\n    [{'id':'99','bio_train_subject_id': '34','category_name': '战斗运动'},\r\n    {'id':'100','bio_train_subject_id': '34','category_name': '利用地形'},\r\n    {'id':'104','bio_train_subject_id': '34','category_name': '战斗运动c'},\r\n    {'id':'0','bio_train_subject_id': '34','category_name': '利用地形a'}]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Category/del": {
+      "post": {
+        "tags": [
+          "课目类别接口"
+        ],
+        "summary": "删除内容类别",
+        "description": "删除内容类别",
+        "operationId": "apps\\xb\\controllers\\CategoryController::delAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "课目内容类别id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "528"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/content/add": {
+      "post": {
+        "tags": [
+          "课目内容接口"
+        ],
+        "summary": "增加课目内容",
+        "description": "增加课目内容",
+        "operationId": "apps\\xb\\controllers\\ContentController::addAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "bio_train_subject_id",
+            "in": "query",
+            "description": "课目ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "17"
+          },
+          {
+            "name": "bio_train_subject_category_id",
+            "in": "query",
+            "description": "课目类别ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "42"
+          },
+          {
+            "name": "content_name",
+            "in": "query",
+            "description": "课目内容名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "立正、稍息、跨立"
+          },
+          {
+            "name": "prop",
+            "in": "query",
+            "description": "科目属性 0 数量类 1 时间类 2 测距离类 3 分数类 ",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "3"
+          },
+          {
+            "name": "train_unit",
+            "in": "query",
+            "description": "成绩单位: 分,米,环等",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "分"
+          },
+          {
+            "name": "score_count",
+            "in": "query",
+            "description": "成绩录入次数",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "calc_type",
+            "in": "query",
+            "description": "成绩计算方式0：求和 1：最小值 2:最大值 3：平均值",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "score_order",
+            "in": "query",
+            "description": "成绩排序方式 0：倒序 1：正序",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "extract_num",
+            "in": "query",
+            "description": "抽取题量 理论类和按明细抽取才有数值",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "exam_type",
+            "in": "query",
+            "description": "考核方式 10:必考 20:抽考 30:不考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "10"
+          },
+          {
+            "name": "exam_ratio",
+            "in": "query",
+            "description": "考核占比",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "100"
+          },
+          {
+            "name": "is_sex",
+            "in": "query",
+            "description": "考核占比",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "100"
+          },
+          {
+            "name": "score_node",
+            "in": "query",
+            "description": "分数节点字符串, 至少2个节点",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "60,75,90"
+          },
+          {
+            "name": "node_json",
+            "in": "query",
+            "description": "评分标准是json 参考战术基础动作需求文档 sex->0:男 1:女 没有就传空字符串",
+            "required": false,
+            "schema": {
+              "type": "json"
+            },
+            "example": "\r\n    [{'sex':'0','score': '60','unit_grade': '30','section_score': '1','section_unit ': '0.2'},\r\n    {'sex':'0','score': '75','unit_grade': '28','section_score': '2','section_unit ': '0.3'},\r\n    {'sex':'0','score': '90','unit_grade': '25','section_score': '1','section_unit ': '0.3'},\r\n    {'sex':'0','score': '60','unit_grade': '40','section_score': '1','section_unit ': '0.2'},\r\n    {'sex':'0','score': '75','unit_grade': '38','section_score': '2','section_unit ': '0.3'},\r\n    {'sex':'0','score': '90','unit_grade': '35','section_score': '1','section_unit ': '0.3'}]"
+          },
+          {
+            "name": "subject_option",
+            "in": "query",
+            "description": "扣分项, option_url(观察、报知与指示目标 才有)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "\r\n    [{'id':'0','bio_train_subject_id': '34','bio_train_subject_category_id': '42','bio_train_subject_content_id': '0','option_name':'低姿、高姿、屈身前进中持枪方式不正确','qty': '10','operator': '-','is_image': '0'},\r\n    {'id':'0','bio_train_subject_id': '34','bio_train_subject_category_id': '42','bio_train_subject_content_id': '0','option_name':'枪口触地或触网、枪支掉落','qty': '5','operator': '-','is_image': '0'}]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      []
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/content/update": {
+      "post": {
+        "tags": [
+          "课目内容接口"
+        ],
+        "summary": "修改课目内容",
+        "description": "修改课目内容",
+        "operationId": "apps\\xb\\controllers\\ContentController::updateAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "114"
+          },
+          {
+            "name": "bio_train_subject_id",
+            "in": "query",
+            "description": "课目ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "17"
+          },
+          {
+            "name": "bio_train_subject_category_id",
+            "in": "query",
+            "description": "课目类别ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "42"
+          },
+          {
+            "name": "content_name",
+            "in": "query",
+            "description": "课目内容名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "立正、稍息、跨立"
+          },
+          {
+            "name": "prop",
+            "in": "query",
+            "description": "科目属性 0 数量类 1 时间类 2 测距离类 3 分数类 ",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "3"
+          },
+          {
+            "name": "train_unit",
+            "in": "query",
+            "description": "成绩单位: 分,米,环等",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "分"
+          },
+          {
+            "name": "score_count",
+            "in": "query",
+            "description": "成绩录入次数",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "calc_type",
+            "in": "query",
+            "description": "成绩计算方式0：求和 1：最小值 2:最大值 3：平均值",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "score_order",
+            "in": "query",
+            "description": "成绩排序方式 0：倒序 1：正序",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "extract_num",
+            "in": "query",
+            "description": "抽取题量 理论类和按明细抽取才有数值",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "exam_type",
+            "in": "query",
+            "description": "考核方式 10:必考 20:抽考 30:不考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "10"
+          },
+          {
+            "name": "exam_ratio",
+            "in": "query",
+            "description": "考核占比",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "100"
+          },
+          {
+            "name": "is_sex",
+            "in": "query",
+            "description": "考核占比",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "score_node",
+            "in": "query",
+            "description": "分数节点字符串, 至少2个节点",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "60,75,90"
+          },
+          {
+            "name": "is_image",
+            "in": "query",
+            "description": "是否图片类 默认0, 0:文字类 1:图片类",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "node_json",
+            "in": "query",
+            "description": "评分标准是json 参考战术基础动作需求文档 sex->0:男 1:女 没有就传空字符串",
+            "required": false,
+            "schema": {
+              "type": "json"
+            },
+            "example": "\r\n    [{'sex':'0','score': '60','unit_grade': '30','section_score': '1','section_unit ': '0.2'},\r\n    {'sex':'0','score': '75','unit_grade': '28','section_score': '2','section_unit ': '0.3'},\r\n    {'sex':'0','score': '90','unit_grade': '25','section_score': '1','section_unit ': '0.3'},\r\n    {'sex':'0','score': '60','unit_grade': '40','section_score': '1','section_unit ': '0.2'},\r\n    {'sex':'0','score': '75','unit_grade': '38','section_score': '2','section_unit ': '0.3'},\r\n    {'sex':'0','score': '90','unit_grade': '35','section_score': '1','section_unit ': '0.3'}]"
+          },
+          {
+            "name": "subject_option",
+            "in": "query",
+            "description": "扣分项, option_url(观察、报知与指示目标 才有)",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "\r\n    [{'id':'1','bio_train_subject_id': '34','bio_train_subject_category_id': '42','bio_train_subject_content_id': '0','option_name':'低姿、高姿、屈身前进中持枪方式不正确','qty': '10','operator': '-','is_image': '0'},\r\n    {'id':'2','bio_train_subject_id': '34','bio_train_subject_category_id': '42','bio_train_subject_content_id': '0','option_name':'枪口触地或触网、枪支掉落','qty': '5','operator': '-','is_image': '0'}]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      []
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/content/get": {
+      "post": {
+        "tags": [
+          "课目内容接口"
+        ],
+        "summary": "获取课目内容+错误项",
+        "description": "获取课目内容+错误项",
+        "operationId": "apps\\xb\\controllers\\ContentController::getAction",
+        "parameters": [
+          {
+            "name": "content_id",
+            "in": "query",
+            "description": "content_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "114"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/content/delContent": {
+      "post": {
+        "tags": [
+          "课目内容接口"
+        ],
+        "summary": "删除课目内容",
+        "description": "删除课目内容",
+        "operationId": "apps\\xb\\controllers\\ContentController::delContentAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "内容id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "541"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/content/deloption": {
+      "post": {
+        "tags": [
+          "课目内容接口"
+        ],
+        "summary": "删除课目内容的错误项",
+        "description": "删除课目内容的错误项",
+        "operationId": "apps\\xb\\controllers\\ContentController::delOptionAction",
+        "parameters": [
+          {
+            "name": "option",
+            "in": "query",
+            "description": "option",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "11"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/getStageList": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "获取阶段列表",
+        "description": "获取阶段列表",
+        "operationId": "apps\\xb\\controllers\\ExamController::getStageListAction",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/saveStage": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "新增or修改阶段",
+        "description": "新增or修改阶段",
+        "operationId": "apps\\xb\\controllers\\ExamController::saveStageAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID, 不限传空字符串",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "stage_name",
+            "in": "query",
+            "description": "阶段名称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "测试阶段"
+          },
+          {
+            "name": "start_at",
+            "in": "query",
+            "description": "开始时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-08-01"
+          },
+          {
+            "name": "end_at",
+            "in": "query",
+            "description": "结束时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-09-01"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/delStage": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "删除阶段",
+        "description": "删除阶段",
+        "operationId": "apps\\xb\\controllers\\ExamController::delStageAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "4"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/getUserExaminer": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "获取考评员列表",
+        "description": "获取考评员列表",
+        "operationId": "apps\\xb\\controllers\\ExamController::getUserExaminerAction",
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/getSubjectList": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "获取课目列表",
+        "description": "获取课目列表",
+        "operationId": "apps\\xb\\controllers\\ExamController::getSubjectListAction",
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "id": 1,
+                        "title": "格斗基础"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/exam/saveExam": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "考核新增或者修改",
+        "description": "考核新增或者修改",
+        "operationId": "apps\\xb\\controllers\\ExamController::saveExamAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "xb_stage_id",
+            "in": "query",
+            "description": "考核阶段表ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "xb_stage_name",
+            "in": "query",
+            "description": "考核阶段名称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "第一阶段"
+          },
+          {
+            "name": "subject_ids",
+            "in": "query",
+            "description": "考核课目ID字符串",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "90,92,93"
+          },
+          {
+            "name": "subject_name_str",
+            "in": "query",
+            "description": "subject_name_str",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "军人常识,媒介应用,法理斗争"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "部门id列表",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6781,6802,6840"
+          },
+          {
+            "name": "do_exam_names",
+            "in": "query",
+            "description": "部门名称列表",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "一营,二赢"
+          },
+          {
+            "name": "begin_at",
+            "in": "query",
+            "description": "开始时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-5-20"
+          },
+          {
+            "name": "end_at",
+            "in": "query",
+            "description": "结束时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-5-22"
+          },
+          {
+            "name": "exam_status",
+            "in": "query",
+            "description": "10:未发布(保存)  20:已经发布 50：已结束 0:作废",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          },
+          {
+            "name": "assessor_uids",
+            "in": "query",
+            "description": "考评人用户ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "24315,24317,24319"
+          },
+          {
+            "name": "assessor_names",
+            "in": "query",
+            "description": "考评人用户名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "孙2,孙4,孙6"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "id": 1,
+                        "title": "格斗基础"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/exam/publishExam": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "发布考核",
+        "description": "发布考核",
+        "operationId": "apps\\xb\\controllers\\ExamController::publishExamAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "xb_stage_id",
+            "in": "query",
+            "description": "考核阶段表ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "xb_stage_name",
+            "in": "query",
+            "description": "考核阶段名称",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "第一阶段"
+          },
+          {
+            "name": "subject_ids",
+            "in": "query",
+            "description": "考核课目ID字符串",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "90,92,93"
+          },
+          {
+            "name": "subject_name_str",
+            "in": "query",
+            "description": "subject_name_str",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "军人常识,媒介应用,法理斗争"
+          },
+          {
+            "name": "ids",
+            "in": "query",
+            "description": "部门id列表",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6781,6802,6840"
+          },
+          {
+            "name": "begin_at",
+            "in": "query",
+            "description": "开始时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-5-20"
+          },
+          {
+            "name": "end_at",
+            "in": "query",
+            "description": "结束时间",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "2020-5-22"
+          },
+          {
+            "name": "exam_status",
+            "in": "query",
+            "description": "10:未发布(保存)  20:已经发布 50：已结束 0:作废",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          },
+          {
+            "name": "assessor_uids",
+            "in": "query",
+            "description": "考核人用户ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "24315,24317,24319"
+          },
+          {
+            "name": "assessor_names",
+            "in": "query",
+            "description": "考核人用户名",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "孙2,孙4,孙6"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "id": 1,
+                        "title": "格斗基础"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/exam/endExam": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "结束考核",
+        "description": "结束考核",
+        "operationId": "apps\\xb\\controllers\\ExamController::endExamAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "is_confirm",
+            "in": "query",
+            "description": "第一次请求传0, 如果再次确认结束传1",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/nullifyExam": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "作废考核",
+        "description": "作废考核",
+        "operationId": "apps\\xb\\controllers\\ExamController::nullifyExamAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/exam/getExamList": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "考核列表",
+        "description": "考核列表",
+        "operationId": "apps\\xb\\controllers\\ExamController::getExamListAction",
+        "parameters": [
+          {
+            "name": "search",
+            "in": "query",
+            "description": "搜索关键字",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": ""
+          },
+          {
+            "name": "dopage",
+            "in": "query",
+            "description": "是否分页 0:不分 1:分页",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "第几页",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "description": "每页大小",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "id": 1,
+                        "title": "格斗基础"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/exam/getDepartByUnitLevel": {
+      "post": {
+        "tags": [
+          "考核接口"
+        ],
+        "summary": "根据等级 返回部门id集合中符合的数据",
+        "description": "根据等级 返回部门id集合中符合的数据",
+        "operationId": "apps\\xb\\controllers\\ExamController::getDepartByUnitLevelAction",
+        "parameters": [
+          {
+            "name": "depart_ids",
+            "in": "query",
+            "description": "部门ids,逗号分开",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": ""
+          },
+          {
+            "name": "unit_level",
+            "in": "query",
+            "description": "7表示个人",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/face/getUserInfoByFaceId": {
+      "post": {
+        "tags": [
+          "人脸接口"
+        ],
+        "summary": "根据人脸识别到的人脸id 获取用户信息",
+        "description": "人脸库uname存的是用户对应的账号。账号是唯一的",
+        "operationId": "apps\\xb\\controllers\\FaceController::getUserInfoByFaceIdAction",
+        "parameters": [
+          {
+            "name": "faceId",
+            "in": "query",
+            "description": "人脸id 如 15704175",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": ""
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "90"
+          },
+          {
+            "name": "exam_depart_id",
+            "in": "query",
+            "description": "考核列表部门ID",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "0"
+          },
+          {
+            "name": "category_id_string",
+            "in": "query",
+            "description": "类别ID字符串",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123,234,456"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "32位设备识别码"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/face/checkUserByAccount": {
+      "post": {
+        "tags": [
+          "人脸接口"
+        ],
+        "summary": "录入人脸之前，先验证账号是否存在。不存在会报错",
+        "description": "",
+        "operationId": "apps\\xb\\controllers\\FaceController::checkUserByAccountAction",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "description": "账号 如 cs0001",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": ""
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Pad/getPadList": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "获取课目列表",
+        "description": "获取课目列表",
+        "operationId": "apps\\xb\\controllers\\PadController::getPadListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "is_examiner",
+            "in": "query",
+            "description": "是否考评员, 登录接口返回",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "登录人员部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/Pad/getSectionCategory": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "获取课目分段列表",
+        "description": "获取课目分段列表",
+        "operationId": "apps\\xb\\controllers\\PadController::getSectionCategoryAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "133"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getPadExam": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "获取当前课目的考核",
+        "description": "获取当前课目的考核",
+        "operationId": "apps\\xb\\controllers\\PadController::getPadExamAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "93"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/examineesLogin": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "考生登录",
+        "description": "考生登录",
+        "operationId": "apps\\xb\\controllers\\PadController::examineesLoginAction",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "description": "账户",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cs1"
+          },
+          {
+            "name": "pass",
+            "in": "query",
+            "description": "密码",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123456"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "90"
+          },
+          {
+            "name": "exam_depart_id",
+            "in": "query",
+            "description": "考核列表部门ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "category_id_string",
+            "in": "query",
+            "description": "类别ID字符串",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "123,234,456"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "ba9f1844-537c-4504-8a11-26c5d7228ecf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "user_id:22307, uname:cs1"
+          }
+        }
+      }
+    },
+    "/xb/pad/getOralList": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "获取口试题目",
+        "description": "获取口试题目",
+        "operationId": "apps\\xb\\controllers\\PadController::getOralListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "93"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "98"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/saveOral": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "评定口试是否合格",
+        "description": "评定口试是否合格",
+        "operationId": "apps\\xb\\controllers\\PadController::saveOralAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "22307"
+          },
+          {
+            "name": "user_name",
+            "in": "query",
+            "description": "用户名",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cs1"
+          },
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          },
+          {
+            "name": "depart_name",
+            "in": "query",
+            "description": "部门名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "机关单位"
+          },
+          {
+            "name": "is_pass_oral_exam",
+            "in": "query",
+            "description": "口试是否合格, 0:不合格 1:合格",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "99"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "98"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getDepartList": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "获取组织架构",
+        "description": "获取组织架构",
+        "operationId": "apps\\xb\\controllers\\PadController::getDepartListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "营id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/saveDepartList": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "保存组织架构",
+        "description": "保存组织架构",
+        "operationId": "apps\\xb\\controllers\\PadController::saveDepartListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "depart_id_str",
+            "in": "query",
+            "description": "部门id字符串",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6871,6924"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "133"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "331"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "ba9f1844-537c-4504-8a11-26c5d7228ecf"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getUserOral": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "参考人员-人员列表",
+        "description": "参考人员-人员列表",
+        "operationId": "apps\\xb\\controllers\\PadController::getUserOralAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "99"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "98"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "category_id_string",
+            "in": "query",
+            "description": "类别ID字符串",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123,234,456"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "32位设备识别码"
+          },
+          {
+            "name": "depart_id_str",
+            "in": "query",
+            "description": "部门id字符串",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6871,6924"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/delUserOral": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "移除人员口试结果",
+        "description": "移除人员口试结果",
+        "operationId": "apps\\xb\\controllers\\PadController::delUserOralAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "user_id_string",
+            "in": "query",
+            "description": "用户ID字符串",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "11,12"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "99"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "98"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "category_id_string",
+            "in": "query",
+            "description": "类别ID字符串",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "123,234,456"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "32位设备识别码"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getTheoryClassQuestionListConfig": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "开始考核-获取理论题目配置",
+        "description": "开始考核-获取理论题目配置",
+        "operationId": "apps\\xb\\controllers\\PadController::getTheoryClassQuestionListConfigAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "92"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "用户id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "22308"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "课目id",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "92"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getTheoryClassQuestionList": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "开始考核-获取理论题目列表",
+        "description": "开始考核-获取理论题目列表",
+        "operationId": "apps\\xb\\controllers\\PadController::getTheoryClassQuestionListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "参考人id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "24432"
+          },
+          {
+            "name": "user_name",
+            "in": "query",
+            "description": "用户名",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "陈丙"
+          },
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6928"
+          },
+          {
+            "name": "depart_name",
+            "in": "query",
+            "description": "部门名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "一班"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "90"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "331"
+          },
+          {
+            "name": "question_category",
+            "in": "query",
+            "description": "单选题,多选题,判断题",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "单选题"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getSkillClassQuestionListConfig": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "开始考核-获取技能题目配置",
+        "description": "开始考核-获取技能题目配置",
+        "operationId": "apps\\xb\\controllers\\PadController::getSkillClassQuestionListConfigAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "133"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "98"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "category_id_string",
+            "in": "query",
+            "description": "类别ID字符串",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "123,234,456"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "32位设备识别码"
+          },
+          {
+            "name": "depart_id_str",
+            "in": "query",
+            "description": "部门id字符串",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6871,6924"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/getSkillClassQuestionList": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "开始考核-获取技能类,体能类题目列表",
+        "description": "开始考核-获取技能类,体能类题目列表",
+        "operationId": "apps\\xb\\controllers\\PadController::getSkillClassQuestionListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "参考人id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "22307"
+          },
+          {
+            "name": "user_name",
+            "in": "query",
+            "description": "用户名",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cs1"
+          },
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "6871"
+          },
+          {
+            "name": "depart_name",
+            "in": "query",
+            "description": "部门名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "一连"
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "133"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核ID",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "98"
+          },
+          {
+            "name": "question_category",
+            "in": "query",
+            "description": "立正、稍息、跨立",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "立正、稍息、跨立"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "32位设备识别码"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/nextQuestion": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "理论考试-下一题",
+        "description": "理论考试-下一题",
+        "operationId": "apps\\xb\\controllers\\PadController::nextQuestionAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "用户回答的题目id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "654"
+          },
+          {
+            "name": "answer_content",
+            "in": "query",
+            "description": "用户回答的答案",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "json字符串或者 数组, 对象等"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/submitTheoryClassQuestion": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "理论考试-提交成绩",
+        "description": "理论考试-提交成绩",
+        "operationId": "apps\\xb\\controllers\\PadController::submitTheoryClassQuestionAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "90"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "331"
+          },
+          {
+            "name": "user_id",
+            "in": "query",
+            "description": "参考人id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "24432"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/pad/submitSkillClassQuestion": {
+      "post": {
+        "tags": [
+          "pad接口"
+        ],
+        "summary": "技能考试-提交成绩",
+        "description": "技能考试-提交成绩",
+        "operationId": "apps\\xb\\controllers\\PadController::submitSkillClassQuestionAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "133"
+          },
+          {
+            "name": "exam_id",
+            "in": "query",
+            "description": "考核id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "353"
+          },
+          {
+            "name": "is_makeup",
+            "in": "query",
+            "description": "是否补考 0:正考 1:补考",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "data",
+            "in": "query",
+            "description": "用户回答的答案",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "json字符串或者 数组, 对象等"
+          },
+          {
+            "name": "device_str",
+            "in": "query",
+            "description": "设备编号",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "32位设备识别码"
+          },
+          {
+            "name": "category_id_string",
+            "in": "query",
+            "description": "类别ID字符串",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123,234,456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/public/getSubjectCategory": {
+      "post": {
+        "tags": [
+          "公共接口"
+        ],
+        "summary": "获取课目类别",
+        "description": "返回课目类别",
+        "operationId": "apps\\xb\\controllers\\PublicController::getSubjectCategoryAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "BTU=,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,,"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "value": 1,
+                        "label": "体能类"
+                      },
+                      {
+                        "value": 2,
+                        "label": "技能类"
+                      },
+                      {
+                        "value": 10,
+                        "label": "理论类"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/public/getSubjectList": {
+      "post": {
+        "tags": [
+          "公共接口"
+        ],
+        "summary": "获取课目列表",
+        "description": "获取课目列表",
+        "operationId": "apps\\xb\\controllers\\PublicController::getSubjectListAction",
+        "parameters": [
+          {
+            "name": "class_id",
+            "in": "query",
+            "description": "课目类别ID, 不限传空字符串",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "2"
+          },
+          {
+            "name": "no_class_id",
+            "in": "query",
+            "description": "除某个类别ID之外的, 例如题库就要除体能类(2)之外的类别",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "2"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "模糊搜索课目",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": ""
+          },
+          {
+            "name": "dopage",
+            "in": "query",
+            "description": "是否分页 0:不分 1:分页",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "第几页",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "description": "每页大小",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      {
+                        "id": 1,
+                        "title": "格斗基础"
+                      }
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/public/padLogin": {
+      "post": {
+        "tags": [
+          "公共接口"
+        ],
+        "summary": "pad-登录",
+        "description": "pad-登录",
+        "operationId": "apps\\xb\\controllers\\PublicController::padLoginAction",
+        "parameters": [
+          {
+            "name": "account",
+            "in": "query",
+            "description": "token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cs1"
+          },
+          {
+            "name": "pass",
+            "in": "query",
+            "description": "token",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "token:VWYGY1dmWmNQMA=="
+          }
+        }
+      }
+    },
+    "/xb/public/getDefaultDepart": {
+      "post": {
+        "tags": [
+          "公共接口"
+        ],
+        "summary": "获取树形第一个顶级部门第一个子部门",
+        "description": "成绩分析",
+        "operationId": "apps\\xb\\controllers\\PublicController::getDefaultDepartAction",
+        "responses": {
+          "200": {
+            "description": "token:VWYGY1dmWmNQMA=="
+          }
+        }
+      }
+    },
+    "/xb/score/getList": {
+      "post": {
+        "tags": [
+          "成绩接口"
+        ],
+        "summary": "成绩信息列表",
+        "description": "成绩信息列表",
+        "operationId": "apps\\xb\\controllers\\ScoreController::getListAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "课目ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "90"
+          },
+          {
+            "name": "xb_stage_id",
+            "in": "query",
+            "description": "考核阶段ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "3"
+          },
+          {
+            "name": "depart_id",
+            "in": "query",
+            "description": "部门ID",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "6871"
+          },
+          {
+            "name": "uname",
+            "in": "query",
+            "description": "用户名,模糊搜索",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "cs2"
+          },
+          {
+            "name": "dopage",
+            "in": "query",
+            "description": "是否分页 0:不分 1:分页",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "page",
+            "in": "query",
+            "description": "第几页",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "1"
+          },
+          {
+            "name": "pagesize",
+            "in": "query",
+            "description": "每页大小",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/score/setScoreDetail": {
+      "post": {
+        "tags": [
+          "成绩接口"
+        ],
+        "summary": "修改成绩-先获取错误信息",
+        "description": "修改成绩-先获取错误信息",
+        "operationId": "apps\\xb\\controllers\\ScoreController::setScoreDetailAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "考核人员课目成绩表id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/score/getErrorDetail": {
+      "post": {
+        "tags": [
+          "成绩接口"
+        ],
+        "summary": "点击人员信息查看详情",
+        "description": "点击人员信息查看详情",
+        "operationId": "apps\\xb\\controllers\\ScoreController::getErrorDetailAction",
+        "parameters": [
+          {
+            "name": "token",
+            "in": "query",
+            "description": "token",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "VWYGY1dmWmNQMA=="
+          },
+          {
+            "name": "id",
+            "in": "query",
+            "description": "考核人员课目成绩表id",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "1"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/score/checkpwd": {
+      "post": {
+        "tags": [
+          "密码校验"
+        ],
+        "summary": "校验修改成绩密码",
+        "description": "校验修改成绩密码",
+        "operationId": "apps\\xb\\controllers\\ScoreController::checkPwdAction",
+        "parameters": [
+          {
+            "name": "pwd",
+            "in": "query",
+            "description": "密码",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "token:VWYGY1dmWmNQMA=="
+          }
+        }
+      }
+    },
+    "/xb/score/modifypwd": {
+      "post": {
+        "tags": [
+          "密码修改"
+        ],
+        "summary": "修改修改成绩密码",
+        "description": "修改修改成绩密码",
+        "operationId": "apps\\xb\\controllers\\ScoreController::modifyPwdAction",
+        "parameters": [
+          {
+            "name": "old_pwd",
+            "in": "query",
+            "description": "旧密码",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123456"
+          },
+          {
+            "name": "new_pwd",
+            "in": "query",
+            "description": "新密码",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "123456"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "token:VWYGY1dmWmNQMA=="
+          }
+        }
+      }
+    },
+    "/xb/subject/add": {
+      "post": {
+        "tags": [
+          "课目接口"
+        ],
+        "summary": "添加课目",
+        "description": "添加课目",
+        "operationId": "apps\\xb\\controllers\\SubjectController::addAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "class_id",
+            "in": "query",
+            "description": "课目类别ID 1: 体能 2:技能 10:理论",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "10"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "课目名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "军人常识"
+          },
+          {
+            "name": "full_marks",
+            "in": "query",
+            "description": "满分100固定值",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "100"
+          },
+          {
+            "name": "exam_duration",
+            "in": "query",
+            "description": "考核时长,单位(分钟)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "90"
+          },
+          {
+            "name": "is_oral",
+            "in": "query",
+            "description": "是否口试  默认0:不口试 1:需要口试",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "is_section",
+            "in": "query",
+            "description": "是否分段考试  默认0:不口试 1:需要口试",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "oral_num",
+            "in": "query",
+            "description": "口试题量",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "extract_method",
+            "in": "query",
+            "description": "抽取方式 默认20, 10: 按类别 20: 按内容 30: 按明细",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          },
+          {
+            "name": "set",
+            "in": "query",
+            "description": "考核设置, 只有理论类才有",
+            "required": false,
+            "schema": {
+              "type": "json"
+            },
+            "example": "\r\n           [{'category_name':'单选题','content_name': '单选题','extract_num': '20','score': '2','exam_ratio':'6'},\r\n           {'category_name':'多选题','content_name': '多选题','extract_num': '15','score': '2','exam_ratio':'6'},\r\n           {'category_name':'判断题','content_name': '判断题','extract_num': '10','score': '2','exam_ratio':'6'},\r\n           {'category_name':'口试题','content_name': '口试题','extract_num': '5','score': '2','exam_ratio':'6'}]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      []
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/subject/getSubject": {
+      "post": {
+        "tags": [
+          "课目接口"
+        ],
+        "summary": "获取课目",
+        "description": "获取课目",
+        "operationId": "apps\\xb\\controllers\\SubjectController::getSubjectAction",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "subject_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "16"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    },
+    "/xb/subject/update": {
+      "post": {
+        "tags": [
+          "课目接口"
+        ],
+        "summary": "修改课目",
+        "description": "修改课目",
+        "operationId": "apps\\xb\\controllers\\SubjectController::updateAction",
+        "parameters": [
+          {
+            "name": "id",
+            "in": "query",
+            "description": "id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "16"
+          },
+          {
+            "name": "class_id",
+            "in": "query",
+            "description": "课目类别ID 1: 体能 2:技能 10:理论",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "10"
+          },
+          {
+            "name": "title",
+            "in": "query",
+            "description": "课目名称",
+            "required": true,
+            "schema": {
+              "type": "string"
+            },
+            "example": "军人常识"
+          },
+          {
+            "name": "full_marks",
+            "in": "query",
+            "description": "满分100固定值",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "100"
+          },
+          {
+            "name": "exam_duration",
+            "in": "query",
+            "description": "考核时长,单位(分钟)",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "90"
+          },
+          {
+            "name": "is_oral",
+            "in": "query",
+            "description": "是否口试  默认0:不口试 1:需要口试",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "is_section",
+            "in": "query",
+            "description": "是否分段考试  默认0:不口试 1:需要口试",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "oral_num",
+            "in": "query",
+            "description": "口试题量",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "0"
+          },
+          {
+            "name": "extract_method",
+            "in": "query",
+            "description": "抽取方式 默认20, 10: 按类别 20: 按内容 30: 按明细",
+            "required": false,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "20"
+          },
+          {
+            "name": "set",
+            "in": "query",
+            "description": "考核设置",
+            "required": false,
+            "schema": {
+              "type": "string"
+            },
+            "example": "\r\n    [{'category_name':'战斗运动','content_id': '75','content_name': '战斗运动','extract_num': '0','score': '0','exam_ratio':'50','exam_type':'10'},\r\n     {'category_name':'利用地形','content_id': '76','content_name': '利用地形','extract_num': '0','score': '0','exam_ratio':'25','exam_type':'20'},\r\n     {'category_name':'战斗运动a2','content_id': '78','content_name': '战斗运动a2','extract_num': '0','score': '0','exam_ratio':'25','exam_type':'20'}]"
+          },
+          {
+            "name": "category_extract_num_json",
+            "in": "query",
+            "description": "按类别考核时候的json",
+            "required": false,
+            "schema": {
+              "type": "json"
+            },
+            "example": "\r\n    [{'category_id':'99','category_name':'战斗运动','extract_num':'1'},\r\n    {'category_id':'100','category_name':'利用地形','extract_num':'1'},\r\n    {'category_id':'104','category_name':'战斗运动a2','extract_num':'1'}]"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "example": {
+                    "result": 0,
+                    "error": "",
+                    "errorcode": 0,
+                    "debuginfo": "",
+                    "list": [
+                      []
+                    ]
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/xb/subject/delSubject": {
+      "post": {
+        "tags": [
+          "课目接口"
+        ],
+        "summary": "删除课目",
+        "description": "删除课目",
+        "operationId": "apps\\xb\\controllers\\SubjectController::delSubjectAction",
+        "parameters": [
+          {
+            "name": "subject_id",
+            "in": "query",
+            "description": "subject_id",
+            "required": true,
+            "schema": {
+              "type": "integer"
+            },
+            "example": "16"
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "success"
+          }
+        }
+      }
+    }
+  }
+}

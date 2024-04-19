@@ -1,0 +1,261 @@
+{include file="public/header"/}
+<style>
+  .pc {
+    display: block;
+  }
+
+  .h5 {
+    display: none;
+  }
+
+  .date-list {
+    display: flex;
+    overflow-x: auto;
+    padding: 8px;
+  }
+
+  .date-item {
+    min-width: 100px;
+    width: 100px;
+    border-radius: 8px;
+    text-align: center;
+    padding: 8px 0;
+    margin-right: 8px;
+  }
+
+  .date-tips {
+    font-size: 12px;
+  }
+
+  .select-item {
+    color: white;
+    background: #feab05;
+  }
+
+  @media screen and (max-width: 600px) {
+    .h5 {
+      display: block;
+    }
+
+    .pc {
+      display: none;
+    }
+  }
+
+  .class-list {
+    background: #f2f0f3;
+    padding: 16px;
+  }
+
+  .class-time {
+    color: #676567;
+  }
+
+  .class-item {
+    background: white;
+    border-radius: 8px;
+    padding: 16px;
+    margin-top: 8px;
+    margin-bottom: 8px;
+  }
+
+  .class-cate {
+    color: #6c6c6c;
+    font-size: 14px;
+  }
+
+  .class-name {
+    margin: 8px 0 4px 0;
+  }
+
+  .class-teacher {
+    color: #aeacaf;
+    font-size: 12px;
+  }
+
+  .line {
+    width: 100%;
+    height: 1px;
+    background: #f2f0f3;
+    margin: 8px 0;
+  }
+</style>
+<!--==============================
+    Breadcumb
+============================== -->
+
+
+<div class="breadcumb-wrapper" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.png">
+  <div class="container">
+    <div class="breadcumb-content">
+      <h1 class="breadcumb-title">Class Schedule</h1>
+      <ul class="breadcumb-menu">
+        <li><a href="/index.html">Home</a></li>
+        <li>Class Schedule</li>
+      </ul>
+    </div>
+  </div>
+</div>
+<div class="">
+  <div class="class-schedule-area pc" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/schedule.jpg">
+    <!-- 课程分类 -->
+    <div class="widget widget_categories th-comment-form">
+      <h3 class="widget_title">课程分类<span class="shape"></span></h3>
+      <select name="course_id" id="subject" class="form-select nice-select">
+        <option value="" disabled selected hidden>请选择</option>
+        {foreach $course_cat_list as $key=>$value}
+        <option value="{$value.id}">{$value.name}</option>
+        {/foreach}
+      </select>
+    </div>
+
+
+    <table class="class-schedule-table table">
+      <tr class="schedule-day">
+        <td scope="col"></td>
+        <td scope="col">Monday</td>
+        <td scope="col">Tuesday</td>
+        <td scope="col">Wednesday</td>
+        <td scope="col">Thursday</td>
+        <td scope="col">Friday</td>
+        <td scope="col">Saturday</td>
+        <td scope="col">Sunday</td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">10:00 AM</th>
+        <td scope="col" class="schedule-title">Contemporary<span class="schedule-time">10:00AM - 12:00PM</span></td>
+        <td scope="col" class="schedule-title">Ballet<span class="schedule-time">10:00AM - 12:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Hip-hop<span class="schedule-time">10:00AM - 12:00PM</span></td>
+        <td scope="col" class="schedule-title">classic<span class="schedule-time">10:00AM - 12:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Break<span class="schedule-time">10:00AM - 12:00PM</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">12:00 PM</th>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Jazz<span class="schedule-time">1:00AM - 2:00PM</span></td>
+        <td scope="col" class="schedule-title">Modern<span class="schedule-time">1:00AM - 2:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Kid’s<span class="schedule-time">1:00AM - 2:00PM</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">01:00 PM</th>
+        <td scope="col" class="schedule-title">Tango<span class="schedule-time">1:00AM - 2:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Salsa<span class="schedule-time">10:00AM - 12:00PM</span></td>
+        <td scope="col"></td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">02:00 PM</th>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Twerk<span class="schedule-time">2:00AM - 3:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Pole Dance<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col" class="schedule-title">Bachata<span class="schedule-time">04:00AM - 06:00PM</span></td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">03:00 PM</th>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Ballet<span class="schedule-time">10:00AM - 12:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">04:00 PM</th>
+        <td scope="col" class="schedule-title">Hip-hop<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col" class="schedule-title">Break<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col" class="schedule-title">Salsa<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Modern<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col" class="schedule-title">classic<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col"></td>
+      </tr>
+      <tr>
+        <th scope="row" class="time">06:00 PM</th>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Pole Dance<span class="schedule-time">04:00AM - 06:00PM</span></td>
+        <td scope="col"></td>
+        <td scope="col"></td>
+        <td scope="col" class="schedule-title">Tango<span class="schedule-time">6:00AM - 7:00PM</span></td>
+        <td scope="col"></td>
+      </tr>
+    </table>
+  </div>
+  <div class="h5">
+    <!-- 课程分类 -->
+    <div class="widget widget_categories th-comment-form">
+      <h3 class="widget_title">课程分类<span class="shape"></span></h3>
+      <select name="course_id" id="subject" class="form-select nice-select">
+        <option value="" disabled selected hidden>请选择</option>
+        {foreach $course_cat_list as $key=>$value}
+        <option value="{$value.id}">{$value.name}</option>
+        {/foreach}
+      </select>
+    </div>
+    <div class="date-list">
+      <div class="date-item select-item">
+        <div class="date-title">1.12</div>
+        <div class="date-label">今天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+      <div class="date-item">
+        <div class="date-title">1.13</div>
+        <div class="date-label">明天天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+      <div class="date-item">
+        <div class="date-title">1.13</div>
+        <div class="date-label">明天天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+      <div class="date-item">
+        <div class="date-title">1.13</div>
+        <div class="date-label">明天天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+      <div class="date-item">
+        <div class="date-title">1.13</div>
+        <div class="date-label">明天天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+      <div class="date-item">
+        <div class="date-title">1.13</div>
+        <div class="date-label">明天天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+      <div class="date-item">
+        <div class="date-title">1.13</div>
+        <div class="date-label">明天天</div>
+        <div class="date-tips">可约1节</div>
+      </div>
+    </div>
+    <div class="class-list">
+      <div class="class-time">9:00-10:00</div>
+      <div class="class-item">
+        <div class="class-cate">类别</div>
+        <div class="class-name">名字 ></div>
+        <div class="class-teacher">老师</div>
+        <div class="line"></div>
+        <div class="class-cate">类别</div>
+        <div class="class-name">名字 ></div>
+        <div class="class-teacher">老师</div>
+      </div>
+    </div>
+  </div>
+</div>
+<!--==============================
+	Footer Area
+==============================-->
+{include file="public/footer"/}

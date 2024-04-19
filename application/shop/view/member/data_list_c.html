@@ -1,0 +1,210 @@
+{layout name="public:simple" /}
+
+<div class="layui-fluid">
+  <div class="layui-card">
+    <div class="layui-form layui-card-header layuiadmin-card-header-auto">
+      <div class="layui-form-item">
+        <input type="hidden" name="role" placeholder="role" autocomplete="off" class="layui-input" value="student">
+
+        <div class="layui-inline">
+          <label class="layui-form-label">Email</label>
+          <div class="layui-input-inline">
+            <input type="text" name="email" placeholder="Email" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">Phone</label>
+          <div class="layui-input-inline">
+            <input type="text" name="phone" placeholder="Phone" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label" style="width: 120px">Card Number</label>
+          <div class="layui-input-inline">
+            <input type="text" name="card_number" placeholder="Card Number" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <label class="layui-form-label">Full Name</label>
+          <div class="layui-input-inline">
+            <input type="text" name="name" placeholder="name" autocomplete="off" class="layui-input">
+          </div>
+        </div>
+        <div class="layui-inline">
+          <button class="layui-btn layuiadmin-btn-list" lay-submit lay-filter="LAY-app-contlist-search">
+            <i class="layui-icon layui-icon-search layuiadmin-button-btn"></i>
+          </button>
+        </div>
+      </div>
+    </div>
+
+    <div class="layui-card-body">
+      <div style="padding-bottom: 10px;">
+        <!-- <button class="layui-btn layuiadmin-btn-list" data-type="batchdel">删除</button>
+        <button class="layui-btn layuiadmin-btn-list" data-type="add">添加</button> -->
+      </div>
+      <table id="member-content-list" lay-filter="member-content-list"></table>
+      <script type="text/html" id="buttonTpl">
+        {{#  if(d.status == 10){ }}
+        <button class="layui-btn layui-btn-xs">Normal</button>
+        {{#  } else { }}
+        <button class="layui-btn layui-btn-primary layui-btn-xs">Lock</button>
+        {{#  } }}
+      </script>
+
+      <script type="text/html" id="barAction">
+        <a class="layui-btn layui-btn-xs" lay-event="edit" lay-data="{{d.id}}" data-controller="Tags" data-action="edit">{$Think.lang.Edit}</a>
+        <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" data-controller="Tags" data-action="del" lay-data="{{d.id}}">{$Think.lang.Del}</a>
+      </script>
+
+
+      <script type="text/html" id="barDemo">
+        <a class="layui-btn layui-btn-xs" lay-event="read">View</a>
+      </script>
+    </div>
+  </div>
+</div>
+
+<script type="text/html" id="toolbarDemo">
+  <div class="layui-btn-container">
+    <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="{$Think.lang.MemberAdd}">{$Think.lang.MemberAdd}</button>
+  </div>
+</script>
+
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+layui.config({
+    base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+}).extend({
+    index: 'lib/index' //主入口模块
+    // }).use(['index', 'contlist', 'table'], function(){
+}).use([ 'index', 'form', 'table', 'element', 'admin', 'laydate'], function () {
+    var $ = layui.$;
+    var table = layui.table,
+        form = layui.form;
+
+    table.render({
+      toolbar: '#toolbarDemo',
+      elem: '#member-content-list'
+      ,url: '{:url("Member/ajaxList","role=student")}'
+      ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
+      ,cols: [[
+        {field:'id', width:80, type:'checkbox'}
+        ,{field:'id', width:80, title: 'ID', sort: true}
+        ,{field:'name', width:180, title: '{$Think.lang.Name}', sort: false}
+        ,{field:'email', width:220, title: 'Email', sort: false}
+        ,{field:'residue_quantity', width:150, title: '{$Think.lang.ResidueDegree}', sort: false}
+        ,{field:'phone', width:150, title: '{$Think.lang.Phone}', sort: false}
+        ,{field:'card_number', width:150, title: '{$Think.lang.CardNumber}', sort: false}
+        ,{field:'expiry_date', width:150, title: '{$Think.lang.ExpiryDate}', sort: false}
+        // ,{field:'status', width:80,title: '状态',templet:"#buttonTpl"}
+        // ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
+        , {title: '{$Think.lang.Operate}', width: 120, toolbar: '#barAction', fixed: 'right',}
+      ]]
+      ,page: true
+    });
+
+    //监听搜索
+    form.on('submit(LAY-app-contlist-search)', function(data){
+      var field = data.field;
+
+      //执行重载
+      table.reload('member-content-list', {
+        where: field
+      });
+    });
+
+    table.on('toolbar(member-content-list)', function (obj) {
+        switch (obj.event) {
+        case 'add':
+            var index = layer.open({
+                type: 2,
+                title: '{$Think.lang.MemberAdd}',
+                content: '{:url("form")}?role=student',
+                shadeClose: true, // 点击遮罩层关闭
+                maxmin: true,
+                area: ['55%', '650px'],
+                btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    let submit = layero.find('iframe').contents().find("#form_submit");
+                    submit.click();
+                }
+            });
+            // 弹层全屏, 如无需弹层全屏, 请注释layer.full();
+            layer.full(index);
+            break;
+        };
+    });
+
+    function setEdit(id){
+      //弹出即全屏
+      var index = layer.open({
+        type: 2,
+        title: '{$Think.lang.MemberEdit}',
+        content: '{:url("edit")}?id='+id,
+        shadeClose: true, // 点击遮罩层关闭
+        maxmin: true,
+        area: ['860px', '693px'],
+        btnAlign: 'c',
+        btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
+        yes: function(index, layero){
+            layer.close(index);
+            let submit = layero.find('iframe').contents().find("#form_submit");
+            submit.click();
+
+            layer.msg('{$Think.lang.OperateSuccess}',{
+                offset:['50%'],
+                time: 700 //0.5秒关闭（如果不配置，默认是3秒）
+            },function(){
+                table.reload('member-content-list'); //数据刷新
+            });
+        }
+      });
+      layer.full(index);
+    }
+    //监听行工具事件
+    table.on('tool(member-content-list)', function(obj){
+      var params = obj.data;
+      switch (obj.event) {
+      case 'edit':
+          setEdit(obj.data.id);
+          break;
+      case 'del':
+          layer.confirm('{$Think.lang.AreYouSureDel}', function(index){
+              //向服务端发送删除指令
+              $.ajax({
+                  "url":"{:url('del')}",
+                  "data":{"id":obj.data.id},
+              }).done(function (rs) {
+                  layer.msg(rs.msg);
+                  layer.msg(rs.msg);
+                  if(rs.code==0){
+                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                    layer.close(index);
+                    table.reload('member-content-list');
+                  }
+              }).fail(function (rs) {
+                  layer.msg(rs.msg);
+              });
+          });
+          break;
+      };
+
+      });
+
+
+    });
+
+layui.use('laydate', function () {
+    var laydate = layui.laydate;
+
+    //执行一个laydate实例
+    laydate.render({
+        elem: '#create_time',//指定元素
+        range: '~'
+    });
+});
+</script>
+</body>
+</html>

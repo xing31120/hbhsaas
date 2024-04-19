@@ -1,0 +1,150 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <title>中装saas</title>
+  <meta name="renderer" content="webkit">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0, user-scalable=0">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/css/layui.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/style/admin.css" media="all">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/css/comm.css">
+  <!-- 步骤样式 -->
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/layuiadmin/lib/steps/step.css">
+</head>
+<body>
+  <div class="layui-fluid layui-form" lay-filter="formTest">
+    <div class="layui-row layui-col-space15">
+      <div class="layui-col-md12">
+        <div class="layui-card">
+          <!-- <div class="layui-card-header">新增商品</div> -->
+          <div class="layui-card-body" pad15 style="padding-bottom:0;">
+            <!-- 步骤条 -->
+            <div id="step_demo" class="step-body">
+                <div class="step-header" style="width:80%;overflow: hidden; padding-bottom:40px;">
+                    <ul>
+                        <li>
+                            <span class="step-name">选择商品分类</span>
+                        </li>
+                        <li>
+                            <span class="step-name">填写商品信息</span>
+                        </li>
+                        <li>
+                            <span class="step-name">维护商品属性</span>
+                        </li>
+                        <li>
+                            <span class="step-name">选择商品关联</span>
+                        </li>
+                    </ul>
+                </div>
+                <div class="step-content">
+                    <div class="step-list">
+                        <!-- 表单 -->
+                        <iframe id="iframe1" src="{:url('demo/step1')}" frameborder="0" style="width:100%;min-height:800px;"></iframe>
+
+                        <div class="layui-form-item layui-layout-admin">
+                          <div class="layui-input-block">
+                            <div class="layui-footer" style="left: 0;z-index:1;">
+                                <button class="layui-btn nextBtn">下一步,填写商品信息</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="step-list">
+                        <iframe src="{:url('demo/step2')}" frameborder="0" style="width:100%;min-height:800px;"></iframe>
+                        <div class="layui-form-item layui-layout-admin">
+                          <div class="layui-input-block">
+                            <div class="layui-footer" style="left: 0;z-index:1;">
+                                <button class="layui-btn layui-btn-primary preBtn">上一步</button>
+                                <button class="layui-btn nextBtn">下一步,维护商品属性</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="step-list">
+
+                        <div class="layui-form-item layui-layout-admin">
+                          <div class="layui-input-block">
+                            <div class="layui-footer" style="left: 0;z-index:1;">
+                                  <button class="layui-btn layui-btn-primary preBtn">上一步</button>
+                                  <button class="layui-btn nextBtn">下一步,选择商品关联</button>
+                                  <button class="layui-btn">完成，发布商品</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="step-list">
+                      
+                        <div class="layui-form-item layui-layout-admin">
+                          <div class="layui-input-block">
+                            <div class="layui-footer" style="left: 0;z-index:1;">
+                                  <button class="layui-btn layui-btn-primary last-preBtn">上一步</button>
+                                  <button class="layui-btn">完成，发布商品</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+                    <div class="step-list">
+                      
+                        <div class="layui-form-item layui-layout-admin">
+                          <div class="layui-input-block">
+                            <div class="layui-footer" style="left: 0;z-index:1;">
+                                  <button class="layui-btn layui-btn-primary last-preBtn">上一步</button>
+                                  <button class="layui-btn">完成，发布商品</button>
+                            </div>
+                          </div>
+                        </div>
+                    </div>
+
+                </div>
+            </div>
+            <!-- 步骤条 end -->
+           
+
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+  <script>
+    layui.config({
+      base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+      steps: 'lib/steps/index' 
+    }).use(['steps', 'form'], function () {
+      var form = layui.form;
+      var $ = layui.$;
+      var $step= $("#step_demo").step();
+
+      //步骤按钮
+      $('.layui-footer .nextBtn').click(function(ev) {
+          //点击确认触发 iframe 内容中的按钮提交
+          var submit = $('#iframe1').contents().find("#layuiadmin-app-form-submit");
+          submit.click();
+
+      })
+
+      //序号按钮
+      // $(".jump-steps").on('click',function () {
+      //   console.log( $(this).index() )
+      //   // var step_id = $(this).attr("data-step");
+      //   // steps.goStep(step_id);
+      // });
+   
+      // var $ = layui.$;
+      // var $step= $("#step_demo").step();
+      // $("#preBtn").click(function(event) {
+      //     $step.preStep();//上一步
+      // });
+      // $("#goBtn").click(function(event) {
+      //     $step.goStep(3);//到指定步
+      // });
+    });
+  </script>
+
+</body>
+
+</html>

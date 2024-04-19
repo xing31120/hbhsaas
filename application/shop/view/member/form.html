@@ -1,0 +1,129 @@
+{layout name="public:simple" /}
+<style scoped>
+    .layui-form-label {
+        width: 140px;
+    }
+</style>
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <div class="layui-card-header">{$Think.lang.MemberEdit}</div>
+                <form action="{:url('register')}" method="post" class="layui-form form-inline" id="goods-type-form"  method="post">
+                    <div class="layui-card-body" pad15>
+                        <div class="layui-form" wid120 lay-filter="">
+                            <input type="hidden" name="id" value="{$info.id|default='0'}">
+                            <input type="hidden" name="role" value="{$role}">
+                            <div class="layui-form-item">
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Name}：</label>
+                                    <div class="layui-form-mid">
+                                        <div class="layui-input-inline">
+                                            <input type="text" name="name" value="{$info.name|default=''}"  class="layui-input"  placeholder="">
+                                        </div>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">Email：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="email" name="email" value="{$info.email|default=''}"  class="layui-input"   placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Phone}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="phone" value="{$info.phone|default=''}"  class="layui-input"  placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Password}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" name="password" value="{$info.password|default=''}"  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ConfirmPassword}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="password" name="confirm_password" value="{$info.confirm_password|default=''}"  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ExpiryDate}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="expiry_date" value="{$info.expiry_date|default=''}" id="LAY-component-form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+<!--                                        <input type="text" name="date" id="LAY-component-form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">-->
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ResidueDegree}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="residue_quantity" value="{$info.residue_quantity|default='0'}"  class="layui-input " placeholder="">
+                                    </div>
+                                </div>
+
+                                <div class="layui-form-item">
+                                    <div class="layui-input-block">
+                                        <button class="layui-btn layui-hide" id="form_submit" lay-submit lay-filter="submit" type="submit"><i class="iconfont"></i>提交
+                                        </button>
+                                        <!--                                        <button class="layui-btn layui-btn-primary reset" type="reset">重置</button>-->
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.all.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use([ 'index', 'form', 'upload', 'laydate'], function () {
+        var $ = layui.$;
+        var table = layui.table,
+            form = layui.form,
+            upload = layui.upload,
+            element = layui.element;
+        var laydate = layui.laydate;
+        var upload_id = ''
+        layui.laydate.render({
+            elem: '#LAY-component-form-group-date'
+        });
+
+
+//监听提交
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                url: "{:url('register')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('form').serializeArray(),
+                success: function (res) {
+                    if (res.code === 0) {
+                        layer.msg(res.msg, {icon: 1, time: 2000}, function () {
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('{$Think.lang.OperateFailed}');
+                }
+            });
+            return false;
+        });
+
+
+    });
+</script>

@@ -1,0 +1,180 @@
+{layout name="public:layout" /}
+
+<div class="form-content">
+    <div class="layui-card data-container">
+        <div class="layui-card-header"><i class="iconfont">&#xe755;</i> {$title}</div>
+        <div class="layui-card-body">
+            <table class="layui-hide" id="dataTable" lay-filter="dataTable"></table>
+
+            {// 顶部工具栏}
+            <script type="text/html" id="toolbar">
+                <div class="dataToolbar">
+                    <div class="layui-inline">
+                        <input class="layui-input" name="keywords" id="keywords" value="{:input('keywords')}" autocomplete="on" placeholder="请输入权限节点名称">
+                    </div>
+                    <button class="layui-btn search-btn" data-type="reload"><i class="iconfont">&#xe679;</i> 查询</button>
+                    {eq name="$Think.session.uid" value="1"}
+                    <div class="layui-inline">
+                        <a href="{:url('add')}" class="layui-btn larry-btn-dark"><i class="iconfont">&#xe692;</i> 添加权限节点</a>
+                    </div>
+                    {/eq}
+                </div>
+            </script>
+
+            {// 行内工具栏}
+            <script type="text/html" id="barTool">
+                {eq name="$Think.session.uid" value="1"}
+                <a href="{:url('edit')}?id={{ d.id }}" class="layui-btn layui-btn-xs">编辑</a>
+                <a href='javascript:;' onclick="del('{{d.id}}')"  class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
+                {/eq}
+            </script>
+
+            {// 状态}
+            <script type="text/html" id="status">
+                {eq name="$Think.session.uid" value="1"}
+                {{# if(d.status == 1){ }}
+                <button class="layui-btn layui-btn-xs" onclick="setStatus('{{d.id}}', '{{d.status}}')">启用</button>
+                {{# } else { }}
+                <button class="layui-btn layui-btn-xs layui-btn-danger" onclick="setStatus('{{d.id}}', '{{d.status}}')">禁用</button>
+                {{# } }}
+                {else/}
+                {{# if(d.status == 1){ }}
+                <button class="layui-btn layui-btn-xs">启用</button>
+                {{# } else { }}
+                <button class="layui-btn layui-btn-xs layui-btn-danger">禁用</button>
+                {{# } }}
+                {/eq}
+            </script>
+
+            {// 权限结构}
+            <script type="text/html" id="title">
+                {{# if(d.level == 1){ }}
+                <p style="text-indent:{{(d.level * 20) + 'px'}};"><i class="iconfont">&#xe605;</i>&nbsp;{{d.title}}</p>
+                {{# } else if (d.level == 2) { }}
+                <p style="text-indent:{{(d.level * 20) + 'px'}};"><i class="iconfont">&#xe9cf;</i>&nbsp;{{d.title}}</p>
+                {{# } else { }}
+                <p style="text-indent:{{(d.level * 20) + 'px'}};"><i class="iconfont">&#xe9cd;</i>&nbsp;{{d.title}}</p>
+                {{# } }}
+            </script>
+
+            {// 权限类型}
+            <script type="text/html" id="level">
+                {{# if (d.level == 1) { }}
+                <span class="layui-danger">模块</span>
+                {{# } else if (d.level == 2) { }}
+                <span class="layui-success">控制器</span>
+                {{# } else { }}
+                <span class="layui-blue">方法</span>
+                {{# } }}
+            </script>
+        </div>
+    </div>
+</div>
+
+<script>
+    //JavaScript代码区域
+    layui.config({
+        base: '/static/layui/lay/modules/'
+    });
+    layui.use(['element', 'jquery', 'layer', 'form', 'table'], function(){
+        var element = layui.element,
+            $ = layui.jquery,
+            layer = layui.layer,
+            form = layui.form,
+            table = layui.table;
+
+        table.render({
+            elem : '#dataTable'
+            ,url : '{:url("nodeList")}'
+            ,cellMinWidth: 80
+            ,height: 'full-100'
+            // ,page: {
+            //     prev: '上一页',
+            //     next: '下一页',
+            //     layout: ['prev', 'page', 'next', 'skip', 'count', 'limit']
+            // }
+            // ,toolbar: 'default'  // 开启顶部工具栏（默认模板）
+            ,toolbar: '#toolbar' // 指定顶部工具栏模板
+            // ,even: true  // 隔行背景
+            ,title: '权限节点表'  // 表格标题，用户导出数据文件名
+            ,text: {  // 指定无数据或数据异常时的提示文本
+                none: '暂无相关数据' //默认：无数据。注：该属性为 layui 2.2.5 开始新增
+            }
+            ,id: 'dataTable'
+            ,cols: [[  // 表格列标题及数据
+                {title: '#', type: 'numbers'}
+                ,{checkbox: true}
+                ,{field: 'id', width: 60, title: 'ID', sort: true, align: 'center'}
+                ,{field: 'title', width: 200, title: '权限结构', templet: '#title'}
+                ,{field: 'name', width: 250, title: '权限节点', align: 'center'}
+                ,{field: 'status', width: 80, title: '状态', align: 'center', templet: '#status'}
+                ,{field: 'remark', width: 200, title: '权限描述', align: 'center'}
+                ,{field: 'sort', width: 80, title: '排序', sort: true, align: 'center'}
+                ,{field: 'pid', width: 80, title: '父ID', sort: true, align: 'center'}
+                ,{field: 'level', width: 100, title: '权限类型', align: 'center', templet: '#level'}
+                ,{fixed: 'right', width: 200, title: '操作', align:'center', toolbar: '#barTool'}
+            ]], done() {
+                // 搜索功能
+                var $ = layui.$, active = {
+                    reload: function(){
+                        var keywords = $('#keywords');
+
+                        //执行重载
+                        table.reload('dataTable', {
+                            page: {
+                                curr: 1 //重新从第 1 页开始
+                            }
+                            ,where: {
+                                keywords: keywords.val()
+                            }
+                        }, 'data');
+                    }
+                };
+                $('.search-btn').on('click', function(){
+                    var type = $(this).data('type');
+                    active[type] ? active[type].call(this) : '';
+                });
+            }
+        });
+    });
+
+    // 设置显示状态
+    function setStatus(id, is_able) {
+        $.ajax({
+            url: "{:url('setStatus')}",
+            type: 'POST',
+            dataType: 'json',
+            data: {
+                id : id,
+                is_able : is_able
+            },
+            beforeSend: function(){},
+            success: function (data) {
+                if (data.status == 1) {
+                    layer.msg(data.message, {
+                        time: 1500
+                    },function(){
+                        parent.window.location.reload();
+                        var index = parent.layer.getFrameIndex(window.name); //获取窗口索引
+                        parent.layer.close(index);
+                    });
+                } else {
+                    layer.alert(data.message, {
+                        icon: 2
+                    },function(){
+                        window.location.reload();
+                    });
+                }
+            }
+        });
+    }
+
+    function del(id) {
+        layer.confirm('您确定要删除吗？', {
+            icon: 3
+        }, function () {
+            window.location.href="doDelete?id="+id;
+        });
+    }
+</script>
+</div>

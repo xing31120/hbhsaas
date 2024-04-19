@@ -1,0 +1,142 @@
+{layout name="public:simple" /}
+<style scoped>
+    .text-red {
+        color: #ff0000;
+    }
+    .region_container .layui-btn+.layui-btn {
+         margin-left: 0px;
+         margin-right: 0px;
+    }
+    .region_container .layui-btn {
+        margin-right: 10px !important;
+    }
+    .layui-form-label {
+        width: 140px;
+    }
+</style>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <form action="{:url('save')}" method="post" class="layui-form form-inline" id="goods-type-form">
+                    <input type="hidden" name="id" id="id" value="{$info.id|default='0'}">
+                    <div class="layui-card-body" pad15>
+                        <div class="layui-form" wid120 lay-filter="">
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.PageNameZh}：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="page_name_zh" value="{$info.page_name_zh|default=''}"
+                                           class="layui-input"
+                                           lay-verify="required" lay-reqText="{$Think.lang.PageNameZh} Required" placeholder="Entry {$Think.lang.PageNameZh}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.PageNameEn}：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="page_name_en" value="{$info.page_name_en|default=''}"
+                                           class="layui-input"  lay-reqText="{$Think.lang.PageNameEn} Required" placeholder="Entry {$Think.lang.PageNameEn}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.PagePath}：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="page_path" value="{$info.page_path|default=''}"
+                                           class="layui-input"  lay-reqText="{$Think.lang.PagePath} Required" placeholder="Entry {$Think.lang.PagePath}">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">SEO Title：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="seo_title" value="{$info.seo_title|default=''}"
+                                           class="layui-input"  lay-reqText="SEO Title Required" placeholder="Entry SEO Title">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">SEO Keywords：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="seo_keywords" value="{$info.seo_keywords|default=''}"
+                                           class="layui-input"  lay-reqText="SEO Title Required" placeholder="Entry SEO Keywords">
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">SEO Description：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="seo_description" value="{$info.seo_description|default=''}"
+                                           class="layui-input"  lay-reqText="SEO Description Required" placeholder="Entry SEO Description">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-hide">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="submit" type="submit"
+                                            id="form_submit"><i class="iconfont"></i>提交
+                                    </button>
+                                    </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.all.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+    }).use([ 'index', 'form', 'upload', 'laydate'], function () {
+        var $ = layui.$;
+        var table = layui.table,
+            form = layui.form,
+            upload = layui.upload,
+            element = layui.element;
+        var laydate = layui.laydate;
+        var upload_id = ''
+        layui.laydate.render({
+            elem: '#contract_time'
+            ,type: 'datetime'
+        });
+        layui.laydate.render({
+            elem: '#end_time'
+            ,type: 'datetime'
+        });
+
+
+//监听提交
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                url: "{:url('save')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('form').serializeArray(),
+                success: function (res) {
+                    if (res.code === 0) {
+                        layer.msg(res.msg, {icon: 1, time: 2000}, function () {
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('{$Think.lang.OperateFailed}');
+                }
+            });
+            return false;
+        });
+
+
+    });
+</script>
