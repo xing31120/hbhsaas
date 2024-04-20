@@ -29,6 +29,10 @@ class Index extends Base {
         return $this->fetch();
     }
 
+    function about2() {
+        return $this->fetch();
+    }
+
     function contact() {
         return $this->fetch();
     }
