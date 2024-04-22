@@ -28,14 +28,17 @@ class Index extends Base {
     function about() {
         return $this->fetch();
     }
-
-    function about2() {
-        return $this->fetch();
-    }
-
     function contact() {
         return $this->fetch();
     }
+
+    // 翰德学校 介绍
+    function shop_1(){
+        return $this->fetch();
+    }
+
+
+
 
     function index_dance_school(){
         return $this->fetch();
