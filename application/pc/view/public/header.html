@@ -79,6 +79,22 @@ Mobile Menu
             <ul>
                 <li><a href="{:url('index/index')}">Home</a></li>
                 <li><a href="{:url('index/about')}">About</a></li>
+                <li>
+                    <a href="#">Pages</a>
+                    <ul class="sub-menu">
+                        {foreach $campus_list as $shop_id => $value}
+                        <li class="menu-item-has-children">
+                            <a href="/about.html">{$value.name_en}</a>
+                            <ul class="sub-menu">
+                                {foreach $value.data as $shop_id => $campus}
+                                <li><a href="{$campus.url}">{$campus.campus_name_en}</a></li>
+                                {/foreach}
+                            </ul>
+                        </li>
+                        {/foreach}
+
+                    </ul>
+                </li>
 <!--                <li class="menu-item-has-children">
                     <a href="#">Courses</a>
                     <ul class="sub-menu">
@@ -128,7 +144,7 @@ Header Area
                                 <ul class="sub-menu">
                                     {foreach $campus_list as $shop_id => $value}
                                     <li class="menu-item-has-children">
-                                        <a href="about.html">{$value.name_en}</a>
+                                        <a href="/about.html">{$value.name_en}</a>
                                         <ul class="sub-menu">
                                             {foreach $value.data as $shop_id => $campus}
                                             <li><a href="{$campus.url}">{$campus.campus_name_en}</a></li>
@@ -158,7 +174,7 @@ Header Area
                                     </li>
                                 </ul>
                             </li>
-                            -->
+
                             <li class="menu-item-has-children">
                                 <a href="#">Courses</a>
                                 <ul class="sub-menu">
@@ -167,6 +183,8 @@ Header Area
                                     <li><a href="{:url('Classes/schedule_classes')}">Class Schedule</a></li>
                                 </ul>
                             </li>
+                            -->
+
                             <li><a href="{:url('BookCourse/index')}">Reservation</a></li>
                             <li>
                                 <a href="{:url('index/contact')}">Contact Us</a>
