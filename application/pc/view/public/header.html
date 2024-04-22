@@ -108,70 +108,87 @@ Header Area
 }
 </style>
 <header class="th-header header-layout3 header-absolute">
-    <div class="sticky-wrapper">
-        <!-- Main Menu Area -->
-        <div class="menu-area">
-            <div class="container">
-                <div class="row align-items-center justify-content-between">
-                    <div class="col-auto">
-                        <div class="header-logo">
-                            <a href="{:url('index/index')}"><img src="__YUN_PUBLIC_DIR__/static/assets/img/hand_by_hand-log.png" alt="Danza"></a>
-                        </div>
+<div class="sticky-wrapper">
+    <!-- Main Menu Area -->
+    <div class="menu-area">
+        <div class="container">
+            <div class="row align-items-center justify-content-between">
+                <div class="col-auto">
+                    <div class="header-logo">
+                        <a href="{:url('index/index')}"><img src="__YUN_PUBLIC_DIR__/static/assets/img/hand_by_hand-log.png" alt="Danza"></a>
                     </div>
-                    <div class="col-auto">
-                        <nav class="main-menu d-none d-lg-inline-block">
-                            <ul>
-                                <li><a href="{:url('index/index')}">Home</a></li>
-                                <li><a href="{:url('index/about')}">About</a></li>
-                                <!--
-                                <li class="menu-item-has-children">
-                                    <a href="#">Pages</a>
-                                    <ul class="sub-menu">
-                                        <li class="menu-item-has-children"><a href="#">ShopA</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="shop.html">ShopA2</a></li>
-                                                <li><a href="shop.html">ShopA3</a></li>
-                                            </ul>
-                                        </li>
-                                        <li class="menu-item-has-children"><a href="#">ShopB</a>
-                                            <ul class="sub-menu">
-                                                <li><a href="shop.html">ShopB2</a></li>
-                                                <li><a href="shop.html">ShopB3</a></li>
-                                            </ul>
-                                        </li>
-                                    </ul>
-                                </li>
-                                -->
-                                <li class="menu-item-has-children">
-                                    <a href="#">Courses</a>
-                                    <ul class="sub-menu">
-                                        <li><a href="{:url('Classes/dance_classes')}">Dance Classes</a></li>
-                                        <li><a href="{:url('Classes/single_classes')}">Single Classes</a></li>
-                                        <li><a href="{:url('Classes/schedule_classes')}">Class Schedule</a></li>
-                                    </ul>
-                                </li>
-                                <li><a href="{:url('BookCourse/index')}">Reservation</a></li>
-                                <li>
-                                    <a href="{:url('index/contact')}">Contact Us</a>
-                                </li>
-                            </ul>
-                        </nav>
-                        <button type="button" class="th-menu-toggle style3 d-inline-block d-lg-none"><i class="far fa-bars"></i></button>
-                    </div>
-                    <div class="col-auto d-none d-xl-block">
-                        <div class="header-button">
-                            {if !empty($userName)}
-                            <a href="{:url('user/qrcode')}" class="user-name" style="">{$userName}</a>
-                            <a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>
-                            {else/}
-                            <a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a>
-                            {/if}
+                </div>
+                <div class="col-auto">
+                    <nav class="main-menu d-none d-lg-inline-block">
+                        <ul>
+                            <li><a href="{:url('index/index')}">Home</a></li>
+                            <li><a href="{:url('index/about')}">About</a></li>
+                            <li class="menu-item-has-children">
+                                <a href="#">Pages</a>
+                                <ul class="sub-menu">
+                                    {foreach $campus_list as $shop_id => $value}
+                                    <li class="menu-item-has-children">
+                                        <a href="about.html">{$value.name_en}</a>
+                                        <ul class="sub-menu">
+                                            {foreach $value.data as $shop_id => $campus}
+                                            <li><a href="{$campus.url}">{$campus.campus_name_en}</a></li>
+                                            {/foreach}
+                                        </ul>
+                                    </li>
+                                    {/foreach}
 
-                        </div>
+                                </ul>
+                            </li>
+
+                            <!--
+                            <li class="menu-item-has-children">
+                                <a href="#">Pages</a>
+                                <ul class="sub-menu">
+                                    <li class="menu-item-has-children"><a href="#">ShopA</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="shop.html">ShopA2</a></li>
+                                            <li><a href="shop.html">ShopA3</a></li>
+                                        </ul>
+                                    </li>
+                                    <li class="menu-item-has-children"><a href="#">ShopB</a>
+                                        <ul class="sub-menu">
+                                            <li><a href="shop.html">ShopB2</a></li>
+                                            <li><a href="shop.html">ShopB3</a></li>
+                                        </ul>
+                                    </li>
+                                </ul>
+                            </li>
+                            -->
+                            <li class="menu-item-has-children">
+                                <a href="#">Courses</a>
+                                <ul class="sub-menu">
+                                    <li><a href="{:url('Classes/dance_classes')}">Dance Classes</a></li>
+                                    <li><a href="{:url('Classes/single_classes')}">Single Classes</a></li>
+                                    <li><a href="{:url('Classes/schedule_classes')}">Class Schedule</a></li>
+                                </ul>
+                            </li>
+                            <li><a href="{:url('BookCourse/index')}">Reservation</a></li>
+                            <li>
+                                <a href="{:url('index/contact')}">Contact Us</a>
+                            </li>
+                        </ul>
+                    </nav>
+                    <button type="button" class="th-menu-toggle style3 d-inline-block d-lg-none"><i class="far fa-bars"></i></button>
+                </div>
+                <div class="col-auto d-none d-xl-block">
+                    <div class="header-button">
+                        {if !empty($userName)}
+                        <a href="{:url('user/qrcode')}" class="user-name" style="">{$userName}</a>
+                        <a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>
+                        {else/}
+                        <a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a>
+                        {/if}
+
                     </div>
                 </div>
             </div>
         </div>
     </div>
+</div>
 </header>
 

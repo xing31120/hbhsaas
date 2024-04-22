@@ -4,6 +4,7 @@ namespace app\pc\controller;
 use app\common\model\HbhCourse;
 use app\common\model\HbhCourseCat;
 use app\common\model\HbhSeoConfig;
+use app\common\model\HbhShopCampus;
 use think\Controller;
 use auth\Auth;
 use app\common\model\ShopAuthMenu as Menu;
@@ -62,9 +63,11 @@ class Base  extends Controller{
         $course_list = (new HbhCourse())->getAllCourseList($this->shop_id);
         $this->assign('course_list', $course_list);
 
-//        $this->shop_id = session('shop_id');//初始化应用ID
         $this->hbh_user = json_decode(session('hbh_user'), 1);//初始化应用ID
-
+        //所有学校和校区
+        $campus_list = (new HbhShopCampus())->getAllCampusShopList();
+//pj($campus_list);
+        $this->assign('campus_list', $campus_list);
         $this->assign('shop_id', $this->shop_id);
         $this->assign('userInfo', $this->hbh_user);
         $this->assign('userName', session('hbh_name'));

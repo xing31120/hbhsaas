@@ -1,8 +1,8 @@
 <?php
 namespace app\common\model;
-use app\common\model\basic\SingleSubData;
+use app\common\model\basic\Single;
 
-class HbhShop extends SingleSubData {
+class HbhShop extends Single {
     public $mcName = 'hbh_shop_';
 //    public $selectTime = 600;
     public $mcTimeOut = 600;
