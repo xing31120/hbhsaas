@@ -1,8 +1,38 @@
 {include file="public/header"/}
 <style>
-.th-btn.btn-sx{
-    width: 49.4%;
+
+
+@media screen and (max-width: 400px) {
+    .th-btn.btn-sx{
+        width: 49%;
+    }
 }
+@media screen and (min-width: 401px) {
+    .th-btn.btn-sx {
+        width: 49.4%;
+    }
+}
+@media screen and (min-width: 800px) {
+    .th-btn.btn-sx {
+        width: 49.7%;
+    }
+}
+
+@media screen and (max-width: 801px) {
+    .hero-3 .hero-img{
+        top:65px;
+    }
+}
+
+
+@media screen and (min-width: 800px) {
+    .hero-3 .hero-img{
+        top:145px;
+    }
+}
+
+
+
 .hero-style3 {
     max-width: max-content;
 }
@@ -11,11 +41,12 @@
 Hero Area
 ==============================-->
 <div class="th-hero-wrapper hero-3" id="hero">
-    <div class="th-hero-bg" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/hero_bg_1.jpg">
+<!--    data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/hero_bg_1.jpg"-->
+    <div class="th-hero-bg" >
 
     </div>
     <div class="container">
-        <div class="hero-img jump" style="top:125px;">
+        <div class="hero-img jump" style="">
             <img src="__YUN_PUBLIC_DIR__/static/assets/img/hero/nenya-1.png" alt="">
         </div>
         <div class="hero-style3">

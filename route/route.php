@@ -37,7 +37,7 @@ Route::domain(Env::get('route.domain_pc','pc'),function(){
     Route::rule('index-3-onepage','Index/index_onepage_3');
     Route::rule('dance-classes','Classes/dance_classes');
     Route::rule('single-classes','Classes/single_classes');
-    Route::rule('class-schedule','Classes/schedule_classes');
+    Route::rule('schedule-classes','Classes/schedule_classes');
 
 
     Route::rule('account','Auth/login');
