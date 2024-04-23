@@ -59,5 +59,7 @@ class Index extends Base {
     function index_onepage_3(){
         return $this->fetch();
     }
-
+    function about2() {
+        return $this->fetch();
+    }
 }
