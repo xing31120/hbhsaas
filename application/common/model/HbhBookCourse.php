@@ -1,24 +1,46 @@
 <?php
 namespace app\common\model;
 use app\common\model\basic\SingleSubData;
+use think\facade\Lang;
 
 class HbhBookCourse extends SingleSubData {
     public $mcName = 'hbh_book_course_';
 //    public $selectTime = 600;
     public $mcTimeOut = 600;
 
-    //状态 0:待签到 10:签到完成 4:删除
+    //状态 0:待签到 10:签到完成 40: 取消预约
     const status_wait = 0;
-    const status_delete = 4;
+    const status_cancel = 40;
     const status_end = 10;
 
-    //确认状态 0:待确认 10:确认完成
+    //确认状态 0:待确认 10:确认完成 40: 取消预约
     const status_confirm_wait = 0;
     const status_confirm_end = 10;
+    const status_confirm_cancel = 40;
 
 
-    function delAllByUid($custom_uid){
+    static function getStatusText($status){
+        $text = '';
+        if($status == self::status_wait){
+            $text = Lang::get('Booked');
+        }elseif ($status == self::status_cancel){
+            $text = Lang::get('Cancel');
+        }elseif ($status == self::status_end){
+            $text = Lang::get('SignedIn');
+        }
+        return $text;
+    }
 
+    static function getStatusConfirmText($status){
+        $text = '';
+        if($status == self::status_confirm_wait){
+            $text = Lang::get('ConfirmWait');
+        }elseif ($status == self::status_confirm_cancel){
+            $text = Lang::get('ConfirmCancel');
+        }elseif ($status == self::status_confirm_end){
+            $text = Lang::get('ConfirmBooked');
+        }
+        return $text;
     }
 
     /**

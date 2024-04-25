@@ -73,7 +73,10 @@ return [
     //预约  Book Course
     'Booked' =>'已预约',
     'AddBooked' =>'新增预约',
-    'SignIn' =>'已签到',
+    'SignedIn' =>'已签到',
+    'ConfirmWait' =>'待确认',
+    'ConfirmBooked' =>'确认预约',
+    'ConfirmCancel' =>'取消预约',
     'Student' =>'学员',
     'AppointmentTime' =>'预约时间',
     'PleaseSelectAppointmentRecord' =>'请选择预约记录',

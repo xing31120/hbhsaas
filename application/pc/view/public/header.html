@@ -95,6 +95,7 @@ Mobile Menu
 
                     </ul>
                 </li>
+                <!--
 <               <li class="menu-item-has-children">
                     <a href="#">Courses</a>
                     <ul class="sub-menu">
@@ -107,6 +108,8 @@ Mobile Menu
                         <li><a href="{:url('Index/index-ballet-studio')}">ballet_studio</a></li>
                     </ul>
                 </li>
+                -->
+
                 <li><a href="{:url('BookCourse/index')}">Reservation</a></li>
                 <li><a href="{:url('index/contact')}">Contact Us</a></li>
                 <li><a href="{:url('User/qrcode')}">User</a></li>
@@ -144,11 +147,11 @@ Header Area
                             <li><a href="{:url('index/index')}">Home</a></li>
                             <li><a href="{:url('index/about')}">About</a></li>
                             <li class="menu-item-has-children">
-                                <a href="#">Pages</a>
+                                <a href="#">After School Training</a>
                                 <ul class="sub-menu">
                                     {foreach $campus_list as $shop_id => $value}
                                     <li class="menu-item-has-children">
-                                        <a href="/about.html">{$value.name_en}</a>
+                                        <a href="{:url($value['url'])}">{$value.name_en}</a>
                                         <ul class="sub-menu">
                                             {foreach $value.data as $shop_id => $campus}
                                             <li><a href="{$campus.url}">{$campus.campus_name_en}</a></li>

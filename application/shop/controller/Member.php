@@ -215,7 +215,7 @@ class Member extends Base {
         }
 
         unset($data['confirm_password']);
-        $data['shop_id'] = 1;
+        $data['shop_id'] = $this->shop_id;
         $card = '000'.getRandomCode(7);
 //        $data['role'] = 'student';
         $data['watch_history'] = '[]';

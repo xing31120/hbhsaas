@@ -57,7 +57,8 @@ class User extends Base {
             $item['course_name'] = $course_name_list[$item['course_id']] ?? '';
             $item['teacher_name'] = $teacher_name_list[$item['teacher_uid']] ?? '';
 //            $item['student_name'] = $student_name_list[$item['custom_uid']] ?? '';
-            $item['status_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Booked') : Lang::get('SignIn');
+//            $item['status_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Booked') : Lang::get('SignedIn');
+            $item['status_text'] = HbhBookCourse::getStatusText($item['status']);
         }
 
 //        $res = ['count'=>$list['count'],'data'=>$list['list']];

@@ -87,7 +87,8 @@ class Bookcourse extends Base {
             $student_name = $student_list[$item['custom_uid']]['name'] ?? '';
             $phone = $student_list[$item['custom_uid']]['phone'] ?? '';
             $item['student_name'] = "{$student_name}({$phone})";
-            $item['status_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Booked') : Lang::get('SignIn');
+            $item['status_text'] = HbhBookCourse::getStatusText($item['status']);
+            $item['status_confirm_text'] = HbhBookCourse::getStatusConfirmText($item['status']);
         }
 
         $res = ['count'=>$list['count'],'data'=>$list['list']];

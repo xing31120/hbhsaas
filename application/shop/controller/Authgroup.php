@@ -30,7 +30,8 @@ class Authgroup extends Base{
         $map = []; // 将所有的查询条件封装到这个数组中
 
         // 条件1
-//        $map[] = ['status', '=', 1]; // 这里的等号不允许省略
+        $map[] = ['status', '=', 1]; // 这里的等号不允许省略
+        $map[] = ['shop_id', '=', $this->shop_id]; // 这里的等号不允许省略
 
         // 实现搜索功能
         $keywords = input('keywords');
@@ -38,7 +39,7 @@ class Authgroup extends Base{
             // 条件2
             $map[] = ['name', 'like', '%'.$keywords.'%'];
         }
-
+//pj($map);
         // 定义分页参数
         $limit = isset($_GET['limit']) ? $_GET['limit'] : 10;
         $page = isset($_GET['page']) ? $_GET['page'] : 1;
@@ -70,7 +71,7 @@ class Authgroup extends Base{
     {
         // 1. 获取的用户提交的信息
         $data = input();
-
+        $data['shop_id'] = $this->shop_id;
         // 2. 执行新增操作
         $res = AuthGroupModel::create($data);
 

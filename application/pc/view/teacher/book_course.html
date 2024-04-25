@@ -22,7 +22,7 @@
         border-radius: 10px;
     }
 
-    .state-2 {
+    .state-2, .state-3{
         background-color: transparent;
         border: 1px solid var(--theme-color);
         color: var(--theme-color);
@@ -43,11 +43,15 @@
         text-transform: uppercase;
         padding: 8px 20px;
         border-radius: 10px;
+        cursor: pointer;
     }
-          .select {
-            background: var(--theme-color) !important;
-            color: var(--white-color) !important;
-        }
+    .state-3{
+        background-color: var(--error-color);
+    }
+    .select {
+        background: var(--theme-color) !important;
+        color: var(--white-color) !important;
+    }
 </style>
 <section class="th-blog-wrapper space-top space-extra-bottom">
     <div class="container">
@@ -81,7 +85,8 @@
                                         </div>
                                         <div class="event-btn" style="right: 20px;top: 0;">
                                             <div class="state-1">已预约</div>
-                                            <div class="state-2">已签到</div>
+                                            <div class="state-2 confirm_book_course">待确认</div>
+                                            <div class="state-3 cancel_book_course">取消预约</div>
                                         </div>
                                     </div>
                                 </div>
@@ -120,6 +125,31 @@ Footer Area
     }
     ajaxList(nowPage)
 }
+
+function confirmBooked(booked_id){
+    $.ajax({
+        "url": "{:url('ajaxConfirm')}",
+        "data": {"id": booked_id},
+    }).done(function (rs) {
+        Qmsg.info(rs.msg);
+    }).fail(function (rs) {
+        Qmsg.error(rs.msg)
+    });
+
+}
+
+ function cancelBooked(booked_id){
+     $.ajax({
+         "url": "{:url('ajaxConfirm')}",
+         "data": {"id": booked_id},
+     }).done(function (rs) {
+         Qmsg.info(rs.msg);
+     }).fail(function (rs) {
+         Qmsg.error(rs.msg)
+     });
+ }
+
+
 function ajaxList(page){
     limit = 10;
     $.ajax({
@@ -131,7 +161,10 @@ function ajaxList(page){
 
         for (const rsKey in rs.list) {
             if(rs.list[rsKey].status == 0){
-                $status_html = '<div class="state-1">'+rs.list[rsKey].status_text+'</div>';
+                //'<div class="state-1">'+rs.list[rsKey].status_text+'</div>\n' +
+                $status_html =
+                    '<div class="state-2" onclick="confirmBooked('+rs.list[rsKey].id+')" data-id="'+rs.list[rsKey].id+'">'+rs.list[rsKey].confirm_text+'</div>\n' +
+                    '<div class="state-3" onclick="cancelBooked('+rs.list[rsKey].id+')" data-id="'+rs.list[rsKey].id+'">'+rs.list[rsKey].cancel_text+'</div>';
             }else{
                 $status_html = '<div class="state-2">'+rs.list[rsKey].status_text+'</div>';
             }
@@ -156,15 +189,8 @@ function ajaxList(page){
         let pageHtml = ''
         totalPage = Math.ceil(rs.count / limit)
         $('#now-page').html(page)
-         $('#total-page').html(totalPage)
-        // for (let index = 1; index <= rs.count; index++) {
-        //   pageHtml += '<li onclick="toPage('+index+')"><span id="page-' + index + '">' + index + '</span></li>';
-        // }
-        // $('#pagination').html(pageHtml)
-        // $('#prePage').html('');
-        // $('#prePage').after(pageHtml);
+        $('#total-page').html(totalPage)
         $('#detaiList').html(html);
-        // changeCheck(page)
 
     }).fail(function (rs) {
         layer.msg('{$Think.lang.OperateFailed}');
@@ -181,24 +207,7 @@ function changeCheck(page) {
     }
 }
 $(function () {
-
-    ajaxList(1)
-
-
-    // nowPage = 1
-    // totalPage = 0
-    // $('.page_btn').on('click',function (){
-    //     console.log($(this).data('id'))
-
-    //     if ($(this).data('id') === 'prePage') {
-    //         nowPage -= 1
-    //     }else {
-    //         nowPage += 1
-    //     }
-    //     $('#page_num').val(nowPage)
-    //     ajaxList(nowPage)
-    // })
-
+   ajaxList(1)
 })
 
 </script>

@@ -10,6 +10,7 @@ use auth\Auth;
 use app\common\model\ShopAuthMenu as Menu;
 use think\facade\Lang;
 use think\facade\Request;
+use think\facade\Session;
 
 class Base  extends Controller{
 
@@ -37,9 +38,16 @@ class Base  extends Controller{
      */
     protected function initialize(){
         $session_shop_id = session('shop_id');
-        if(empty(session('shop_id'))){
-            $session_shop_id = 1;
+        $get_shop_id = input('sid', 0); //学校ID, 也就是 shop_id
+        if(!empty($get_shop_id)){
+            Session::set('shop_id', $get_shop_id);
+            $this->shop_id = $get_shop_id;
         }
+        // 没有session
+        if(empty(session('shop_id')) && empty($get_shop_id)){
+            $this->shop_id = 1;
+        }
+
         $this->shop_id = $session_shop_id;//初始化应用ID
         //正式环境 要做菜单权限验证
 //        if(!config('app.app_debug')){

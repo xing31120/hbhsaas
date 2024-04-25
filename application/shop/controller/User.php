@@ -100,6 +100,7 @@ class User extends Base{
 
         $data['logintime'] = time();
         $data['loginip'] = $this -> request -> ip();
+        $data['shop_id'] = $this->shop_id;
 
         // 2. 执行新增操作，多表插入记录，开启事务操作
         Db::startTrans();

@@ -71,7 +71,9 @@ class Teacher extends Base {
             $student_name = $student_list[$item['custom_uid']]['name'] ?? '';
             $phone = $student_list[$item['custom_uid']]['phone'] ?? '';
             $item['student_name'] = "{$student_name}({$phone})";
-            $item['status_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Booked') : Lang::get('SignIn');
+            $item['status_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Booked') : Lang::get('SignedIn');
+            $item['confirm_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('ConfirmBooked') : '';
+            $item['cancel_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('ConfirmCancel') : '';
         }
 
 //        $res = ['count'=>$list['count'],'data'=>$list['list']];
@@ -80,6 +82,10 @@ class Teacher extends Base {
         return adminOut($list);
     }
 
+    /**
+     * 老师确认到场学生
+     * @return \think\response\Json
+     */
     function ajaxConfirm(){
         $id = input('id', 0);
         if(empty($id)){
@@ -95,6 +101,7 @@ class Teacher extends Base {
         $up_data['status_confirm'] = HbhBookCourse::status_confirm_end;
         $up_data['status'] = HbhBookCourse::status_end;
         $res_up =  (new HbhBookCourse())->updateById($id,  $up_data);
+
         if(!$res_up){
             Db::rollback();
             return adminOutError(Lang::get('OperateFailed'));
@@ -109,10 +116,42 @@ class Teacher extends Base {
         $res = (new HbhUsers())->reduceWallet($book_course_info['custom_uid'], 1);
         if(!$res['result']){
             Db::rollback();
-            return adminOutError(Lang::get('OperateFailed'));
+            return adminOutError($res);
         }
         Db::commit();
         return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+
+    }
+
+    /**
+     * 老师 取消到场学生的预约
+     * @return \think\response\Json
+     */
+    function ajaxCancel(){
+        $id = input('id', 0);
+        if(empty($id)){
+            return adminOutError(Lang::get('PleaseSelectAppointmentRecord'));
+        }
+        $book_course_info = (new HbhBookCourse())->info($id);
+        if(empty($book_course_info)){
+            return adminOutError(Lang::get('PleaseSelectAppointmentRecord'));
+        }
+        if($book_course_info['status'] == HbhBookCourse::status_end || $book_course_info['status'] == HbhBookCourse::status_cancel) {
+            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+        }
+
+        Db::startTrans();
+        $up_data['update_time'] = time();
+        $up_data['status_confirm'] = HbhBookCourse::status_confirm_cancel;
+        $up_data['status'] = HbhBookCourse::status_cancel;
+        $res_up =  (new HbhBookCourse())->updateById($id,  $up_data);
+        if(!$res_up){
+            Db::rollback();
+            return adminOutError(Lang::get('OperateFailed'));
+        }
+
+        Db::commit();
+        return adminOut(Lang::get('OperateSuccess'));
 
     }
 

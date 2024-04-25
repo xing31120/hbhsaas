@@ -31,7 +31,7 @@ class Classtime extends Base {
         $op['page'] = isset($data['page']) ? intval($data['page']) : 1;
         $op['limit'] = $data['limit'] ?? $limit;
         $op['order'] = 'sort asc,id asc';
-        $list = (new HbhClassTime())->getList($op, 0);
+        $list = (new HbhClassTime())->getList($op);
 
         $res = ['count'=>$list['count'],'data'=>$list['list']];
         return adminOut($res);
@@ -127,6 +127,7 @@ class Classtime extends Base {
             return adminOutError(['msg' => Lang::get('ParameterError')]);
         }
         if (empty($id)) {
+            $data['shop_id'] = $this->shop_id;
             $course_id = (new HbhClassTime())->insertGetId($data);
         } else {
             $course_id =  (new HbhClassTime())->updateById($id,  $data);

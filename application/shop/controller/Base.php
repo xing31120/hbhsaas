@@ -121,8 +121,10 @@ class Base  extends Controller{
         $userInfo = (new ShopUser())->info($uid);
         $access = (new ShopAuthGroupAccess())->where('user_id', $uid)->select()->toArray();
         $role_id_arr = array_column($access, 'role_id', 'user_id');
-
-        if(in_array(1, $role_id_arr)){
+        $role_list = (new ShopAuthGroup())->whereIn('id', $role_id_arr)->select()->toArray();
+        $role_name = array_column($role_list,'name');
+//pj($role_list);
+        if(in_array('superadmin', $role_name)){
             return true;
         }
         return false;
