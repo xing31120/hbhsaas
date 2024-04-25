@@ -97,6 +97,13 @@ class Bookcourse extends Base {
 
     function ajaxSetShow(){
         $data = input();
+        $info = (new HbhBookCourse())->info($data['id']);
+        $uid = $info['custom_uid'] ?? 0;
+        $userInfo = (new HbhUsers())->info($uid);
+        if(empty($userInfo)){
+            return errorReturn(Lang::get('UserNotFound'));
+        }
+        $update['is_unlimited_number'] = $userInfo['is_unlimited_number'];
         $update['status'] = $data['status'];
         $bool = (new HbhBookCourse())->updateById($data['id'], $update);
         if($bool){

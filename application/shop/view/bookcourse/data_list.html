@@ -29,7 +29,7 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">{$Think.lang.Student}</label>
                                             <div class="layui-input-inline">
-                                                <select name="custom_uid"  lay-reqText="Please Select Category">
+                                                <select name="custom_uid"  lay-reqText="Please Select Category" lay-search>
                                                     <option value="">{$Think.lang.PleaseSelect}</option>
                                                     {foreach $student_list as $key=>$value}
                                                     <option value="{$value.id}" >{$value.name}</option>
