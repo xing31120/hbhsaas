@@ -54,6 +54,7 @@ class User extends Base {
 //        $student_name_list = array_column($student_list, 'name', 'id');
 //pj($student_name_list);
         foreach ($list['list'] as &$item) {
+            $item['day_short'] = date('M d', strtotime($item['day']));
             $item['course_name'] = $course_name_list[$item['course_id']] ?? '';
             $item['teacher_name'] = $teacher_name_list[$item['teacher_uid']] ?? '';
 //            $item['student_name'] = $student_name_list[$item['custom_uid']] ?? '';
