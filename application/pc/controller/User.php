@@ -13,6 +13,11 @@ use think\facade\Lang;
 
 class User extends Base {
 
+    function index()
+    {
+        return $this->fetch();
+    }
+
     function qrcode(){
         if(empty($this->hbh_user)){
             $this->redirect('auth/login');
