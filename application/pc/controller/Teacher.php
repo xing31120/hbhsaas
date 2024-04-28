@@ -95,13 +95,15 @@ class Teacher extends Base {
         if(empty($book_course_info)){
             return adminOutError(Lang::get('PleaseSelectAppointmentRecord'));
         }
+        $info_course = (new HbhCourse())->info($book_course_info['course_id']);
 
         Db::startTrans();
+        //更新预约数据
         $up_data['update_time'] = time();
         $up_data['status_confirm'] = HbhBookCourse::status_confirm_end;
         $up_data['status'] = HbhBookCourse::status_end;
+        $up_data['is_pay'] = HbhBookCourse::is_pay_true;
         $res_up =  (new HbhBookCourse())->updateById($id,  $up_data);
-
         if(!$res_up){
             Db::rollback();
             return adminOutError(Lang::get('OperateFailed'));
@@ -113,7 +115,8 @@ class Teacher extends Base {
         }
 
         // 如果是未签到的用户, 要扣除余额
-        $res = (new HbhUsers())->reduceWallet($book_course_info['custom_uid'], 1);
+        $pay_fee = $info_course['course_fees'] ?? 0;
+        $res = (new HbhUsers())->reduceWallet($book_course_info['custom_uid'], $pay_fee);
         if(!$res['result']){
             Db::rollback();
             return adminOutError($res);

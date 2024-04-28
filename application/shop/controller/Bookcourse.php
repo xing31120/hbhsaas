@@ -99,19 +99,42 @@ class Bookcourse extends Base {
         $data = input();
         $info = (new HbhBookCourse())->info($data['id']);
         $uid = $info['custom_uid'] ?? 0;
+        $info_course = (new HbhCourse())->info($info['course_id']);
         $userInfo = (new HbhUsers())->info($uid);
         if(empty($userInfo)){
             return errorReturn(Lang::get('UserNotFound'));
         }
+        Db::startTrans();
+        //更新预约数据
         $update['is_unlimited_number'] = $userInfo['is_unlimited_number'];
         $update['status'] = $data['status'];
+        $update['update_time'] = time();
+        $update['is_pay'] = HbhBookCourse::is_pay_true;
         $bool = (new HbhBookCourse())->updateById($data['id'], $update);
-        if($bool){
-            $res['msg'] = Lang::get('OperateSuccess');
-        }else{
-            $res['msg'] = Lang::get('OperateFailed');
+        if(false === $bool){
+            Db::rollback();
+            return adminOutError(Lang::get('OperateFailed'));
         }
-        return adminOut($res);
+        //已经签到了, 不扣除额度
+        if($info['status'] == HbhBookCourse::status_end) {
+            Db::commit();
+            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+        }
+        //已经付费了, 不扣除额度
+        if($info['status'] == HbhBookCourse::is_pay_true) {
+            Db::commit();
+            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+        }
+        // 如果是未签到的用户, 要扣除余额
+        $pay_fee = $info_course['course_fees'] ?? 0;
+        $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+        if(!$res['result']){
+            Db::rollback();
+            return adminOutError($res);
+        }
+        Db::commit();
+
+        return adminOut(Lang::get('OperateSuccess'));
     }
 
     //进入新增或修改页面

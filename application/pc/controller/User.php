@@ -8,6 +8,7 @@ use app\common\model\HbhBookCourse;
 use app\common\model\HbhCourse;
 use app\common\model\HbhUsers;
 use app\shop\controller\Course;
+use think\Db;
 use think\facade\Lang;
 
 class User extends Base {
@@ -101,7 +102,6 @@ class User extends Base {
     function checkSign($uid, $day=''){
         $today = date("Y-m-d");  // 当天
         empty($day) && $day = $today;
-//pj($day);
         if(empty($uid)){
             return errorReturn(Lang::get('UserError'));
         }
@@ -114,7 +114,7 @@ class User extends Base {
         $list = (new HbhBookCourse())
             ->where('status', HbhBookCourse::status_wait)
             ->where('day', $day)
-            ->where('custom_uid', $userInfo['id'])
+            ->where('custom_uid', $uid)
             ->select()->toArray();
 //pj([$list]);
         if(count($list) == 0){
@@ -129,21 +129,29 @@ class User extends Base {
         if(!$check_res['result']){
             return $check_res;
         }
-
+        Db::startTrans();
+        //更新预约数据
+        $update_book_course['update_time'] = time();
         $update_book_course['status'] = HbhBookCourse::status_end;
         $update_book_course['is_unlimited_number'] = $userInfo['is_unlimited_number'];
-        if(!$userInfo['is_unlimited_number']){  //0:有限数量, 1:不限数量
-            $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - count($list);
-        }
-        unset($userInfo['create_time']);
-        unset($userInfo['update_time']);
-        $res = $user_model->saveData($userInfo);
-        if(!$res){
-            return errorReturn(Lang::get('UserNotFound'));
-        }
+        $update_book_course['is_pay'] = HbhBookCourse::is_pay_true;
         $res = (new HbhBookCourse())->where('day', $day)->where('custom_uid', $userInfo['id'])->update($update_book_course);
+        if(false === $res){
+            Db::rollback();
+            return errorReturn(Lang::get('OperateFailed'));
+        }
+        //更新用户钱包
+        foreach ($list as $info) {
+            $info_course = (new HbhCourse())->info($info['course_id']);
+            $pay_fee = $info_course['course_fees'] ?? 0;
+            $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+            if(!$res['result']){
+                Db::rollback();
+                return errorReturn($res);
+            }
+        }
 
-
+        Db::commit();
         $msg = "Your Scheduled {$course_name_string} ".Lang::get('SuccessSignIn');
         return successReturn(['data' => $res, 'msg' => $msg]);
 
