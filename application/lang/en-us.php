@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Success' =>'Success!',
     'ParameterError' =>'Parameter Error!',
     'DuplicateName' =>'Duplicate Name!',
     'OperateSuccess' =>'Operation Successful!',
@@ -62,6 +63,7 @@ return [
     'AddCourse' =>'Add Course',
     'Description' =>'Description',
     'TotalPeople' =>'Total People',
+    'CourseFees' =>'Course Fees',
     //Course Classify
     'ClassifyName' =>'Classify Name',
     'AddClassify' =>'Add Classify',
@@ -84,6 +86,10 @@ return [
     'IsCall' =>'Is Contact',
     'IsCallWait' =>'Not Contacted',
     'IsCallEnd' =>'Contacted',
+    'PleaseEnterYourPhoneNumber' =>'Please Enter Your Phone Number',
+    'PleaseEnterYourEmail' =>'Please Enter Your Email',
+    'PleaseEnterYourName' =>'Please Enter Your Name',
+    'PleaseSelectASchool' =>'Please Select a School',
     //Seo
     'PageNameZh' => 'Page Name CN',
     'PageNameEn' => 'Page Name EN',

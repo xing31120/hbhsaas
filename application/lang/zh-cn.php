@@ -1,6 +1,7 @@
 <?php
 
 return [
+    'Success' =>'成功!',
     'ParameterError' =>'参数错误!',
     'DuplicateName' =>'名称重复!',
     'OperateSuccess' =>'操作成功!',
@@ -62,6 +63,7 @@ return [
     'AddCourse' =>'新增课程',
     'Description' =>'描述',
     'TotalPeople' =>'总人数',
+    'CourseFees' =>'课程费用',
     //课程分类
     'ClassifyName' =>'分类名称',
     'AddClassify' =>'新增分类',
@@ -84,6 +86,10 @@ return [
     'IsCall' =>'是否联系',
     'IsCallWait' =>'未联系',
     'IsCallEnd' =>'已联系',
+    'PleaseEnterYourPhoneNumber' =>'请输入手机号',
+    'PleaseEnterYourEmail' =>'请输入Email',
+    'PleaseEnterYourName' =>'请输入姓名',
+    'PleaseSelectASchool' =>'请选择学校',
     //Seo
     'PageNameZh' => '页面中文名',
     'PageNameEn' => '页面英文名',

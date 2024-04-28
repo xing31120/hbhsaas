@@ -19,7 +19,7 @@ class User extends Base {
         }
         $uid = $this->hbh_user['id'];
         $userInfo = (new HbhUsers())->info($uid);
-        $userInfo['expiry_date_en'] = date("d M,Y");
+        $userInfo['expiry_date_en'] = date("M d, Y", strtotime($userInfo['expiry_date']));   //expiry_date
 
         $this->assign('userInfo', $userInfo);
 //        $this->assign('url', url("user/signCheckUid",[ 'uid'=>$this->hbh_user['id'] ]), 'html', true);

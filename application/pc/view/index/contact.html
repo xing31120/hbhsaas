@@ -100,30 +100,30 @@ Contact Area
                     <p class="">Efficiently integrate wireless value whereas cross-platform e-tailers.</p>
                 </div>
                 <form action="{:url('index/contact_form')}" method="POST" class="contact-us-form ajax-contact">
-                    <input type="hidden" class="" name="shop_id" id="shop_id" value="{$shop_id}">
+                    <input type="hidden" class="" name="contact_type" id="contact_type" value="1">
                     <div class="row">
                         <div class="form-group col-md-6">
-                            <input type="text" class="" name="name" id="name" placeholder="Your Name">
+                            <input type="text" class="" name="name" id="name" placeholder="{$Think.lang.Name}" require="">
                             <i class="fal fa-user"></i>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="email" class="" name="email" id="email" placeholder="Your Email">
+                            <input type="email" class="" name="email" id="email" placeholder="Email" require="">
                             <i class="fal fa-envelope"></i>
                         </div>
                         <div class="form-group col-md-6">
-                            <input type="tel" class="" name="phone" id="phone" placeholder="Phone Number">
+                            <input type="tel" class="" name="phone" id="phone" placeholder="Phone Number" require="">
                             <i class="fa-regular fa-phone-flip"></i>
                         </div>
                         <div class="form-group col-md-6">
-                            <select name="subject_id" id="subject_id" class="form-select nice-select">
+                            <select name="shop_id" id="shop_id" class="form-select nice-select" require="">
                                 <option value="" disabled selected hidden>Please Select</option>
-                                {foreach $course_list as $key=>$value}
-                                <option value="{$value.id}" >{$value.name}</option>
+                                {foreach $shop_list as $key=>$value}
+                                <option value="{$value.id}" >{$value.shop_name_en}</option>
                                 {/foreach}
                             </select>
                         </div>
                         <div class="form-group col-12">
-                            <textarea name="message" id="message" cols="30" rows="3" class="" placeholder="Your Message"></textarea>
+                            <textarea name="message" id="message" cols="30" rows="3" class="" placeholder="Your Message" require=""></textarea>
                             <i class="fal fa-comment"></i>
                         </div>
                         <div class="contact-form-btn col-12">

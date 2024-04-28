@@ -57,9 +57,9 @@
                 <h2 class="blog-title">{$userInfo.name}
                 </h2>
                 <div class="blog-meta">
-                    <a href="#"><i class="fa-light fa-calendar-days"></i>{$userInfo.expiry_date_en}</a>
+                    <a href="#">{$Think.lang.ExpiryDate}: <i class="fa-light fa-calendar-days"></i>{$userInfo.expiry_date_en}</a>
                 </div>
-                <p class="blog-text">剩余次数: {$userInfo.residue_quantity}</p>
+                <p class="blog-text">{$Think.lang.ResidueDegree}: {$userInfo.residue_quantity}</p>
                 <div class="blog-img" style="padding: 30px 0;">
                     <a href="blog-details.html">
                         <div style="width: 100%;text-align: center;" id="qrcode"></div>

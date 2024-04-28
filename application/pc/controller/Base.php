@@ -68,8 +68,8 @@ class Base  extends Controller{
         // 课程分类
         $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
         $this->assign('course_cat_list', $cat_list);
-        $course_list = (new HbhCourse())->getAllCourseList($this->shop_id);
-        $this->assign('course_list', $course_list);
+//        $course_list = (new HbhCourse())->getAllCourseList($this->shop_id);
+//        $this->assign('course_list', $course_list);
 
         $this->hbh_user = json_decode(session('hbh_user'), 1);//初始化应用ID
         //所有学校和校区

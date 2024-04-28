@@ -4,6 +4,8 @@ namespace app\pc\controller;
 
 //use think\Request;
 use app\common\model\HbhContactForm;
+use app\common\model\HbhShop;
+use think\facade\Lang;
 use think\facade\Request;
 
 class Index extends Base {
@@ -12,23 +14,34 @@ class Index extends Base {
         return $this->fetch();
     }
 
+    function contact() {
+        $shop_list = (new HbhShop())->getAllShopList();
+        $this->assign('shop_list', $shop_list);
+        return $this->fetch();
+    }
     function contact_form(){
         $data = input();
-        if($data['email'] && $data['phone'] ){
-            $res = HbhContactForm::create($data);
+        if(empty($data['phone'])){
+            return adminOutError(Lang::get('PleaseEnterYourPhoneNumber'));
+        }
+        if(empty($data['email'])){
+            return adminOutError(Lang::get('PleaseEnterYourEmail'));
+        }
+        if(empty($data['name'])){
+            return adminOutError(Lang::get('PleaseEnterYourName'));
+        }
+        if(empty($data['shop_id'])){
+            return adminOutError(Lang::get('PleaseSelectASchool'));
         }
 
-
+        $res = HbhContactForm::create($data);
         // 3. 执行成功
         if ( $res ) {
-            $this -> success('Send Success');
+            return adminOut(Lang::get('Success'));
         }
     }
 
     function about() {
-        return $this->fetch();
-    }
-    function contact() {
         return $this->fetch();
     }
 

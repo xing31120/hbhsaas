@@ -153,6 +153,7 @@ class Course extends Base {
         $course_data['category_id'] = $data['category_id'];
         $course_data['description'] = $data['description'] ?? '';
         $course_data['total_people'] = $data['total_people'] ?? 6;
+        $course_data['course_fees'] = $data['course_fees'] ?: 1;
         $course_data['create_time'] = time();
         if (empty($id)) {
             $course_id = model('HbhCourse')->insertGetId($course_data);
