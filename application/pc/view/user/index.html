@@ -1,211 +1,96 @@
 {include file="public/header"/}
-<style>
-    .state-1 {
-        background-color: transparent;
-        border: 1px solid var(--theme-color);
-        color: var(--theme-color);
-        position: relative;
-        z-index: 2;
-        overflow: hidden;
-        vertical-align: middle;
-        display: inline-block;
-        text-align: center;
-        /* background-color: var(--theme-color); */
-        /* color: var(--white-color); */
-        font-family: var(--title-font);
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 26px;
-        text-transform: uppercase;
-        padding: 7px 19px;
-        border-radius: 10px;
-    }
-
-    .state-2 {
-        background-color: transparent;
-        border: 1px solid var(--theme-color);
-        color: var(--theme-color);
-        position: relative;
-        z-index: 2;
-        overflow: hidden;
-        vertical-align: middle;
-        display: inline-block;
-        border: none;
-        text-align: center;
-        background-color: var(--theme-color);
-        color: var(--white-color);
-        font-family: var(--title-font);
-        font-style: normal;
-        font-weight: 400;
-        font-size: 14px;
-        line-height: 26px;
-        text-transform: uppercase;
-        padding: 8px 20px;
-        border-radius: 10px;
-    }
-          .select {
-            background: var(--theme-color) !important;
-            color: var(--white-color) !important;
-        }
-</style>
-<section class="th-blog-wrapper space-top space-extra-bottom">
+<!--==============================
+Breadcumb
+============================== -->
+<div class="breadcumb-wrapper " data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.jpg">
     <div class="container">
-        <div class="th-blog blog-single has-post-thumbnail">
-            <input type="hidden" name="url" id="url" value="{$url}">
-            <div class="blog-content">
-                <h2 class="blog-title">{$userInfo.name}
-                </h2>
-                <div class="blog-meta">
-                    <a href="#">{$Think.lang.ExpiryDate}: <i class="fa-light fa-calendar-days"></i>{$userInfo.expiry_date_en}</a>
-                </div>
-                <p class="blog-text">{$Think.lang.ResidueDegree}: {$userInfo.residue_quantity}</p>
-                <div class="blog-img" style="padding: 30px 0;">
-                    <a href="blog-details.html">
-                        <div style="width: 100%;text-align: center;" id="qrcode"></div>
-                    </a>
-
-                </div>
-<!--                <a href="blog-details.html" class="th-btn" style="width: 100%;">生成</a>-->
-            </div>
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">User Center</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="index.html">Home</a></li>
+                <li>User Center</li>
+            </ul>
         </div>
-                    <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
-                        <!--
-                        <div class="event-item" style="position: relative;">
-                            <div class="event-item_wrapper">
-                                <div class="event-item-wrapp" style="flex: 1;">
-                                    <div class="event-item_content">
-                                        <div class="event-item_list">
-                                            <h3 class="event-item_title">课程名称</h3>
-                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>08:00AM -10:00PM</span>
-                                            <span class="event-item_location"><i class="fal fa-user"></i>老师</span>
-                                        </div>
-                                        <div class="event-btn" style="right: 20px;top: 0;">
-                                            <div class="state-1">已预约</div>
-                                            <div class="state-2">已签到</div>
-                                        </div>
-                                    </div>
+    </div>
+</div>
+<!--==============================
+Dance Classes Area
+==============================-->
+ <style>
+        .none {
+            display: none;
+        }
+
+        .selected {
+            background: #eb0029 !important;
+            color: white !important;
+        }
+    </style>
+    <section class="space-top space-extra-bottom">
+        <div class="container">
+            <div class="row flex-row-reverse">
+                <div class="col-xl-9 col-lg-8">
+                    <div class="none" id="userInfo">
+                        <form action="mail.php" method="POST" class="login-form ajax-contact">
+                            <h5 class="form-title">用户信息修改</h5>
+                            <div class="row">
+                                <div class="form-group">
+                                    <label>用户名</label>
+                                    <input type="text" class="form-control style-white" name="name" id="name" placeholder="">
+                                    <i class="fal fa-user"></i>
+                                </div>
+                                <div class="form-group style-3">
+                                    <label>密码</label>
+                                    <input type="password" class="form-control style-white" name="password" id="password" placeholder=""
+                                        require="">
+                                    <i class="fa-solid fa-eye-slash"></i>
+                                </div>
+                                <div class="form-btn col-12 text-center">
+                                    <button class="th-btn w-100">修改</button>
                                 </div>
                             </div>
-                        </div>
-                        >-->
-
+                            <p class="form-messages mb-0 mt-3"></p>
+                        </form>
                     </div>
-                    <div class="th-pagination text-center mt-30">
-                        <ul id="pagination">
-                            <li id="prePage" data-id="prePage" onclick="toPage('previous')" class="page_btn"><span><i class="far fa-arrow-left"></i></span></li>
-                            <li><span style="width: auto;padding: 0 15px;display:flex"><div id="now-page">1</div> <div style="margin: 0 5px">
-                                /
-                            </div> <div id="total-page">1</div></span></li>
-<!--                            <li><span onclick="toPage(3)">3</span></li>-->
-                            <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
+                    <div class="none" id="userWallet">
+                        用户钱包
+                    </div>
+                </div>
+                <div class="col-xl-3 col-lg-4">
+                    <div class="widget widget_categories  ">
+                        <h3 class="widget_title">账户信息<span class="shape"></span></h3>
+                        <ul>
+                            <li>
+                                <a class="selected" onclick="showMenu('userInfo')" href="javascript:;">账户信息</a>
+                                <i class="selected fa-regular fa-arrow-right"></i>
+                            </li>
+                            <li>
+                                <a onclick="showMenu('userWallet')" href="javascript:;">用户钱包</a>
+                                <i class="fa-regular fa-arrow-right"></i>
+                            </li>
                         </ul>
                     </div>
-                    <!--<input type="text" name="page_num" id="page_num" value="1">-->
-    </div>
-</section>
+                </div>
+            </div>
+        </div>
+    </section>
+    <script>
+        showMenu('userInfo')
+        function showMenu(id) {
+            let list = ['userInfo', 'userWallet']
+            list.forEach(item => {
+                let info = document.getElementById(item)
+                if (item === id) {
+                    info.style.display = 'block'
+                } else {
+                    info.style.display = 'none'
+                }
+            })
+        }
+    </script>
 <!--==============================
 Footer Area
 ==============================-->
+
+
 {include file="public/footer"/}
-<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
-<script>
- function toPage(type) {
-    if (type === 'next') {
-        if (nowPage < totalPage) {
-             nowPage += 1
-        }
-    } else {
-        if (nowPage > 1) {
-            nowPage -= 1
-        }
-    }
-    ajaxList(nowPage)
-}
-function ajaxList(page){
-    limit = 20;
-    $.ajax({
-        "url": "{:url('ajaxList')}",
-        "data": {"page": page, "limit": limit},
-    }).done(function (rs) {
-        console.log('rs', rs)
-        var html = '';
-
-        for (const rsKey in rs.list) {
-            if(rs.list[rsKey].status == 0){
-                $status_html = '<div class="state-1">'+rs.list[rsKey].status_text+'</div>';
-            }else{
-                $status_html = '<div class="state-2">'+rs.list[rsKey].status_text+'</div>';
-            }
-
-            html += '<div class="event-item" style="position: relative;">\n' +
-                '                            <div class="event-item_wrapper">\n' +
-                '                                <div class="event-item-wrapp" style="flex: 1;">\n' +
-                '                                    <div class="event-item_content">\n' +
-                '                                        <div class="event-item_list">\n' +
-                '                                            <h3 class="event-item_title">'+rs.list[rsKey].course_name+'</h3>\n' +
-                '                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>'+rs.list[rsKey].day_short+' ('+rs.list[rsKey].start_time+' - '+rs.list[rsKey].end_time+')</span>\n' +
-                '                                            <span class="event-item_location"><i class="fal fa-user"></i>'+rs.list[rsKey].teacher_name+'</span>\n' +
-                '                                        </div>\n' +
-                '                                        <div class="event-btn" style="right: 20px;top: 0;">\n' +
-                $status_html+
-                '                                        </div>\n' +
-                '                                    </div>\n' +
-                '                                </div>\n' +
-                '                            </div>\n' +
-                '                        </div>';
-        }
-        let pageHtml = ''
-        totalPage = Math.ceil(rs.count / limit)
-        $('#now-page').html(page)
-         $('#total-page').html(totalPage)
-        // for (let index = 1; index <= rs.count; index++) {
-        //   pageHtml += '<li onclick="toPage('+index+')"><span id="page-' + index + '">' + index + '</span></li>';
-        // }
-        // $('#pagination').html(pageHtml)
-        // $('#prePage').html('');
-        // $('#prePage').after(pageHtml);
-        $('#detaiList').html(html);
-        // changeCheck(page)
-
-    }).fail(function (rs) {
-        layer.msg('{$Think.lang.OperateFailed}');
-    });
-}
-
-function changeCheck(page) {
-    for (let index = 1; index <= totalPage; index++) {
-        if (index === page) {
-            $('#page-' + index).addClass('select')
-        } else {
-            $('#page-' + index).removeClass('select')
-        }
-    }
-}
-$(function () {
-
-    $('#qrcode').qrcode({
-        width: 260,
-        height: 260,
-        text: "{$url}"
-    });
-    ajaxList(1)
-
-
-    nowPage = 1
-    totalPage = 0
-    // $('.page_btn').on('click',function (){
-    //     console.log($(this).data('id'))
-
-    //     if ($(this).data('id') === 'prePage') {
-    //         nowPage -= 1
-    //     }else {
-    //         nowPage += 1
-    //     }
-    //     $('#page_num').val(nowPage)
-    //     ajaxList(nowPage)
-    // })
-
-})
-
-</script>
