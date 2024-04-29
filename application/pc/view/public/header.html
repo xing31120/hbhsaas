@@ -71,7 +71,7 @@ Mobile Menu
 ============================== -->
 <div class="th-menu-wrapper">
     <div class="th-menu-area style3 text-center">
-        
+
         <button class="th-menu-toggle style3"><i class="fal fa-times"></i></button>
         <div class="mobile-logo">
             <a href="{:url('index/index')}"><img style="width: 100px" src="__YUN_PUBLIC_DIR__/static/assets/img/hand_by_hand-log.png" alt="Danza"></a>
@@ -187,11 +187,11 @@ Header Area
                 </div>
                 <div class="col-auto d-none d-xl-block">
                     <div class="header-button">
-                        {if !empty($userName) && $userInfo['role'] == 'student'}
-                        <a href="{:url('user/qrcode')}" class="user-name" style="">{$userName}</a>
+                        {if !empty($userInfo['name']) && $userInfo['role'] == 'student'}
+                        <a href="{:url('user/qrcode')}" class="user-name" style="">{$userInfo.name}</a>
                         <a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>
-                        {elseif !empty($userName) && $userInfo['role'] == 'teacher' /}
-                        <a href="{:url('teacher/bookCourse')}" class="user-name" style="">{$userName}</a>
+                        {elseif !empty($userInfo['name']) && $userInfo['role'] == 'teacher' /}
+                        <a href="{:url('teacher/bookCourse')}" class="user-name" style="">{$userInfo.name}</a>
                         <a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>
                         {else/}
                         <a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a>

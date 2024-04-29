@@ -78,7 +78,7 @@ class Base  extends Controller{
         $this->assign('campus_list', $campus_list);
         $this->assign('shop_id', $this->shop_id);
         $this->assign('userInfo', $this->hbh_user);
-        $this->assign('userName', session('hbh_name'));
+//        $this->assign('userName', session('hbh_name'));
 
         $lang = input('lang', 'en-us');
         setcookie('think_var', $lang);
@@ -141,7 +141,7 @@ class Base  extends Controller{
         // 2. 将分类信息赋值给模板 nav.html
         $this -> view -> assign('menu', $menu);
         $this -> view -> assign('title', '中装SAAS总后台');
-        $this->assign('username', session('username'));
+//        $this->assign('username', session('username'));
         $lang = input('lang', 'zh-cn');
         setcookie('think_var', $lang);
         $this->assign('language', $lang);

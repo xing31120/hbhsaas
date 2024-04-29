@@ -7,6 +7,7 @@ use app\common\model\HbhUsers;
 use app\common\model\ShopAuthGroup;
 use app\common\model\ShopAuthGroupAccess;
 use app\common\model\ShopUser;
+use think\facade\Lang;
 use think\facade\Session;
 
 class Auth extends Base {
@@ -77,20 +78,20 @@ class Auth extends Base {
         };
         $result = HbhUsers::where($where)->find();
         if (!empty($result) && $result['email'] == $data['email']){
-            return errorReturn(['msg'=> 'email occupied','data'=> $result, 'url' => url('auth/reg') ]);
+            return errorReturn(['msg'=> Lang::get('EmailOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if (!empty($result) && $result['name'] == $data['name']){
-            return errorReturn(['msg'=> 'name occupied','data'=> $result, 'url' => url('auth/reg') ]);
+            return errorReturn(['msg'=> Lang::get('NameOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if(empty($data['password'])){
-            return errorReturn(['msg'=> 'password is empty','data'=> $result, 'url' => url('auth/reg') ]);
+            return errorReturn(['msg'=> Lang::get('PasswordIsEmpty'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if(empty($data['confirm_password'])){
-            return errorReturn(['msg'=> 'confirm password is empty','data'=> $result, 'url' => url('auth/reg') ]);
+            return errorReturn(['msg'=> Lang::get('ConfirmPasswordIsEmpty'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
 
         if($data['confirm_password'] != $data['password']){
-            return errorReturn(['msg'=> 'password inconsistency','data'=> $result, 'url' => url('auth/reg') ]);
+            return errorReturn(['msg'=> Lang::get('PasswordInconsistency'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
 
         unset($data['confirm_password']);

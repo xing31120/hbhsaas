@@ -28,12 +28,15 @@
                                         <input type="email" name="email" value="{$info.email}"  class="layui-input"   placeholder="">
                                     </div>
                                 </div>
-<!--                                <div class="layui-form-item">-->
-<!--                                    <label class="layui-form-label">Role：</label>-->
-<!--                                    <div class="layui-input-inline">-->
-<!--                                        <input type="text" name="role" value="{$info.role}"  class="layui-input"  placeholder="">-->
-<!--                                    </div>-->
-<!--                                </div>-->
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.CountryCode}：</label>
+                                    <div class="layui-input-inline">
+<!--                                        <input type="text" name="phone_code" value="{$info.phone_code}"  class="layui-input"  placeholder="">-->
+                                        <select name="phone_code" lay-verify="required" lay-reqText="Please Select Category">
+                                            <option value="+971">+971</option>
+                                        </select>
+                                    </div>
+                                </div>
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">{$Think.lang.Phone}：</label>
                                     <div class="layui-input-inline">
