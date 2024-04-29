@@ -10,4 +10,8 @@ class Activity extends Base {
         return $this->fetch();
     }
 
+    function detail()
+    {
+        return $this->fetch();
+    }
 }
