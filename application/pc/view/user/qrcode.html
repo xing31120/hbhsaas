@@ -53,7 +53,10 @@
 </style>
 <section class="th-blog-wrapper space-top space-extra-bottom">
     <div class="container">
-        <div class="th-blog blog-single has-post-thumbnail">
+         <div class="row flex-row">
+              {include file="user/left_menu"/}
+            <div class="col-xl-9 col-lg-8">
+                  <div class="th-blog blog-single has-post-thumbnail">
             <input type="hidden" name="url" id="url" value="{$url}">
             <div class="blog-content">
                 <h2 class="blog-title">{$userInfo.name}
@@ -72,6 +75,11 @@
             </div>
         </div>
         <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
+                  </div>
+                   </div>
+                   
+           
+      
             <!--
             <div class="event-item" style="position: relative;">
                 <div class="event-item_wrapper">
@@ -102,7 +110,7 @@
                 <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
             </ul>
         </div>
-        {include file="user/left_menu"/}
+      
         <!--<input type="text" name="page_num" id="page_num" value="1">-->
     </div>
 </section>

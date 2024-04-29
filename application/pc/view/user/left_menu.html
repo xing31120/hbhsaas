@@ -7,6 +7,11 @@
         background: #eb0029 !important;
         color: white !important;
     }
+    
+    .no-select {
+        color: black;
+        /*background: white !important;*/
+    }
     .th-btn-sx {
         position: relative;
         z-index: 2;
@@ -46,7 +51,7 @@
             </li>
             <li>
                 <a class="left_a {if $fun_name == 'user_qrcode'}selected{/if}" data-id="SignInRecord" href="{:url('user/qrcode')}">{$Think.lang.SignInRecord}</a>
-                <i class="{if $fun_name == 'user_index'}selected{/if} fa-regular fa-arrow-right"></i>
+                <i class="{if $fun_name == 'user_index'}selected{/if} fa-regular fa-arrow-right no-select"></i>
             </li>
 
 
