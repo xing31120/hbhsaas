@@ -86,6 +86,7 @@ return [
     'Booked' =>'Booked',
     'AddBooked' =>'Add Booked',
     'SignedIn' =>'Signed In',
+    'SignInRecord' =>'Sign In Record',
     'ConfirmWait' =>'Wait Confirm',
     'ConfirmBooked' =>'Confirm Booked',
     'ConfirmCancel' =>'Cancel Booked',

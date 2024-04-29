@@ -86,6 +86,7 @@ return [
     'Booked' =>'已预约',
     'AddBooked' =>'新增预约',
     'SignedIn' =>'已签到',
+    'SignInRecord' =>'签到记录',
     'ConfirmWait' =>'待确认',
     'ConfirmBooked' =>'确认预约',
     'ConfirmCancel' =>'取消预约',

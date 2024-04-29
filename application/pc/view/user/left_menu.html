@@ -1,0 +1,55 @@
+<style>
+    .none {
+        display: none;
+    }
+
+    .selected {
+        background: #eb0029 !important;
+        color: white !important;
+    }
+    .th-btn-sx {
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        vertical-align: middle;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        background-color: var(--theme-color);
+        color: var(--white-color);
+        font-family: var(--title-font);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 26px;
+        text-transform: uppercase;
+        padding: 15px 35px;
+        border-radius: 10px;
+    }
+</style>
+
+<div class="col-xl-3 col-lg-4">
+    <div class="widget widget_categories  ">
+        <h3 class="widget_title">{$Think.lang.UserCenter}<span class="shape"></span></h3>
+        <ul>
+<!--            <li>-->
+<!--                <a class="left_a selected" data-id="userInfo" onclick="showMenu(this,'userInfo')" href="javascript:;">{$Think.lang.UserInfo}</a>-->
+<!--                <i class="selected fa-regular fa-arrow-right"></i>-->
+<!--            </li>-->
+<!--            <li>-->
+<!--                <a class="left_a" data-id="userWallet" onclick="showMenu(this,'userWallet')" href="javascript:;">{$Think.lang.UserWallet}</a>-->
+<!--                <i class="fa-regular fa-arrow-right"></i>-->
+<!--            </li>-->
+            <li>
+                <a class="left_a {if $fun_name == 'user_index'}selected{/if}" data-id="userInfo" href="{:url('user/index')}">{$Think.lang.UserInfo}</a>
+                <i class="{if $fun_name == 'user_index'}selected{/if} fa-regular fa-arrow-right"></i>
+            </li>
+            <li>
+                <a class="left_a {if $fun_name == 'user_qrcode'}selected{/if}" data-id="SignInRecord" href="{:url('user/qrcode')}">{$Think.lang.SignInRecord}</a>
+                <i class="{if $fun_name == 'user_index'}selected{/if} fa-regular fa-arrow-right"></i>
+            </li>
+
+
+        </ul>
+    </div>
+</div>

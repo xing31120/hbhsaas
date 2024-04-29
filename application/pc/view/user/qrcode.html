@@ -1,4 +1,6 @@
 {include file="public/header"/}
+
+{include file="user/top"/}
 <style>
     .state-1 {
         background-color: transparent;
@@ -69,39 +71,39 @@
 <!--                <a href="blog-details.html" class="th-btn" style="width: 100%;">生成</a>-->
             </div>
         </div>
-                    <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
-                        <!--
-                        <div class="event-item" style="position: relative;">
-                            <div class="event-item_wrapper">
-                                <div class="event-item-wrapp" style="flex: 1;">
-                                    <div class="event-item_content">
-                                        <div class="event-item_list">
-                                            <h3 class="event-item_title">课程名称</h3>
-                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>08:00AM -10:00PM</span>
-                                            <span class="event-item_location"><i class="fal fa-user"></i>老师</span>
-                                        </div>
-                                        <div class="event-btn" style="right: 20px;top: 0;">
-                                            <div class="state-1">已预约</div>
-                                            <div class="state-2">已签到</div>
-                                        </div>
-                                    </div>
-                                </div>
+        <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
+            <!--
+            <div class="event-item" style="position: relative;">
+                <div class="event-item_wrapper">
+                    <div class="event-item-wrapp" style="flex: 1;">
+                        <div class="event-item_content">
+                            <div class="event-item_list">
+                                <h3 class="event-item_title">课程名称</h3>
+                                <span class="event-item_time"><i class="fa-regular fa-clock"></i>08:00AM -10:00PM</span>
+                                <span class="event-item_location"><i class="fal fa-user"></i>老师</span>
+                            </div>
+                            <div class="event-btn" style="right: 20px;top: 0;">
+                                <div class="state-1">已预约</div>
+                                <div class="state-2">已签到</div>
                             </div>
                         </div>
-                        >-->
-
                     </div>
-                    <div class="th-pagination text-center mt-30">
-                        <ul id="pagination">
-                            <li id="prePage" data-id="prePage" onclick="toPage('previous')" class="page_btn"><span><i class="far fa-arrow-left"></i></span></li>
-                            <li><span style="width: auto;padding: 0 15px;display:flex"><div id="now-page">1</div> <div style="margin: 0 5px">
-                                /
-                            </div> <div id="total-page">1</div></span></li>
+                </div>
+            </div>
+            >-->
+        </div>
+        <div class="th-pagination text-center mt-30">
+            <ul id="pagination">
+                <li id="prePage" data-id="prePage" onclick="toPage('previous')" class="page_btn"><span><i class="far fa-arrow-left"></i></span></li>
+                <li><span style="width: auto;padding: 0 15px;display:flex"><div id="now-page">1</div> <div style="margin: 0 5px">
+                    /
+                </div> <div id="total-page">1</div></span></li>
 <!--                            <li><span onclick="toPage(3)">3</span></li>-->
-                            <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
-                        </ul>
-                    </div>
-                    <!--<input type="text" name="page_num" id="page_num" value="1">-->
+                <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
+            </ul>
+        </div>
+        {include file="user/left_menu"/}
+        <!--<input type="text" name="page_num" id="page_num" value="1">-->
     </div>
 </section>
 <!--==============================

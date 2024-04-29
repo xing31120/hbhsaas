@@ -15,6 +15,7 @@ use think\facade\Session;
 class User extends Base {
 
     function index(){
+        $this->assign('fun_name', 'user_index');
         return $this->fetch();
     }
 
@@ -62,6 +63,7 @@ class User extends Base {
         $userInfo = (new HbhUsers())->info($uid);
         $userInfo['expiry_date_en'] = date("M d, Y", strtotime($userInfo['expiry_date']));   //expiry_date
 
+        $this->assign('fun_name', 'user_qrcode');
         $this->assign('userInfo', $userInfo);
 //        $this->assign('url', url("user/signCheckUid",[ 'uid'=>$this->hbh_user['id'] ]), 'html', true);
         $this->assign('url', url("user/signCheckUid", ['uid'=> $uid], 'html', true));
