@@ -17,77 +17,157 @@ Breadcumb
 Dance Classes Area
 ==============================-->
  <style>
-        .none {
-            display: none;
-        }
+    .none {
+        display: none;
+    }
 
-        .selected {
-            background: #eb0029 !important;
-            color: white !important;
-        }
-    </style>
-    <section class="space-top space-extra-bottom">
-        <div class="container">
-            <div class="row flex-row-reverse">
-                <div class="col-xl-9 col-lg-8">
-                    <div class="none" id="userInfo">
-                        <form action="mail.php" method="POST" class="login-form ajax-contact">
-                            <h5 class="form-title">用户信息修改</h5>
-                            <div class="row">
-                                <div class="form-group">
-                                    <label>用户名</label>
-                                    <input type="text" class="form-control style-white" name="name" id="name" placeholder="">
-                                    <i class="fal fa-user"></i>
-                                </div>
-                                <div class="form-group style-3">
-                                    <label>密码</label>
-                                    <input type="password" class="form-control style-white" name="password" id="password" placeholder=""
-                                        require="">
-                                    <i class="fa-solid fa-eye-slash"></i>
-                                </div>
-                                <div class="form-btn col-12 text-center">
-                                    <button class="th-btn w-100">修改</button>
-                                </div>
+    .selected {
+        background: #eb0029 !important;
+        color: white !important;
+    }
+    .th-btn-sx {
+        position: relative;
+        z-index: 2;
+        overflow: hidden;
+        vertical-align: middle;
+        display: inline-block;
+        border: none;
+        text-align: center;
+        background-color: var(--theme-color);
+        color: var(--white-color);
+        font-family: var(--title-font);
+        font-style: normal;
+        font-weight: 400;
+        font-size: 14px;
+        line-height: 26px;
+        text-transform: uppercase;
+        padding: 15px 35px;
+        border-radius: 10px;
+    }
+</style>
+<section class="space-top space-extra-bottom">
+    <div class="container">
+        <div class="row flex-row-reverse">
+            <div class="col-xl-9 col-lg-8">
+                <div class="block" id="userInfo">
+                    <form action="ajaxUpdateUser" method="POST" class="login-form ajax-contact" id="pc_form">
+                        <input type="hidden" value="{$userInfo.id}" name="id" id="id">
+                        <h5 class="form-title">{$Think.lang.UserInfo}</h5>
+                        <div class="row">
+                            <div class="form-group">
+                                <label>{$Think.lang.Name}</label>
+                                <input type="text" class="form-control style-white" value="{$userInfo.name}" name="name" id="name" placeholder="">
+                                <i class="fal fa-user"></i>
                             </div>
-                            <p class="form-messages mb-0 mt-3"></p>
-                        </form>
-                    </div>
-                    <div class="none" id="userWallet">
-                        用户钱包
-                    </div>
+                            <div class="form-group style-3">
+                                <label>{$Think.lang.Password}</label>
+                                <input type="password" class="form-control style-white" value="" name="login_password" id="login_password" placeholder=""
+                                    require="" >
+                                <i class="fa-solid fa-eye-slash" onclick="togglePassword(this)"></i>
+                            </div>
+                            <div class="form-group">
+                                <label>{$Think.lang.Email}</label>
+                                <input type="text" class="form-control style-white" value="{$userInfo.email}" name="email" id="email" placeholder="">
+                                <i class="fal fa-envelope"></i>
+                            </div>
+                            <div class="form-group">
+                                <label>{$Think.lang.CountryCode}</label>
+                                <select name="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
+                                    <option value="+971">+971</option>
+                                </select>
+<!--                                <i class="fal fa-phone"></i>-->
+                            </div>
+                            <div class="form-group">
+                                <label>{$Think.lang.Phone}</label>
+                                <input type="text" class="form-control style-white" value="{$userInfo.phone}" name="phone" id="phone" placeholder="">
+                                <i class="fal fa-phone"></i>
+                            </div>
+                            <div class="form-btn col-12 text-center th-btn-sx w-100"  onclick="submitForm()">
+<!--                                <button class="th-btn-sx w-100" onclick="submitForm()">-->
+                                {$Think.lang.Modify}
+<!--                                </button>-->
+                            </div>
+                        </div>
+                        <p class="form-messages form-messages_login mb-0 mt-3"></p>
+                    </form>
                 </div>
-                <div class="col-xl-3 col-lg-4">
-                    <div class="widget widget_categories  ">
-                        <h3 class="widget_title">账户信息<span class="shape"></span></h3>
-                        <ul>
-                            <li>
-                                <a class="selected" onclick="showMenu('userInfo')" href="javascript:;">账户信息</a>
-                                <i class="selected fa-regular fa-arrow-right"></i>
-                            </li>
-                            <li>
-                                <a onclick="showMenu('userWallet')" href="javascript:;">用户钱包</a>
-                                <i class="fa-regular fa-arrow-right"></i>
-                            </li>
-                        </ul>
-                    </div>
+                <div class="none" id="userWallet">
+                    {$Think.lang.UserWallet}
+                </div>
+            </div>
+            <div class="col-xl-3 col-lg-4">
+                <div class="widget widget_categories  ">
+                    <h3 class="widget_title">{$Think.lang.UserCenter}<span class="shape"></span></h3>
+                    <ul>
+                        <li>
+                            <a class="left_a selected" data-id="userInfo" onclick="showMenu(this,'userInfo')" href="javascript:;">{$Think.lang.UserInfo}</a>
+                            <i class="selected fa-regular fa-arrow-right"></i>
+                        </li>
+                        <li>
+                            <a class="left_a" data-id="userWallet" onclick="showMenu(this,'userWallet')" href="javascript:;">{$Think.lang.UserWallet}</a>
+                            <i class="fa-regular fa-arrow-right"></i>
+                        </li>
+                    </ul>
                 </div>
             </div>
         </div>
-    </section>
-    <script>
-        showMenu('userInfo')
-        function showMenu(id) {
-            let list = ['userInfo', 'userWallet']
-            list.forEach(item => {
-                let info = document.getElementById(item)
-                if (item === id) {
-                    info.style.display = 'block'
-                } else {
-                    info.style.display = 'none'
-                }
-            })
+    </div>
+</section>
+<script>
+function showMenu(click_obj, id) {
+    let obj_list = document.getElementsByClassName('left_a')
+    // 全部隐藏
+    for (var i = 0; i < obj_list.length; i++) {
+        var dataId = obj_list[i].getAttribute('data-id');
+        obj_list[i].classList.remove('selected');
+        document.getElementById(dataId).style.display = 'none';
+    }
+    //当前点击的元素显示
+    dataIdThis = click_obj.getAttribute('data-id');
+    click_obj.classList.add('selected');
+    document.getElementById(dataIdThis).style.display = 'block';
+
+}
+
+function togglePassword(obj) {
+    const passwordField = document.getElementById('login_password');
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        obj.classList.remove("fa-eye-slash"); // 移除指定的class
+        obj.classList.add("fa-eye"); // 增加指定的class
+    } else {
+        passwordField.type = 'password';
+        obj.classList.add("fa-eye-slash"); // 移除指定的class
+        obj.classList.remove("fa-eye"); // 增加指定的class
+    }
+
+}
+
+function submitForm(){
+    $.ajax({
+        url: "{:url('ajaxUpdateUser')}",
+        type: 'post',
+        dataType: 'json',
+        data: $('#pc_form').serializeArray(),
+        success: function (rs) {
+            var formMessages_login = $(".form-messages_login");
+            // Qmsg.info(rs.msg);
+            if (rs.result) {
+                window.location.href = rs.url;
+            } else {
+                formMessages_login.removeClass("success");
+                formMessages_login.addClass("error");
+                // Set the message text.
+                formMessages_login.text(rs.msg);
+            }
+        },
+        error: function () {
+            Qmsg.error(rs.msg);
         }
-    </script>
+    });
+}
+
+</script>
 <!--==============================
 Footer Area
 ==============================-->

@@ -10,12 +10,48 @@ use app\common\model\HbhUsers;
 use app\shop\controller\Course;
 use think\Db;
 use think\facade\Lang;
+use think\facade\Session;
 
 class User extends Base {
 
-    function index()
-    {
+    function index(){
         return $this->fetch();
+    }
+
+    function ajaxUpdateUser(){
+        $data['id']             = input('id', 0);
+        $data['login_password'] = input('login_password', '', 'trim');
+        $data['phone_code']     = input('phone_code', '', 'trim');
+        $data['name']           = input('name', '', 'trim');
+        $data['email']          = input('email', '', 'trim');
+        $data['phone']          = input('phone', '', 'trim');
+
+
+        $where[] = ['id', '<>',$data['id']];
+        $result = HbhUsers::where($where)
+            ->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']])
+            ->find();
+//pj((new HbhUsers())->getLastSql());
+//pj($result);
+        if (!empty($result) && $result['email'] == $data['email']){
+            return errorReturn(Lang::get('EmailOccupied'));
+        }
+        if (!empty($result) && $result['name'] == $data['name']){
+            return errorReturn(Lang::get('NameOccupied'));
+        }
+
+        if(empty($data['login_password'])){
+            unset($data['login_password']);
+        }
+
+        $dataUser = array_merge($this->hbh_user, $data);
+        Session::set('hbh_user', json_encode($dataUser));
+        $res = (new HbhUsers())->updateById($data['id'], $data);
+        if(!$res){
+            return errorReturn(Lang::get('OperateFailed'));
+        }
+        return successReturn(['msg' => Lang::get('OperateSuccess'), 'url' =>  url('user/index')]);
+
     }
 
     function qrcode(){

@@ -99,7 +99,7 @@ Hero Area
 <div class="bg-dark">   <!--space-top-->
     <div class="container">
 <!--        <a href="account.html" class="th-btn blue-btn">Login Now</a>-->
-    {if empty($userName)}
+    {if empty($userInfo['name'])}
         <a href="{:url('auth/login')}"><button class="th-btn btn-fw blue-btn">Login Now</button></a>
     {elseif $userInfo['role'] == 'teacher' }
         <a href="{:url('Teacher/bookCourse')}"><button class="th-btn btn-fw blue-btn">Reservation</button></a>
