@@ -210,29 +210,36 @@ class Classdetail extends Base {
         $year = substr($data['day'], 0, 4);
 
         $class_time_info = (new HbhClassTime())->info($data['class_time_id']);
+        $course_data['status']                  = $data['status'] ?? HbhBookCourse::status_wait;
         $course_data['custom_uid']              = $data['custom_uid'];
         $course_data['teacher_uid']             = $data['teacher_uid'];
         $course_data['course_id']               = $data['course_id'];
         $course_data['detail_id']               = $data['detail_id'];
         $course_data['shop_id']                 = $this->shop_id;
-//        $course_data['week']                    = date('l', strtotime($data['day']));
         $course_data['start_time']              = $class_time_info['start_time'];
         $course_data['end_time']                = $class_time_info['end_time'];
         $course_data['year']                    = $year;
         $course_data['day']                     = $data['day'];
+        $course_data['is_pay']                  = $data['is_pay'] ?? HbhBookCourse::is_pay_false;
         $course_data['which_week']              = $which_week;
 //pj([$id, $course_data]);
+        Db::startTrans();
         if (empty($id)) {
             $course_data['create_time'] = time();
             $book_course_id = (new HbhBookCourse())->insertGetId($course_data);
-        } else {
-            $course_data['update_time'] = time();
-            $book_course_id =  (new HbhBookCourse())->updateById($id,  $course_data);
-        }
-        if($book_course_id){
-            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+        } else { //修改预约, 如果修改is_pay需要扣费
+            $book_course_id = false;
+            $res = (new HbhBookCourse())->payByBoosCourseId($id, $data['is_pay']);
+            if($res['result']){
+                $book_course_id =  (new HbhBookCourse())->updateById($id,  $course_data);
+            }
         }
 
+        if($book_course_id){
+            Db::commit();
+            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+        }
+        Db::rollback();
         return adminOut(Lang::get('OperateFailed'));
     }
 
