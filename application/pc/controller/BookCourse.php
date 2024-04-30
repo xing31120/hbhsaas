@@ -294,7 +294,7 @@ class BookCourse extends Base {
             return $check_res;
         }
         Db::startTrans();
-        // 删除当前周当前用户的所有预约记录
+        // 删除某天当前用户的所有预约记录
         $res_del = (new HbhBookCourse())->delByUidDay($this->hbh_user['id'], $day);
         if(!$res_del['result']){
             Db::rollback();

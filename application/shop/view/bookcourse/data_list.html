@@ -107,7 +107,7 @@
 
 
 <script type="text/html" id="barAction">
-<!--    <a class="layui-btn layui-btn-xs" lay-event="edit" lay-text="编辑" lay-data="{{d.id}}">编辑</a>-->
+    <a class="layui-btn layui-btn-xs" lay-event="edit" lay-text="编辑" lay-data="{{d.id}}">编辑</a>
     <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-text="删除" lay-data="{{d.id}}">删除</a>
 </script>
 
@@ -160,14 +160,23 @@
                 {field: 'student_name', title: '{$Think.lang.Student}', minWidth: 220,},
                 // {field: 'week', title: '星期几', minWidth: 120,},
                 {field: 'day', title: '{$Think.lang.Day}', minWidth: 120,},
-                // {field: 'status_text', title: '{$Think.lang.Status}', minWidth: 80, templet: function (res) {
-                //     if(res.status == 0){
-                //         return res.status_text;
-                //     }else {
-                //         return "<font color='red'>"+res.status_text+"</font>";
-                //     }
-                // }},
-                {field: 'status_text', title: '{$Think.lang.Status}', templet: '#showTpl', width: 100,},
+                {field: 'status_text', title: '{$Think.lang.Status}', minWidth: 80, templet: function (res) {
+                    if(res.status == 0){
+                        return res.status_text;
+                    }else if(res.status == 10){
+                        return "<font color='blue'>"+res.status_text+"</font>";
+                    }else{
+                        return "<font color='red'>"+res.status_text+"</font>";
+                    }
+                }},
+                {field: 'is_pay_text', title: '{$Think.lang.DeductionStatus}', width: 100,templet: function (res) {
+                    if(res.is_pay == 10){
+                        return "<font color='blue'>"+res.is_pay_text+"</font>";
+                    }else{
+                        return "<font color='red'>"+res.is_pay_text+"</font>";
+                    }
+                }},
+                // {field: 'status_text', title: '{$Think.lang.Status}', templet: '#showTpl', width: 100,},
                 {field: 'start_time', title: '{$Think.lang.StartTime}', minWidth: 40,},
                 {field: 'end_time', title: '{$Think.lang.EndTime}', minWidth: 40,},
                 // {field: 'description', title: 'Description', minWidth: 120,},

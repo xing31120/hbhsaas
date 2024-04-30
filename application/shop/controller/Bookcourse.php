@@ -87,6 +87,7 @@ class Bookcourse extends Base {
             $student_name = $student_list[$item['custom_uid']]['name'] ?? '';
             $phone = $student_list[$item['custom_uid']]['phone'] ?? '';
             $item['student_name'] = "{$student_name}({$phone})";
+            $item['is_pay_text'] = $item['is_pay'] == HbhBookCourse::is_pay_true ? Lang::get('AlreadyDeducted') :Lang::get('NoDeducted');;
             $item['status_text'] = HbhBookCourse::getStatusText($item['status']);
             $item['status_confirm_text'] = HbhBookCourse::getStatusConfirmText($item['status']);
         }
@@ -97,55 +98,55 @@ class Bookcourse extends Base {
 
     function ajaxSetShow(){
         $data = input();
-        $info = (new HbhBookCourse())->info($data['id']);
-        $uid = $info['custom_uid'] ?? 0;
-        $info_course = (new HbhCourse())->info($info['course_id']);
-        $userInfo = (new HbhUsers())->info($uid);
-        if(empty($userInfo)){
-            return errorReturn(Lang::get('UserNotFound'));
-        }
-        Db::startTrans();
-        //更新预约数据
-        $update['is_unlimited_number'] = $userInfo['is_unlimited_number'];
-        $update['status'] = $data['status'];
-        $update['update_time'] = time();
-        $update['is_pay'] = HbhBookCourse::is_pay_true;
-        $bool = (new HbhBookCourse())->updateById($data['id'], $update);
-        if(false === $bool){
-            Db::rollback();
-            return adminOutError(Lang::get('OperateFailed'));
-        }
-        //已经签到了, 不扣除额度
-        if($info['status'] == HbhBookCourse::status_end) {
-            Db::commit();
-            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
-        }
-        //已经付费了, 不扣除额度
-        if($info['status'] == HbhBookCourse::is_pay_true) {
-            Db::commit();
-            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
-        }
-        // 如果是未签到的用户, 要扣除余额
-        $pay_fee = $info_course['course_fees'] ?? 0;
-        $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
-        if(!$res['result']){
-            Db::rollback();
-            return adminOutError($res);
-        }
-        Db::commit();
+//        $info = (new HbhBookCourse())->info($data['id']);
+//        $uid = $info['custom_uid'] ?? 0;
+//        $info_course = (new HbhCourse())->info($info['course_id']);
+//        $userInfo = (new HbhUsers())->info($uid);
+//        if(empty($userInfo)){
+//            return adminOutError(Lang::get('UserNotFound'));
+//        }
+//        Db::startTrans();
+//        //更新预约数据
+//        $update['is_unlimited_number'] = $userInfo['is_unlimited_number'];
+//        $update['status'] = $data['status'];
+//        $update['update_time'] = time();
+//        $update['is_pay'] = HbhBookCourse::is_pay_true;
+//        $bool = (new HbhBookCourse())->updateById($data['id'], $update);
+//        if(false === $bool){
+//            Db::rollback();
+//            return adminOutError(Lang::get('OperateFailed'));
+//        }
+//        //已经签到了, 不扣除额度
+//        if($info['status'] == HbhBookCourse::status_end) {
+//            Db::commit();
+//            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+//        }
+//        //已经付费了, 不扣除额度
+//        if($info['status'] == HbhBookCourse::is_pay_true) {
+//            Db::commit();
+//            return adminOut(Lang::get('OperateSuccess')); //. json_encode($course_data)
+//        }
+//        // 如果是未签到的用户, 要扣除余额
+//        $pay_fee = $info_course['course_fees'] ?? 0;
+//        $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+//        if(!$res['result']){
+//            Db::rollback();
+//            return adminOutError($res);
+//        }
+//        Db::commit();
+//        $res = (new HbhBookCourse())->payByBoosCourseId($data['id'], );
 
         return adminOut(Lang::get('OperateSuccess'));
     }
 
     //进入新增或修改页面
-    public function add(){
-        return $this->fetch();
-    }
-
     public function form()
     {
         $data = input();
-        $detail_id = input('detail_id', 0);
+        $id = input('id', 0);
+        $info = (new HbhBookCourse())->info($id);
+//pj($info['course_id']);
+        $detail_id = $info['detail_id'];
         $detail_info = (new HbhClassTimeDetail())->info($detail_id);
         $course_id = $detail_info['course_id'] ?? 0;
         $teacher_uid = $detail_info['uid'] ?? 0;
@@ -168,14 +169,16 @@ class Bookcourse extends Base {
 
         $course_name = $course_name_list[$course_id]['name'] ?? '';
         $course_description = $course_name_list[$course_id]['description'] ?? '';
-        $detail_info['course_name'] = $course_name."({$course_description})";
-        $detail_info['teacher_name'] = $teacher_name_list[$teacher_uid] ?? '';
-        $detail_info['class_time'] = $start_time . '-' . $end_time;
-        $detail_info['teacher_uid'] = $teacher_uid;
+        $detail_info['course_name'] = $info['course_name'] = $course_name."({$course_description})";
+        $detail_info['teacher_name'] = $info['teacher_name'] = $teacher_name_list[$teacher_uid] ?? '';
+        $detail_info['class_time'] = $info['class_time'] = $start_time . '-' . $end_time;
+        $info['course_cat_id'] = $course_cat_id;
+//        $detail_info['teacher_uid'] = $info['teacher_uid'] = $teacher_uid;
 //pj($detail_info);
         $classTimeList = model('HbhClassTime')->getAllList();
         $classTimeList = array_column($classTimeList, null, 'id');
 
+        $this->assign('info', $info);
         $this->assign('classTimeList', $classTimeList);
         $this->assign('course_name_list', $course_name_list);
         $this->assign('teacher_name_list', $teacher_name_list);
@@ -210,48 +213,6 @@ class Bookcourse extends Base {
         return adminOut(['msg' => Lang::get('OperateSuccess')]);
     }
 
-    /**
-     * Notes:保存
-     * @return \think\response\Json
-     * User: qc DateTime: 2021/7/17 12:33
-     */
-    public function save()
-    {
-        $data = input();
-        $id = $data['id'] ?? 0;
-
-        $is_exist = (new HbhBookCourse())
-            ->where('detail_id', $data['detail_id'])
-            ->where('day', $data['day'])
-            ->where('custom_uid', $data['custom_uid'])
-            ->when(!empty($id), function ($query) use ($id) {
-                $query->where('id', '<>', $id);
-            })
-            ->find();
-        if (!empty($is_exist)) return adminOut('Duplicate Book Course');
-
-
-        $course_data['shop_id']                 = $this->shop_id;
-        $course_data['custom_uid']              = $data['custom_uid'];
-        $course_data['teacher_uid']             = $data['teacher_uid'];
-        $course_data['course_id']               = $data['course_id'];
-        $course_data['detail_id']               = $data['detail_id'];
-        $course_data['start_time']              = $data['start_time'];
-        $course_data['end_time']                = $data['end_time'];
-        $course_data['day']                     = $data['day'];
-        $course_data['create_time'] = time();
-
-        if (empty($id)) {
-            $course_id = (new HbhBookCourse())->insertGetId($course_data);
-        } else {
-            $course_id = (new HbhBookCourse())->updateById($id,  $course_data);
-        }
-        if($course_id){
-            return adminOut(Lang::get('SaveSuccess'));
-        }
-
-        return adminOut(Lang::get('SaveFailed'));
-    }
 
 
 

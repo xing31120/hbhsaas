@@ -1,6 +1,7 @@
 <?php
 namespace app\common\model;
 use app\common\model\basic\SingleSubData;
+use think\Db;
 use think\facade\Lang;
 
 class HbhBookCourse extends SingleSubData {
@@ -27,7 +28,7 @@ class HbhBookCourse extends SingleSubData {
         if($status == self::status_wait){
             $text = Lang::get('Booked');
         }elseif ($status == self::status_cancel){
-            $text = Lang::get('Cancel');
+            $text = Lang::get('ConfirmCancel');
         }elseif ($status == self::status_end){
             $text = Lang::get('SignedIn');
         }
@@ -47,7 +48,7 @@ class HbhBookCourse extends SingleSubData {
     }
 
     /**
-     * Notes:
+     * Notes: 删除当前用户的所有$detail_ids预约记录
      * @param $custom_uid
      * @param array $detail_ids
      * @param int $shop_id
@@ -76,6 +77,14 @@ class HbhBookCourse extends SingleSubData {
         }
     }
 
+    /**
+     * 删除某天当前用户的所有预约记录
+     * @param $custom_uid
+     * @param $day
+     * @param $shop_id
+     * @return array
+     * @throws \Exception
+     */
     function delByUidDay($custom_uid, $day, $shop_id = 1){
         if(empty($day )){
             return successReturn('success');
@@ -95,7 +104,7 @@ class HbhBookCourse extends SingleSubData {
     }
 
     /**
-     * 单条预约
+     * 单条预约增加
      * @param $custom_uid
      * @param $detail_id
      * @param $shop_id
@@ -118,6 +127,10 @@ class HbhBookCourse extends SingleSubData {
         if(empty($detail_info)){
             return errorReturn('课时错误');
         }
+        $userInfo = (new HbhUsers())->info($custom_uid);
+        if(empty($userInfo)){
+            return errorReturn(Lang::get('ParameterError').'-uid');
+        }
         $data['shop_id']        = $shop_id;
         $data['custom_uid']     = $custom_uid;
         $data['teacher_uid']    = $detail_info['uid'] ?? 0;
@@ -128,6 +141,7 @@ class HbhBookCourse extends SingleSubData {
         $data['day']            = $detail_info['day'] ?? '';
         $data['year']           = $detail_info['year'] ?? '';
         $data['which_week']     = $detail_info['which_week'] ?? '';
+        $data['is_unlimited_number'] = $userInfo['is_unlimited_number'];
 
         $data['id'] = $this->insert($data);
 
@@ -158,6 +172,11 @@ class HbhBookCourse extends SingleSubData {
             return errorReturn('课时错误');
         }
 
+        $op_user['where'][] = ['id', 'in', $custom_uid_arr];
+        $op_user['doPage'] = false;
+        $user_list = (new HbhUsers())->getList($op_user);
+        $user_list = array_column($user_list['list'], null, 'id');
+
         $time = time();
         $insert_data = [];
         foreach ($custom_uid_arr as $custom_uid) {
@@ -167,6 +186,7 @@ class HbhBookCourse extends SingleSubData {
             if(empty($custom_uid)){
                 continue;
             }
+            $userInfo = $user_list[$custom_uid] ?? [];
 
             $data['shop_id']        = $shop_id;
             $data['custom_uid']     = $custom_uid;
@@ -178,6 +198,7 @@ class HbhBookCourse extends SingleSubData {
             $data['day']            = $detail_info['day'] ?? '';
             $data['year']           = $detail_info['year'] ?? '';
             $data['which_week']     = $detail_info['which_week'] ?? '';
+            $data['is_unlimited_number'] = $userInfo['is_unlimited_number'] ?? 0;
             $data['create_time']    = $time;
             $insert_data[] = $data;
         }
@@ -188,4 +209,44 @@ class HbhBookCourse extends SingleSubData {
         return  successReturn(['data' => $insert_data, 'res' => $res]);
 
     }
+
+
+    /**
+     *  支付扣费根据预约id
+     * @param $id
+     * @param $is_pay
+     * @return array
+     */
+    function payByBoosCourseId($id, $is_pay = self::is_pay_false){
+        $info = $this->info($id);
+        $uid = $info['custom_uid'] ?? 0;
+        $info_course = (new HbhCourse())->info($info['course_id']);
+        $userInfo = (new HbhUsers())->info($uid);
+        if(empty($userInfo)){
+            return errorReturn(Lang::get('UserNotFound'));
+        }
+//        if($is_pay == HbhBookCourse::is_pay_false) {
+//            return successReturn(Lang::get('OperateSuccess'.'aa')); //. json_encode($course_data)
+//        }
+        //已经付费了, 不扣除额度
+        if($info['is_pay'] == HbhBookCourse::is_pay_true) {
+            return successReturn(Lang::get('OperateSuccess').'bb'); //. json_encode($course_data)
+        }
+        //更新预约数据
+        $update['is_unlimited_number'] = $userInfo['is_unlimited_number'];
+        $update['update_time'] = time();
+        $update['is_pay'] = $is_pay;
+        $bool = (new HbhBookCourse())->updateById($id, $update);
+        if(false === $bool){
+            return errorReturn(Lang::get('OperateFailed'));
+        }
+        // 如果是未签到的用户, 要扣除余额
+        $pay_fee = $info_course['course_fees'] ?? 0;
+        $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+        if(!$res['result']){
+            return errorReturn($res);
+        }
+        return successReturn(Lang::get('OperateSuccess').'ccc');
+    }
+
 }
