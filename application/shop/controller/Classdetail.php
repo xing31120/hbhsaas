@@ -210,7 +210,7 @@ class Classdetail extends Base {
         $year = substr($data['day'], 0, 4);
 
         $class_time_info = (new HbhClassTime())->info($data['class_time_id']);
-        $course_data['status']                  = $data['status'];
+        $course_data['status']                  = $data['status'] ?? HbhBookCourse::status_wait;
         $course_data['custom_uid']              = $data['custom_uid'];
         $course_data['teacher_uid']             = $data['teacher_uid'];
         $course_data['course_id']               = $data['course_id'];
@@ -220,7 +220,7 @@ class Classdetail extends Base {
         $course_data['end_time']                = $class_time_info['end_time'];
         $course_data['year']                    = $year;
         $course_data['day']                     = $data['day'];
-        $course_data['is_pay']                  = $data['is_pay'];
+        $course_data['is_pay']                  = $data['is_pay'] ?? HbhBookCourse::is_pay_false;
         $course_data['which_week']              = $which_week;
 //pj([$id, $course_data]);
         Db::startTrans();
