@@ -12,7 +12,7 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <form action="{:url('SaveBooked')}" method="post" class="layui-form form-inline" id="goods-type-form">
+                <form action="{:url('classdetail/SaveBooked')}" method="post" class="layui-form form-inline" id="goods-type-form">
                     <input type="hidden" name="id" id="id" value="{$info.id|default='0'}">
                     <input type="hidden" name="detail_id" id="detail_id" value="{$detail_id|default='0'}">
 
@@ -20,13 +20,13 @@
                         <div class="layui-form" wid120 lay-filter="">
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.Teacher}：</label><div class="layui-input-inline">
-                                    <select name="teacher_uid" lay-verify="required" lay-reqText="Please Select Teacher" lay-search>
-                                        <option value="">{$Think.lang.PleaseSelect}</option>
-                                        {foreach $teacher_name_list as $key=>$value}
-                                        <option value="{$key}" {if isset($info['teacher_uid']) && $info['teacher_uid'] == $key} selected {/if}>{$value}</option>
-                                        {/foreach}
-                                    </select>
-                                </div>
+                                <select name="teacher_uid" lay-verify="required" lay-reqText="Please Select Teacher" lay-search>
+                                    <option value="">{$Think.lang.PleaseSelect}</option>
+                                    {foreach $teacher_name_list as $key=>$value}
+                                    <option value="{$key}" {if isset($info['teacher_uid']) && $info['teacher_uid'] == $key} selected {/if}>{$value}</option>
+                                    {/foreach}
+                                </select>
+                            </div>
                             </div>
 
                             <div class="layui-form-item">
@@ -56,12 +56,12 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.CourseName}：</label>
                                 <div class="layui-input-inline">
-                                <select  name="course_id" id="course_id" lay-verify="required" lay-reqText="Please Select Course" lay-search>
-                                    <option value="">{$Think.lang.PleaseSelect}</option>
-                                    {foreach $course_name_list as $key=>$value}
-                                    <option value="{$key}" {if isset($info['course_id']) && $info['course_id'] == $key} selected {/if}>{$value['name']}({$value['description']})</option>
-                                    {/foreach}
-                                </select>
+                                    <select  name="course_id" id="course_id" lay-verify="required" lay-reqText="Please Select Course" lay-search>
+                                        <option value="">{$Think.lang.PleaseSelect}</option>
+                                        {foreach $course_name_list as $key=>$value}
+                                        <option value="{$key}" {if isset($info['course_id']) && $info['course_id'] == $key} selected {/if}>{$value['name']}({$value['description']})</option>
+                                        {/foreach}
+                                    </select>
                                 </div>
                             </div>
                             <div class="layui-form-item">
@@ -73,7 +73,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.Week}：</label>
                                 <div class="layui-input-inline">
-                                    <select name="weekStr" id="weekStr" lay-filter="weekStr" lay-verify="required" lay-reqText="Please Select Week" disabled="disabled">
+                                    <select name="weekStr" id="weekStr" lay-filter="weekStr" lay-verify="required" lay-reqText="Please Select Course" disabled="disabled">
                                         <option value="">{$Think.lang.PleaseSelect}</option>
                                         <option value="Sunday"    {if isset($info['week']) && $info['week'] == "Sunday"} selected {/if}>Sunday</option>
                                         <option value="Monday"    {if isset($info['week']) && $info['week'] == "Monday"} selected {/if}>Monday</option>
@@ -87,10 +87,32 @@
                                 </div>
                             </div>
 
+                            <!-- status 0:待签到 10:签到完成 40: 取消预约,-->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.Week}：</label>
+                                <div class="layui-input-inline">
+                                    <select name="status" id="status" lay-filter="status" lay-verify="required" lay-reqText="Please Select Status" >
+                                        <option value="0" {if isset($info['status']) && $info['status'] == 0} selected {/if}>{$Think.lang.Booked}</option>
+                                        <option value="10" {if isset($info['status']) && $info['status'] == 10} selected {/if}>{$Think.lang.SignedIn}</option>
+                                        <option value="40" {if isset($info['status']) && $info['status'] == 40} selected {/if}>{$Think.lang.ConfirmCancel}</option>
+                                    </select>
+                                    </div>
+                            </div>
+                            <!-- is_pay 是否已扣费用 0: 未扣, 10:已经扣除,-->
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.Week}：</label>
+                                <div class="layui-input-inline">
+                                    <select name="is_pay" id="is_pay" lay-filter="is_pay" lay-verify="required" lay-reqText="Please Select Deduction Status" >
+                                        <option value="0" {if isset($info['is_pay']) && $info['is_pay'] == 0} selected {/if}>{$Think.lang.NoDeducted}</option>
+                                        <option value="10" {if isset($info['is_pay']) && $info['is_pay'] == 10} selected {/if}>{$Think.lang.AlreadyDeducted}</option>
+                                    </select>
+                                </div>
+                            </div>
+
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.ClassTime}：</label>
                                 <div class="layui-input-inline">
-                                    <select lay-filter="selectMore" class="ssq-2" data-target="3" lay-verify="required" name="class_time_id" >
+                                    <select lay-filter="selectMore" class="ssq-2" data-target="3" lay-verify="required" name="class_time_id">
                                         <option value="">{$Think.lang.PleaseSelect}{$Think.lang.ClassTime}</option>
                                         {volist name="classTimeList" id="classTime"}
                                         <option value="{$classTime.id}" {if $info['class_time'] == $classTime.start_time."-".$classTime.end_time} selected {/if}>{$classTime.start_time}-{$classTime.end_time}</option>
@@ -145,6 +167,28 @@
 <!--<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.all.js"></script>-->
 <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
 <script>
+    // value 格式 2024-04-29
+    function weekChange(value){
+        if(value!="" && value.length>0){
+            var today = new Date(value.substring(0,10));
+            var weekdayNum = today.getDay();
+// console.log(weekdayNum)
+            var weekStr = '';
+            switch (weekdayNum) {
+                case 0: weekStr = 'Sunday';break;
+                case 1: weekStr = 'Monday';break;
+                case 2: weekStr = 'Tuesday';break;
+                case 3: weekStr = 'Wednesday';break;
+                case 4: weekStr = 'Thursday';break;
+                case 5: weekStr = 'Friday';break;
+                case 6: weekStr = 'Saturday';break;
+            }
+            document.getElementById('week').value = weekStr;
+            document.getElementById('weekStr').value = weekStr;
+        }
+    }
+
+
     layui.config({
         base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
     }).extend({
@@ -157,49 +201,21 @@
             upload = layui.upload,
             element = layui.element;
         var laydate = layui.laydate;
-        var upload_id = ''
-        document.getElementById('week').onchange = null;
-        form.render('select');
-        form.render();
         laydate.render({
             elem: '#day',
             trigger: 'click',
             done: function(value){
-                if(value!="" && value.length>0){
-                    var today = new Date(value.substring(0,10));
-                    var weekdayNum = today.getDay();
-console.log(weekdayNum)
-                    var weekStr = '';
-                    switch (weekdayNum) {
-                        case 0: weekStr = 'Sunday';break;
-                        case 1: weekStr = 'Monday';break;
-                        case 2: weekStr = 'Tuesday';break;
-                        case 3: weekStr = 'Wednesday';break;
-                        case 4: weekStr = 'Thursday';break;
-                        case 5: weekStr = 'Friday';break;
-                        case 6: weekStr = 'Saturday';break;
-                    }
-                    $("#week").val(weekStr);
-                    $("#weekStr").val(weekStr);
-                    // $("#date1").val(start+"~"+end);
-                }else{
-                    $("#week").val('');
-                    $("#weekStr").val('');
-                }
+                weekChange(value)
                 form.render('select')
-                form.render();
             }
         });
-
-        // form.render('select', 'week', {
-        //     value: 'Sunday' // 这里的值应该对应你想要选中的option的value值
-        // });
-
+        weekChange('{$info['day']}')
+        form.render('select');
 
         //监听提交
         form.on('submit(submit)', function (data) {
             $.ajax({
-                url: "{:url('SaveBooked')}",
+                url: "{:url('classdetail/SaveBooked')}",
                 type: 'post',
                 dataType: 'json',
                 data: $('form').serializeArray(),
@@ -250,10 +266,6 @@ console.log(weekdayNum)
             });
         });
 
-        $('#day').change(function (){
-
-        })
-
 
 
     });
@@ -261,29 +273,6 @@ console.log(weekdayNum)
 
 
     $(document).ready(function (){
-//         $('#course_cat_id').change(function (){
-//             cat_id = ('#course_cat_id').val()
-// console.log(cat_id)
-            // $.ajax({
-            //     url: "{:url('pub/ajaxCourseByCat')}",
-            //     type: 'post',
-            //     dataType: 'json',
-            //     data: {"cat_id":},
-            //     success: function (res) {
-            //         if (res.code === 0) {
-            //             layer.msg(res.msg, {icon: 1, time: 2000}, function () {
-            //                 parent.location.reload();
-            //             });
-            //         } else {
-            //             layer.msg(res.msg);
-            //         }
-            //     },
-            //     error: function () {
-            //         layer.msg('{$Think.lang.OperateFailed}');
-            //     }
-            // });
-
-        // })
     })
 
 </script>
