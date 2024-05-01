@@ -50,7 +50,10 @@ class Index extends Base {
         return $this->fetch();
     }
 
-
+    function event_detail()
+    {
+        return $this->fetch();
+    }
 
 
     function index_dance_school(){
