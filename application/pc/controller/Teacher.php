@@ -35,7 +35,7 @@ class Teacher extends Base {
     function setWhere(){
         $uid = session('hbh_uid');
         $where[] = ['teacher_uid', '=', $uid];
-        $where[] = ['day', '=', date("Y-m-d")];
+//        $where[] = ['day', '=', date("Y-m-d")];
         return $where;
     }
 
@@ -66,14 +66,15 @@ class Teacher extends Base {
         $student_list = array_column($student_list, null, 'id');
 //pj($student_list);
         foreach ($list['list'] as &$item) {
+            $item['day_short'] = date('M d', strtotime($item['day']));
             $item['course_name'] = $course_name_list[$item['course_id']] ?? '';
             $item['teacher_name'] = $teacher_name_list[$item['teacher_uid']] ?? '';
             $student_name = $student_list[$item['custom_uid']]['name'] ?? '';
             $phone = $student_list[$item['custom_uid']]['phone'] ?? '';
             $item['student_name'] = "{$student_name}({$phone})";
             $item['status_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Booked') : Lang::get('SignedIn');
-            $item['confirm_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('ConfirmBooked') : '';
-            $item['cancel_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('ConfirmCancel') : '';
+            $item['confirm_text'] = $item['status_confirm'] == HbhBookCourse::status_wait ? Lang::get('Confirm') : '';
+            $item['cancel_text'] = $item['status'] == HbhBookCourse::status_wait ? Lang::get('Cancel') : '';
         }
 
 //        $res = ['count'=>$list['count'],'data'=>$list['list']];
