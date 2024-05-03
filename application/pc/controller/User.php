@@ -43,6 +43,8 @@ class User extends Base {
 
         if(empty($data['login_password'])){
             unset($data['login_password']);
+        }else{
+            $data['password'] = $data['login_password'];
         }
 
         $dataUser = array_merge($this->hbh_user, $data);
