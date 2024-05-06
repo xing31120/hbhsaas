@@ -40,7 +40,7 @@
 <!--==============================
 Hero Area
 ==============================-->
-<div class="th-hero-wrapper hero-3" id="hero">
+<div class="th-hero-wrapper hero-3" style="height: 93vh" id="hero">
 <!--    data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/bg/hero_bg_1.jpg"-->
     <div class="th-hero-bg" >
 
@@ -76,6 +76,8 @@ Hero Area
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
 <script>
     function _escape() {
+        
+        console.log(window.outerWidth)
         zeroModal.show({
             // title: 'hello world',
             content: '<video id="video"  width="450" height="800" muted controls autoplay="autoplay" preload="auto" >\n' +
@@ -84,7 +86,7 @@ Hero Area
                 '</video>',
             // content: '<b>this is zeroModal</b>',
             // content: 'this is zeroModal',
-            width: '450px',
+            width: window.outerWidth > 500 ? '450px' : '100%',
             height: '800px'
         });
     }
