@@ -41,7 +41,7 @@
         font-size: 14px;
         line-height: 26px;
         text-transform: uppercase;
-        padding: 8px 20px;
+        padding: 8px 8px;
         border-radius: 10px;
         cursor: pointer;
     }
@@ -53,7 +53,7 @@
         color: var(--white-color) !important;
     }
 </style>
-<section class="th-blog-wrapper space-top space-extra-bottom">
+<section class="th-blog-wrapper space-top space-extra-bottom" style="padding-top: 150px">
     <div class="container">
         <div class="th-blog blog-single has-post-thumbnail">
             <div class="blog-content">
@@ -113,6 +113,8 @@ Footer Area
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
 <script>
+    nowPage = 1
+    totalPage = 0
  function toPage(type) {
     if (type === 'next') {
         if (nowPage < totalPage) {
@@ -175,7 +177,8 @@ function ajaxList(page){
                 '                                    <div class="event-item_content">\n' +
                 '                                        <div class="event-item_list">\n' +
                 '                                            <h3 class="event-item_title">'+rs.list[rsKey].course_name+'</h3>\n' +
-                '                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>'+rs.list[rsKey].start_time+' - '+rs.list[rsKey].end_time+'</span>\n' +
+                // '                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>'+rs.list[rsKey].start_time+' - '+rs.list[rsKey].end_time+'</span>\n' +
+                '                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>'+rs.list[rsKey].day_short+' ('+rs.list[rsKey].start_time+' - '+rs.list[rsKey].end_time+')</span>\n' +
                 '                                            <span class="event-item_location"><i class="fal fa-user"></i>'+rs.list[rsKey].student_name+'</span>\n' +
                 '                                        </div>\n' +
                 '                                        <div class="event-btn" style="right: 20px;top: 0;">\n' +

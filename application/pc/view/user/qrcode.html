@@ -77,9 +77,9 @@
         <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
                   </div>
                    </div>
-                   
-           
-      
+
+
+
             <!--
             <div class="event-item" style="position: relative;">
                 <div class="event-item_wrapper">
@@ -110,7 +110,7 @@
                 <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
             </ul>
         </div>
-      
+
         <!--<input type="text" name="page_num" id="page_num" value="1">-->
     </div>
 </section>
@@ -120,6 +120,8 @@ Footer Area
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
 <script>
+    nowPage = 1
+    totalPage = 0
  function toPage(type) {
     if (type === 'next') {
         if (nowPage < totalPage) {
@@ -202,8 +204,7 @@ $(function () {
     ajaxList(1)
 
 
-    nowPage = 1
-    totalPage = 0
+
     // $('.page_btn').on('click',function (){
     //     console.log($(this).data('id'))
 
