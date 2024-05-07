@@ -115,6 +115,12 @@ Mobile Menu
                 <li><a href="{:url('BookCourse/index')}">Reservation</a></li>
                 <li><a href="{:url('index/contact')}">Contact Us</a></li>
                 <li><a href="{:url('User/qrcode')}">User</a></li>
+                {if !empty($userInfo['name'])}
+                         <li><a href="/auth/logout.html" class="">logout</a></li>
+                        {else/}
+                        <li> <a href="{:url('auth/login')}">Login Now</a></li>
+                        {/if}
+                 <!--<li><a href="/auth/logout.html" class="">logout</a></li>-->
             </ul>
         </div>
     </div>

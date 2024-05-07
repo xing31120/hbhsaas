@@ -66,6 +66,10 @@ class Index extends Base {
     function index_dance_school(){
         return $this->fetch();
     }
+    
+    function single_event(){
+        return $this->fetch();
+    }
 
     function index_ballet_studio(){
         return $this->fetch();
