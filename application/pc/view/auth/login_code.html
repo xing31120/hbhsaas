@@ -24,16 +24,20 @@
                     <h5 class="form-title">Login</h5>
                     <div class="row">
                         <div class="form-group">
-                            <label>Username or email address</label>
-                            <input type="text" class="form-control style-white" name="login_name" id="login_name"
-                                placeholder="">
-                            <i class="fal fa-user"></i>
+                            <label>Country Code</label>
+                            <select name="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
+                                <option value="+971">+971</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="text" class="form-control style-white" name="phone" id="phone" placeholder="">
+                            <i class="fal fa-phone"></i>
                         </div>
                         <div class="form-group style-3">
-                            <label>Password *</label>
-                            <input type="password" class="form-control style-white" name="login_password"
-                                id="login_password" placeholder="" require="">
-                            <i class="fa-solid fa-eye-slash" onclick="togglePassword(this)"></i>
+                            <label>Verification Code *</label>
+                            <input type="text" class="form-control style-white" name="verify_code" id="verify_code">
+                            <i class="fa-solid fa-envelope">Send SMS</i>
                         </div>
 
                         <div class="form-group col-12 text-start align-self-center">
@@ -41,7 +45,7 @@
                             <label for="remember">Remember Me</label>
                         </div>
                         <div class="form-group col-6">
-                            <a class="read-more-btn" style="word-wrap: normal;" href="{:url('auth/loginCode')}">Verification Code Login</a>
+<!--                            <a class="read-more-btn" style="word-wrap: normal;" href="{:url('auth/forgot')}">Forgot Password?</a>-->
                         </div>
                         <div class="form-group col-6 text-end">
                             <a class="read-more-btn" href="{:url('auth/reg')}">Register</a>

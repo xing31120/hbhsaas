@@ -9,7 +9,7 @@ class AliyunSmsService{
     //初始化
     private static function initClient(){
         AlibabaCloud::accessKeyClient(env('sms.alisms_access_key',''), env('sms.alisms_access_secret',''))
-            ->regionId('cn-hangzhou')
+//            ->regionId('cn-hangzhou')
             ->asDefaultClient();
     }
 
@@ -24,7 +24,7 @@ class AliyunSmsService{
                 ->host('dysmsapi.aliyuncs.com')
                 ->options([
                     'query' => [
-                        'RegionId' => "cn-hangzhou",
+//                        'RegionId' => "cn-hangzhou",
                         'PhoneNumbers' => "",//发送手机号码
                         'SignName' => "",//签名
                         'TemplateCode' => "",//模版ID
@@ -50,7 +50,7 @@ class AliyunSmsService{
                 ->host('dysmsapi.aliyuncs.com')
                 ->options([
                     'query' => [
-                        'RegionId' => "cn-hangzhou",
+//                        'RegionId' => "cn-hangzhou",
                         'PhoneNumberJson' => "",//发送手机号码
                         'SignNameJson' => "",//签名
                         'TemplateCode' => "",//模版ID

@@ -7,6 +7,7 @@ use app\common\model\HbhUsers;
 use app\common\model\ShopAuthGroup;
 use app\common\model\ShopAuthGroupAccess;
 use app\common\model\ShopUser;
+use think\facade\Cache;
 use think\facade\Lang;
 use think\facade\Session;
 
@@ -95,7 +96,7 @@ class Auth extends Base {
         }
 
         unset($data['confirm_password']);
-$data['shop_id'] = 1;
+        $data['shop_id'] = $data['shop_id']?? 1;
         $card = '000'.getRandomCode(7);
         $time = time();
         $data['role'] = 'student';
@@ -111,6 +112,48 @@ $data['shop_id'] = 1;
         $data['login_name'] = $data['name'];
         $data['login_password'] = $data['password'];
         return $this->login_data($data);
+    }
+
+    function loginCode()
+    {
+        return $this->fetch();
+    }
+
+    function loginSendSmsCode(){
+        $mobile = input('phone');
+        $type = 2;  //2: 验证码登录
+        $return_msg = SendSmsCode($mobile,$type);
+        return apiOut($return_msg);
+    }
+
+    function checkLoginSmsCode(){
+        if(!isset($data['phone']) || !isset($data['verify_code']) || !isset($data['phone_code'])){
+            return adminOutError(Lang::get('ParameterError'));
+        }
+        //2: 验证码登录
+        $key = getSmsKey($data['mobile'],2);
+        $verify_code = Cache::get($key);
+        if ($data['verify_code'] != $verify_code){
+            return adminOutError(Lang::get('VerificationCodeError'));
+        }
+        $where[] = ['phone', '=', $data['phone']];
+        $where[] = ['phone_code', '=', $data['phone_code']];
+        $result = HbhUsers::where($where)->find();
+        if (empty($result)){
+            return adminOutError(Lang::get('UserError'));
+        }
+        if ($result['status'] != 1){
+            return adminOutError('account is disabled', -1);
+        }
+
+        Session::set('hbh_shop_id', $result['shop_id']);
+        Session::set('hbh_uid', $result['id']);
+        Session::set('hbh_name', $result['name']);
+        Session::set('hbh_email', $result['email']);
+        Session::set('hbh_role', $result['role']);
+        Session::set('hbh_user', json_encode($result));
+        return successReturn(['msg'=> 'login success','data'=> $result, 'url' => '/index' ] );
+
     }
 
 
