@@ -37,7 +37,7 @@
                         <div class="form-group style-3">
                             <label>Verification Code *</label>
                             <input type="text" class="form-control style-white" name="verify_code" id="verify_code">
-                            <i class="fa-solid fa-envelope" onclick="sendSms(this)">Send SMS</i>
+                            <i class="fa-solid fa-envelope" id="time" onclick="sendSms(this)"> Send SMS</i>
                         </div>
 
                         <div class="form-group col-12 text-start align-self-center">
@@ -68,6 +68,7 @@
 
 <script>
 
+	
     var formMessages_login = $(".form-messages_login");
     var formMessages_reg = $(".form-messages_reg");
     $('#login_submit2').on('click', function () {
@@ -90,8 +91,22 @@
             layer.msg('error');
         });
     });
-
+var time = 60;
+var isSend = false
     function sendSms (obj) {
+        if (isSend) return
+         let timer =	setInterval(function() {
+				time--;
+				isSend = true
+				document.querySelector("#time").innerHTML = " " + time + "秒";
+				if(time == 0) {
+				    clearInterval(timer)
+					time = 60;
+					document.querySelector("#time").innerHTML = " Send SMS";
+					isSend = false
+				}
+			
+			}, 1000);
         var phone_code = $('#phone_code').val();
         var phone = $('#phone').val();
         $.ajax({
