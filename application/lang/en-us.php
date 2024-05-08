@@ -20,6 +20,8 @@ return [
     'Close' =>'Close',
     'Edit' =>'Edit',
     'Operate' =>'Operate',
+    'Search' =>'Search',
+    'Submit' =>'Submit',
     'Del' =>'Del',
     'Delete' =>'Delete',
     'PleaseSelect' =>'Please Select',
@@ -70,6 +72,7 @@ return [
     'Unlimited' =>'Unlimited',
     'Limited' =>'Limited',
     //Course
+    'CourseSchedule' =>'Course Schedule',
     'CourseName' =>'Course Name',
     'AddCourse' =>'Add Course',
     'Description' =>'Description',

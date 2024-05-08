@@ -213,8 +213,8 @@
   class="checkmark"></span></label>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-light" data-bs-dismiss="modal">取消</button>
-                <button type="button" class=" btn" style="background-color: var(--theme-color);color: white" id="confim_btn">确认</button>
+                <button type="button" class="btn btn-light" data-bs-dismiss="modal">{$Think.lang.Cancel}</button>
+                <button type="button" class=" btn" style="background-color: var(--theme-color);color: white" id="confim_btn">{$Think.lang.Confirm}</button>
             </div>
         </div>
     </div>
@@ -222,10 +222,17 @@
 
 <form method="post" id="pc_form" onsubmit="return false">
     <div class="class-schedule-area pc" style="margin-top: 0px;margin-bottom: 0px" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/bj.jpg">
-        <h5 class="form-title" style="color: white;">课程</h5>
+        <h5 class="form-title" style="color: white;">{$Think.lang.Course}</h5>
         <div class="row">
             <div class="form-group">
-                <label style="color: white;">课程分类</label>
+                <div style="display:flex">
+                    <select id="shop_id">
+                        {foreach $campus_list as $sid => $value}
+                        <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>
+                        {/foreach}
+                    </select>
+                </div>
+                <label style="color: white;">{$Think.lang.ClassifyName}</label>
                 <div style="display:flex">
                     <select multip id="cat_more">
                          <option value="-1">All</option>
@@ -234,7 +241,7 @@
                             {$value.name}</option>
                         {/foreach}
                     </select>
-                    <div style="width: 200px;margin-left: 20px" class="th-btn" id="search-btn" name="submit_mob">搜索</div>
+                    <div style="width: 200px;margin-left: 20px" class="th-btn" id="search-btn" name="submit_mob">{$Think.lang.Search}</div>
                 </div>
                 <!--<select name="cat_id" id="cat_id" class="form-select nice-select">-->
                 <!--    <option value="-1">All</option>-->
@@ -245,7 +252,7 @@
                 <!--</select>-->
             </div>
             <div class="form-group style-3">
-                <label style="color: white;">课程表</label>
+                <label style="color: white;">{$Think.lang.CourseSchedule}</label>
                 <div style="overflow:auto;position:relative">
                     <table class="class-schedule-table table">
                     <tr class="schedule-day">
@@ -286,7 +293,7 @@
             </div>
 
             <div class="form-btn col-12 text-center">
-                <button class="th-btn w-100 red-btn" id="submit_pc" name="submit_pc">提交</button>
+                <button class="th-btn w-100 red-btn" id="submit_pc" name="submit_pc">{$Think.lang.Submit}</button>
             </div>
         </div>
         <p class="form-messages mb-0 mt-3"></p>
@@ -301,7 +308,7 @@
         <input type="text" name="today" id="today" value="{$today}">
         <!-- 课程分类下拉框 -->
         <div class="widget widget_categories th-comment-form">
-            <h3 class="widget_title">课程分类<span class="shape"></span></h3>
+            <h3 class="widget_title">{$Think.lang.ClassifyName}<span class="shape"></span></h3>
             <select name="cat_id_mob" id="cat_id_mob" class="form-select nice-select">
                 {foreach $course_cat_list as $key=>$value}
                 <option value="{$value.id}" {if in_array($value['id'], $cat_more)} selected {/if}>{$value.name}</option>
@@ -498,6 +505,12 @@
         selectMultip.register()
         var array = <?php echo json_encode($cat_more); ?>;
         selectMultip.setVal('cat_more', array);
+
+        //选择学校之后
+        $("#shop_id").change(function () {
+            shop_id = $("#shop_id").val();
+            window.location.href = '{:url("index")}?sid=' + shop_id;
+        })
 
         //选择课程分类
          $("#search-btn").click(function () {

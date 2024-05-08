@@ -20,6 +20,8 @@ return [
     'Close' =>'关闭',
     'Edit' =>'编辑',
     'Operate' =>'操作',
+    'Search' =>'搜索',
+    'Submit' =>'提交',
     'Del' =>'删除',
     'Delete' =>'删除',
     'PleaseSelect' =>'请选择',
@@ -70,6 +72,7 @@ return [
     'Unlimited' =>'不限',
     'Limited' =>'有限',
     //课程
+    'CourseSchedule' =>'课程表',
     'CourseName' =>'课程名称',
     'AddCourse' =>'新增课程',
     'Description' =>'描述',
