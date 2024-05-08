@@ -37,18 +37,19 @@ class Base  extends Controller{
      * 在所有的方法之前被调用
      */
     protected function initialize(){
-        $session_shop_id = session('shop_id');
+        $session_shop_id = session('hbh_shop_id');
+        $this->shop_id = $session_shop_id;//初始化应用ID
         $get_shop_id = input('sid', 0); //学校ID, 也就是 shop_id
         if(!empty($get_shop_id)){
-            Session::set('shop_id', $get_shop_id);
+            Session::set('hbh_shop_id', $get_shop_id);
             $this->shop_id = $get_shop_id;
         }
         // 没有session
-        if(empty(session('shop_id')) && empty($get_shop_id)){
+        if(empty(session('hbh_shop_id')) && empty($get_shop_id)){
             $this->shop_id = 1;
         }
+//pj([$this->shop_id, $get_shop_id, $session_shop_id]);
 
-        $this->shop_id = $session_shop_id;//初始化应用ID
         //正式环境 要做菜单权限验证
 //        if(!config('app.app_debug')){
 //            $this->authMenu();
@@ -74,9 +75,10 @@ class Base  extends Controller{
         $this->hbh_user = json_decode(session('hbh_user'), 1);//初始化应用ID
         //所有学校和校区
         $campus_list = (new HbhShopCampus())->getAllCampusShopList();
+//pj($this->shop_id);
 //pj($campus_list);
         $this->assign('campus_list', $campus_list);
-        $this->assign('shop_id', $this->shop_id);
+        $this->assign('s_id', $this->shop_id);
         $this->assign('userInfo', $this->hbh_user);
 //        $this->assign('userName', session('hbh_name'));
 

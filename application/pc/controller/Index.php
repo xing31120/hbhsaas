@@ -50,7 +50,14 @@ class Index extends Base {
         return $this->fetch();
     }
 
+    //活动详情
     function event_detail()
+    {
+        return $this->fetch();
+    }
+
+    //留学介绍
+    function study_abroad()
     {
         return $this->fetch();
     }

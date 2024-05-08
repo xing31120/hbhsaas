@@ -14,7 +14,7 @@ class AliyunSmsService{
     }
 
     //发送单条短信
-    public static function sendSms(){
+    public static function sendSms($sms_param){
         self::initClient();
         try {
             $result = AlibabaCloud::rpc()
@@ -23,12 +23,7 @@ class AliyunSmsService{
                 ->version('2017-05-25')->action('SendSms')->method('POST')
                 ->host('dysmsapi.aliyuncs.com')
                 ->options([
-                    'query' => [
-                        'RegionId' => "cn-hangzhou",
-                        'PhoneNumbers' => "",//发送手机号码
-                        'SignName' => "",//签名
-                        'TemplateCode' => "",//模版ID
-                    ],
+                    'query' => $sms_param
                 ])
                 ->request();
             print_r($result->toArray());
@@ -40,7 +35,7 @@ class AliyunSmsService{
     }
 
     //发送多个手机号
-    public static function sendBatchSms(){
+    public static function sendBatchSms($code,$phone,$sign_name,$param,$shop_uid){
         self::initClient();
         try {
             $result = AlibabaCloud::rpc()
@@ -51,9 +46,10 @@ class AliyunSmsService{
                 ->options([
                     'query' => [
                         'RegionId' => "cn-hangzhou",
-                        'PhoneNumberJson' => "",//发送手机号码
-                        'SignNameJson' => "",//签名
-                        'TemplateCode' => "",//模版ID
+                        'PhoneNumberJson' => json_encode($phone),//发送手机号码
+                        'SignNameJson' => json_encode($sign_name),//签名
+                        'TemplateCode' => $code,//模版ID
+                        'TemplateParamJson' => json_encode($param),//短信内容参数
                     ],
                 ])
                 ->request();

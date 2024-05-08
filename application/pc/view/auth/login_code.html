@@ -1,0 +1,109 @@
+{include file="public/header"/}
+<!--==============================
+    Breadcumb
+============================== -->
+<div class="breadcumb-wrapper " data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.jpg">
+    <div class="container">
+        <div class="breadcumb-content">
+            <h1 class="breadcumb-title">My Account</h1>
+            <ul class="breadcumb-menu">
+                <li><a href="index.html">Home</a></li>
+                <li>My Account</li>
+            </ul>
+        </div>
+    </div>
+</div>
+<!--==============================
+    My Account Area
+    ==============================-->
+<div class="space">
+    <div class="container">
+        <div class="row gy-4" style="justify-content: center;">
+            <div class="col-lg-6 col-xl-5">
+                <form action="" method="POST" class="login-form ajax-contact" onsubmit="false">
+                    <h5 class="form-title">Login</h5>
+                    <div class="row">
+                        <div class="form-group">
+                            <label>Country Code</label>
+                            <select name="phone_code" id="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
+                                <option value="+971">+971</option>
+                            </select>
+                        </div>
+                        <div class="form-group">
+                            <label>Phone *</label>
+                            <input type="text" class="form-control style-white" name="phone" id="phone" placeholder="">
+                            <i class="fal fa-phone"></i>
+                        </div>
+                        <div class="form-group style-3">
+                            <label>Verification Code *</label>
+                            <input type="text" class="form-control style-white" name="verify_code" id="verify_code">
+                            <i class="fa-solid fa-envelope" onclick="sendSms(this)">Send SMS</i>
+                        </div>
+
+                        <div class="form-group col-12 text-start align-self-center">
+                            <input class="style2" type="checkbox" id="remember">
+                            <label for="remember">Remember Me</label>
+                        </div>
+                        <div class="form-group col-6">
+<!--                            <a class="read-more-btn" style="word-wrap: normal;" href="{:url('auth/forgot')}">Forgot Password?</a>-->
+                        </div>
+                        <div class="form-group col-6 text-end">
+                            <a class="read-more-btn" href="{:url('auth/reg')}">Register</a>
+                        </div>
+
+                        <div class="form-btn col-12 text-center">
+                            <button class="th-btn w-100" id="login_submit2">Login</button>
+                        </div>
+                    </div>
+                    <p class="form-msg form-messages_login mb-0 mt-3"></p>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+<!--==============================
+	Footer Area
+==============================-->
+{include file="public/footer"/}
+
+<script>
+
+    var formMessages_login = $(".form-messages_login");
+    var formMessages_reg = $(".form-messages_reg");
+    $('#login_submit2').on('click', function () {
+        // alert(111)
+        var login_name = $('#login_name').val();
+        var login_password = $('#login_password').val();
+        $.ajax({
+            "url": "{:url('auth/logincheck')}",
+            "data": { "login_name": login_name, "login_password": login_password },
+        }).done(function (rs) {
+            if (rs.result) {
+                window.location.href = rs.url;
+            } else {
+                formMessages_login.removeClass("success");
+                formMessages_login.addClass("error");
+                // Set the message text.
+                formMessages_login.text(rs.msg);
+            }
+        }).fail(function (rs) {
+            layer.msg('error');
+        });
+    });
+
+    function sendSms (obj) {
+        var phone_code = $('#phone_code').val();
+        var phone = $('#phone').val();
+        $.ajax({
+            "url": "{:url('auth/loginSendSmsCode')}",
+            "data": { "phone_code": phone_code, "phone": phone},
+        }).done(function (rs) {
+console.log(rs)
+        }).fail(function (rs) {
+console.log(rs)
+        });
+
+    }
+
+
+</script>

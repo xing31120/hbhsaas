@@ -67,11 +67,11 @@ class StatisticsService{
         ];
         $where_lesson_hours = $where;
         $lessonHoursInfo = (new HbhUsers())->field($field_lesson_hours)->where($where_lesson_hours)->findOrEmpty()->toArray();
-        !empty($activeInfo) && $lesson_hours_all = $lessonHoursInfo['quantity_sum'];
+        !empty($activeInfo) && $lesson_hours_all = $lessonHoursInfo['quantity_sum'] ?? 0;
         // 有效课时
         $where_lesson_hours[] = ['expiry_date','>',date("Y-m-d")];
         $lessonHoursInfo = (new HbhUsers())->field($field_lesson_hours)->where($where_lesson_hours)->findOrEmpty()->toArray();
-        !empty($activeInfo) && $lesson_hours_enable = $lessonHoursInfo['quantity_sum'];
+        !empty($activeInfo) && $lesson_hours_enable = $lessonHoursInfo['quantity_sum'] ?? 0;
 
 
         return $res_base = [

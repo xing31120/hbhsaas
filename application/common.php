@@ -374,14 +374,6 @@ function makeTree($data) {
     return $tree;
 }
 
-//admin后台统一返回值
-//function adminOut($res){
-//    $resData = [
-//        'code'=>0,'msg'=>'','count'=>0,'data'=>[]
-//    ];
-//    $resData = array_merge($resData,$res);
-//    return json($resData);
-//}
 function adminOut($res)
 {
     return json(successReturn($res));
@@ -683,5 +675,54 @@ if (!function_exists('characet')) {
             }
         }
         return $data;
+    }
+}
+
+if (!function_exists('getSmsKey')) {
+    function getSmsKey($mobile, $type = 0)
+    {
+        switch ($type) {
+            case 1:     //注册
+                $key = 'official_website_shop_user_mobile_register_' . $mobile;
+                break;
+            case 2:     //登录
+                $key = 'official_website_shop_user_mobile_login_' . $mobile;
+                break;
+//            case 3:
+//                $key = 'user_activity_shipping_address_check' . $mobile;
+//                break;
+            case 4:     // 忘记密码
+                $key = 'user_store_forget_pass_check' . $mobile;
+                break;
+            default:    //其他
+                $key = 'official_website_shop_user_mobile_other_' . $mobile;
+        }
+        return $key;
+    }
+}
+
+if (!function_exists('SendSmsCode')) {
+    function SendSmsCode($mobile, $type = 0, $shop_uid = 0)
+    {
+        $key = getSmsKey($mobile, $type);
+        if (empty($mobile)) return errorReturn(['msg' => 'empty phone!']);
+        $code = mt_rand(1000, 9999);
+        $sms_param = [
+            'RegionId' => "cn-hangzhou",
+            'PhoneNumbers' => $mobile,
+            'SignName' => env('sms.alisms_sign_name'),
+            'TemplateCode' => 'SMS_465970872',
+            'TemplateParam' => json_encode(['code' => $code]),
+            'shop_id' => $shop_uid,
+        ];
+        $sms_service = new \app\common\service\AliyunSmsService();
+        $return_msg = $sms_service->sendSms($sms_param);
+//pj($return_msg);
+        if ($return_msg['Code'] == 'OK') {
+            \think\facade\Cache::set($key, $code, 500);
+            return successReturn(['msg' => 'send sms success!']);
+        } else {
+            return errorReturn('send sms error!');
+        }
     }
 }
