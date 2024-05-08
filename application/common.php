@@ -711,13 +711,13 @@ if (!function_exists('SendSmsCode')) {
             'RegionId' => "cn-hangzhou",
             'PhoneNumbers' => $mobile,
             'SignName' => env('sms.alisms_sign_name'),
-            'TemplateCode' => 'SMS_163195078',
+            'TemplateCode' => 'SMS_465970872',
             'TemplateParam' => json_encode(['code' => $code]),
-            'shop_uid' => $shop_uid,
+            'shop_id' => $shop_uid,
         ];
         $sms_service = new \app\common\service\AliyunSmsService();
         $return_msg = $sms_service->sendSms($sms_param);
-
+//pj($return_msg);
         if ($return_msg['Code'] == 'OK') {
             \think\facade\Cache::set($key, $code, 500);
             return successReturn(['msg' => 'send sms success!']);

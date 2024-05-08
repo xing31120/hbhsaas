@@ -88,6 +88,7 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
         'O' => 
         array (
             'Overtrue\\Pinyin\\' => 16,
+            'OneSm\\' => 6,
             'OSS\\' => 4,
         ),
         'L' => 
@@ -113,11 +114,22 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
         array (
             'Elasticsearch\\' => 14,
         ),
+        'D' => 
+        array (
+            'Darabonba\\OpenApi\\' => 18,
+            'Darabonba\\GatewaySpi\\' => 21,
+        ),
         'A' => 
         array (
             'Alipay\\EasySDK\\' => 15,
+            'AlibabaCloud\\Tea\\XML\\' => 21,
+            'AlibabaCloud\\Tea\\Utils\\' => 23,
             'AlibabaCloud\\Tea\\FileForm\\' => 26,
             'AlibabaCloud\\Tea\\' => 17,
+            'AlibabaCloud\\SDK\\Dysmsapi\\V20170525\\' => 36,
+            'AlibabaCloud\\OpenApiUtil\\' => 25,
+            'AlibabaCloud\\Endpoint\\' => 22,
+            'AlibabaCloud\\Credentials\\' => 25,
             'AlibabaCloud\\Client\\' => 20,
             'AlibabaCloud\\' => 13,
             'Adbar\\' => 6,
@@ -229,6 +241,10 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
         array (
             0 => __DIR__ . '/..' . '/overtrue/pinyin/src',
         ),
+        'OneSm\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/lizhichao/one-sm/src',
+        ),
         'OSS\\' => 
         array (
             0 => __DIR__ . '/..' . '/aliyuncs/oss-sdk-php/src/OSS',
@@ -277,9 +293,25 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
         array (
             0 => __DIR__ . '/..' . '/elasticsearch/elasticsearch/src/Elasticsearch',
         ),
+        'Darabonba\\OpenApi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/darabonba-openapi/src',
+        ),
+        'Darabonba\\GatewaySpi\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/gateway-spi/src',
+        ),
         'Alipay\\EasySDK\\' => 
         array (
             0 => __DIR__ . '/..' . '/alipaysdk/easysdk/php/src',
+        ),
+        'AlibabaCloud\\Tea\\XML\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/tea-xml/src',
+        ),
+        'AlibabaCloud\\Tea\\Utils\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/tea-utils/src',
         ),
         'AlibabaCloud\\Tea\\FileForm\\' => 
         array (
@@ -288,6 +320,22 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
         'AlibabaCloud\\Tea\\' => 
         array (
             0 => __DIR__ . '/..' . '/alibabacloud/tea/src',
+        ),
+        'AlibabaCloud\\SDK\\Dysmsapi\\V20170525\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/dysmsapi-20170525/src',
+        ),
+        'AlibabaCloud\\OpenApiUtil\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/openapi-util/src',
+        ),
+        'AlibabaCloud\\Endpoint\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/endpoint-util/src',
+        ),
+        'AlibabaCloud\\Credentials\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/alibabacloud/credentials/src',
         ),
         'AlibabaCloud\\Client\\' => 
         array (

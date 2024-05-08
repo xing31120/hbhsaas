@@ -120,7 +120,9 @@ class Auth extends Base {
     }
 
     function loginSendSmsCode(){
-        $mobile = input('phone');
+        $phone = input('phone');
+        $phone_code = input('phone_code', '');
+        $mobile = $phone_code . $phone;
         $type = 2;  //2: 验证码登录
         $return_msg = SendSmsCode($mobile,$type);
         return apiOut($return_msg);

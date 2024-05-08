@@ -25,7 +25,7 @@
                     <div class="row">
                         <div class="form-group">
                             <label>Country Code</label>
-                            <select name="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
+                            <select name="phone_code" id="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
                                 <option value="+971">+971</option>
                             </select>
                         </div>
@@ -37,7 +37,7 @@
                         <div class="form-group style-3">
                             <label>Verification Code *</label>
                             <input type="text" class="form-control style-white" name="verify_code" id="verify_code">
-                            <i class="fa-solid fa-envelope">Send SMS</i>
+                            <i class="fa-solid fa-envelope" onclick="sendSms(this)">Send SMS</i>
                         </div>
 
                         <div class="form-group col-12 text-start align-self-center">
@@ -90,47 +90,18 @@
             layer.msg('error');
         });
     });
-    $('#register_submit').on('click', function () {
-        // alert(222)
-        var name = $('#name').val();
+
+    function sendSms (obj) {
+        var phone_code = $('#phone_code').val();
         var phone = $('#phone').val();
-        var email = $('#email').val();
-        var address = $('#address').val();
-        var password = $('#password').val();
-        var confirm_password = $('#confirm_password').val();
         $.ajax({
-            "url": "{:url('auth/register')}",
-            "data": { "name": name, "phone": phone, "email": email, "address": address, "password": password, "confirm_password": confirm_password },
+            "url": "{:url('auth/loginSendSmsCode')}",
+            "data": { "phone_code": phone_code, "phone": phone},
         }).done(function (rs) {
-            if (rs.result) {
-                window.location.href = rs.url;
-            } else {
-                formMessages_reg.removeClass("success");
-                formMessages_reg.addClass("error");
-                // Set the message text.
-                formMessages_reg.text(rs.msg);
-            }
+console.log(rs)
         }).fail(function (rs) {
-            layer.msg('error');
+console.log(rs)
         });
-    });
-
-    function togglePassword(obj) {
-        // const element = document.getElementById("myElement"); // 获取要操作的元素
-        // element.classList.remove("myClass"); // 移除指定的class
-
-
-        const passwordField = document.getElementById('login_password');
-        // const passwordField = $('#login_password');
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            obj.classList.remove("fa-eye-slash"); // 移除指定的class
-            obj.classList.add("fa-eye"); // 增加指定的class
-        } else {
-            passwordField.type = 'password';
-            obj.classList.add("fa-eye-slash"); // 移除指定的class
-            obj.classList.remove("fa-eye"); // 增加指定的class
-        }
 
     }
 

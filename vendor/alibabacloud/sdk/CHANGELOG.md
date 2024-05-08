@@ -1,5 +1,113 @@
 # CHANGELOG
 
+## 1.8.2094 - 2024-4-1
+- Generated 2013-02-21 for `Slb`.
+
+
+## 1.8.2093 - 2024-3-29
+- ListOrderConsumeStatisticRecords  add applicationExternalId serviceCode.
+
+
+## 1.8.2092 - 2024-3-28
+- Add min_access_level and organization_alis fields.
+- Add CreateCommitWithMultipleFiles api.
+- Add CreateComment api.
+
+
+## 1.8.2091 - 2024-3-26
+- DeleteFlow、DeleteSchedule Parameters move to body.
+
+
+## 1.8.2090 - 2024-3-26
+- Supported ECR Attachment.
+
+
+## 1.8.2089 - 2024-3-25
+- update api
+
+
+## 1.8.2088 - 2024-3-25
+- Generated 2019-09-01 for `OceanBasePro`.
+
+
+## 1.8.2087 - 2024-3-25
+- Fix API
+
+
+## 1.8.2086 - 2024-3-25
+- Generated 2019-06-01 for `oos`.
+
+
+## 1.8.2085 - 2024-3-19
+- Add QueryWorkspaceRoleConfig, ListWorkspaceRoleUsers, ListWorkspaceRoles, QueryOrganizationRoleConfig, ListOrganizationRoleUsers and ListOrganizationRoles APIs.
+
+
+## 1.8.2084 - 2024-3-14
+- Fixed bugs for PauseEventStreaming and DeleteEventStreaming
+
+
+## 1.8.2083 - 2024-3-13
+- Generated 2020-06-01 for `SWAS-OPEN`.
+
+
+## 1.8.2082 - 2024-3-13
+- Update QueryFaceImageTemplate.
+
+
+## 1.8.2081 - 2024-3-13
+- Update QueryFaceVideoTemplate.
+
+
+## 1.8.2080 - 2024-3-13
+- Update to support new apis.
+
+
+## 1.8.2079 - 2024-3-8
+- Support CreateInstance API.
+- Support UpdateInstance API.
+
+
+## 1.8.2078 - 2024-3-8
+- Generated 2015-12-01 for `Dds`.
+
+
+## 1.8.2077 - 2024-3-6
+- Update to support new apis.
+
+
+## 1.8.2076 - 2024-3-5
+- Support UserData parameter for ApplyNodes interface.
+
+
+## 1.8.2075 - 2024-3-1
+- Update to support new apis.
+
+
+## 1.8.2074 - 2024-2-29
+- Generated 2019-01-03 for `Sddp`.
+
+
+## 1.8.2073 - 2024-2-28
+- Fixed bugs for ListUserDefinedEventSources
+
+
+## 1.8.2072 - 2024-2-27
+- AllotDatasetAccelerationTask API add error code.
+- QueryUserInfoByAccount, QueryUserInfoByUserId, AddUser, UpdateUser, and QueryUserList APIs add query or response parameters.
+
+
+## 1.8.2071 - 2024-2-20
+- Release GenerateCosplayImage.
+- Release GenerateTextDeformation.
+- Release GenerateTextTexture.
+- Release InteractiveFullSegmentation.
+- Release InteractiveScribbleSegmentation.
+
+
+## 1.8.2070 - 2024-2-18
+- Generated 2023-03-05 for `captcha`.
+
+
 ## 1.8.2069 - 2024-2-2
 - Add UnsubscribeTopic.
 

@@ -60,7 +60,7 @@ class Index extends Base {
     */
     function homepage(){
         $StatisticsService = new StatisticsService();
-        $memberInfo = $StatisticsService->homepageStatistics();
+        $memberInfo = $StatisticsService->homepageStatistics($this->shop_id);
         $this->assign('memberInfo',$memberInfo);
 //pr($memberInfo);
         return $this->fetch('homepage');
