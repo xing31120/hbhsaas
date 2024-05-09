@@ -13,6 +13,7 @@ use think\facade\Session;
 
 class Auth extends Base {
 
+
     function login() {
         return $this->fetch();
     }
@@ -114,14 +115,24 @@ class Auth extends Base {
         return $this->login_data($data);
     }
 
+    private $key = 'sssss_xxxxx_1';
     function loginCode()
     {
+//        $key = $this->key;
+//        $code = '1112';
+//        $rrr = '';
+//        $rrr = \think\facade\Cache::set($key, $code, 10);
+//        $verify_code = Cache::get($key);
+//pj([$key, $verify_code, $rrr]);
+
+
         return $this->fetch();
     }
 
     function loginSendSmsCode(){
         $phone = input('phone');
         $phone_code = input('phone_code', '');
+//$phone_code = '';
         $mobile = $phone_code . $phone;
         $type = 2;  //2: 验证码登录
         $return_msg = SendSmsCode($mobile,$type);
@@ -129,12 +140,15 @@ class Auth extends Base {
     }
 
     function checkLoginSmsCode(){
+        $data = input();
         if(!isset($data['phone']) || !isset($data['verify_code']) || !isset($data['phone_code'])){
             return adminOutError(Lang::get('ParameterError'));
         }
+        $mobile = $data['phone_code'] . $data['phone'];
         //2: 验证码登录
-        $key = getSmsKey($data['mobile'],2);
+        $key = getSmsKey($mobile,2);
         $verify_code = Cache::get($key);
+//pj([$mobile, $key, $data['verify_code'], $verify_code]);
         if ($data['verify_code'] != $verify_code){
             return adminOutError(Lang::get('VerificationCodeError'));
         }

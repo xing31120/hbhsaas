@@ -708,19 +708,20 @@ if (!function_exists('SendSmsCode')) {
         if (empty($mobile)) return errorReturn(['msg' => 'empty phone!']);
         $code = mt_rand(1000, 9999);
         $sms_param = [
-            'RegionId' => "cn-hangzhou",
-            'PhoneNumbers' => $mobile,
-            'SignName' => env('sms.alisms_sign_name'),
-            'TemplateCode' => 'SMS_465970872',
-            'TemplateParam' => json_encode(['code' => $code]),
-            'shop_id' => $shop_uid,
+//            'RegionId' => "cn-hangzhou",
+            'phoneNumbers' => $mobile,
+            'signName' => env('sms.alisms_sign_name'),
+            'templateCode' => 'SMS_465970872',
+            'templateParam' => json_encode(['code' => $code]),
+//            'shop_id' => $shop_uid,
         ];
+//pj([$key, $sms_param]);
         $sms_service = new \app\common\service\AliyunSmsService();
         $return_msg = $sms_service->sendSms($sms_param);
 //pj($return_msg);
         if ($return_msg['Code'] == 'OK') {
-            \think\facade\Cache::set($key, $code, 500);
-            return successReturn(['msg' => 'send sms success!']);
+            \think\facade\Cache::set($key, $code, 3600);
+            return successReturn(['msg' => 'send sms success!'. $code]);
         } else {
             return errorReturn('send sms error!');
         }

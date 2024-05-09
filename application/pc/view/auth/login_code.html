@@ -26,7 +26,7 @@
                         <div class="form-group">
                             <label>Country Code</label>
                             <select name="phone_code" id="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
-                                <option value="+971">+971</option>
+                                <option value="971">+971</option>
                             </select>
                         </div>
                         <div class="form-group">
@@ -41,7 +41,7 @@
     height: 46px;;position: absolute;right: 17px;
     top: 29px;;border:none;   background-color: var(--theme-color);border-radius: 8px;color:white;padding: 10px 20px" id="time">Send SMS</button>
                             <!--<i class="" style="top: 29px"  > -->
-                           
+
                             <!--</i>-->
                         </div>
 
@@ -73,16 +73,17 @@
 
 <script>
 
-	
+
     var formMessages_login = $(".form-messages_login");
     var formMessages_reg = $(".form-messages_reg");
     $('#login_submit2').on('click', function () {
         // alert(111)
-        var login_name = $('#login_name').val();
-        var login_password = $('#login_password').val();
+        var phone = $('#phone').val();
+        var phone_code = $('#phone_code').val();
+        var verify_code = $('#verify_code').val();
         $.ajax({
-            "url": "{:url('auth/logincheck')}",
-            "data": { "login_name": login_name, "login_password": login_password },
+            "url": "{:url('auth/checkLoginSmsCode')}",
+            "data": { "phone": phone, "phone_code": phone_code, "verify_code": verify_code },
         }).done(function (rs) {
             if (rs.result) {
                 window.location.href = rs.url;
@@ -110,7 +111,7 @@ var isSend = false
 					document.querySelector("#time").innerHTML = " Send SMS";
 					isSend = false
 				}
-			
+
 			}, 1000);
         var phone_code = $('#phone_code').val();
         var phone = $('#phone').val();
