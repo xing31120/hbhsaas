@@ -166,7 +166,7 @@
             color: #b9b9b9;
     }
     .modal {
-        top: 200px;
+        top: 20px;
         z-index: 100;
     }
 </style>
@@ -186,7 +186,7 @@
         </div>
     </div>
 </div>
-  <div class="step-img" style="padding: 0 10%;height: 240px" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/bu_zhou5.jpg">
+  <div class="step-img" style="padding: 0 10%;height: 240px" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/bu_zhou6.jpg">
 <!--      操作步骤: </br>-->
 <!--1、选择课程分类，点击搜索 </br>-->
 <!--2、选择所需时间段和课程，点击提交 </br>-->
@@ -366,18 +366,25 @@
 
 <form method="post" id="pc_form" onsubmit="return false">
     <div class="class-schedule-area pc" style="margin-top: 0px;margin-bottom: 0px" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/bj.jpg">
-        <h5 class="form-title" style="color: white;">{$Think.lang.Course}</h5>
+        
         <div class="row">
-            <div class="form-group">
-                <div style="display:flex">
+            <div class="form-group" style="display:flex">
+                <div style="flex:1;margin-right: 20px">
+                    
+                     <label style="color: white;white-space:nowrap">{$Think.lang.Course}</label>
+                <div style="display:flex;align-items:center;flex:1">
+                  
                     <select id="shop_id">
                         {foreach $campus_list as $sid => $value}
                         <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>
                         {/foreach}
                     </select>
                 </div>
-                <label style="color: white;">{$Think.lang.ClassifyName}</label>
-                <div style="display:flex">
+                </div>
+              <div style="flex:1">
+                   <label style="color: white;white-space:nowrap">{$Think.lang.ClassifyName}</label>
+                <div style="display:flex;align-items:center;flex:1">
+                     
                     <select multip id="cat_more">
                          <option value="-1">All</option>
                         {foreach $course_cat_list as $key=>$value}
@@ -387,6 +394,7 @@
                     </select>
                     <div style="width: 200px;margin-left: 20px" class="th-btn" id="search-btn" name="submit_mob">{$Think.lang.Search}</div>
                 </div>
+              </div>
                 <!--<select name="cat_id" id="cat_id" class="form-select nice-select">-->
                 <!--    <option value="-1">All</option>-->
                 <!--    {foreach $course_cat_list as $key=>$value}-->
