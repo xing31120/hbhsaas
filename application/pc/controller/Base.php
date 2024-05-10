@@ -5,6 +5,7 @@ use app\common\model\HbhCourse;
 use app\common\model\HbhCourseCat;
 use app\common\model\HbhSeoConfig;
 use app\common\model\HbhShopCampus;
+use app\common\model\HbhStudyAbroad;
 use think\Controller;
 use auth\Auth;
 use app\common\model\ShopAuthMenu as Menu;
@@ -75,8 +76,11 @@ class Base  extends Controller{
         $this->hbh_user = json_decode(session('hbh_user'), 1);//初始化应用ID
         //所有学校和校区
         $campus_list = (new HbhShopCampus())->getAllCampusShopList();
+        //留学学校 tree
+        $study_abroad_list = (new HbhStudyAbroad())->getTreeList();
+
 //pj($this->shop_id);
-//pj($campus_list);
+//pj($study_abroad_list);
         $this->assign('campus_list', $campus_list);
         $this->assign('s_id', $this->shop_id);
         $this->assign('userInfo', $this->hbh_user);
