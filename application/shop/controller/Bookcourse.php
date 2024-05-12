@@ -41,6 +41,10 @@ class Bookcourse extends Base {
         if (isset($param['teacher_uid']) && !empty($param['teacher_uid'])) {
             $where[] = ['teacher_uid', '=', $param['teacher_uid']];
         }
+        if (isset($param['is_unlimited_number']) && $param['is_unlimited_number'] != -1) {
+            $where[] = ['is_unlimited_number', '=', $param['is_unlimited_number']];
+        }
+
         if (isset($param['create_time']) && $param['create_time'] != ''){
             $time = explode('~', $param['create_time']);
             $where[] = ['create_time', 'between', [strtotime($time[0]), strtotime($time[1]) + 3600 * 24]];
@@ -88,6 +92,7 @@ class Bookcourse extends Base {
             $phone = $student_list[$item['custom_uid']]['phone'] ?? '';
             $item['student_name'] = "{$student_name}({$phone})";
             $item['is_pay_text'] = $item['is_pay'] == HbhBookCourse::is_pay_true ? Lang::get('AlreadyDeducted') :Lang::get('NoDeducted');;
+            $item['is_unlimited_number_text'] = $item['is_unlimited_number'] == HbhBookCourse::is_unlimited_number_true ? Lang::get('Unlimited') :Lang::get('Limited');;
             $item['status_text'] = HbhBookCourse::getStatusText($item['status']);
             $item['status_confirm_text'] = HbhBookCourse::getStatusConfirmText($item['status']);
         }
