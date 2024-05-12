@@ -72,6 +72,12 @@
                 -->
             </div>
         </div>
+        <div style="display:flex;align-items:center">
+            <input type="date" name="" style="width: 200px" id="todayId" value="" />
+            <div style="flex:1"></div>
+            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn">搜索</button>
+         
+        </div>
                     <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
                         <!--
                         <div class="event-item" style="position: relative;">
@@ -113,6 +119,7 @@ Footer Area
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
 <script>
+document.getElementById('todayId').valueAsDate = new Date()
     nowPage = 1
     totalPage = 0
  function toPage(type) {
@@ -212,6 +219,7 @@ function changeCheck(page) {
     }
 }
 $(function () {
+    
    ajaxList(1)
 })
 
