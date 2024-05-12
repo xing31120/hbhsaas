@@ -23,6 +23,10 @@ class HbhBookCourse extends SingleSubData {
     const is_pay_false = 0;
     const is_pay_true = 10;
 
+    //是否已扣费用 0: 未扣, 10:已经扣除
+    const is_unlimited_number_false = 0;
+    const is_unlimited_number_true = 1;
+
     static function getStatusText($status){
         $text = '';
         if($status == self::status_wait){

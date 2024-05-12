@@ -123,6 +123,7 @@ class Coursecat extends Base {
 
         $is_exist = model('HbhCourseCat')
             ->where('name', $data['name'])
+            ->where('shop_id', $this->shop_id)
             ->when(!empty($id), function ($query) use ($id) {
                 $query->where('id', '<>', $id);
             })

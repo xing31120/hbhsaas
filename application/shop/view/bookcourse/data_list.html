@@ -50,6 +50,18 @@
                                             </div>
                                         </div>
                                         <div class="layui-inline">
+                                            <label class="layui-form-label">{$Think.lang.UnlimitedNumber}</label>
+                                            <div class="layui-input-inline">
+                                                <select name="is_unlimited_number"  lay-reqText="Please Select Unlimited Number">
+                                                    <option value="-1">{$Think.lang.PleaseSelect}</option>
+                                                    <option value="0" >{$Think.lang.Limited}</option>
+                                                    <option value="1" >{$Think.lang.Unlimited}</option>
+                                                    {/foreach}
+                                                </select>
+                                            </div>
+                                        </div>
+
+                                        <div class="layui-inline">
                                             <label class="layui-form-label">{$Think.lang.AppointmentTime}:</label>
                                             <div class="layui-input-inline">
                                                 <input type="text" class="layui-input" id="create_time" name="create_time"
@@ -176,6 +188,13 @@
                         return "<font color='red'>"+res.is_pay_text+"</font>";
                     }
                 }},
+                {field: 'is_unlimited_number_text', title: '{$Think.lang.UnlimitedNumber}', width: 80,templet: function (res) {
+                        if(res.is_unlimited_number == 0){
+                            return "<font color='blue'>"+res.is_unlimited_number_text+"</font>";
+                        }else{
+                            return "<font color='red'>"+res.is_unlimited_number_text+"</font>";
+                        }
+                    }},
                 // {field: 'status_text', title: '{$Think.lang.Status}', templet: '#showTpl', width: 100,},
                 {field: 'start_time', title: '{$Think.lang.StartTime}', minWidth: 40,},
                 {field: 'end_time', title: '{$Think.lang.EndTime}', minWidth: 40,},
