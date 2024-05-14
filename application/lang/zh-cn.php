@@ -72,6 +72,7 @@ return [
     'Unlimited' =>'不限',
     'Limited' =>'有限',
     //课程
+    'Branch' =>'分校',
     'CourseSchedule' =>'课程表',
     'CourseName' =>'课程名称',
     'AddCourse' =>'新增课程',

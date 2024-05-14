@@ -345,7 +345,7 @@
         </tr>
     </tbody>
 </table>
-                
+
 <!--                操作步骤:-->
 <!--1、选择课程分类，点击搜索-->
 <!--2、选择所需时间段和课程，点击提交-->
@@ -366,14 +366,14 @@
 
 <form method="post" id="pc_form" onsubmit="return false">
     <div class="class-schedule-area pc" style="margin-top: 0px;margin-bottom: 0px" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/bj.jpg">
-        
+
         <div class="row">
             <div class="form-group" style="display:flex">
                 <div style="flex:1;margin-right: 20px">
-                    
-                     <label style="color: white;white-space:nowrap">{$Think.lang.Course}</label>
+
+                     <label style="color: white;white-space:nowrap">{$Think.lang.Branch}</label>
                 <div style="display:flex;align-items:center;flex:1">
-                  
+
                     <select id="shop_id">
                         {foreach $campus_list as $sid => $value}
                         <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>
@@ -382,9 +382,9 @@
                 </div>
                 </div>
               <div style="flex:1">
-                   <label style="color: white;white-space:nowrap">{$Think.lang.ClassifyName}</label>
+                   <label style="color: white;white-space:nowrap">{$Think.lang.CourseName}</label>
                 <div style="display:flex;align-items:center;flex:1">
-                     
+
                     <select multip id="cat_more">
                          <option value="-1">All</option>
                         {foreach $course_cat_list as $key=>$value}

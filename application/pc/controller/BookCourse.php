@@ -26,7 +26,10 @@ class BookCourse extends Base {
         }
 
         // 默认第一个 课程分类
-        $cat_first = (new HbhCourseCat())->where('status', HbhCourseCat::status_true)->order('id', 'asc')->findOrEmpty();
+        $cat_first = (new HbhCourseCat())
+            ->where('status', HbhCourseCat::status_true)
+            ->where('shop_id', $this->shop_id)
+            ->order('id', 'asc')->findOrEmpty();
         $cat_first_id = $cat_first['id'] ?? 0;
         $cat_name = $cat_first['name'] ?? '';
         $cat_more = input('cat_more', $cat_first_id);
@@ -56,6 +59,7 @@ class BookCourse extends Base {
         }else{
             $cat_more_arr = [-1];
         }
+        $where_mob[] = $where_book[] = ['shop_id', '=', $this->shop_id];
         $where_mob[] = $where_book[] = ['day', '>=', $today];
         $where_mob[] = $where_book[] = ['day', '<=', $sevenDays];
         $where = $where_mob;

@@ -72,6 +72,7 @@ return [
     'Unlimited' =>'Unlimited',
     'Limited' =>'Limited',
     //Course
+    'Branch' =>'Branch',
     'CourseSchedule' =>'Course Schedule',
     'CourseName' =>'Course Name',
     'AddCourse' =>'Add Course',
