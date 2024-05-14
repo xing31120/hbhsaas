@@ -91,6 +91,10 @@
                     <div class="layui-input-inline">
                         <input type="text" name="end_date" value="" id="end_date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input" lay-filter="input_date">
                     </div>
+
+                    <div class="layui-input-inline">
+                        {$Think.lang.TotalClassHoursConsumed}: <span id="sum_count"></span>
+                    </div>
                 </div>
                 <div class="layui-card-body">
                     <div class="layui-row">
@@ -127,7 +131,8 @@
                 data:{"start_date":start_date, "end_date":end_date},
                 success:function (res) {
                     var orderSeven = res.data;
-
+                    var sum_count = res.sum_count;
+                    document.getElementById('sum_count').innerHTML = sum_count;
                     const echartsOrder = echarts.init(document.getElementById('echartsOrder'));
                     option = {
                         tooltip: {
@@ -148,7 +153,7 @@
                             }
                         },
                         legend: {
-                            data: ['消耗课时']  //,'入账金额'
+                            data: ['{$Think.lang.ConsumptionOfClassHours}']  //,'入账金额'
                         },
                         xAxis: [
                             {
@@ -162,7 +167,7 @@
                         yAxis: [
                             {
                                 type: 'value',
-                                name: '消耗课时数',
+                                name: '{$Think.lang.ConsumptionOfClassHours}',
                                 interval: 50,
                                 axisLabel: {
                                     formatter: '{value} 节'
@@ -171,7 +176,7 @@
                         ],
                         series: [
                             {
-                                name: '消耗课时',
+                                name: '{$Think.lang.ConsumptionOfClassHours}',
                                 type: 'bar',
                                 data: orderSeven.count_arr,
                             },

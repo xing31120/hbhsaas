@@ -74,6 +74,13 @@
                                         <input type="radio" name="is_unlimited_number" lay-skin="primary" value="0" title="{$Think.lang.Limited}" {eq name="$info.is_unlimited_number" value="0"}checked{/eq}>
                                     </div>
                                 </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.UserLevel}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="radio" name="level_id" lay-skin="primary" value="1" title="{$Think.lang.UserLevelNew}" {eq name="$info.level_id" value="1"}checked{/eq}>
+                                        <input type="radio" name="level_id" lay-skin="primary" value="2" title="{$Think.lang.UserLevelStudent}" {eq name="$info.level_id" value="2"}checked{/eq}>
+                                    </div>
+                                </div>
 
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">

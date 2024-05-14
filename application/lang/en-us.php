@@ -71,6 +71,9 @@ return [
     'UnlimitedNumber' =>'Unlimited Number',
     'Unlimited' =>'Unlimited',
     'Limited' =>'Limited',
+    'UserLevel' =>'User Level',
+    'UserLevelNew' =>'New Register',
+    'UserLevelStudent' =>'Student Level',
     //Course
     'Branch' =>'Branch',
     'CourseSchedule' =>'Course Schedule',
@@ -86,6 +89,8 @@ return [
     'ClassDate' =>'Class Date',
     'ClassTime' =>'Class Time',
     'AddClassDetail' =>'Add Class Detail',
+    'ConsumptionOfClassHours' =>'Consumption Of Class Hours',
+    'TotalClassHoursConsumed' =>'Total Class Hours Consumed',
     'Week' => 'Week',
     //预约  Book Course
     'Booked' =>'Booked',

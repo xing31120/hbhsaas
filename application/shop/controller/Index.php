@@ -78,15 +78,17 @@ class Index extends Base {
             return adminOut('');
         }
         $orderSevenDay = $statisticsService->getBookStartEnd($start_date, $end_date, $this->shop_id);
+        $sum_count = 0;
         foreach( $orderSevenDay as $key => $val){
             $o_s_days[] = $val['day'];
             $o_s_count[] = (int)$val['count'];
+            $sum_count += (int)$val['count'];
         }
         $orderSevenDayArr = [
             'day_arr'  => $o_s_days,
             'count_arr' => $o_s_count,
         ];
-        return adminOut(['data'=>$orderSevenDayArr]);
+        return adminOut(['data'=>$orderSevenDayArr, 'sum_count' => $sum_count,]);
     }
 
 

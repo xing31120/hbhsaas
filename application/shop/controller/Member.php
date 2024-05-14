@@ -135,6 +135,10 @@ class Member extends Base {
         $this->title = '会员信息';
         return $this->fetch();
     }
+    public function dataListNew(){
+        $this->title = '会员信息';
+        return $this->fetch();
+    }
     //数据列表
     public function dataListTeacher(){
         $this->title = '教师信息';
@@ -158,6 +162,9 @@ class Member extends Base {
         }
         if(isset($data['phone']) && $data['phone'] != ''){
             $op['where'][] = ['phone','like',"%{$data['phone']}%"];
+        }
+        if(isset($data['level_id']) && !empty($data['level_id']) ){
+            $op['where'][] = ['level_id','=', $data['level_id']];
         }
 
         $op['page'] = isset($data['page']) ? intval($data['page']) : 1;

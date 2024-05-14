@@ -71,6 +71,9 @@ return [
     'UnlimitedNumber' =>'不限数量',
     'Unlimited' =>'不限',
     'Limited' =>'有限',
+    'UserLevel' =>'会员等级',
+    'UserLevelNew' =>'新注册',
+    'UserLevelStudent' =>'学员',
     //课程
     'Branch' =>'分校',
     'CourseSchedule' =>'课程表',
@@ -86,6 +89,8 @@ return [
     'ClassDate' =>'上课日期',
     'ClassTime' =>'上课时间',
     'AddClassDetail' =>'新增课时',
+    'ConsumptionOfClassHours' =>'消耗课时',
+    'TotalClassHoursConsumed' =>'总消耗课时',
     'Week' => '星期',
     //预约  Book Course
     'Booked' =>'已预约',

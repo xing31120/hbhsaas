@@ -203,6 +203,7 @@ class HbhBookCourse extends SingleSubData {
             $data['year']           = $detail_info['year'] ?? '';
             $data['which_week']     = $detail_info['which_week'] ?? '';
             $data['is_unlimited_number'] = $userInfo['is_unlimited_number'] ?? 0;
+            $data['level_id'] = $userInfo['level_id'] ?? 0;
             $data['create_time']    = $time;
             $insert_data[] = $data;
         }
