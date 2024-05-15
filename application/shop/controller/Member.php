@@ -31,6 +31,11 @@ class Member extends Base {
             if(empty($data['password'])){
                 unset($data['password']);
             }
+            $res = (new HbhUsers())->checkPhone($data['phone']);
+            if(!$res['result']){
+                return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
+            }
+
             $res = (new HbhUsers())->updateById($id, $data);
             if(!$res){
                 return adminOut(Lang::get('OperateFailed'));
@@ -191,18 +196,25 @@ class Member extends Base {
     public function form(){
         $data = input();
         $role = input('role', 'student');
+        $level_id = input('level_id', '');
         $id = $data['id'] ?? 0;
         $info = model('HbhUsers')->info($id);
 
         $this->assign('info', $info);
         $this->assign('role', $role);
+        $this->assign('level_id', $level_id);
         return $this->fetch();
     }
 
     function register() {
         $data = input();
+        $res = (new HbhUsers())->checkPhone($data['phone']);
+        if(!$res['result']){
+            return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
+        }
+
         $where[] = function ($query) use ($data) {
-            $query->whereRaw("name = :name OR email = :email", ['name' => $data['name'], 'email'=> $data['email']]);
+            $query->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']]);
         };
         $result = HbhUsers::where($where)->find();
         if (!empty($result) && $result['email'] == $data['email']){
@@ -210,6 +222,9 @@ class Member extends Base {
         }
         if (!empty($result) && $result['name'] == $data['name']){
             return adminOutError(['msg'=> 'name occupied','data'=> $result, 'url' => url('auth/reg') ]);
+        }
+        if (!empty($result) && $result['phone'] == $data['phone']){
+            return errorReturn(['msg'=> Lang::get('PhoneOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if(empty($data['password'])){
             return adminOutError(['msg'=> 'password is empty','data'=> $result, 'url' => url('auth/reg') ]);

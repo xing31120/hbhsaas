@@ -15,6 +15,31 @@ class HbhUsers extends SingleSubData {
     const is_unlimited_number_true = 1;    // 1:无限数量,
 
 
+    /**
+     * 注册, 修改手机的手机号验证
+     * @param $phone
+     * @return array
+     */
+    function checkPhone($phone){
+//$phone  = '585330846';
+
+        // 去掉空格
+        $search = " ";
+        $replace = "";
+        $phone = str_replace($search, $replace, $phone);
+
+        $firstChar = substr($phone, 0, 1);
+        if($firstChar != 5){
+            return errorReturn(Lang::get('PhoneStart5'));
+        }
+
+        $pattern = '/^5\d{8}$/';
+        if (preg_match($pattern, $phone, $matches)) {
+            return successReturn(['data' => $phone]);
+        }
+        return errorReturn(Lang::get('Number9NumberStartWith5'));
+
+    }
 
     function info($id,  $field = ''){
         $info = parent::info($id, $field);

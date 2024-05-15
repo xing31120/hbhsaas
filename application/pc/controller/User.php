@@ -27,7 +27,10 @@ class User extends Base {
         $data['email']          = input('email', '', 'trim');
         $data['phone']          = input('phone', '', 'trim');
 
-
+        $res = (new HbhUsers())->checkPhone($data['phone']);
+        if(!$res['result']){
+            return $res;
+        }
         $where[] = ['id', '<>',$data['id']];
         $result = HbhUsers::where($where)
             ->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']])
