@@ -31,6 +31,7 @@ return [
     'Modify' =>'修改',
     'EmailOccupied' =>'Email已被占用!',
     'NameOccupied' =>'名字已被占用!',
+    'PhoneOccupied' =>'手机已被占用!',
     'PasswordIsEmpty' =>'密码不能为空!',
     'ConfirmPasswordIsEmpty' =>'确认密码不能为空!',
     'PasswordInconsistency' =>'密码不一致!',

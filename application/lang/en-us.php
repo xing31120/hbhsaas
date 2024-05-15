@@ -31,6 +31,7 @@ return [
     'Modify' =>'Modify',
     'EmailOccupied' =>'Email Occupied!',
     'NameOccupied' =>'Name Occupied!',
+    'PhoneOccupied' =>'Phone Occupied!',
     'PasswordIsEmpty' =>'Password Is Empty!',
     'ConfirmPasswordIsEmpty' =>'Confirm Password Is Empty!',
     'PasswordInconsistency' =>'Password Inconsistency!',

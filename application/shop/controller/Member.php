@@ -148,6 +148,7 @@ class Member extends Base {
     //异步获取列表数据
     public function ajaxList(){
         $data = input();
+//pj($data);
         $limit = 10;//每页显示的数量
         $op['where'][] = ['role','=',$data['role']];
         if(isset($data['email']) && $data['email'] != ''){
