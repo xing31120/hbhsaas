@@ -208,6 +208,7 @@ class Member extends Base {
 
     function register() {
         $data = input();
+//pj($data);
         $res = (new HbhUsers())->checkPhone($data['phone']);
         if(!$res['result']){
             return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
@@ -244,7 +245,7 @@ class Member extends Base {
         $data['watch_history'] = '[]';
         $data['address'] = '';
         $data['card_number'] = $data['serial_num'] = $card;
-        $data['expiry_date'] = date("Y-m-d");
+//        $data['expiry_date'] = date("Y-m-d");
         $data['class_details'] = $data['second_class'] = $data['third_class'] = '';
 //pj($data);
         HbhUsers::create($data);
