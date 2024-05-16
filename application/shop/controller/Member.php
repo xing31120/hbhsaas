@@ -38,7 +38,7 @@ class Member extends Base {
 
             $res = (new HbhUsers())->updateById($id, $data);
             if(!$res){
-                return adminOut(Lang::get('OperateFailed'));
+                return adminOutError(Lang::get('OperateFailed'));
             }
             return adminOut(['msg' => Lang::get('OperateSuccess')]);
         }
@@ -225,7 +225,7 @@ class Member extends Base {
             return adminOutError(['msg'=> 'name occupied','data'=> $result, 'url' => url('auth/reg') ]);
         }
         if (!empty($result) && $result['phone'] == $data['phone']){
-            return errorReturn(['msg'=> Lang::get('PhoneOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
+            return adminOutError(['msg'=> Lang::get('PhoneOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if(empty($data['password'])){
             return adminOutError(['msg'=> 'password is empty','data'=> $result, 'url' => url('auth/reg') ]);

@@ -75,6 +75,10 @@ class Auth extends Base {
 
     function register() {
         $data = input();
+        $res = (new HbhUsers())->checkPhone($data['phone']);
+        if(!$res['result']){
+            return errorReturn(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
+        }
         $where[] = function ($query) use ($data) {
             $query->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']]);
         };

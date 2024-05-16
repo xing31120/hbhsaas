@@ -9,7 +9,7 @@
         <div class="layui-col-md12">
             <div class="layui-card">
                 <div class="layui-card-header">{$Think.lang.MemberEdit}</div>
-                <form action="{:url('edit')}" method="post" class="layui-form form-inline" id="goods-type-form"  method="post">
+                <form action="{:url('edit')}" method="post" class="layui-form form-inline" id="goods-type-form">
                     <div class="layui-card-body" pad15>
                         <div class="layui-form" wid120 lay-filter="">
                             <input type="hidden" name="id" value="{$info.id}">
@@ -17,7 +17,7 @@
                                 <input type="hidden" name="role" value="{$info.role}"  class="layui-input"   placeholder="">
 
                                 <div class="layui-form-item">
-                                    <label class="layui-form-label">{$Think.lang.Name}：</label>
+                                    <label class="layui-form-label">{$Think.lang.Name}33：</label>
                                     <div class="layui-form-mid">
                                         <input type="name" name="name" value="{$info.name}"  class="layui-input"   placeholder="">
                                     </div>
@@ -115,5 +115,31 @@
         laydate.render({
             elem: '#LAY-component-form-group-date2'
         });
+
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                url: "{:url('edit')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('form').serializeArray(),
+                success: function (res) {
+                    console.log(res.result)
+                    if (res.result) {
+                        layer.msg(res.msg, {icon: 1, time: 2000}, function () {
+                            parent.layer.msg(res.msg);
+                            parent.location.reload();
+                        });
+                    } else {
+                        parent.layer.msg(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('{$Think.lang.OperateFailed}');
+                }
+            });
+            return false;
+        });
+
+
     });
 </script>
