@@ -136,7 +136,7 @@
             , title: 'Course List'
             , cols: [[
                 // {type: 'checkbox'},
-                {field: 'id', title: 'ID', unresize: true, sort: true, width: 60},
+                {field: 'id', title: 'ID', unresize: true, sort: true, width: 80},
                 {field: 'teacher_name', title: '{$Think.lang.Teacher}', minWidth: 120,},
                 {field: 'cat_name', title: '{$Think.lang.ClassifyName}', minWidth: 120,},
                 {field: 'course_name', title: '{$Think.lang.Course}', minWidth: 220,},
@@ -209,6 +209,7 @@
                         btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
                         btnAlign: 'c',
                         yes: function (index, layero) {
+                            layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
                         }

@@ -145,7 +145,7 @@
         btnAlign: 'c',
         btn: ['save', 'cancel'],
         yes: function(index, layero){
-          layer.close(index);
+          // layer.close(index);
           let submit = layero.find('iframe').contents().find("#form_submit");
           submit.click();
 
