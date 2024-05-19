@@ -29,18 +29,19 @@
                             <i class="fal fa-user"></i>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Phone</label>
-                            <input type="text" class="form-control" name="phone" id="phone" placeholder="">
-                            <i class="fal fa-user"></i>
-                        </div>
-                        <div class="form-group col-md-6">
                             <label>Email</label>
                             <input type="email" class="form-control" name="email" id="email" placeholder="">
                             <i class="fal fa-envelope"></i>
                         </div>
                         <div class="form-group col-md-6">
-                            <label>Address</label>
-                            <input type="text" class="form-control" name="address" id="address" placeholder="">
+                            <label>Country Code</label>
+                            <select name="phone_code" id="phone_code" lay-verify="required" lay-reqText="Please Select Country Code">
+                                <option value="971">+971</option>
+                            </select>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Phone</label>
+                            <input type="text" class="form-control" name="phone" id="phone" placeholder="">
                             <i class="fal fa-user"></i>
                         </div>
                         <div class="form-group col-md-6">
@@ -54,6 +55,13 @@
                             <input type="password" class="form-control" name="confirm_password" id="confirm_password"
                                 placeholder="" require="">
                             <i class="fa-solid fa-eye-slash"></i>
+                        </div>
+                        <div class="form-group col-md-6">
+                            <label>Address</label>
+                            <input type="text" class="form-control" name="address" id="address" placeholder="">
+                            <i class="fal fa-user"></i>
+                        </div>
+                        <div class="form-group col-md-6">
                         </div>
                         <div class="form-group col-6">
                         </div>
