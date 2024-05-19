@@ -80,7 +80,8 @@ class Auth extends Base {
             return errorReturn(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
         }
         $where[] = function ($query) use ($data) {
-            $query->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']]);
+//            OR phone = :phone    , 'phone'=> $data['phone']
+            $query->whereRaw("name = :name OR email = :email ", ['name' => $data['name'], 'email'=> $data['email']]);
         };
         $result = HbhUsers::where($where)->find();
         if (!empty($result) && $result['email'] == $data['email']){

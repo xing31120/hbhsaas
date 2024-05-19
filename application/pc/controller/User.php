@@ -33,7 +33,8 @@ class User extends Base {
         }
         $where[] = ['id', '<>',$data['id']];
         $result = HbhUsers::where($where)
-            ->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']])
+            //  OR phone = :phone    , 'phone'=> $data['phone']
+            ->whereRaw("name = :name OR email = :email", ['name' => $data['name'], 'email'=> $data['email']])
             ->find();
 //pj((new HbhUsers())->getLastSql());
 //pj($result);

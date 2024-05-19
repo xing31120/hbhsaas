@@ -208,5 +208,29 @@
         $('.region_container').on('click', 'i', function () {
             $(this).closest('button').remove()
         })
+
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                url: "{:url('edit')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('form').serializeArray(),
+                success: function (res) {
+                    console.log(res.result)
+                    if (res.result) {
+                        layer.msg(res.msg, {icon: 1, time: 2000}, function () {
+                            parent.layer.msg(res.msg);
+                            parent.location.reload();
+                        });
+                    } else {
+                        parent.layer.msg(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('{$Think.lang.OperateFailed}');
+                }
+            });
+            return false;
+        });
     });
 </script>
