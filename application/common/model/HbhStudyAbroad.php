@@ -11,27 +11,24 @@ class HbhStudyAbroad extends Single {
     const status_false = 4;
 
     function getTreeList(){
+        $cat_list = (new HbhStudyAbroadCat())->getAllList();
+
         $op['where'][] = ['status','=', self::status_true];
         $op['doPage'] = false;
         $op['field'] = '*';
-        $op['order'] = 'level asc';
+        $op['order'] = 'sort asc';
         $res = $this->getList($op);
 
         $list = [];
-        foreach ($res['list'] as $item) {
-            if($item['level'] == 1 && $item['p_id'] == 0){
-                $item['child'] = [];
-                $list[$item['id']] = $item;
-                continue;
+        foreach ($cat_list as $cat) {
+            $cat['child'] = [];
+            foreach ($res['list'] as $item) {
+                if($item['cat_id'] == $cat['id']){
+                    $cat['child'][$item['id']] = $item;
+                }
             }
-
-            $pid = $item['p_id'];
-            $list[$pid]['child'][$item['id']] = $item;
-
+            $list[] = $cat;
         }
-
-
-
 
         return $list;
     }

@@ -1,9 +1,13 @@
 {layout name="public:simple" /}
+<style scoped>
+    .layui-form-label {
+        width: 100px;
+    }
+</style>
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <!-- <div class="layui-card-header">商品设置</div> -->
                 <div class="layui-card-body" pad15>
 
                     <!-- <div class="layui-tab"> -->
@@ -15,53 +19,19 @@
                                 <div class="layui-form layui-card-header layuiadmin-card-header-auto">
                                     <div class="layui-form-item">
                                         <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.ClassifyName}</label>
+                                            <label class="layui-form-label">{$Think.lang.SchoolName}</label>
                                             <div class="layui-input-inline">
-                                                <select name="course_cat_id"  lay-reqText="Please Select Category">
-                                                    <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    {foreach $cat_list as $key=>$value}
-                                                    <option value="{$value.id}" >{$value.name}</option>
-                                                    {/foreach}
-                                                </select>
+                                                <input type="text" name="name" placeholder="Classify Name" autocomplete="off" class="layui-input">
                                             </div>
                                         </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.Course}</label>
-                                            <div class="layui-input-inline">
-                                                <select name="course_id"  lay-reqText="Please Select Course" lay-search>
-                                                    <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    {foreach $course_list as $key=>$value}
-                                                    <option value="{$value.id}" >{$value.name}</option>
-                                                    {/foreach}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.Teacher}</label>
-                                            <div class="layui-input-inline">
-                                                <select name="teacher_uid"  lay-reqText="Please Select Teacher">
-                                                    <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    {foreach $teacher_list as $key=>$value}
-                                                    <option value="{$value.id}" >{$value.name}</option>
-                                                    {/foreach}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.Week}:</label>
-                                            <div class="layui-input-inline">
-                                                <select name="week"  lay-reqText="Please Select Week">
-                                                    <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    <option value="Sunday">Sunday</option>
-                                                    <option value="Monday">Monday</option>
-                                                    <option value="Tuesday">Tuesday</option>
-                                                    <option value="Wednesday">Wednesday</option>
-                                                    <option value="Thursday">Thursday</option>
-                                                    <option value="Friday">Friday</option>
-                                                    <option value="Saturday">Saturday</option>
-                                                </select>
-                                            </div>
-                                        </div>
+
+<!--                                        <div class="layui-inline">-->
+<!--                                            <label class="layui-form-label">加入时间</label>-->
+<!--                                            <div class="layui-input-inline">-->
+<!--                                                <input type="text" class="layui-input" id="check_time" name="check_time"-->
+<!--                                                       autocomplete="off" placeholder="时间" value="{$time|default=''}">-->
+<!--                                            </div>-->
+<!--                                        </div>-->
 
                                         <div class="layui-inline" wid120>
                                             <button class="layui-btn layuiadmin-btn-forum-list" lay-submit
@@ -87,7 +57,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="Add Category">{$Think.lang.AddPlanConfig}</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="{$Think.lang.SchoolName}">{$Think.lang.SchoolName}</button>
     </div>
 </script>
 <script type="text/html" id="recommendTpl">
@@ -95,7 +65,7 @@
            lay-text="√|×" {{ d.is_recommend== 1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="showTpl">
-    <input type="checkbox" lay-filter="isShowSwitch" name="status" value="{{d.id}}" lay-skin="switch" lay-text="开启|关闭" {{
+    <input type="checkbox" lay-filter="isShowSwitch" name="status" value="{{d.id}}" lay-skin="switch" lay-text="{$Think.lang.Open}|{$Think.lang.Close}" {{
            d.status== 1 ? 'checked' : '' }}>
 </script>
 <script type="text/html" id="importTpl">
@@ -105,8 +75,8 @@
 
 
 <script type="text/html" id="barAction">
-    <a class="layui-btn layui-btn-xs" lay-event="edit" lay-text="编辑" lay-data="{{d.id}}">{$Think.lang.Edit}</a>
-    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-text="删除" lay-data="{{d.id}}">{$Think.lang.Delete}</a>
+    <a class="layui-btn layui-btn-xs" lay-event="edit" lay-text="edit" lay-data="{{d.id}}">{$Think.lang.Edit}</a>
+    <a class="layui-btn layui-btn-xs layui-btn-danger" lay-event="del" lay-text="Delete" lay-data="{{d.id}}">{$Think.lang.Delete}</a>
 </script>
 
 
@@ -116,7 +86,8 @@
         base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use([ 'index', 'form', 'table', 'element', 'admin', 'laydate'], function () {
+        // , ssqselect: 'temp/ssq-select/ssqselect'
+    }).use([ 'index', 'form', 'table', 'element', 'admin', 'laydate'], function () {    //'ssqselect',
         var $ = layui.$;
         var table = layui.table,
             form = layui.form,
@@ -126,15 +97,14 @@
 
         //执行一个laydate实例
         laydate.render({
-            elem: '#day',//指定元素
+            elem: '#check_time',//指定元素
             range: '~'
         });
         //表格数据
         table.render({
-            toolbar: '#toolbarDemo',
             elem: '#dataTable'
             , url: '{:url("ajaxList")}'
-            // , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
+            , toolbar: '#toolbarDemo' //开启头部工具栏，并为其绑定左侧模板
             // , defaultToolbar: ['filter', 'exports', 'print', { //自定义头部工具栏右侧图标。如无需自定义，去除该参数即可
             //     title: '提示'
             //     , layEvent: 'LAYTABLE_TIPS'
@@ -142,46 +112,69 @@
             // }]
             , title: 'Course List'
             , cols: [[
-                // {type: 'checkbox'},
                 {field: 'id', title: 'ID', unresize: true, sort: true, width: 100},
-                {field: 'teacher_name', title: '{$Think.lang.Teacher}', minWidth: 120,},
-                {field: 'cat_name', title: '{$Think.lang.ClassifyName}', minWidth: 120,},
-                {field: 'course_name', title: '{$Think.lang.Course}', minWidth: 220,},
-                {field: 'week', title: '{$Think.lang.Week}', minWidth: 80,},
-                // {field: 'day', title: '{$Think.lang.ClassDate}', minWidth: 120,},
-                {field: 'start_time', title: '{$Think.lang.StartTime}', minWidth: 40,},
-                {field: 'end_time', title: '{$Think.lang.EndTime}', minWidth: 40,},
-                {field: 'create_time', title: '{$Think.lang.CreateTime}', width: 160,},
+                {field: 'shop_name_en', title: '{$Think.lang.SchoolName}', minWidth: 120,},
+                {field: 'profile', title: '{$Think.lang.Profile}', minWidth: 320,},
+                {field: 'create_time', title: '{$Think.lang.CreateTime}', width: 200,},
                 {title: '{$Think.lang.Operate}', toolbar: '#barAction', width: 120, fixed: 'right'}
             ]]
             , page: true
         });
 
+        //监听搜索
+        form.on('submit(LAY-app-contlist-search)', function (data) {
+            var field = data.field; //检索参数
+            //执行重载
+            table.reload('dataTable', {
+                where: field,
+                page: {
+                    curr: 1 //重新从第 1 页开始
+                }
+            });
+        });
 
         //头工具栏事件
         table.on('toolbar(dataTable)', function (obj) {
-// console.log(obj.event)
+            var checkStatus = table.checkStatus(obj.config.id); //选中的数据数组等对象
             switch (obj.event) {
+                case 'getCheckData':
+                    var data = checkStatus.data; //选中的数据数组
+                    layer.alert(JSON.stringify(data));
+                    break;
                 case 'add':
                     var index = layer.open({
                         type: 2,
-                        title: '{$Think.lang.AddClassDetail}',
+                        title: 'Add Course',
                         content: '{:url("form")}?id=0',
                         shadeClose: true, // 点击遮罩层关闭
                         maxmin: true,
-                        area: ['55%', '450px'],
+                        area: ['35%', '450px'],
                         btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
                         btnAlign: 'c',
                         yes: function (index, layero) {
+                            // let submit = layero.find('iframe').contents().find("#form_submit");
+                            // submit.click();
+
                             layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
+
+                            layer.msg('{$Think.lang.SaveSuccess}',{
+                                offset:['50%'],
+                                time: 700 //0.5秒关闭（如果不配置，默认是3秒）
+                            },function(){
+                                table.reload('dataTable'); //数据刷新
+                            });
                         }
                     });
+
+
+
                     // 弹层全屏, 如无需弹层全屏, 请注释layer.full();
-                    layer.full(index);
+                    // layer.full(index);
                     break;
-            };
+            }
+            ;
         });
 
         table.on('tool(dataTable)', function (obj) {
@@ -190,27 +183,26 @@
                 case 'edit':
                     var index = layer.open({
                         type: 2,
-                        title: '{$Think.lang.Edit}',
-                        content: '{:url("form")}?id=' + obj.data.id,
+                        title: 'Edit',
+                        content: '{:url("Coursecat/form")}?id=' + obj.data.id,
                         shadeClose: true, // 点击遮罩层关闭
                         maxmin: true,
-                        area: ['55%', '450px'],
+                        area: ['35%', '450px'],
                         btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
                         btnAlign: 'c',
                         yes: function (index, layero) {
-                            layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
                         }
                     });
                     // 弹层全屏, 如无需弹层全屏, 请注释layer.full();
-                    layer.full(index);
+                    // layer.full(index);
                     break;
                 case 'del':
                     layer.confirm('{$Think.lang.AreYouSureDel}', function(index){
                         //向服务端发送删除指令
                         $.ajax({
-                            "url":"{:url('del')}",
+                            "url":"{:url('Coursecat/del')}",
                             "data":{"id":obj.data.id, "status":obj.data.status},
                         }).done(function (rs) {
                             layer.msg(rs.msg);
@@ -240,20 +232,10 @@
             }).done(function (rs) {
                 layer.msg(rs.msg);
             }).fail(function (rs) {
-                layer.msg('操作失败');
+                layer.msg('{$Think.lang.OperateFailed}');
             });
         });
-        //监听搜索
-        form.on('submit(LAY-app-contlist-search)', function (data) {
-            var field = data.field; //检索参数
-            //执行重载
-            table.reload('dataTable', {
-                where: field,
-                page: {
-                    curr: 1 //重新从第 1 页开始
-                }
-            });
-        });
+
 
         //顶部tab切换触发效果
         element.on('tab(tabFilter)', function (data) {

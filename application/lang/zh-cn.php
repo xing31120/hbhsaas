@@ -129,5 +129,9 @@ return [
     //Plan config
     'AddPlanConfig' => '增加课时计划',
     'MemberSelection' => '学员选择',
+    // 留学 study broad
+    'SchoolName' => '学校名',
+    'AddSchool' => '新增学校',
+    'Profile' => '简介',
 
 ];

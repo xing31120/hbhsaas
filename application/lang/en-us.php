@@ -129,5 +129,9 @@ return [
     //Plan config
     'AddPlanConfig' => 'Add Plan Config',
     'MemberSelection' => 'Member Selection',
+    // 留学 study broad
+    'SchoolName' => 'School Name',
+    'AddSchool' => 'Add School',
+    'Profile' => 'Profile',
 
 ];
