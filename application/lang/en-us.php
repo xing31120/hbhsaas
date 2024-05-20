@@ -36,6 +36,8 @@ return [
     'ConfirmPasswordIsEmpty' =>'Confirm Password Is Empty!',
     'PasswordInconsistency' =>'Password Inconsistency!',
     'VerificationCodeError' =>'Verification Code Error!',
+    'ErrorCreateDir' =>'Error Create Dir!',
+    'ErrorDirNotWriteable' =>'Error Dir Not Writeable!',
     //member
     'UserCenter' => 'User Center',
     'CountryCode' => 'Country Code',
@@ -130,8 +132,12 @@ return [
     'AddPlanConfig' => 'Add Plan Config',
     'MemberSelection' => 'Member Selection',
     // 留学 study broad
+    'StudyAbroad' => 'Study Abroad',
     'SchoolName' => 'School Name',
+    'SchoolCoverPicture' => 'CoverP icture',
+    'SchoolType' => 'School Type',
     'AddSchool' => 'Add School',
     'Profile' => 'Profile',
+    'DetailedInformation' => 'Detailed Information',
 
 ];

@@ -25,11 +25,56 @@
                         <div class="layui-form" wid120 lay-filter="">
 
                             <div class="layui-form-item">
-                                <label class="layui-form-label star">{$Think.lang.ClassifyName}：</label>
+                                <label class="layui-form-label star">{$Think.lang.SchoolName}：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="name" value="{$info.name|default=''}"
-                                           class="layui-input"
-                                           lay-verify="required" lay-reqText="Course Name Required" placeholder="Entry Course Name">
+                                    <input type="text" name="shop_name_en" value="{$info.shop_name_en|default=''}" class="layui-input"
+                                           lay-verify="required" lay-reqText="School Name Required" placeholder="Entry School Name">
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.SchoolCoverPicture}：</label>
+                                <div class="layui-input-inline">
+                                    <img {if empty($info.img_url)} class="zzsp_none" {/if} src="{if !empty($info.img_url)}{$info.img_url}{/if}" id="img_url" style="height: 100px">
+                                    <button type="button" class="layui-btn" id="upload-normal-img">
+                                        <i class="layui-icon">&#xe67c;</i>Upload Image
+                                    </button>
+                                    <div class="layui-form-mid layui-word-aux">Suggest uploading 750 * 560 size images</div>
+                                    <input type="hidden" name="img_url" value="{$info.img_url|default=''}" lay-verify="required"  lay-reqText="Please Upload Image"/>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.Profile}：</label>
+                                <div class="layui-input-inline">
+<!--                                    <input type="text" name="profile" value="{$info.profile|default=''}" class="layui-input" lay-verify="required" lay-reqText="Profile Required" placeholder="Entry Profile">-->
+                                    <textarea name="profile"  autocomplete="off" class="layui-textarea">{$info.profile ?? ''}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.SchoolType}：</label>
+                                <div class="layui-input-inline">
+                                    <select name="cat_id" lay-verify="required" lay-reqText="Please Select Category">
+                                        <option value="">{$Think.lang.PleaseSelect}</option>
+                                        {foreach $cat_list as $key=>$value}
+                                        <option value="{$value.id}" {if isset($info['cat_id']) && $info['cat_id'] == $value['id']} selected {/if}>{$value.shop_name_en}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.DetailedInformation}：</label>
+                                <div class="layui-input-inline" style="width: 500px">
+                                    <textarea id="text_detail" name="text_detail" maxlength="250"  class="layui-textarea">{$info.text_detail ?? ''}</textarea>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.Sort}：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="sort" value="{$info.sort|default='100'}" class="layui-input">
                                 </div>
                             </div>
 
@@ -37,7 +82,7 @@
                             <div class="layui-form-item layui-hide">
                                 <div class="layui-input-block">
                                     <button class="layui-btn" lay-submit lay-filter="submit" type="submit"
-                                            id="form_submit"><i class="iconfont"></i>提交
+                                            id="form_submit"><i class="iconfont"></i>{$Think.lang.Submit}
                                     </button>
                                 </div>
                             </div>
@@ -62,7 +107,7 @@
         base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'form', 'upload', 'laydate'], function () {
+    }).use(['index', 'form', 'upload', 'laydate', 'layedit'], function () {
         var $ = layui.$;
         var table = layui.table,
             form = layui.form,
@@ -70,18 +115,41 @@
             element = layui.element;
         var laydate = layui.laydate;
         var upload_id = ''
-        layui.laydate.render({
-            elem: '#contract_time'
-            ,type: 'datetime'
+        var layedit = layui.layedit;
+        var editConfig = {
+            // tool: ['strong', 'italic', 'underline', 'left', 'center','right']
+            tool: ['strong', 'italic', 'underline',  'left', 'center','right', 'del', 'addimg', 'video', 'link', 'face', 'preview',]
+        };
+        const index = layedit.build('text', editConfig);
+
+        // layui.laydate.render({
+        //     elem: '#contract_time'
+        //     ,type: 'datetime'
+        // });
+        // layui.laydate.render({
+        //     elem: '#end_time'
+        //     ,type: 'datetime'
+        // });
+
+        //上传
+        upload.render({
+            elem: '#upload-normal-img'
+            ,url: '{:url("Tools/upload")}' //改成您自己的上传接口
+            ,accept: 'images'
+            ,size: 2048
+            ,done: function(res){
+                layer.msg('上传成功');
+                $("#img_url").attr("src",res.data.src).show();
+                $("input[name = img_url]").val(res.data.src);
+            },
+            error: function () {
+                layer.msg('上传失败');
+            }
         });
-        layui.laydate.render({
-            elem: '#end_time'
-            ,type: 'datetime'
-        });
+
 
         //监听提交
         form.on('submit(submit)', function (data) {
-            console.log(111222)
             $.ajax({
                 url: "{:url('save')}",
                 type: 'post',

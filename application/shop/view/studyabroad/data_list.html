@@ -57,7 +57,7 @@
 
 <script type="text/html" id="toolbarDemo">
     <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="{$Think.lang.SchoolName}">{$Think.lang.SchoolName}</button>
+        <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="{$Think.lang.AddSchool}">{$Think.lang.AddSchool}</button>
     </div>
 </script>
 <script type="text/html" id="recommendTpl">
@@ -114,7 +114,15 @@
             , cols: [[
                 {field: 'id', title: 'ID', unresize: true, sort: true, width: 100},
                 {field: 'shop_name_en', title: '{$Think.lang.SchoolName}', minWidth: 120,},
+                // {field: 'img_url', title: '{$Think.lang.SchoolCoverPicture}', minWidth: 120,},
+                {
+                    field: 'img_url', title: '{$Think.lang.SchoolCoverPicture}', minWidth: 100, templet: function (res) {
+                        return '<img src="' + res.img_url + '"  height="60" onClick="bigImg()" >'
+                    }
+                }
+                ,
                 {field: 'profile', title: '{$Think.lang.Profile}', minWidth: 320,},
+                {field: 'status', title: '{$Think.lang.Status}', templet: '#showTpl', width: 100,},
                 {field: 'create_time', title: '{$Think.lang.CreateTime}', width: 200,},
                 {title: '{$Think.lang.Operate}', toolbar: '#barAction', width: 120, fixed: 'right'}
             ]]
@@ -137,10 +145,6 @@
         table.on('toolbar(dataTable)', function (obj) {
             var checkStatus = table.checkStatus(obj.config.id); //选中的数据数组等对象
             switch (obj.event) {
-                case 'getCheckData':
-                    var data = checkStatus.data; //选中的数据数组
-                    layer.alert(JSON.stringify(data));
-                    break;
                 case 'add':
                     var index = layer.open({
                         type: 2,
@@ -184,7 +188,7 @@
                     var index = layer.open({
                         type: 2,
                         title: 'Edit',
-                        content: '{:url("Coursecat/form")}?id=' + obj.data.id,
+                        content: '{:url("Studyabroad/form")}?id=' + obj.data.id,
                         shadeClose: true, // 点击遮罩层关闭
                         maxmin: true,
                         area: ['35%', '450px'],
@@ -196,13 +200,13 @@
                         }
                     });
                     // 弹层全屏, 如无需弹层全屏, 请注释layer.full();
-                    // layer.full(index);
+                    layer.full(index);
                     break;
                 case 'del':
                     layer.confirm('{$Think.lang.AreYouSureDel}', function(index){
                         //向服务端发送删除指令
                         $.ajax({
-                            "url":"{:url('Coursecat/del')}",
+                            "url":"{:url('Studyabroad/del')}",
                             "data":{"id":obj.data.id, "status":obj.data.status},
                         }).done(function (rs) {
                             layer.msg(rs.msg);
@@ -244,4 +248,19 @@
         });
 
     });
+    function bigImg(id) {
+        var $ = layui.$;
+        var selector;
+        selector = $('#layer-photos-demo').length ? '#layer-photos-demo' : '.table-cell-auto'
+        if (id) {
+            selector = '#id' + id;
+        }
+        console.log(id);
+        layui.layer.photos({
+            photos: selector,
+            tab: function (pic, layero) {
+                console.log(pic) //当前图片的一些信息
+            }
+        });
+    }
 </script>

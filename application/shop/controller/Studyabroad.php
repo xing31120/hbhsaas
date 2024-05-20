@@ -2,6 +2,7 @@
 namespace app\shop\controller;
 
 use app\common\model\HbhStudyAbroad;
+use app\common\model\HbhStudyAbroadCat;
 use think\Db;
 use think\facade\Lang;
 
@@ -48,23 +49,6 @@ class Studyabroad extends Base {
     public function add(){
         return $this->fetch();
     }
-    //新增和修改保存
-    public function edit(){
-        $data = input();
-        $id = $data['id'];
-        $model = new HbhStudyAbroad();
-        $info = $model->info($id);
-        if ($this->request->isPost()) {
-            $res = $model->updateById($id, $data);
-            if(!$res){
-                return adminOutError(Lang::get('OperateFailed'));
-            }
-            return adminOut(['msg' => Lang::get('OperateSuccess')]);
-        }
-        $this->assign('info', $info);
-        return $this->fetch();
-
-    }
     //删除操作(包含批量删除,使用del方法是为了删除对应的缓存)
 
     function ajaxSetShow(){
@@ -78,12 +62,15 @@ class Studyabroad extends Base {
         }
         return adminOut($res);
     }
-    public function form()
-    {
+    public function form(){
         $data = input();
         $id = $data['id'] ?? 0;
         $info = (new HbhStudyAbroad())->info($id);
+
+        $cat_list =(new HbhStudyAbroadCat())->getAllList();
+
         $this->assign('info', $info);
+        $this->assign('cat_list', $cat_list);
         return $this->fetch();
     }
 
@@ -122,8 +109,9 @@ class Studyabroad extends Base {
     public function save()
     {
         $data = input();
+//pj($data);
         $id = $data['id'] ?? 0;
-        if(empty($data['name'])){
+        if(empty($data['shop_name_en'])){
             return adminOutError(['msg' => Lang::get('ParameterError')]);
         }
         $isAdmin = $this->isAdmin();
@@ -132,7 +120,7 @@ class Studyabroad extends Base {
         }
         $model = new HbhStudyAbroad();
         $is_exist = $model
-            ->where('name', $data['name'])
+            ->where('shop_name_en', $data['shop_name_en'])
             ->when(!empty($id), function ($query) use ($id) {
                 $query->where('id', '<>', $id);
             })
@@ -141,11 +129,12 @@ class Studyabroad extends Base {
 
 
         $course_data['shop_id']     = $this->shop_id;
-        $course_data['name']        = $data['name'];
-        $course_data['category_id'] = $data['category_id'];
-        $course_data['description'] = $data['description'] ?? '';
-        $course_data['total_people'] = $data['total_people'] ?? 6;
-        $course_data['course_fees'] = $data['course_fees'] ?: 1;
+        $course_data['shop_name_en']        = $data['shop_name_en'];
+        $course_data['cat_id'] = $data['cat_id'];
+        $course_data['img_url'] = $data['img_url'] ?: '';
+        $course_data['profile'] = $data['profile'] ?: '';
+        $course_data['sort'] = $data['sort'] ?? 99;
+        $course_data['text_detail'] = $data['text_detail'] ?: '';
         $course_data['create_time'] = time();
         if (empty($id)) {
             $course_id = $model->insertGetId($course_data);

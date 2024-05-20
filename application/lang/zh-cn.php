@@ -36,6 +36,8 @@ return [
     'ConfirmPasswordIsEmpty' =>'确认密码不能为空!',
     'PasswordInconsistency' =>'密码不一致!',
     'VerificationCodeError' =>'验证码错误!',
+    'ErrorCreateDir' =>'创建目录失败!',
+    'ErrorDirNotWriteable' =>'目录不可写入!',
     //会员
     'UserCenter' => '会员中心',
     'CountryCode' => '国家代码',
@@ -129,9 +131,13 @@ return [
     //Plan config
     'AddPlanConfig' => '增加课时计划',
     'MemberSelection' => '学员选择',
-    // 留学 study broad
+    // 留学 study abroad
+    'StudyAbroad' => '留学',
     'SchoolName' => '学校名',
+    'SchoolCoverPicture' => '学校封面',
+    'SchoolType' => '学校分类',
     'AddSchool' => '新增学校',
     'Profile' => '简介',
+    'DetailedInformation' => '详细信息',
 
 ];
