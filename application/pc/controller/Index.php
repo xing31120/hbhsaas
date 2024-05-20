@@ -56,6 +56,11 @@ class Index extends Base {
         return $this->fetch();
     }
 
+    function event_detail_1()
+    {
+        return $this->fetch();
+    }
+
     //留学介绍
     function study_abroad()
     {
@@ -66,7 +71,7 @@ class Index extends Base {
     function index_dance_school(){
         return $this->fetch();
     }
-    
+
     function single_event(){
         return $this->fetch();
     }

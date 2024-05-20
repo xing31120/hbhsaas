@@ -145,16 +145,16 @@
         btnAlign: 'c',
         btn: ['save', 'cancel'],
         yes: function(index, layero){
-          layer.close(index);
+          // layer.close(index);
           let submit = layero.find('iframe').contents().find("#form_submit");
           submit.click();
 
-          layer.msg('{$Think.lang.OperateSuccess}',{
-            offset:['50%'],
-            time: 700 //0.5秒关闭（如果不配置，默认是3秒）
-          },function(){
-            // table.reload('member-content-list'); //数据刷新
-          });
+          // layer.msg('{$Think.lang.OperateSuccess}',{
+          //   offset:['50%'],
+          //   time: 700 //0.5秒关闭（如果不配置，默认是3秒）
+          // },function(){
+          //   // table.reload('member-content-list'); //数据刷新
+          // });
         }
       });
       layer.full(index);

@@ -31,6 +31,7 @@ return [
     'Modify' =>'Modify',
     'EmailOccupied' =>'Email Occupied!',
     'NameOccupied' =>'Name Occupied!',
+    'PhoneOccupied' =>'Phone Occupied!',
     'PasswordIsEmpty' =>'Password Is Empty!',
     'ConfirmPasswordIsEmpty' =>'Confirm Password Is Empty!',
     'PasswordInconsistency' =>'Password Inconsistency!',
@@ -74,6 +75,9 @@ return [
     'UserLevel' =>'User Level',
     'UserLevelNew' =>'New Register',
     'UserLevelStudent' =>'Student Level',
+    'PhoneStart5' =>'Phone Number Starts With 5',  //手机号要以5开头
+    'PhoneError' =>'Phone Error',
+    'Number9NumberStartWith5' =>'9-Digit Number Starting With 5', //9-digit number starting with 5
     //Course
     'Branch' =>'Branch',
     'CourseSchedule' =>'Course Schedule',
@@ -125,5 +129,9 @@ return [
     //Plan config
     'AddPlanConfig' => 'Add Plan Config',
     'MemberSelection' => 'Member Selection',
+    // 留学 study broad
+    'SchoolName' => 'School Name',
+    'AddSchool' => 'Add School',
+    'Profile' => 'Profile',
 
 ];

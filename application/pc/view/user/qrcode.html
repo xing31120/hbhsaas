@@ -74,6 +74,12 @@
 <!--                <a href="blog-details.html" class="th-btn" style="width: 100%;">生成</a>-->
             </div>
         </div>
+        <div style="display:flex;align-items:center">
+            <input type="date" name="" style="width: 200px" id="day" value="{$day}" />
+            <div style="flex:1"></div>
+            <!--            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn">搜索</button>-->
+
+        </div>
         <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
                   </div>
                    </div>
@@ -132,13 +138,13 @@ Footer Area
             nowPage -= 1
         }
     }
-    ajaxList(nowPage)
+    ajaxList(nowPage, day)
 }
-function ajaxList(page){
+function ajaxList(page, day){
     limit = 20;
     $.ajax({
         "url": "{:url('ajaxList')}",
-        "data": {"page": page, "limit": limit},
+        "data": {"page": page, "limit": limit, "day": day},
     }).done(function (rs) {
         console.log('rs', rs)
         var html = '';
@@ -201,6 +207,11 @@ $(function () {
         height: 260,
         text: "{$url}"
     });
+
+    $("#day").change(function () {
+        day = $("#day").val();
+        ajaxList(1, day)
+    })
     ajaxList(1)
 
 

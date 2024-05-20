@@ -31,9 +31,14 @@ class Member extends Base {
             if(empty($data['password'])){
                 unset($data['password']);
             }
+            $res = (new HbhUsers())->checkPhone($data['phone']);
+            if(!$res['result']){
+                return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
+            }
+
             $res = (new HbhUsers())->updateById($id, $data);
             if(!$res){
-                return adminOut(Lang::get('OperateFailed'));
+                return adminOutError(Lang::get('OperateFailed'));
             }
             return adminOut(['msg' => Lang::get('OperateSuccess')]);
         }
@@ -52,28 +57,37 @@ class Member extends Base {
             if(empty($data['password'])){
                 unset($data['password']);
             }
-            $res = model('HbhUsers')->updateById($id, $data);
-            $select_region = array_unique($data['select_region']);
-            $teacher_class_time_arr = [];
-            foreach ($select_region as $value) {
-                $val = explode(',', $value);
-                $teacher_class_time = [
-                    'shop_id' => $info['shop_id'],
-                    'uid' => $info['id'],
-                    'course_id' => $info['course_id'],
-                    'week' => $val[0],
-                    'class_time_id' => $val[1],
-                    'create_time' => time(),
-                    'update_time' => time(),
-                ];
-
-                $teacher_class_time_arr[] = $teacher_class_time;
+            $res = (new HbhUsers())->checkPhone($data['phone']);
+            if(!$res['result']){
+                return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
             }
 
-            $where_del = [
-                'shop_id' => $info['shop_id'],
-                'uid' => $info['id'],
-            ];
+            $res = (new HbhUsers())->updateById($id, $data);
+            if(!$res){
+                return adminOutError(Lang::get('OperateFailed'));
+            }
+            return adminOut(['msg' => Lang::get('OperateSuccess')]);
+//            $select_region = array_unique($data['select_region']);
+//            $teacher_class_time_arr = [];
+//            foreach ($select_region as $value) {
+//                $val = explode(',', $value);
+//                $teacher_class_time = [
+//                    'shop_id' => $info['shop_id'],
+//                    'uid' => $info['id'],
+//                    'course_id' => $info['course_id'],
+//                    'week' => $val[0],
+//                    'class_time_id' => $val[1],
+//                    'create_time' => time(),
+//                    'update_time' => time(),
+//                ];
+//
+//                $teacher_class_time_arr[] = $teacher_class_time;
+//            }
+
+//            $where_del = [
+//                'shop_id' => $info['shop_id'],
+//                'uid' => $info['id'],
+//            ];
 //            Db::startTrans();
 //            try {
 //                $res = HbhTeacherClassTime::where($where_del) -> delete();
@@ -87,7 +101,7 @@ class Member extends Base {
 //                Db::rollback();
 //                return errorReturn(Lang::get('OperateFailed'));
 //            }
-            return adminOut(['msg' => Lang::get('OperateFailed')]);
+//            return adminOut(['msg' => Lang::get('OperateSuccess')]);
         }
         $courseList = model('HbhCourse')->getAllCourseList();
         $courseList = array_column($courseList, null, 'id');
@@ -148,6 +162,7 @@ class Member extends Base {
     //异步获取列表数据
     public function ajaxList(){
         $data = input();
+//pj($data);
         $limit = 10;//每页显示的数量
         $op['where'][] = ['role','=',$data['role']];
         if(isset($data['email']) && $data['email'] != ''){
@@ -190,18 +205,26 @@ class Member extends Base {
     public function form(){
         $data = input();
         $role = input('role', 'student');
+        $level_id = input('level_id', '');
         $id = $data['id'] ?? 0;
         $info = model('HbhUsers')->info($id);
 
         $this->assign('info', $info);
         $this->assign('role', $role);
+        $this->assign('level_id', $level_id);
         return $this->fetch();
     }
 
     function register() {
         $data = input();
+//pj($data);
+        $res = (new HbhUsers())->checkPhone($data['phone']);
+        if(!$res['result']){
+            return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
+        }
+
         $where[] = function ($query) use ($data) {
-            $query->whereRaw("name = :name OR email = :email", ['name' => $data['name'], 'email'=> $data['email']]);
+            $query->whereRaw("name = :name OR email = :email ", ['name' => $data['name'], 'email'=> $data['email']]);
         };
         $result = HbhUsers::where($where)->find();
         if (!empty($result) && $result['email'] == $data['email']){
@@ -209,6 +232,9 @@ class Member extends Base {
         }
         if (!empty($result) && $result['name'] == $data['name']){
             return adminOutError(['msg'=> 'name occupied','data'=> $result, 'url' => url('auth/reg') ]);
+        }
+        if (!empty($result) && $result['phone'] == $data['phone']){
+            return adminOutError(['msg'=> Lang::get('PhoneOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if(empty($data['password'])){
             return adminOutError(['msg'=> 'password is empty','data'=> $result, 'url' => url('auth/reg') ]);
@@ -228,7 +254,7 @@ class Member extends Base {
         $data['watch_history'] = '[]';
         $data['address'] = '';
         $data['card_number'] = $data['serial_num'] = $card;
-        $data['expiry_date'] = date("Y-m-d");
+//        $data['expiry_date'] = date("Y-m-d");
         $data['class_details'] = $data['second_class'] = $data['third_class'] = '';
 //pj($data);
         HbhUsers::create($data);

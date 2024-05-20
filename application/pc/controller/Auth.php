@@ -75,8 +75,13 @@ class Auth extends Base {
 
     function register() {
         $data = input();
+        $res = (new HbhUsers())->checkPhone($data['phone']);
+        if(!$res['result']){
+            return errorReturn(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
+        }
         $where[] = function ($query) use ($data) {
-            $query->whereRaw("name = :name OR email = :email", ['name' => $data['name'], 'email'=> $data['email']]);
+//            OR phone = :phone    , 'phone'=> $data['phone']
+            $query->whereRaw("name = :name OR email = :email ", ['name' => $data['name'], 'email'=> $data['email']]);
         };
         $result = HbhUsers::where($where)->find();
         if (!empty($result) && $result['email'] == $data['email']){
@@ -84,6 +89,9 @@ class Auth extends Base {
         }
         if (!empty($result) && $result['name'] == $data['name']){
             return errorReturn(['msg'=> Lang::get('NameOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
+        }
+        if (!empty($result) && $result['phone'] == $data['phone']){
+            return errorReturn(['msg'=> Lang::get('PhoneOccupied'),'data'=> $result, 'url' => url('auth/reg') ]);
         }
         if(empty($data['password'])){
             return errorReturn(['msg'=> Lang::get('PasswordIsEmpty'),'data'=> $result, 'url' => url('auth/reg') ]);

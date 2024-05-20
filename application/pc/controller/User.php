@@ -27,10 +27,14 @@ class User extends Base {
         $data['email']          = input('email', '', 'trim');
         $data['phone']          = input('phone', '', 'trim');
 
-
+        $res = (new HbhUsers())->checkPhone($data['phone']);
+        if(!$res['result']){
+            return $res;
+        }
         $where[] = ['id', '<>',$data['id']];
         $result = HbhUsers::where($where)
-            ->whereRaw("name = :name OR email = :email OR phone = :phone", ['name' => $data['name'], 'email'=> $data['email'], 'phone'=> $data['phone']])
+            //  OR phone = :phone    , 'phone'=> $data['phone']
+            ->whereRaw("name = :name OR email = :email", ['name' => $data['name'], 'email'=> $data['email']])
             ->find();
 //pj((new HbhUsers())->getLastSql());
 //pj($result);
@@ -65,6 +69,10 @@ class User extends Base {
         $userInfo = (new HbhUsers())->info($uid);
         $userInfo['expiry_date_en'] = date("M d, Y", strtotime($userInfo['expiry_date']));   //expiry_date
 
+        $day = input('day', '');
+        $day = $day ?: date('Y-m-d');
+
+        $this->assign('day', $day);
         $this->assign('fun_name', 'user_qrcode');
         $this->assign('userInfo', $userInfo);
 //        $this->assign('url', url("user/signCheckUid",[ 'uid'=>$this->hbh_user['id'] ]), 'html', true);
@@ -72,11 +80,13 @@ class User extends Base {
         return $this->fetch();
     }
 
-    function setWhere(){
+    function setWhere($data){
         $uid = session('hbh_uid');
+        $day = $data['day'] ?? date('Y-m-d');
 //pj([$uid, $_SESSION]);
 //echo $uid;exit();
         $where[] = ['custom_uid', '=', $uid];
+        $where[] = ['day', '=', $day];
         return $where;
     }
 

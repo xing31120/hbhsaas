@@ -28,14 +28,19 @@ class Teacher extends Base {
         $userInfo = (new HbhUsers())->info($uid);
         $userInfo['expiry_date_en'] = date("d M,Y");
 
+        $day = input('day', '');
+        $day = $day ?: date('Y-m-d');
+
+        $this->assign('day', $day);
         $this->assign('userInfo', $userInfo);
         return $this->fetch();
     }
 
-    function setWhere(){
+    function setWhere($data){
+        $day = $data['day'] ?? date('Y-m-d');
         $uid = session('hbh_uid');
         $where[] = ['teacher_uid', '=', $uid];
-//        $where[] = ['day', '=', date("Y-m-d")];
+        $where[] = ['day', '=', $day];
         return $where;
     }
 
@@ -48,8 +53,8 @@ class Teacher extends Base {
         $op['where'] = $this->setWhere($data);
         $op['page'] = isset($data['page']) ? intval($data['page']) : 1;
         $op['limit'] = $data['limit'] ?? $limit;
-        $exp = new \think\db\Expression(' ABS( TIMESTAMPDIFF(SECOND, CONCAT(day, " ", start_time), NOW())) ');
-        $op['order'] = $exp;
+//        $exp = new \think\db\Expression(' ABS( TIMESTAMPDIFF(SECOND, CONCAT(day, " ", start_time), NOW())) ');
+//        $op['order'] = $exp;
         $list = (new HbhBookCourse())->getList($op);
 
         $custom_uid_arr = array_values(array_unique(array_column($list['list'], 'custom_uid')));

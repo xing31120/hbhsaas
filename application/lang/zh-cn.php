@@ -31,6 +31,7 @@ return [
     'Modify' =>'修改',
     'EmailOccupied' =>'Email已被占用!',
     'NameOccupied' =>'名字已被占用!',
+    'PhoneOccupied' =>'手机已被占用!',
     'PasswordIsEmpty' =>'密码不能为空!',
     'ConfirmPasswordIsEmpty' =>'确认密码不能为空!',
     'PasswordInconsistency' =>'密码不一致!',
@@ -74,6 +75,9 @@ return [
     'UserLevel' =>'会员等级',
     'UserLevelNew' =>'新注册',
     'UserLevelStudent' =>'学员',
+    'PhoneStart5' =>'手机号要以5开头',  //The phone number should start with 5
+    'PhoneError' =>'手机号错误',
+    'Number9NumberStartWith5' =>'以5开头的9位数字', //9-digit number starting with 5
     //课程
     'Branch' =>'分校',
     'CourseSchedule' =>'课程表',
@@ -125,5 +129,9 @@ return [
     //Plan config
     'AddPlanConfig' => '增加课时计划',
     'MemberSelection' => '学员选择',
+    // 留学 study broad
+    'SchoolName' => '学校名',
+    'AddSchool' => '新增学校',
+    'Profile' => '简介',
 
 ];

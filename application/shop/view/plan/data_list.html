@@ -173,6 +173,7 @@
                         btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
                         btnAlign: 'c',
                         yes: function (index, layero) {
+                            layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
                         }
@@ -197,6 +198,7 @@
                         btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
                         btnAlign: 'c',
                         yes: function (index, layero) {
+                            layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
                         }

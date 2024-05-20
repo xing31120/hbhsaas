@@ -86,7 +86,7 @@ layui.config({
     table.render({
       toolbar: '#toolbarDemo',
       elem: '#member-content-list'
-      ,url: '{:url("Member/ajaxList","role=student&level=1")}'
+      ,url: '{:url("Member/ajaxList","role=student&level_id=2")}'
       ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
       ,cols: [[
         {field:'id', width:80, type:'checkbox'}
@@ -120,7 +120,7 @@ layui.config({
             var index = layer.open({
                 type: 2,
                 title: '{$Think.lang.MemberAdd}',
-                content: '{:url("form")}?role=student',
+                content: '{:url("form")}?role=student&level_id=2',
                 shadeClose: true, // 点击遮罩层关闭
                 maxmin: true,
                 area: ['55%', '650px'],
@@ -149,16 +149,16 @@ layui.config({
         btnAlign: 'c',
         btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
         yes: function(index, layero){
-            layer.close(index);
+            // layer.close(index);
             let submit = layero.find('iframe').contents().find("#form_submit");
             submit.click();
 
-            layer.msg('{$Think.lang.OperateSuccess}',{
-                offset:['50%'],
-                time: 700 //0.5秒关闭（如果不配置，默认是3秒）
-            },function(){
-                table.reload('member-content-list'); //数据刷新
-            });
+            // layer.msg('{$Think.lang.OperateSuccess}',{
+            //     offset:['50%'],
+            //     time: 700 //0.5秒关闭（如果不配置，默认是3秒）
+            // },function(){
+            //     table.reload('member-content-list'); //数据刷新
+            // });
         }
       });
       layer.full(index);
