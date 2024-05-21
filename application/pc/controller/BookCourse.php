@@ -40,7 +40,7 @@ class BookCourse extends Base {
         $course_list = array_column($course_list, null, 'id');
 //pj($course_list);
         // 时间配置表
-        $class_time_list = (new HbhClassTime())->getAllList();
+        $class_time_list = (new HbhClassTime())->getAllList($this->shop_id);
         $class_time_list = array_column($class_time_list, null, 'id');
         // 教师用户数据
         $teacher_list = (new HbhUsers())->getAllTeacherList();

@@ -103,7 +103,7 @@ class Member extends Base {
 //            }
 //            return adminOut(['msg' => Lang::get('OperateSuccess')]);
         }
-        $courseList = model('HbhCourse')->getAllCourseList();
+        $courseList = model('HbhCourse')->getAllCourseList($this->shop_id);
         $courseList = array_column($courseList, null, 'id');
 
         $classTimeList = model('HbhClassTime')->getAllList();
@@ -188,7 +188,7 @@ class Member extends Base {
         $op['limit'] = $data['limit'] ?? $limit;
         $op['order'] = 'id desc';
         $list = model('HbhUsers')->getList($op);
-        $courseList = model('HbhCourse')->getAllCourseList();
+        $courseList = model('HbhCourse')->getAllCourseList($this->shop_id);
         $courseList = array_column($courseList, null, 'id');
 
         foreach ($list['list'] as &$item) {

@@ -7,7 +7,8 @@ class HbhClassTime extends SingleSubData {
 //    public $selectTime = 600;
     public $mcTimeOut = 600;
 
-    function getAllList(){
+    function getAllList($shop_id = ''){
+        $shop_id && $op['where'][] = ['shop_id','=', $shop_id];
         $op['where'][] = ['status','=', 1];
         $op['doPage'] = false;
         $op['field'] = '*';

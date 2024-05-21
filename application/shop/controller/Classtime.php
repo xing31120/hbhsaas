@@ -16,6 +16,7 @@ class Classtime extends Base {
     public function setWhere(array $param)
     {
         $where = [];
+        $where[] = ['shop_id', '=', $this->shop_id];
         if (isset($param['status']) && $param['status'] != '') {
             $where[] = ['status', '=', $param['status']];
         }

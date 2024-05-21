@@ -132,9 +132,9 @@ class Classdetail extends Base {
         $info['teacher_name'] = $teacher_name_list[$uid] ?? '';
         $info['class_time'] = $start_time . '-' . $end_time;
 
-        $classTimeList = model('HbhClassTime')->getAllList();
+        $classTimeList = (new HbhClassTime())->getAllList($this->shop_id);
         $classTimeList = array_column($classTimeList, null, 'id');
-
+//pj($classTimeList);
         $this->assign('classTimeList', $classTimeList);
         $this->assign('course_name_list', $course_name_list);
         $this->assign('teacher_name_list', $teacher_name_list);
@@ -173,7 +173,7 @@ class Classdetail extends Base {
         $detail_info['class_time'] = $start_time . '-' . $end_time;
         $detail_info['teacher_uid'] = $teacher_uid;
 //pj($detail_info);
-        $classTimeList = model('HbhClassTime')->getAllList();
+        $classTimeList = (new HbhClassTime())->getAllList($this->shop_id);
         $classTimeList = array_column($classTimeList, null, 'id');
 
         $this->assign('classTimeList', $classTimeList);
