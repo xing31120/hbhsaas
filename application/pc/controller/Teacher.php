@@ -55,6 +55,7 @@ class Teacher extends Base {
         $op['limit'] = $data['limit'] ?? $limit;
 //        $exp = new \think\db\Expression(' ABS( TIMESTAMPDIFF(SECOND, CONCAT(day, " ", start_time), NOW())) ');
 //        $op['order'] = $exp;
+        $op['order'] = 'start_time asc, id asc';
         $list = (new HbhBookCourse())->getList($op);
 
         $custom_uid_arr = array_values(array_unique(array_column($list['list'], 'custom_uid')));
