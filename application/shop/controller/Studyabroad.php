@@ -38,7 +38,14 @@ class Studyabroad extends Base {
         $op['page'] = isset($data['page']) ? intval($data['page']) : 1;
         $op['limit'] = $data['limit'] ?? $limit;
         $op['order'] = 'sort asc,id asc';
+        $op['field'] = ['id','shop_name','shop_name_en','img_url','cat_id','status','profile','create_time','update_time','sort'];
         $list = (new HbhStudyAbroad())->getList($op);
+
+        $cat_list = (new HbhStudyAbroadCat())->getAllList();
+        $cat_list = array_column($cat_list, 'shop_name_en', 'id');
+        foreach ($list['list'] as &$item) {
+            $item['cat_name'] = $cat_list[$item['cat_id']] ?? '';
+        }
 
         $res = ['count'=>$list['count'],'data'=>$list['list']];
         return adminOut($res);
@@ -49,8 +56,7 @@ class Studyabroad extends Base {
     public function add(){
         return $this->fetch();
     }
-    //删除操作(包含批量删除,使用del方法是为了删除对应的缓存)
-
+/*
     function ajaxSetShow(){
         $data = input();
         $update['status'] = $data['status'];
@@ -62,6 +68,7 @@ class Studyabroad extends Base {
         }
         return adminOut($res);
     }
+*/
     public function form(){
         $data = input();
         $id = $data['id'] ?? 0;
@@ -128,7 +135,7 @@ class Studyabroad extends Base {
         if (!empty($is_exist)) return adminOutError(Lang::get('DuplicateName'));
 
 
-        $course_data['shop_id']     = $this->shop_id;
+//        $course_data['shop_id']     = $this->shop_id;
         $course_data['shop_name_en']        = $data['shop_name_en'];
         $course_data['cat_id'] = $data['cat_id'];
         $course_data['img_url'] = $data['img_url'] ?: '';

@@ -134,6 +134,7 @@ return [
     // 留学 study abroad
     'StudyAbroad' => '留学',
     'SchoolName' => '学校名',
+    'StudyAbroadCat' => '留学分类',
     'SchoolCoverPicture' => '学校封面',
     'SchoolType' => '学校分类',
     'AddSchool' => '新增学校',

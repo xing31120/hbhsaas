@@ -134,6 +134,7 @@ return [
     // 留学 study broad
     'StudyAbroad' => 'Study Abroad',
     'SchoolName' => 'School Name',
+    'StudyAbroadCat' => 'Classification',
     'SchoolCoverPicture' => 'CoverP icture',
     'SchoolType' => 'School Type',
     'AddSchool' => 'Add School',

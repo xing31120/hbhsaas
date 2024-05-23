@@ -112,8 +112,9 @@
             // }]
             , title: 'Course List'
             , cols: [[
-                {field: 'id', title: 'ID', unresize: true, sort: true, width: 100},
-                {field: 'shop_name_en', title: '{$Think.lang.SchoolName}', minWidth: 120,},
+                {field: 'id', title: 'ID', unresize: true, sort: true, width: 80},
+                {field: 'cat_name', title: '{$Think.lang.StudyAbroadCat}', width: 120},
+                {field: 'shop_name_en', title: '{$Think.lang.SchoolName}', minWidth: 180,},
                 // {field: 'img_url', title: '{$Think.lang.SchoolCoverPicture}', minWidth: 120,},
                 {
                     field: 'img_url', title: '{$Think.lang.SchoolCoverPicture}', minWidth: 100, templet: function (res) {
@@ -148,7 +149,7 @@
                 case 'add':
                     var index = layer.open({
                         type: 2,
-                        title: 'Add Course',
+                        title: 'Add School',
                         content: '{:url("form")}?id=0',
                         shadeClose: true, // 点击遮罩层关闭
                         maxmin: true,
@@ -159,7 +160,7 @@
                             // let submit = layero.find('iframe').contents().find("#form_submit");
                             // submit.click();
 
-                            layer.close(index);
+                            // layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
 
@@ -175,7 +176,7 @@
 
 
                     // 弹层全屏, 如无需弹层全屏, 请注释layer.full();
-                    // layer.full(index);
+                    layer.full(index);
                     break;
             }
             ;

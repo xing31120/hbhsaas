@@ -46,7 +46,7 @@
 
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.Profile}：</label>
-                                <div class="layui-input-inline">
+                                <div class="layui-input-inline" style="width: 500px">
 <!--                                    <input type="text" name="profile" value="{$info.profile|default=''}" class="layui-input" lay-verify="required" lay-reqText="Profile Required" placeholder="Entry Profile">-->
                                     <textarea name="profile"  autocomplete="off" class="layui-textarea">{$info.profile ?? ''}</textarea>
                                 </div>
@@ -66,8 +66,8 @@
 
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.DetailedInformation}：</label>
-                                <div class="layui-input-inline" style="width: 500px">
-                                    <textarea id="text_detail" name="text_detail" maxlength="250"  class="layui-textarea">{$info.text_detail ?? ''}</textarea>
+                                <div class="layui-input-inline" style="width: 700px">
+                                    <textarea id="text_detail" name="text_detail" class="layui-textarea">{$info.text_detail ?? ''}</textarea>
                                 </div>
                             </div>
 

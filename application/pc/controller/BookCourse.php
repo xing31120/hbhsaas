@@ -20,7 +20,7 @@ class BookCourse extends Base {
     function index(){
         // 可预约几天后的课程; 目前是7天后+当天总的8天
         $config_before_day = config('extend.time_before');
-        $config_before_day = 14;
+        $config_before_day = 7;
         if(empty($this->hbh_user)){
             $this->redirect('auth/login');
         }

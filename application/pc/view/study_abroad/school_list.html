@@ -1,0 +1,81 @@
+{include file="public/header"/}
+<!--==============================
+Breadcumb
+============================== -->
+<!--<div class="breadcumb-wrapper " data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/breadcumb/breadcumb_bg.jpg">-->
+<!--    <div class="container">-->
+<!--        <div class="breadcumb-content">-->
+<!--            <h1 class="breadcumb-title">Dance Classes</h1>-->
+<!--            <ul class="breadcumb-menu">-->
+<!--                <li><a href="index.html">Home</a></li>-->
+<!--                <li>Dance Classes</li>-->
+<!--            </ul>-->
+<!--        </div>-->
+<!--    </div>-->
+<!--</div>-->
+
+<div class="th-hero-wrapper hero-1" id="hero">
+    <div class="hero-slider-1 number-dots th-carousel" data-fade="true" data-slide-show="1" data-md-slide-show="1" data-dots="true">
+
+        <div class="th-hero-slide">
+            <div class="th-hero-bg" data-bg-src="__YUN_PUBLIC_DIR__/static/assets/img/hero/hero_bg_1_1.jpg">
+                <div class="hero-shape">
+                    <img src="__YUN_PUBLIC_DIR__/static/assets/img/hero/hero_shape_1.svg" alt="shape">
+                </div>
+            </div>
+            <div class="container">
+                <div class="hero-style1">
+                    <span class="hero-subtitle" data-ani="slideinleft" data-ani-delay="0.1s"> Let’s Dance!</span>
+                    <h1 class="hero-title" data-ani="slideinleft" data-ani-delay="0.3s">Join The Incredible</h1>
+                    <h1 class="hero-title" data-ani="slideinleft" data-ani-delay="0.5s">World Of <span class="text-theme">Dance!</span></h1>
+                    <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Donec sollicitudin molestie malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae. </p>
+                    <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
+                        <a href="contact.html" class="th-btn red-btn">Consultation</a>
+<!--                        <a href="about.html" class="th-btn style2">流程介绍</a>-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+</div>
+<!--==============================
+Dance Classes Area
+==============================-->
+<section class="space">
+    <div class="container">
+        <div class="row gy-4">
+            {foreach $list as $value}
+            <div class="col-lg-4 col-md-6">
+                <div class="couple-card style2">
+                    <div class="couple-card_img">
+                        <img src="{$value.img_url}" alt="couple">
+                    </div>
+                    <h3 class="couple-card_title"><a href="{:url("detail")}?id={$value.id}">{$value.shop_name_en}</a></h3>
+                    <p class="couple-card_text">{$value.profile}</p>
+                    <a href="{:url("detail")}?id={$value.id}" class="th-btn style3">Explore Details</a>
+                </div>
+            </div>
+            {/foreach}
+            <!--
+            <div class="col-lg-4 col-md-6">
+                <div class="couple-card style2">
+                    <div class="couple-card_img">
+                        <img src="__YUN_PUBLIC_DIR__/static/assets/img/couple/couple_1_1.jpg" alt="couple">
+                    </div>
+                    <h3 class="couple-card_title"><a href="single-classes.html">GEMS 迪拜皇家学校 (RDS)</a></h3>
+                    <p class="couple-card_text">位于 Mirdif 中心的 BSO 优秀、高绩效、包容性和以家庭为导向的社区。在 RDS，我们的学生有权学习和发展，并得到支持，在不断变化的世界中成为成功、自信的贡献者。</p>
+                    <a href="single-classes.html" class="th-btn style3">Explore Details</a>
+                </div>
+            </div>
+            -->
+
+        </div>
+    </div>
+</section>
+<!--==============================
+Footer Area
+==============================-->
+
+
+{include file="public/footer"/}
