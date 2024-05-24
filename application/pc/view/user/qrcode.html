@@ -1,6 +1,7 @@
 {include file="public/header"/}
 
 {include file="user/top"/}
+
 <style>
     .state-1 {
         background-color: transparent;
@@ -75,7 +76,8 @@
             </div>
         </div>
         <div style="display:flex;align-items:center">
-            <input type="date" name="" style="width: 200px" id="day" value="{$day}" />
+            <input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />
+            <!--<input type="date" name="" style="width: 200px" id="day" value="{$day}" />-->
             <div style="flex:1"></div>
             <!--            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn">搜索</button>-->
 
@@ -125,6 +127,32 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
+        <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
+      <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+<script>
+// https://www.cnblogs.com/ysxq/p/13385941.html
+    /* 日期选择 */
+	// 默认初始赋值数据
+	var dayData = ['2024-05-25', '2024-05-24', '2024-05-23'];
+	$('#daySelect')
+			.attr('title', dayData.join())               //设置title 当值太多显示不全时有用
+			.datepicker({
+				clearButton: true,
+				language: 'zh',
+				multipleDates: true,                     //是否多选，Boolean | Number
+				multipleDatesSeparator: ',',             // 多选间隔符号
+				onHide: function (inst, animationCompleted) {
+					inst.$el.attr('title', inst.$el.val())
+				}
+			})
+			.data('datepicker')
+			// .selectDate([new Date('2020-05-01'),new Date('2020-05-02'),new Date('2020-05-03')])
+			.selectDate(dayData.map(function (n) { return new Date(n) }))
+
+    $('#daySelect').chnage((e) => {
+        console.log(e)
+    })
+</script>
 <script>
     nowPage = 1
     totalPage = 0

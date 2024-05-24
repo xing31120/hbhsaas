@@ -53,9 +53,25 @@
     <!-- Theme Custom CSS -->
     <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/style.css">
     <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/message.min.css">
-
+ <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/datepicker.css">
     <script src="__YUN_PUBLIC_DIR__/static/assets/js/message.min.js"></script>
+
     <script src="__YUN_PUBLIC_DIR__/static/js/jquery.min.js"></script>
+        <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
+      <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+    <style>
+    .header-layout3 .main-menu > ul > li > a {
+        font-size: 15px;
+    }
+    /*.main-menu > ul > li {*/
+    /*    margin: 0 10px;*/
+    /*}*/
+    /*    @media (max-width: 992px) {*/
+    /*.container, .container-lg, .container-md, .container-sm {*/
+    /*    max-width: 0px;*/
+    /*}*/
+}
+    </style>
 </head>
 
 <body class="theme-blue">
@@ -97,7 +113,7 @@ Mobile Menu
                     </ul>
                 </li>
 
-<               <li class="menu-item-has-children">
+               <li class="menu-item-has-children">
                 <!-- {$Think.lang.Sort}-->
                     <a href="#">International School</a>
                     <ul class="sub-menu">
@@ -196,24 +212,34 @@ Header Area
                             <li>
                                 <a href="{:url('index/contact')}">Contact Us</a>
                             </li>
+                             {if !empty($userInfo['name']) && $userInfo['role'] == 'student'}
+                         <li><a href="{:url('user/qrcode')}" class="user-name" style="">{$userInfo.name}</a>  </li>
+                         <li><a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>  </li>
+                        {elseif !empty($userInfo['name']) && $userInfo['role'] == 'teacher' /}
+                         <li><a href="{:url('teacher/bookCourse')}" class="user-name" style="">{$userInfo.name}</a>  </li>
+                         <li><a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>  </li>
+                        {else/}
+                         <li><a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a>  </li>
+                        {/if}
+
                         </ul>
                     </nav>
                     <button type="button" class="th-menu-toggle style3 d-inline-block d-lg-none"><i class="far fa-bars"></i></button>
                 </div>
-                <div class="col-auto d-none d-xl-block">
-                    <div class="header-button">
-                        {if !empty($userInfo['name']) && $userInfo['role'] == 'student'}
-                        <a href="{:url('user/qrcode')}" class="user-name" style="">{$userInfo.name}</a>
-                        <a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>
-                        {elseif !empty($userInfo['name']) && $userInfo['role'] == 'teacher' /}
-                        <a href="{:url('teacher/bookCourse')}" class="user-name" style="">{$userInfo.name}</a>
-                        <a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>
-                        {else/}
-                        <a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a>
-                        {/if}
+                <!--<div class="col-auto d-none d-xl-block">-->
+                <!--    <div class="header-button">-->
+                <!--        {if !empty($userInfo['name']) && $userInfo['role'] == 'student'}-->
+                <!--         <li><a href="{:url('user/qrcode')}" class="user-name" style="">{$userInfo.name}</a> </ul>-->
+                <!--         <li><a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a> </ul>-->
+                <!--        {elseif !empty($userInfo['name']) && $userInfo['role'] == 'teacher' /}-->
+                <!--         <li><a href="{:url('teacher/bookCourse')}" class="user-name" style="">{$userInfo.name}</a> </ul>-->
+                <!--         <li><a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a> </ul>-->
+                <!--        {else/}-->
+                <!--         <li><a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a> </ul>-->
+                <!--        {/if}-->
 
-                    </div>
-                </div>
+                <!--    </div>-->
+                <!--</div>-->
             </div>
         </div>
     </div>
