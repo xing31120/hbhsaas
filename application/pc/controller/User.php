@@ -83,10 +83,10 @@ class User extends Base {
     function setWhere($data){
         $uid = session('hbh_uid');
         $day = $data['day'] ?? date('Y-m-d');
-//pj([$uid, $_SESSION]);
-//echo $uid;exit();
+        $day_arr = explode(',', $day);
+
         $where[] = ['custom_uid', '=', $uid];
-        $where[] = ['day', '=', $day];
+        $where[] = ['day', 'in', $day_arr];
         return $where;
     }
 

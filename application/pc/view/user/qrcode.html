@@ -79,7 +79,7 @@
             <input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />
             <!--<input type="date" name="" style="width: 200px" id="day" value="{$day}" />-->
             <div style="flex:1"></div>
-            <!--            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn">搜索</button>-->
+            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn" onclick="submit_search()">搜索</button>
 
         </div>
         <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
@@ -127,13 +127,22 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
-        <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
-      <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
 <script>
+    const today = new Date();
+    const year = today.getFullYear();
+    const month = today.getMonth() + 1; // 月份是从0开始的，所以要加1
+    const day = today.getDate();
+    const formattedMonth = month < 10 ? `0${month}` : month;
+    const formattedDay = day < 10 ? `0${day}` : day;
+    var today_str = `${year}-${formattedMonth}-${formattedDay}`;
+    var dayData = [today_str];
+
 // https://www.cnblogs.com/ysxq/p/13385941.html
     /* 日期选择 */
 	// 默认初始赋值数据
-	var dayData = ['2024-05-25', '2024-05-24', '2024-05-23'];
+	// var dayData = ['2024-05-25', '2024-05-24', '2024-05-23'];
 	$('#daySelect')
 			.attr('title', dayData.join())               //设置title 当值太多显示不全时有用
 			.datepicker({
@@ -149,11 +158,13 @@ Footer Area
 			// .selectDate([new Date('2020-05-01'),new Date('2020-05-02'),new Date('2020-05-03')])
 			.selectDate(dayData.map(function (n) { return new Date(n) }))
 
-    $('#daySelect').chnage((e) => {
-        console.log(e)
-    })
 </script>
 <script>
+    function submit_search(){
+        daySelect = $("#daySelect").val();
+        ajaxList(nowPage, daySelect)
+        // console.log(daySelect)
+    }
     nowPage = 1
     totalPage = 0
  function toPage(type) {
@@ -166,7 +177,8 @@ Footer Area
             nowPage -= 1
         }
     }
-    ajaxList(nowPage, day)
+    daySelect = $("#daySelect").val();
+    ajaxList(nowPage, daySelect)
 }
 function ajaxList(page, day){
     limit = 20;
@@ -212,23 +224,23 @@ function ajaxList(page, day){
         // $('#prePage').html('');
         // $('#prePage').after(pageHtml);
         $('#detaiList').html(html);
-        // changeCheck(page)
 
     }).fail(function (rs) {
         layer.msg('{$Think.lang.OperateFailed}');
     });
 }
 
-function changeCheck(page) {
-    for (let index = 1; index <= totalPage; index++) {
-        if (index === page) {
-            $('#page-' + index).addClass('select')
-        } else {
-            $('#page-' + index).removeClass('select')
-        }
-    }
-}
+// function changeCheck(page) {
+//     for (let index = 1; index <= totalPage; index++) {
+//         if (index === page) {
+//             $('#page-' + index).addClass('select')
+//         } else {
+//             $('#page-' + index).removeClass('select')
+//         }
+//     }
+// }
 $(function () {
+
 
     $('#qrcode').qrcode({
         width: 260,
@@ -236,25 +248,12 @@ $(function () {
         text: "{$url}"
     });
 
-    $("#day").change(function () {
-        day = $("#day").val();
-        ajaxList(1, day)
-    })
-    ajaxList(1)
-
-
-
-    // $('.page_btn').on('click',function (){
-    //     console.log($(this).data('id'))
-
-    //     if ($(this).data('id') === 'prePage') {
-    //         nowPage -= 1
-    //     }else {
-    //         nowPage += 1
-    //     }
-    //     $('#page_num').val(nowPage)
-    //     ajaxList(nowPage)
+    // $("#day").change(function () {
+    //     day = $("#day").val();
+    //     ajaxList(1, day)
     // })
+
+    ajaxList(1, today_str)
 
 })
 
