@@ -15,6 +15,11 @@
      }
 </style>
 
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/plugin/ueditor/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/plugin/ueditor/ueditor.all.js"></script>
+
 <div class="layui-fluid">
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
@@ -67,7 +72,7 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.DetailedInformation}：</label>
                                 <div class="layui-input-inline" style="width: 700px">
-                                    <textarea id="text_detail" name="text_detail" class="layui-textarea">{$info.text_detail ?? ''}</textarea>
+                                    <textarea id="text_detail" name="text_detail" class="layui-textarea">{$info.text_detail|raw}</textarea>
                                 </div>
                             </div>
 
@@ -115,12 +120,19 @@
             element = layui.element;
         var laydate = layui.laydate;
         var upload_id = ''
-        var layedit = layui.layedit;
-        var editConfig = {
-            // tool: ['strong', 'italic', 'underline', 'left', 'center','right']
-            tool: ['strong', 'italic', 'underline',  'left', 'center','right', 'del', 'addimg', 'video', 'link', 'face', 'preview',]
-        };
-        const index = layedit.build('text', editConfig);
+        // var layedit = layui.layedit;
+        // var editConfig = {
+        //     // tool: ['strong', 'italic', 'underline', 'left', 'center','right']
+        //     tool: ['strong', 'italic', 'underline',  'left', 'center','right', 'del', 'addimg', 'video', 'link', 'face', 'preview',]
+        // };
+        // const index = layedit.build('text', editConfig);
+        // 实例化编辑器
+        var ue = UE.getEditor('text_detail', {
+            initialFrameHeight: 200,   //初始化高度
+            // lang: (navigator.language||navigator.browserLanguage ||navigator.userLanguage).toLowerCase(),
+            // lang: 'en',
+        });
+
 
         // layui.laydate.render({
         //     elem: '#contract_time'
