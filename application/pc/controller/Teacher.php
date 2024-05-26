@@ -37,7 +37,7 @@ class Teacher extends Base {
         $where[] = ['day', '<', $end_time];
         $where[] = ['teacher_uid', '=', $uid];
         $day_group_count = $model->where($where)->group("day")->having('transNum > 0')->order('day asc')->field("day, count(*) as transNum")->select()->toArray();
-        $day_group_count = array_column($day_group_count, 'transNum', 'day');
+        $day_group_count = array_column($day_group_count, 'day');
         $this->assign('day_group_count', $day_group_count);
         $this->assign('userInfo', $userInfo);
         return $this->fetch();
