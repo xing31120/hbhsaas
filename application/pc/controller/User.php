@@ -69,10 +69,19 @@ class User extends Base {
         $userInfo = (new HbhUsers())->info($uid);
         $userInfo['expiry_date_en'] = date("M d, Y", strtotime($userInfo['expiry_date']));   //expiry_date
 
-        $day = input('day', '');
-        $day = $day ?: date('Y-m-d');
+        //查询当天前后14天, 总共28天的分组统计数据
+        $time = time();
+        $model= new HbhBookCourse();
+        $start_time = date("Y-m-d", $time - 86400 * 15);
+        $end_time = date("Y-m-d", $time + 86400 * 15);
+        $where[] = ['day', '>', $start_time];
+        $where[] = ['day', '<', $end_time];
+        $where[] = ['custom_uid', '=', $uid];
+        $day_group_count = $model->where($where)->group("day")->having('transNum > 0')->order('day asc')->field("day, count(*) as transNum")->select()->toArray();
+        $day_group_count = array_column($day_group_count, 'day');
+//pj($day_group_count);
+        $this->assign('day_group_count', $day_group_count);
 
-        $this->assign('day', $day);
         $this->assign('fun_name', 'user_qrcode');
         $this->assign('userInfo', $userInfo);
 //        $this->assign('url', url("user/signCheckUid",[ 'uid'=>$this->hbh_user['id'] ]), 'html', true);
