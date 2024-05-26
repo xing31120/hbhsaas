@@ -48,9 +48,28 @@
     .state-3{
         background-color: var(--error-color);
     }
+
+
+
     .select {
         background: var(--theme-color) !important;
         color: var(--white-color) !important;
+    }
+    .highlight a {
+        /*background: #f5f5f5 !important;*/
+        color: black !important;
+        /* 在这里定义高亮显示的样式 */
+    }
+    .ui-widget-header {
+        background: white ;
+    }
+    .ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+        background: white;
+        color: #999797;
+        border-radius: 4px;
+    }
+    .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+        border: 1px solid #6b2ae6;
     }
 </style>
 <section class="th-blog-wrapper space-top space-extra-bottom" style="padding-top: 150px">
@@ -73,8 +92,8 @@
             </div>
         </div>
         <div style="display:flex;align-items:center">
-            <input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />
-<!--            <input type="date" name="" style="width: 200px" id="day" value="{$day}" />-->
+            <input type="text" id="datepicker" placeholder="请选择日期">
+<!--            <input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />-->
             <div style="flex:1"></div>
             <button type="submit" style="width: 200px;margin-left:20px" class="th-btn" onclick="submit_search()">搜索</button>
 
@@ -119,6 +138,7 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/assets/js/jquery-ui.js"></script>
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
 <script>
@@ -129,22 +149,24 @@ Footer Area
     const formattedMonth = month < 10 ? `0${month}` : month;
     const formattedDay = day < 10 ? `0${day}` : day;
     var today_str = `${year}-${formattedMonth}-${formattedDay}`;
-    var dayData = [today_str];
 
-// console.log(dayData)
-    $('#daySelect')
-        .attr('title', dayData.join())               //设置title 当值太多显示不全时有用
-        .datepicker({
-            clearButton: true,
-            language: 'zh',
-            multipleDates: true,                     //是否多选，Boolean | Number
-            multipleDatesSeparator: ',',             // 多选间隔符号
-            onHide: function (inst, animationCompleted) {
-                inst.$el.attr('title', inst.$el.val())
+    var highlightDates = <?php echo json_encode($day_group_count); ?>; //要高亮显示的日期
+    $("#datepicker").datepicker({
+        inline: true,
+        showButtonPanel: false,
+        dateFormat: 'yy-mm-dd',
+        onSelect: function (dateText, inst) {
+// console.log(dateText)
+            ajaxList(1, dateText)
+        },
+        beforeShowDay: function (date) {
+
+            if (highlightDates.includes($.datepicker.formatDate('yy-mm-dd', date))) {
+                return [true, "highlight"];
             }
-        })
-        .data('datepicker')
-        .selectDate(dayData.map(function (n) { return new Date(n) }))
+            return [true, '']
+        }
+    });
 
     function submit_search(){
         daySelect = $("#daySelect").val();
@@ -251,12 +273,12 @@ function changeCheck(page) {
     }
 }
 $(document).ready(function () {
-    $("#day").change(function () {
-        day = $("#day").val();
-        ajaxList(1, day)
-    })
+    // $("#day").change(function () {
+    //     day = $("#day").val();
+    //     ajaxList(1, day)
+    // })
 
-   ajaxList(1, today_str)
+   // ajaxList(1, today_str)
 })
 
 </script>
