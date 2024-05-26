@@ -145,7 +145,6 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
-<<<<<<< HEAD
         <script src="__YUN_PUBLIC_DIR__/static/assets/js/jquery-ui.js"></script>
       <!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>-->
 <script>
@@ -164,39 +163,6 @@ Footer Area
 				return [true, '']
 			}
 		});
-=======
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
-<script>
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = today.getMonth() + 1; // 月份是从0开始的，所以要加1
-    const day = today.getDate();
-    const formattedMonth = month < 10 ? `0${month}` : month;
-    const formattedDay = day < 10 ? `0${day}` : day;
-    var today_str = `${year}-${formattedMonth}-${formattedDay}`;
-    var dayData = [today_str];
-
-// https://www.cnblogs.com/ysxq/p/13385941.html
-    /* 日期选择 */
-	// 默认初始赋值数据
-	// var dayData = ['2024-05-25', '2024-05-24', '2024-05-23'];
-	$('#daySelect')
-			.attr('title', dayData.join())               //设置title 当值太多显示不全时有用
-			.datepicker({
-				clearButton: true,
-				language: 'zh',
-				multipleDates: true,                     //是否多选，Boolean | Number
-				multipleDatesSeparator: ',',             // 多选间隔符号
-				onHide: function (inst, animationCompleted) {
-					inst.$el.attr('title', inst.$el.val())
-				}
-			})
-			.data('datepicker')
-			// .selectDate([new Date('2020-05-01'),new Date('2020-05-02'),new Date('2020-05-03')])
-			.selectDate(dayData.map(function (n) { return new Date(n) }))
-
->>>>>>> 95e4799622f261ed7f367347f3307af7a0975858
 </script>
 <script>
     function submit_search(){
