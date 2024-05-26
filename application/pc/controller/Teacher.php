@@ -37,16 +37,19 @@ class Teacher extends Base {
     }
 
     function setWhere($data){
-        $day = $data['day'] ?? date('Y-m-d');
+//        $day = $data['day'] ?? date('Y-m-d');
         $uid = session('hbh_uid');
+        $day = $data['day'] ?? date('Y-m-d');
+        $day_arr = explode(',', $day);
+
         $where[] = ['teacher_uid', '=', $uid];
-        $where[] = ['day', '=', $day];
+        $where[] = ['day', 'in', $day_arr];
         return $where;
     }
 
     function ajaxList(){
         $data = input();
-        $limit = 10;//每页显示的数量
+        $limit = 20;//每页显示的数量
 
         //老师也只能看到 当天的课时预约记录
         //如果当天有多堂课,  默认最近的一堂课排前面
