@@ -54,11 +54,13 @@
     <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/style.css">
     <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/message.min.css">
  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/datepicker.css">
+  <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/jquery-ui.css">
     <script src="__YUN_PUBLIC_DIR__/static/assets/js/message.min.js"></script>
 
-    <script src="__YUN_PUBLIC_DIR__/static/js/jquery.min.js"></script>
-        <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
-      <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+    <script src="__YUN_PUBLIC_DIR__/static/js/jquery.js"></script>
+            <script src="__YUN_PUBLIC_DIR__/static/assets/js/jquery-ui.js"></script>
+        <!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>-->
+      <!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>-->
     <style>
     .header-layout3 .main-menu > ul > li > a {
         font-size: 15px;
@@ -219,7 +221,7 @@ Header Area
                          <li><a href="{:url('teacher/bookCourse')}" class="user-name" style="">{$userInfo.name}</a>  </li>
                          <li><a href="/auth/logout.html" class="" style="color:var(--white-color)">logout</a>  </li>
                         {else/}
-                         <li><a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a>  </li>
+                         <li> <div><a href="{:url('auth/login')}" style="display:flex" class="th-btn blue-btn">Login Now</a></div>  </li>
                         {/if}
 
                         </ul>

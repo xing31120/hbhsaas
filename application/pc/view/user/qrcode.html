@@ -51,8 +51,24 @@
             background: var(--theme-color) !important;
             color: var(--white-color) !important;
         }
+        		.highlight a {
+			/*background: #f5f5f5 !important;*/
+			color: black !important;
+			/* 在这里定义高亮显示的样式 */
+		}
+		.ui-widget-header {
+		    background: white ;
+		}
+		.ui-state-default, .ui-widget-content .ui-state-default, .ui-widget-header .ui-state-default {
+		    background: white;
+		    color: #999797;
+		    border-radius: 4px;
+		}
+		.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
+		    border: 1px solid #6b2ae6;
+		}
 </style>
-<section class="th-blog-wrapper space-top space-extra-bottom">
+<section class="th-blog-wrapper space-top space-extra-bottom" style="padding-bottom: 300px">
     <div class="container">
          <div class="row flex-row">
               {include file="user/left_menu"/}
@@ -76,7 +92,9 @@
             </div>
         </div>
         <div style="display:flex;align-items:center">
-            <input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />
+            <input type="text" id="datepicker" placeholder="请选择日期">
+            	<!--<div id="datepicker" onclick="openDatepicker()">请选择日期</div>-->
+            <!--<input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />-->
             <!--<input type="date" name="" style="width: 200px" id="day" value="{$day}" />-->
             <div style="flex:1"></div>
             <!--            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn">搜索</button>-->
@@ -127,31 +145,24 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
-        <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
-      <script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+        <script src="__YUN_PUBLIC_DIR__/static/assets/js/jquery-ui.js"></script>
+      <!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>-->
 <script>
-// https://www.cnblogs.com/ysxq/p/13385941.html
-    /* 日期选择 */
-	// 默认初始赋值数据
-	var dayData = ['2024-05-25', '2024-05-24', '2024-05-23'];
-	$('#daySelect')
-			.attr('title', dayData.join())               //设置title 当值太多显示不全时有用
-			.datepicker({
-				clearButton: true,
-				language: 'zh',
-				multipleDates: true,                     //是否多选，Boolean | Number
-				multipleDatesSeparator: ',',             // 多选间隔符号
-				onHide: function (inst, animationCompleted) {
-					inst.$el.attr('title', inst.$el.val())
+		$("#datepicker").datepicker({
+			inline: true,
+			showButtonPanel: false,
+			dateFormat: 'yy-mm-dd',
+			onSelect: function (dateText, inst) {
+				ajaxList(1, dateText)
+			},
+			beforeShowDay: function (date) {
+				var highlightDates = ["2024-05-22", "2024-05-21"]; //要高亮显示的日期
+				if (highlightDates.includes($.datepicker.formatDate('yy-mm-dd', date))) {
+					return [true, "highlight"];
 				}
-			})
-			.data('datepicker')
-			// .selectDate([new Date('2020-05-01'),new Date('2020-05-02'),new Date('2020-05-03')])
-			.selectDate(dayData.map(function (n) { return new Date(n) }))
-
-    $('#daySelect').chnage((e) => {
-        console.log(e)
-    })
+				return [true, '']
+			}
+		});
 </script>
 <script>
     nowPage = 1
