@@ -112,6 +112,7 @@ return [
     'Student' =>'Student',
     'AppointmentTime' =>'Appointment Time',
     'PleaseSelectAppointmentRecord' =>'Please Select Appointment Record',
+    'PleaseSelectDate' =>'Please Select Date',
     //联系表单管理
     'IsCall' =>'Is Contact',
     'IsCallWait' =>'Not Contacted',
