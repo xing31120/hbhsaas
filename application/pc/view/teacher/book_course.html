@@ -71,6 +71,17 @@
     .ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
         border: 1px solid #6b2ae6;
     }
+/*    .ui-datepicker .ui-datepicker-prev span {*/
+
+/*display: block;position:absolute;left: 50%;margin-left: -8px; top: 50%; margin-top: -8px;width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-right:8px solid white;*/
+
+/*}*/
+
+/*.ui-datepicker .ui-datepicker-next span {*/
+
+/*display: block;position:absolute;left: 50%;margin-left: -8px; top: 50%; margin-top: -8px;width:0;height:0;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:8px solid white;*/
+
+/*}*/
 </style>
 <section class="th-blog-wrapper space-top space-extra-bottom" style="padding-top: 150px;padding-bottom: 300px">
     <div class="container">
@@ -138,7 +149,7 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/jquery-ui.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script>
     var highlightDates = <?php echo json_encode($day_group_count); ?>; //要高亮显示的日期
     $("#datepicker").datepicker({
@@ -158,8 +169,8 @@ Footer Area
         }
     });
 </script>
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+<!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>-->
+<!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>-->
 <script>
     function submit_search(){
         daySelect = $("#daySelect").val();

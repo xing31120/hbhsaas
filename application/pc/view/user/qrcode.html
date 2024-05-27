@@ -67,6 +67,7 @@
 		.ui-state-highlight, .ui-widget-content .ui-state-highlight, .ui-widget-header .ui-state-highlight {
 		    border: 1px solid #6b2ae6;
 		}
+
 </style>
 <section class="th-blog-wrapper space-top space-extra-bottom" style="padding-bottom: 300px">
     <div class="container">
@@ -144,7 +145,7 @@ Footer Area
 ==============================-->
 {include file="public/footer"/}
 <script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/js/jquery.qrcode.min.js"></script>
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/jquery-ui.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/jquery-ui-1.12.1/jquery-ui.min.js"></script>
 <script>
     var highlightDates = <?php echo json_encode($day_group_count); ?>; //要高亮显示的日期
     $("#datepicker").datepicker({
@@ -165,8 +166,8 @@ Footer Area
     });
 </script>
 
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>
-<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>
+<!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>-->
+<!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>-->
 <script>
     function submit_search(){
         datepicker = $("#datepicker").val();
