@@ -7,6 +7,7 @@ namespace app\common\service;
 
 
 use AlibabaCloud\SDK\Dysmsapi\V20170525\Dysmsapi;
+use AlibabaCloud\SDK\Dysmsapi\V20170525\Models\SendBatchSmsRequest;
 use \Exception;
 use AlibabaCloud\Tea\Exception\TeaError;
 use AlibabaCloud\Tea\Utils\Utils;
@@ -57,30 +58,30 @@ class AliyunSmsService{
         }
     }
 
+
     //发送多个手机号
-    public static function sendBatchSms($code,$phone,$sign_name,$param,$shop_uid){
-        self::initClient();
+    public static function sendBatchSms($sms_param)
+    {
+        $client = self::createClient();
+        $sendBatchSmsRequest = new SendBatchSmsRequest($sms_param);
+
         try {
-            $result = AlibabaCloud::rpc()
-                ->product('Dysmsapi')
-                // ->scheme('https') // https | http
-                ->version('2017-05-25')->action('SendBatchSms')->method('POST')
-                ->host('dysmsapi.aliyuncs.com')
-                ->options([
-                    'query' => [
-                        'RegionId' => "cn-hangzhou",
-                        'PhoneNumberJson' => json_encode($phone),//发送手机号码
-                        'SignNameJson' => json_encode($sign_name),//签名
-                        'TemplateCode' => $code,//模版ID
-                        'TemplateParamJson' => json_encode($param),//短信内容参数
-                    ],
-                ])
-                ->request();
-            print_r($result->toArray());
-        } catch (ClientException $e) {
-            echo $e->getErrorMessage() . PHP_EOL;
-        } catch (ServerException $e) {
-            echo $e->getErrorMessage() . PHP_EOL;
+            // 复制代码运行请自行打印 API 的返回值
+            $res = $client->sendBatchSmsWithOptions($sendBatchSmsRequest, new RuntimeOptions([]));
+            $result = $res->toMap();
+            return $result['body'];
+        }
+        catch (Exception $error) {
+            if (!($error instanceof TeaError)) {
+                $error = new TeaError([], $error->getMessage(), $error->getCode(), $error);
+            }
+            // 此处仅做打印展示，请谨慎对待异常处理，在工程项目中切勿直接忽略异常。
+            // 错误 message
+            var_dump($error->message);
+            // 诊断地址
+            var_dump($error->data["Recommend"]);
+            Utils::assertAsString($error->message);
         }
     }
+
 }

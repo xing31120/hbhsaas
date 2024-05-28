@@ -703,7 +703,7 @@ if (!function_exists('getSmsKey')) {
 
 // 发送验证码
 if (!function_exists('SendSmsCode')) {
-    function SendSmsCode($mobile, $type = 0, $shop_uid = 0)
+    function SendSmsCode($mobile, $type = 0)
     {
         $key = getSmsKey($mobile, $type);
         if (empty($mobile)) return errorReturn(['msg' => 'empty phone!']);
@@ -731,28 +731,32 @@ if (!function_exists('SendSmsCode')) {
 
 //发送上课通知
 if (!function_exists('SendSmsClassNotice')) {
-    function SendBatchSms($mobile_arr, $shop_uid = 0)
+    function SendSmsClassNotice($mobile_arr, $template_param_arr)
     {
-//        $key = getSmsKey($mobile, 3);
+        //$template_param_arr --> ${course}  ${start} ${end}.
         if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone!']);
+        $sign = env('sms.alisms_sign_name');
+
+        $sign_arr = [];
+        foreach ($mobile_arr as $item) {
+            $sign_arr[] = $sign;
+        }
 
         $sms_param = [
-//            'RegionId' => "cn-hangzhou",
-            'phoneNumbers' => $mobile,
-            'signName' => env('sms.alisms_sign_name'),
+            'phoneNumberJson' => json_encode($mobile_arr),
+            'signNameJson' => json_encode($sign_arr),
             'templateCode' => 'SMS_467605096',
-            'templateParam' => json_encode(['course' => $course]),
-//            'shop_id' => $shop_uid,
+            'templateParamJson' => json_encode($template_param_arr),
         ];
 //pj([$key, $sms_param]);
         $sms_service = new \app\common\service\AliyunSmsService();
-        $return_msg = $sms_service->sendSms($sms_param);
+        $return_msg = $sms_service->sendBatchSms($sms_param);
 //pj($return_msg);
         if ($return_msg['Code'] == 'OK') {
-            \think\facade\Cache::set($key, $code, 3600);
-            return successReturn(['msg' => 'send sms success!'. $code]);
+//            \think\facade\Cache::set($key, $code, 3600);
+            return successReturn(['msg' => 'send sms success!']);
         } else {
-            return errorReturn('send sms error!');
+            return errorReturn(json_encode($return_msg));
         }
     }
 }
