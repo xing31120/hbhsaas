@@ -27,6 +27,10 @@ class HbhBookCourse extends SingleSubData {
     const is_unlimited_number_false = 0;
     const is_unlimited_number_true = 1;
 
+    //是否通知客户 0: 未通知  1:已经通知
+    const notice_status_false = 0;
+    const notice_status_true = 1;
+
     static function getStatusText($status){
         $text = '';
         if($status == self::status_wait){

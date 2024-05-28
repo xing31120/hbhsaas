@@ -688,9 +688,9 @@ if (!function_exists('getSmsKey')) {
             case 2:     //登录
                 $key = 'official_website_shop_user_mobile_login_' . $mobile;
                 break;
-//            case 3:
-//                $key = 'user_activity_shipping_address_check' . $mobile;
-//                break;
+            case 3:     // 上课通知
+                $key = 'notice_class_' . $mobile;
+                break;
             case 4:     // 忘记密码
                 $key = 'user_store_forget_pass_check' . $mobile;
                 break;
@@ -701,6 +701,7 @@ if (!function_exists('getSmsKey')) {
     }
 }
 
+// 发送验证码
 if (!function_exists('SendSmsCode')) {
     function SendSmsCode($mobile, $type = 0, $shop_uid = 0)
     {
@@ -713,6 +714,34 @@ if (!function_exists('SendSmsCode')) {
             'signName' => env('sms.alisms_sign_name'),
             'templateCode' => 'SMS_465970872',
             'templateParam' => json_encode(['code' => $code]),
+//            'shop_id' => $shop_uid,
+        ];
+//pj([$key, $sms_param]);
+        $sms_service = new \app\common\service\AliyunSmsService();
+        $return_msg = $sms_service->sendSms($sms_param);
+//pj($return_msg);
+        if ($return_msg['Code'] == 'OK') {
+            \think\facade\Cache::set($key, $code, 3600);
+            return successReturn(['msg' => 'send sms success!'. $code]);
+        } else {
+            return errorReturn('send sms error!');
+        }
+    }
+}
+
+//发送上课通知
+if (!function_exists('SendSmsClassNotice')) {
+    function SendBatchSms($mobile_arr, $shop_uid = 0)
+    {
+//        $key = getSmsKey($mobile, 3);
+        if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone!']);
+
+        $sms_param = [
+//            'RegionId' => "cn-hangzhou",
+            'phoneNumbers' => $mobile,
+            'signName' => env('sms.alisms_sign_name'),
+            'templateCode' => 'SMS_467605096',
+            'templateParam' => json_encode(['course' => $course]),
 //            'shop_id' => $shop_uid,
         ];
 //pj([$key, $sms_param]);
