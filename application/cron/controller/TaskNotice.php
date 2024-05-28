@@ -26,29 +26,31 @@ class TaskNotice extends Base{
 
         $course_list = (new HbhCourse())->whereIn('id', $course_id_arr)->select()->toArray();
         $course_name_list = array_column($course_list, 'name', 'id');
-//pj($course_name_list);
+
         $mobile_arr = [];
         foreach ($userList as $user) {
-            $phone_code = $user['phone_code'];
-            $phone = $user['phone'];
-            $mobile_arr[] = $phone_code . $phone;
+//            $phone_code = $user['phone_code'];
+//            $phone = $user['phone'];
+            $mobile_arr[$user['id']] = $user;
         }
 
         $template_param_arr = [];
         foreach ($list as $book_course) {
+            $user = $mobile_arr[$book_course['custom_uid']] ?? '';
+            $res = (new HbhUsers())->checkPhone($user['phone']);
+            if(!$res['result']){
+                continue;
+            }
             $template_param['start'] = $book_course['start_time'] ?? '';
             $template_param['end'] = $book_course['end_time'] ?? '';
             $template_param['course'] = $course_name_list[$book_course['course_id']] ?? '';
 
             $template_param_arr[] = $template_param;
         }
-pj([$list,$mobile_arr, $template_param_arr]);
-
-
 
         $return_msg = SendSmsClassNotice($mobile_arr, $template_param_arr);
 //pj($return_msg);
-        return apiOut($return_msg);
+        return $return_msg;
 
 
 
