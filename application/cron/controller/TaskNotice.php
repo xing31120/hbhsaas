@@ -11,7 +11,7 @@ class TaskNotice extends Base{
     function classNotice(){
         $book_course_model = new HbhBookCourse();
         $day = date("Y-m-d");
-//$day = '2024-05-27';
+$day = '2024-05-27';
 
         $op['where'][] = ['notice_status', '=', HbhBookCourse::notice_status_false];
         $op['where'][] = ['day', '=', $day];
@@ -49,6 +49,10 @@ class TaskNotice extends Base{
         }
 
         $return_msg = SendSmsClassNotice($mobile_arr, $template_param_arr);
+        if($return_msg['result']){
+            $up = $book_course_model->where($op['where'])->update(['notice_status' => HbhBookCourse::notice_status_true]);
+            if(!$up) return errorReturn('update error');
+        }
 //pj($return_msg);
         return $return_msg;
 

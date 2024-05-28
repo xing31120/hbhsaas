@@ -733,6 +733,7 @@ if (!function_exists('SendSmsCode')) {
 if (!function_exists('SendSmsClassNotice')) {
     function SendSmsClassNotice($mobile_arr, $template_param_arr)
     {
+//return successReturn(['msg' => 'send sms success!']);
         //$template_param_arr --> ${course}  ${start} ${end}.
         if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone!']);
         $sign = env('sms.alisms_sign_name');
