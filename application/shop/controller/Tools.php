@@ -56,7 +56,7 @@ class Tools extends Base
             $resData = [
                 'file_name' => $file,
 //                'src' => setImgUrl($yun_path),
-                'src' => $src_path,
+                'src' => $src_path,         //主要看这个
                 'file_path' => $yun_path
             ];
 //            ImageInfoService::addInfo($resData['src']);

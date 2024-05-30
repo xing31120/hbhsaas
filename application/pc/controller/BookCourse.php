@@ -359,6 +359,56 @@ class BookCourse extends Base {
         return successReturn(['data' => $res, 'msg' => 'success']);
     }
 
+    /**
+     * @return \think\response\Json 上传附件
+     */
+    function upload_attr(){
+        $id = input('id', 0);
+        if(!$id){
+            return adminOutError(['msg' => Lang::get('ParameterError')]);
+        }
+
+        $data = $_FILES;
+        $file = basename($data['file']['name']);
+        $temp = explode('.', $file);
+        $local_path = $data['file']['tmp_name'];
+        $move_to_path = PUBLIC_PATH.'upload/'.date('Ymd').'/'.md5($temp[0].time()).'.'.$temp[1];
+        $src_path = '/upload/'.date('Ymd').'/'.md5($temp[0].time()).'.'.$temp[1];
+        $dirname = dirname($move_to_path);
+        //创建目录失败
+        if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {
+            return adminOutError(['msg' => Lang::get('ErrorCreateDir')]);
+        } else if (!is_writeable($dirname)) {
+            return adminOutError(['msg' => Lang::get('ErrorDirNotWriteable')]);
+        }
+
+        if (!(move_uploaded_file($local_path, $move_to_path) && file_exists($move_to_path) )) { //文件存在, 移动失败
+            $bool = false;
+        } else { //移动成功
+            $bool = true;
+        }
+
+        if (!$bool) {
+            return adminOutError(['msg' => 'upload error']);
+        }
+
+        $yun_path = '/public/upload/'.date('Ymd').'/'.md5($temp[0].time()).'.'.$temp[1];
+        $resData = [
+            'file_name' => $file,
+            'src' => $src_path,     //主要看这个
+            'file_path' => $yun_path
+        ];
+
+        $update['attachment_url'] = $src_path;
+        $update['update_time'] = time();
+        $up_res = (new HbhBookCourse())->updateById($id, $update);
+        if($up_res === false){
+            return adminOutError(['msg' => 'upload error2']);
+        }
+
+        return adminOut(['msg' => 'upload success', 'data' => $resData]);
+    }
+
 
     function ajaxList(){
     }

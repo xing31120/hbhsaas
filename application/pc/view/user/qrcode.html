@@ -20,7 +20,7 @@
         font-weight: 400;
         font-size: 14px;
         line-height: 26px;
-        text-transform: uppercase;
+        /*text-transform: uppercase;*/
         padding: 7px 19px;
         border-radius: 10px;
     }
@@ -70,75 +70,53 @@
 
 </style>
 <section class="th-blog-wrapper space-top space-extra-bottom" style="padding-bottom: 300px">
-    <div class="container">
-         <div class="row flex-row">
-              {include file="user/left_menu"/}
-            <div class="col-xl-9 col-lg-8">
-                  <div class="th-blog blog-single has-post-thumbnail">
-            <input type="hidden" name="url" id="url" value="{$url}">
-            <div class="blog-content">
-                <h2 class="blog-title">{$userInfo.name}
-                </h2>
-                <div class="blog-meta">
-                    <a href="#">{$Think.lang.ExpiryDate}: <i class="fa-light fa-calendar-days"></i>{$userInfo.expiry_date_en}</a>
-                </div>
-                <p class="blog-text">{$Think.lang.ResidueDegree}: {$userInfo.residue_quantity}</p>
-                <div class="blog-img" style="padding: 30px 0;">
-                    <a href="#">
-                        <div style="width: 100%;text-align: center;" id="qrcode"></div>
-                    </a>
-
-                </div>
-<!--                <a href="blog-details.html" class="th-btn" style="width: 100%;">生成</a>-->
-            </div>
-        </div>
-        <div style="display:flex;align-items:center">
-            <input type="text" id="datepicker" placeholder="{$Think.lang.PleaseSelectDate}">
-            	<!--<div id="datepicker" onclick="openDatepicker()">请选择日期</div>-->
-            <!--<input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />-->
-            <div style="flex:1"></div>
-            <button type="submit" style="width: 200px;margin-left:20px" class="th-btn" onclick="submit_search()">{$Think.lang.Search}</button>
-
-        </div>
-        <div class="tab-pane fade active show" id="detaiList" role="tabpanel">
-                  </div>
-                   </div>
-
-
-
-            <!--
-            <div class="event-item" style="position: relative;">
-                <div class="event-item_wrapper">
-                    <div class="event-item-wrapp" style="flex: 1;">
-                        <div class="event-item_content">
-                            <div class="event-item_list">
-                                <h3 class="event-item_title">课程名称</h3>
-                                <span class="event-item_time"><i class="fa-regular fa-clock"></i>08:00AM -10:00PM</span>
-                                <span class="event-item_location"><i class="fal fa-user"></i>老师</span>
-                            </div>
-                            <div class="event-btn" style="right: 20px;top: 0;">
-                                <div class="state-1">已预约</div>
-                                <div class="state-2">已签到</div>
-                            </div>
-                        </div>
+<div class="container">
+    <div class="row flex-row">
+        {include file="user/left_menu"/}
+        <div class="col-xl-9 col-lg-8">
+            <div class="th-blog blog-single has-post-thumbnail">
+                <input type="hidden" name="url" id="url" value="{$url}">
+                <div class="blog-content">
+                    <h2 class="blog-title">{$userInfo.name}
+                    </h2>
+                    <div class="blog-meta">
+                        <a href="#">{$Think.lang.ExpiryDate}: <i class="fa-light fa-calendar-days"></i>{$userInfo.expiry_date_en}</a>
+                    </div>
+                    <p class="blog-text">{$Think.lang.ResidueDegree}: {$userInfo.residue_quantity}</p>
+                    <div class="blog-img" style="padding: 30px 0;">
+                        <a href="#">
+                            <div style="width: 100%;text-align: center;" id="qrcode"></div>
+                        </a>
                     </div>
                 </div>
             </div>
-            >-->
-        </div>
-        <div class="th-pagination text-center mt-30">
-            <ul id="pagination">
-                <li id="prePage" data-id="prePage" onclick="toPage('previous')" class="page_btn"><span><i class="far fa-arrow-left"></i></span></li>
-                <li><span style="width: auto;padding: 0 15px;display:flex"><div id="now-page">1</div> <div style="margin: 0 5px">
-                    /
-                </div> <div id="total-page">1</div></span></li>
-<!--                            <li><span onclick="toPage(3)">3</span></li>-->
-                <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
-            </ul>
-        </div>
+            <div style="display:flex;align-items:center">
+                <input type="text" id="datepicker" placeholder="{$Think.lang.PleaseSelectDate}">
+                    <!--<div id="datepicker" onclick="openDatepicker()">请选择日期</div>-->
+                <!--<input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />-->
+                <div style="flex:1"></div>
+                <button type="submit" style="width: 200px;margin-left:20px" class="th-btn" onclick="submit_search()">{$Think.lang.Search}</button>
 
-        <!--<input type="text" name="page_num" id="page_num" value="1">-->
+            </div>
+            <div style="display: none">
+                <input type="file" name="file" id="upload_attr">
+                <input type="hidden" name="upload_id" id="upload_id">
+            </div>
+
+            <div class="tab-pane fade active show" id="detaiList" role="tabpanel"></div>
+        </div>
     </div>
+    <div class="th-pagination text-center mt-30">
+        <ul id="pagination">
+            <li id="prePage" data-id="prePage" onclick="toPage('previous')" class="page_btn"><span><i class="far fa-arrow-left"></i></span></li>
+            <li><span style="width: auto;padding: 0 15px;display:flex"><div id="now-page">1</div> <div style="margin: 0 5px">
+                /
+            </div> <div id="total-page">1</div></span></li>
+            <li id="nextPage" data-id="nextPage" onclick="toPage('next')"  class="page_btn"><span><i class="far fa-arrow-right"></i></span></li>
+        </ul>
+    </div>
+
+</div>
 </section>
 <!--==============================
 Footer Area
@@ -166,15 +144,14 @@ Footer Area
     });
 </script>
 
-<!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.min.js"></script>-->
-<!--<script src="__YUN_PUBLIC_DIR__/static/assets/js/datepicker.zh.min.js"></script>-->
+
 <script>
-    function submit_search(){
-        datepicker = $("#datepicker").val();
-        ajaxList(nowPage, datepicker)
-    }
-    nowPage = 1
-    totalPage = 0
+function submit_search(){
+    datepicker = $("#datepicker").val();
+    ajaxList(nowPage, datepicker)
+}
+nowPage = 1
+totalPage = 0
  function toPage(type) {
     if (type === 'next') {
         if (nowPage < totalPage) {
@@ -188,6 +165,39 @@ Footer Area
      datepicker = $("#datepicker").val();
     ajaxList(nowPage, datepicker)
 }
+
+
+function uploadAttr(booked_id){
+    $("#upload_id").val(booked_id)
+    upload_attr.click();
+}
+
+/*
+
+*/
+document.getElementById('upload_attr').addEventListener('change', function() {
+
+    booked_id = $("#upload_id").val()
+    var formData = new FormData();
+    formData.append('id', booked_id);
+    formData.append('file', $('#upload_attr')[0].files[0]);
+// console.log(formData)
+
+    $.ajax({
+        "url": "{:url('BookCourse/upload_attr')}",
+        "type": 'POST',
+        // "data": {"id": booked_id},
+        "data": formData,
+        "processData": false,
+        "contentType": false,
+    }).done(function (rs) {
+        Qmsg.info(rs.msg);
+    }).fail(function (rs) {
+        Qmsg.error(rs.msg)
+    });
+});
+
+
 function ajaxList(page, day){
     limit = 20;
     $.ajax({
@@ -203,6 +213,13 @@ function ajaxList(page, day){
             }else{
                 $status_html = '<div class="state-2">'+rs.list[rsKey].status_text+'</div>';
             }
+            if(rs.list[rsKey].attachment_url == ''){
+                $attr_html = '<button class="state-1" onclick="uploadAttr('+rs.list[rsKey].id+')">Upload File</button>'
+                    //  + '<input type="file" name="upload" id="upload" style="display: none;" />';
+            }else{
+                $attr_html = '<button class="state-2" onclick="uploadAttr('+rs.list[rsKey].id+')">Re Upload</button>';
+            }
+
 
             html += '<div class="event-item" style="position: relative;">\n' +
                 '                            <div class="event-item_wrapper">\n' +
@@ -213,7 +230,10 @@ function ajaxList(page, day){
                 '                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>'+rs.list[rsKey].day_short+' ('+rs.list[rsKey].start_time+' - '+rs.list[rsKey].end_time+')</span>\n' +
                 '                                            <span class="event-item_location"><i class="fal fa-user"></i>'+rs.list[rsKey].teacher_name+'</span>\n' +
                 '                                        </div>\n' +
-                '                                        <div class="event-btn" style="right: 20px;top: 0;">\n' +
+                '                                        <div class="event-btn" style="top: 0;">\n' +
+                $attr_html+
+                '                                        </div>\n' +
+                '                                        <div class="event-btn" style="top: 0;">\n' +
                 $status_html+
                 '                                        </div>\n' +
                 '                                    </div>\n' +
@@ -238,15 +258,7 @@ function ajaxList(page, day){
     });
 }
 
-// function changeCheck(page) {
-//     for (let index = 1; index <= totalPage; index++) {
-//         if (index === page) {
-//             $('#page-' + index).addClass('select')
-//         } else {
-//             $('#page-' + index).removeClass('select')
-//         }
-//     }
-// }
+
 $(function () {
 
 
@@ -261,7 +273,7 @@ $(function () {
     //     ajaxList(1, day)
     // })
 
-    ajaxList(1, today_str)
+    ajaxList(1)
 
 })
 
