@@ -199,7 +199,8 @@ function confirmBooked(booked_id){
         "data": {"id": booked_id},
     }).done(function (rs) {
         Qmsg.info(rs.msg);
-        location.reload();
+        ajaxList(nowPage, datepicker)
+        // location.reload();
     }).fail(function (rs) {
         Qmsg.error(rs.msg)
     });
@@ -212,7 +213,8 @@ function confirmBooked(booked_id){
          "data": {"id": booked_id},
      }).done(function (rs) {
          Qmsg.info(rs.msg);
-         location.reload();
+         ajaxList(nowPage, datepicker)
+         // location.reload();
      }).fail(function (rs) {
          Qmsg.error(rs.msg)
      });
@@ -220,7 +222,7 @@ function confirmBooked(booked_id){
 
 
 function ajaxList(page, day){
-    limit = 10;
+    limit = 2;
     $.ajax({
         "url": "{:url('ajaxList')}",
         "data": {"page": page, "limit": limit, "day": day},
