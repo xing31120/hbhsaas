@@ -200,7 +200,6 @@ function confirmBooked(booked_id){
     }).done(function (rs) {
         Qmsg.info(rs.msg);
         ajaxList(nowPage, datepicker)
-        // location.reload();
     }).fail(function (rs) {
         Qmsg.error(rs.msg)
     });
@@ -240,6 +239,13 @@ function ajaxList(page, day){
                 $status_html = '<div class="state-2">'+rs.list[rsKey].status_text+'</div>';
             }
 
+            if(rs.list[rsKey].attachment_url == ''){
+                $attr_html = 'Not Uploaded'
+                //  + '<input type="file" name="upload" id="upload" style="display: none;" />';
+            }else{
+                $attr_html = '<a class="state-2" target="_blank" href="'+rs.list[rsKey].attachment_url+'">Download</a>';
+            }
+
             html += '<div class="event-item" style="position: relative;">\n' +
                 '                            <div class="event-item_wrapper">\n' +
                 '                                <div class="event-item-wrapp" style="flex: 1;">\n' +
@@ -250,7 +256,10 @@ function ajaxList(page, day){
                 '                                            <span class="event-item_time"><i class="fa-regular fa-clock"></i>'+rs.list[rsKey].day_short+' ('+rs.list[rsKey].start_time+' - '+rs.list[rsKey].end_time+')</span>\n' +
                 '                                            <span class="event-item_location"><i class="fal fa-user"></i>'+rs.list[rsKey].student_name+'</span>\n' +
                 '                                        </div>\n' +
-                '                                        <div class="event-btn" style="right: 20px;top: 0;">\n' +
+                '                                        <div class="event-btn" style="top: 0;">\n' +
+                $attr_html+
+                '                                        </div>\n' +
+                '                                        <div class="event-btn" style="top: 0;">\n' +
                 $status_html+
                 '                                        </div>\n' +
                 '                                    </div>\n' +

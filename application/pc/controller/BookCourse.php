@@ -367,13 +367,14 @@ class BookCourse extends Base {
         if(!$id){
             return adminOutError(['msg' => Lang::get('ParameterError')]);
         }
-
+//pj($this->hbh_user['name']);
         $data = $_FILES;
         $file = basename($data['file']['name']);
         $temp = explode('.', $file);
         $local_path = $data['file']['tmp_name'];
-        $move_to_path = PUBLIC_PATH.'upload/'.date('Ymd').'/'.md5($temp[0].time()).'.'.$temp[1];
-        $src_path = '/upload/'.date('Ymd').'/'.md5($temp[0].time()).'.'.$temp[1];
+        $end_file_name = $this->hbh_user['name'].'_'.md5($temp[0].time()).'.'.$temp[1];
+        $move_to_path = PUBLIC_PATH.'upload/'.date('Ymd').'/'.$end_file_name;
+        $src_path = '/upload/'.date('Ymd').'/'.$end_file_name;
         $dirname = dirname($move_to_path);
         //创建目录失败
         if (!file_exists($dirname) && !mkdir($dirname, 0777, true)) {

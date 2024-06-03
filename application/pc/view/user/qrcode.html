@@ -162,7 +162,7 @@ totalPage = 0
             nowPage -= 1
         }
     }
-     datepicker = $("#datepicker").val();
+    datepicker = $("#datepicker").val();
     ajaxList(nowPage, datepicker)
 }
 
@@ -192,6 +192,8 @@ document.getElementById('upload_attr').addEventListener('change', function() {
         "contentType": false,
     }).done(function (rs) {
         Qmsg.info(rs.msg);
+        datepicker = $("#datepicker").val();
+        ajaxList(nowPage, datepicker)
     }).fail(function (rs) {
         Qmsg.error(rs.msg)
     });
