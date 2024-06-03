@@ -222,7 +222,7 @@ function confirmBooked(booked_id){
 
 
 function ajaxList(page, day){
-    limit = 2;
+    limit = 10;
     $.ajax({
         "url": "{:url('ajaxList')}",
         "data": {"page": page, "limit": limit, "day": day},
