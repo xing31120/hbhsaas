@@ -139,7 +139,8 @@ class StatisticsService{
         if($shop_id > 0){
             $where[] = ['shop_id','=',$shop_id];
         }
-        $where[] = ['create_time','BETWEEN',[$begin_time, $end_time]];
+//        $where[] = ['create_time','BETWEEN',[$begin_time, $end_time]];
+        $where[] = ['day','BETWEEN',[$startDate, $endDate]];
         $where[] = ['status', '=', HbhBookCourse::status_end];
         $where[] = ['is_unlimited_number', '=', HbhUsers::is_unlimited_number_false];   //有限次数的会员才算课时
         $field = [
@@ -148,6 +149,8 @@ class StatisticsService{
         ];
         $group = 'day';
         $orderInfo = (new HbhBookCourse())->field($field)->where($where)->group($group)->select();
+//$sql = (new HbhBookCourse())->getLastSql();
+//pj($sql);
         $orderInfo = empty($orderInfo)?:$orderInfo->toArray();
         $orderInfo = array_column($orderInfo,null,'day');
 
