@@ -620,6 +620,20 @@ if (!function_exists('pj')) {
         if ($isExit) exit;
     }
 }
+
+if (!function_exists('ej')) {
+    /**
+     * Notes:
+     * @param $data
+     * @param int $isExit
+     * User: SongX DateTime: 2021/9/23 11:49
+     */
+    function ej($data, $isExit = 1){
+        echo json_encode($data);
+        if ($isExit) exit;
+    }
+}
+
 if (!function_exists('pr')) {
     /**
      * Description:打印数据

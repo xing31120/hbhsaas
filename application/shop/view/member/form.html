@@ -31,6 +31,14 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.CountryCode}：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="phone_code" lay-verify="required" lay-reqText="Please Select Phone Code">
+                                            <option value="971">+971</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">{$Think.lang.Phone}：</label>
                                     <div class="layui-input-inline">
                                         <input type="text" name="phone" value="{$info.phone|default=''}"  class="layui-input"  placeholder="">

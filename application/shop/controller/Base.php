@@ -1,9 +1,11 @@
 <?php
 namespace app\shop\controller;
 
+use app\common\model\HbhSjLog;
 use app\common\model\ShopAuthGroup;
 use app\common\model\ShopAuthGroupAccess;
 use app\common\model\ShopUser;
+use phpseclib3\Crypt\EC;
 use think\Controller;
 use auth\Auth;
 use app\common\model\ShopAuthMenu as Menu;
@@ -130,5 +132,39 @@ class Base  extends Controller{
         return false;
 //pj($access);
 //        if()
+    }
+
+    function add_log($old_info, $new_info){
+//        $this->shop_id = session('shop_id');//初始化应用ID
+        $row['module']      = 'shop';
+        $row['controller']  = request()->controller();
+        $row['action']      = request()->action();
+        $row['ip']          = request()->ip();
+        $row['shop_id']     = session('shop_id');
+        $row['create_time'] = time();
+        $row['create_at']   = date("Y-m-d H:i:s");
+        $row['admin_id']    = session('uid');
+        $row['admin_name']  = session('username');
+
+        $ignore_key = ['password', 'create_time', 'update_time'];
+
+        $before_data = $after_data = [];
+        foreach ($new_info as $new_key => $new_val) {
+            $old_val = $old_info[$new_key] ?? '-@';
+            if($old_val === '-@'){  //旧数据异常的, 跳过
+                continue;
+            }
+
+            // 忽略某些key的 变化
+            if(in_array($new_key, $ignore_key)) continue;
+
+            if($old_val != $new_val){
+                $before_data[$new_key] = $old_val;
+                $after_data[$new_key] = $new_val;
+            }
+        }
+        $row['before_data'] = json_encode($before_data);
+        $row['after_data'] = json_encode($after_data);
+        HbhSjLog::create($row);
     }
 }

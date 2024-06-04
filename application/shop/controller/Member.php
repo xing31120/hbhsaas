@@ -28,6 +28,7 @@ class Member extends Base {
         $id = $data['id'];
         $info = model('HbhUsers')->info($id);
         if ($this->request->isPost()) {
+            $this->add_log($info, $data);
             if(empty($data['password'])){
                 unset($data['password']);
             }
