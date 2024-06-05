@@ -134,7 +134,13 @@ class Base  extends Controller{
 //        if()
     }
 
-    function add_log($old_info, $new_info){
+    /**
+     * @param $old_info     新增时 $old_info 为空
+     * @param $new_info     删除时 $new_info 为空
+     * @param $type         操作类型, 1: 新增, 2:修改, 4:删除
+     * @return void
+     */
+    function add_log($old_info, $new_info, $type = 2){
 //        $this->shop_id = session('shop_id');//初始化应用ID
         $row['module']      = 'shop';
         $row['controller']  = request()->controller();
@@ -149,20 +155,23 @@ class Base  extends Controller{
         $ignore_key = ['password', 'create_time', 'update_time'];
 
         $before_data = $after_data = [];
-        foreach ($new_info as $new_key => $new_val) {
-            $old_val = $old_info[$new_key] ?? '-@';
-            if($old_val === '-@'){  //旧数据异常的, 跳过
-                continue;
-            }
+        if($type == HbhSjLog::type_update){
+            foreach ($new_info as $new_key => $new_val) {
+                $old_val = $old_info[$new_key] ?? '-@';
+                if($old_val === '-@'){  //旧数据异常的, 跳过
+                    continue;
+                }
 
-            // 忽略某些key的 变化
-            if(in_array($new_key, $ignore_key)) continue;
+                // 忽略某些key的 变化
+                if(in_array($new_key, $ignore_key)) continue;
 
-            if($old_val != $new_val){
-                $before_data[$new_key] = $old_val;
-                $after_data[$new_key] = $new_val;
+                if($old_val != $new_val){
+                    $before_data[$new_key] = $old_val;
+                    $after_data[$new_key] = $new_val;
+                }
             }
         }
+
         $row['before_data'] = json_encode($before_data);
         $row['after_data'] = json_encode($after_data);
         HbhSjLog::create($row);

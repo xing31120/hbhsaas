@@ -1,6 +1,8 @@
 <?php
 namespace app\shop\controller;
 
+use app\common\model\HbhCourseCat;
+use app\common\model\HbhSjLog;
 use think\Db;
 use think\facade\Lang;
 
@@ -104,6 +106,7 @@ class Coursecat extends Base {
         if (!$bool) {
             return adminOut(['msg' => Lang::get('OperateFailed')]);
         }
+        $this->add_log(['id' => $id], [], HbhSjLog::type_del);
         return adminOut(['msg' => Lang::get('OperateSuccess')]);
     }
 
@@ -120,8 +123,9 @@ class Coursecat extends Base {
         if(!$isAdmin){
             return adminOutError(Lang::get('NoPermission'));
         }
+        $model = new HbhCourseCat();
 
-        $is_exist = model('HbhCourseCat')
+        $is_exist = $model
             ->where('name', $data['name'])
             ->where('shop_id', $this->shop_id)
             ->when(!empty($id), function ($query) use ($id) {
@@ -137,9 +141,12 @@ class Coursecat extends Base {
 //        $course_data['description'] = $data['description'];
         $course_data['create_time'] = time();
         if (empty($id)) {
-            $course_id = model('HbhCourseCat')->insertGetId($course_data);
+            $this->add_log([], $course_data, HbhSjLog::type_add);
+            $course_id = (new HbhCourseCat())->insertGetId($course_data);
         } else {
-            $course_id =  model('HbhCourseCat')->updateById($id,  $course_data);
+            $info = $model->info($id);
+            $this->add_log($info, $course_data);
+            $course_id =  $model->updateById($id,  $course_data);
         }
         if($course_id){
             return adminOut(Lang::get('OperateSuccess'));

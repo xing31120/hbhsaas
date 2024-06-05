@@ -6,6 +6,7 @@ use app\common\model\HbhClassTime;
 use app\common\model\HbhClassTimeDetail;
 use app\common\model\HbhCourse;
 use app\common\model\HbhCourseCat;
+use app\common\model\HbhSjLog;
 use app\common\model\HbhUsers;
 use think\Db;
 use think\facade\Lang;
@@ -226,11 +227,14 @@ class Classdetail extends Base {
         Db::startTrans();
         if (empty($id)) {
             $course_data['create_time'] = time();
+            $this->add_log([], $course_data, HbhSjLog::type_add);
             $book_course_id = (new HbhBookCourse())->insertGetId($course_data);
         } else { //修改预约, 如果修改is_pay需要扣费
             $book_course_id = false;
             $res = (new HbhBookCourse())->payByBoosCourseId($id, $data['is_pay']);
             if($res['result']){
+                $info = (new HbhClassTimeDetail())->info($id);
+                $this->add_log($info, $course_data);
                 $book_course_id =  (new HbhBookCourse())->updateById($id,  $course_data);
             }
         }
@@ -264,6 +268,7 @@ class Classdetail extends Base {
         if (!$bool) {
             return adminOut(['msg' => Lang::get('OperateFailed')]);
         }
+        $this->add_log(['id' => $id], [], HbhSjLog::type_del);
         return adminOut(['msg' => Lang::get('OperateSuccess')]);
     }
 
@@ -310,9 +315,12 @@ class Classdetail extends Base {
 
         if (empty($id)) {
             $course_data['create_time'] = time();
+            $this->add_log([], $course_data, HbhSjLog::type_add);
             $course_id = (new HbhClassTimeDetail())->insertGetId($course_data);
         } else {
             $course_data['update_time'] = time();
+            $info = (new HbhClassTimeDetail())->info($id);
+            $this->add_log($info, $course_data);
             $course_id =  (new HbhClassTimeDetail())->updateById($id,  $course_data);
         }
         if($course_id){

@@ -6,6 +6,7 @@ use app\common\model\HbhClassTimeDetail;
 use app\common\model\HbhClassTimePlan;
 use app\common\model\HbhCourse;
 use app\common\model\HbhCourseCat;
+use app\common\model\HbhSjLog;
 use app\common\model\HbhUsers;
 use think\Db;
 use think\facade\Lang;
@@ -222,9 +223,12 @@ class Plan extends Base {
 //pj($course_data);
         if (empty($id)) {
             $course_data['create_time'] = time();
+            $this->add_log([], $course_data, HbhSjLog::type_add);
             $course_id = (new HbhClassTimePlan())->insertGetId($course_data);
         } else {
             $course_data['update_time'] = time();
+            $info = (new HbhClassTimePlan())->info($id);
+            $this->add_log($info, $course_data);
             $course_id =  (new HbhClassTimePlan())->updateById($id,  $course_data);
         }
         if($course_id){

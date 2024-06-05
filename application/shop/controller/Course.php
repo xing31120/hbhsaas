@@ -1,6 +1,8 @@
 <?php
 namespace app\shop\controller;
 
+use app\common\model\HbhCourse;
+use app\common\model\HbhSjLog;
 use think\Db;
 use think\facade\Lang;
 
@@ -56,6 +58,7 @@ class Course extends Base {
         $id = $data['id'];
         $info = model('HbhCourse')->info($id);
         if ($this->request->isPost()) {
+            $this->add_log($info, $data);
             $res = model('HbhCourse')->updateById($id, $data);
             if(!$res){
                 return adminErrorOut(Lang::get('OperateFailed'));
@@ -120,6 +123,7 @@ class Course extends Base {
         if (!$bool) {
             return adminOut(['msg' => Lang::get('OperateFailed')]);
         }
+        $this->add_log(['id' => $id], [], HbhSjLog::type_del);
         return adminOut(['msg' => Lang::get('OperateSuccess')]);
     }
 
@@ -157,9 +161,12 @@ class Course extends Base {
         $course_data['course_fees'] = $data['course_fees'] ?: 1;
         $course_data['create_time'] = time();
         if (empty($id)) {
+            $this->add_log([], $course_data, HbhSjLog::type_add);
             $course_id = model('HbhCourse')->insertGetId($course_data);
         } else {
-            $course_id =  model('HbhCourse')->updateById($id,  $course_data);
+            $info = (new HbhCourse())->info($id);
+            $this->add_log($info, $course_data);
+            $course_id =  (new HbhCourse())->updateById($id,  $course_data);
         }
 //
 //pj([$id, $course_data, $course_id]);

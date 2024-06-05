@@ -1,6 +1,7 @@
 <?php
 namespace app\shop\controller;
 
+use app\common\model\HbhSjLog;
 use app\common\model\HbhTeacherClassTime;
 use app\common\model\HbhUsers;
 use app\common\service\HbhUserService;
@@ -62,7 +63,7 @@ class Member extends Base {
             if(!$res['result']){
                 return adminOutError(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
             }
-
+            $this->add_log($info, $data);
             $res = (new HbhUsers())->updateById($id, $data);
             if(!$res){
                 return adminOutError(Lang::get('OperateFailed'));
@@ -143,6 +144,7 @@ class Member extends Base {
         if (!$bool) {
             return adminOut(['msg' => Lang::get('OperateFailed')]);
         }
+        $this->add_log(['id' => $id], [], HbhSjLog::type_del);
         return adminOut(['msg' => Lang::get('OperateSuccess')]);
     }
     //数据列表
@@ -259,6 +261,7 @@ class Member extends Base {
         $data['class_details'] = $data['second_class'] = $data['third_class'] = '';
 //pj($data);
         HbhUsers::create($data);
+        $this->add_log([], $data, HbhSjLog::type_add);
 
         $data['login_name'] = $data['name'];
         $data['login_password'] = $data['password'];

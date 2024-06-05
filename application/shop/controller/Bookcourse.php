@@ -5,6 +5,7 @@ use app\common\model\HbhBookCourse;
 use app\common\model\HbhClassTimeDetail;
 use app\common\model\HbhCourse;
 use app\common\model\HbhCourseCat;
+use app\common\model\HbhSjLog;
 use app\common\model\HbhUsers;
 use think\Db;
 use think\facade\Lang;
@@ -215,6 +216,7 @@ class Bookcourse extends Base {
         if (!$bool) {
             return adminOut(['msg' => Lang::get('OperateFailed')]);
         }
+        $this->add_log(['id' => $id], [], HbhSjLog::type_del);
         return adminOut(['msg' => Lang::get('OperateSuccess')]);
     }
 
