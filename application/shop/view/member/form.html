@@ -69,6 +69,20 @@
                                         <input type="text" name="residue_quantity" value="{$info.residue_quantity|default='0'}"  class="layui-input " placeholder="">
                                     </div>
                                 </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.UnlimitedNumber}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="radio" name="is_unlimited_number" lay-skin="primary" value="0" title="{$Think.lang.Limited}" checked>
+                                        <input type="radio" name="is_unlimited_number" lay-skin="primary" value="1" title="{$Think.lang.Unlimited}" >
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.UserLevel}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="radio" name="level_id" lay-skin="primary" value="1" title="{$Think.lang.UserLevelNew}" checked>
+                                        <input type="radio" name="level_id" lay-skin="primary" value="2" title="{$Think.lang.UserLevelStudent}" >
+                                    </div>
+                                </div>
 
                                 <div class="layui-form-item">
                                     <div class="layui-input-block">

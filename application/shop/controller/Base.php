@@ -135,12 +135,12 @@ class Base  extends Controller{
     }
 
     /**
-     * @param $old_info     新增时 $old_info 为空
-     * @param $new_info     删除时 $new_info 为空
-     * @param $type         操作类型, 1: 新增, 2:修改, 4:删除
+     * @param array $old_info     新增时 $old_info 为空
+     * @param array $new_info     删除时 $new_info 为空
+     * @param int   $type         操作类型, 1: 新增, 2:修改, 4:删除
      * @return void
      */
-    function add_log($old_info, $new_info, $type = 2){
+    function add_log(array $old_info, array $new_info, int $type = 2){
 //        $this->shop_id = session('shop_id');//初始化应用ID
         $row['module']      = 'shop';
         $row['controller']  = request()->controller();
@@ -148,6 +148,7 @@ class Base  extends Controller{
         $row['ip']          = request()->ip();
         $row['shop_id']     = session('shop_id');
         $row['create_time'] = time();
+        $row['type']        = $type;
         $row['create_at']   = date("Y-m-d H:i:s");
         $row['admin_id']    = session('uid');
         $row['admin_name']  = session('username');
@@ -170,6 +171,13 @@ class Base  extends Controller{
                     $after_data[$new_key] = $new_val;
                 }
             }
+        }else{
+            $before_data = $old_info;
+            $after_data = $new_info;
+        }
+
+        if(empty($before_data) && empty($after_data)){
+            return;
         }
 
         $row['before_data'] = json_encode($before_data);
