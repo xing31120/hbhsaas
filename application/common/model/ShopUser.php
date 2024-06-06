@@ -14,4 +14,14 @@ class ShopUser extends Single{
         unset($rs['password']); //密码字段unset
         return $this->afterLogin($rs);
     }
+
+    function getAllList($shop_id = ''){
+        $shop_id && $op['where'][] = ['shop_id','=', $shop_id];
+        $op['where'][] = ['status','=', 1];
+        $op['doPage'] = false;
+        $op['field'] = '*';
+        $op['order'] = 'id desc';
+        $list = $this->getList($op);
+        return $list['list'];
+    }
 }

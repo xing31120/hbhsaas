@@ -17,10 +17,10 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">{$Think.lang.Operator}</label>
                                             <div class="layui-input-inline">
-                                                <select name="course_cat_id"  lay-reqText="Please Select Category">
+                                                <select name="admin_id"  lay-reqText="Please Select Category">
                                                     <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    {foreach $cat_list as $key=>$value}
-                                                    <option value="{$value.id}" >{$value.name}</option>
+                                                    {foreach $shop_user_list as $key=>$value}
+                                                    <option value="{$value.id}" >{$value.username}</option>
                                                     {/foreach}
                                                 </select>
                                             </div>

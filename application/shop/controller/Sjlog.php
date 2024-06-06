@@ -8,6 +8,7 @@ use app\common\model\HbhCourse;
 use app\common\model\HbhCourseCat;
 use app\common\model\HbhSjLog;
 use app\common\model\HbhUsers;
+use app\common\model\ShopUser;
 use think\Db;
 use think\facade\Lang;
 
@@ -18,8 +19,8 @@ class Sjlog extends Base {
         $lang = input('lang', 'zh-cn');
 //pj($this->lang);
         $this->title = '操作日志';
-        $cat_list = (new HbhCourseCat())->getAllCourseCatList();
-        $this->assign('cat_list', $cat_list);
+        $shop_user_list = (new ShopUser())->getAllList($this->shop_id);
+        $this->assign('shop_user_list', $shop_user_list);
         return $this->fetch();
     }
 
