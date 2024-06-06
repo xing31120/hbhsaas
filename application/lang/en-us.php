@@ -141,5 +141,11 @@ return [
     'AddSchool' => 'Add School',
     'Profile' => 'Profile',
     'DetailedInformation' => 'Detailed Information',
+    // 系统管理
+    'OperationLog' => 'Operation Log',
+    'Operator' => 'Operator',
+    'OperatorType' => 'Operator Type',
+    'OperationContent' => 'Operation Content',
+    'Page' => 'Page',
 
 ];

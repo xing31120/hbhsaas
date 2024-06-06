@@ -141,5 +141,11 @@ return [
     'AddSchool' => '新增学校',
     'Profile' => '简介',
     'DetailedInformation' => '详细信息',
+    // 系统管理
+    'OperationLog' => '操作日志',
+    'Operator' => '操作人',
+    'OperatorType' => '操作类型',
+    'OperationContent' => '操作内容',
+    'Page' => '页面',
 
 ];

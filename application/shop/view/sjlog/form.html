@@ -1,0 +1,342 @@
+{layout name="public:simple" /}
+<style scoped>
+    .text-red {
+        color: #ff0000;
+    }
+    .region_container .layui-btn+.layui-btn {
+        margin-left: 0px;
+        margin-right: 0px;
+    }
+    .region_container .layui-btn {
+        margin-right: 10px !important;
+    }
+    .layui-form-label {
+        width: 120px;
+    }
+</style>
+
+<div class="layui-fluid">
+    <div class="layui-row layui-col-space15">
+        <div class="layui-col-md12">
+            <div class="layui-card">
+                <form action="{:url('save')}" method="post" class="layui-form form-inline" id="goods-type-form">
+                    <input type="hidden" name="id" id="id" value="{$info.id|default='0'}">
+                    <input type="hidden" name="uid" id="uid" value="{$info.uid|default='0'}">
+                    <input type="hidden" name="teacher_class_time_id" id="teacher_class_time_id" value="{$info.teacher_class_time_id|default='0'}">
+
+                    <div class="layui-card-body" pad15>
+                        <div class="layui-form" wid120 lay-filter="">
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star"><span class="text-red">*</span>{$Think.lang.Teacher}：</label>
+                                <!--                                <label class="layui-form-label star" style="text-align:left">{$info.course_name|default=''}</label>-->
+                                <div class="layui-input-inline">
+                                    <select name="uid" lay-verify="required" lay-reqText="Please Select Teacher" lay-search>
+                                        <option value="">{$Think.lang.PleaseSelect}</option>
+                                        {foreach $teacher_name_list as $key=>$value}
+                                        <option value="{$key}" {if isset($info['uid']) && $info['uid'] == $key} selected {/if}>{$value}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star"><span class="text-red">*</span>{$Think.lang.ClassifyName}：</label>
+                                <!--                                <label class="layui-form-label star" style="text-align:left">{$info.course_name|default=''}</label>-->
+                                <div class="layui-input-inline">
+                                    <select lay-filter="CatId" name="course_cat_id" id="course_cat_id" lay-verify="required" lay-reqText="Please Select Category">
+                                        <option value="">{$Think.lang.PleaseSelect}</option>
+                                        {foreach $cat_list as $key=>$value}
+                                        <option value="{$value.id}" {if isset($info['course_cat_id']) && $info['course_cat_id'] == $value['id']} selected {/if}>{$value.name}</option>
+                                        {/foreach}
+                                    </select>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star"><span class="text-red">*</span>{$Think.lang.CourseName}：</label>
+<!--                                <label class="layui-form-label star" style="text-align:left">{$info.course_name|default=''}</label>-->
+                                <div class="layui-input-inline">
+                                <select  name="course_id" id="course_id" lay-verify="required" lay-reqText="Please Select Course" lay-search>
+                                    <option value="">{$Think.lang.PleaseSelect}</option>
+                                    {foreach $course_name_list as $key=>$value}
+                                    <option value="{$key}" {if isset($info['course_id']) && $info['course_id'] == $key} selected {/if}>{$value['name']}({$value['description']})</option>
+                                    {/foreach}
+                                </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star"><span class="text-red">*</span>{$Think.lang.Week}：</label>
+                                <div class="layui-input-inline">
+                                    <select name="week" id="week" lay-filter="week" lay-verify="required" lay-reqText="Please Select Week" >
+                                        <option value="">{$Think.lang.PleaseSelect}</option>
+                                        <option value="Sunday"    {if isset($info['week']) && $info['week'] == "Sunday"} selected {/if}>Sunday</option>
+                                        <option value="Monday"    {if isset($info['week']) && $info['week'] == "Monday"} selected {/if}>Monday</option>
+                                        <option value="Tuesday"   {if isset($info['week']) && $info['week'] == "Tuesday"} selected {/if}>Tuesday</option>
+                                        <option value="Wednesday" {if isset($info['week']) && $info['week'] == "Wednesday"} selected {/if}>Wednesday</option>
+                                        <option value="Thursday"  {if isset($info['week']) && $info['week'] == "Thursday"} selected {/if}>Thursday</option>
+                                        <option value="Friday"    {if isset($info['week']) && $info['week'] == "Friday"} selected {/if}>Friday</option>
+                                        <option value="Saturday"  {if isset($info['week']) && $info['week'] == "Saturday"} selected {/if}>Saturday</option>
+                                    </select>
+<!--                                    <input type="hidden" name="week" id="week" value="{$info.week|default=''}"  class="layui-input " placeholder="">-->
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star"><span class="text-red">*</span>{$Think.lang.ClassTime}：</label>
+                                <div class="layui-input-inline">
+                                    <select lay-filter="selectMore" class="ssq-2" data-target="3" lay-verify="required" name="class_time_id" >
+                                        <option value="">{$Think.lang.PleaseSelect}{$Think.lang.ClassTime}</option>
+                                        {volist name="classTimeList" id="classTime"}
+                                        <option value="{$classTime.id}" {if $info['class_time'] == $classTime.start_time."-".$classTime.end_time} selected {/if}>{$classTime.start_time}-{$classTime.end_time}</option>
+                                        {/volist}
+                                    </select>
+                                </div>
+                            </div>
+                            <div class="layui-form-item">
+                                <label class="layui-form-label"><span class="text-red">*</span>{$Think.lang.MemberSelection}：</label>
+                                <div class="layui-input-block" style="width: 800px">
+                                    <a class="layui-btn layui-btn-sm add_uid" >{$Think.lang.MemberAdd}</a>
+                                    <div class="region_container" style="width: 800px">
+                                        {if !empty($info['user_list'])}
+                                        {foreach $info['user_list'] as $key => $value}
+                                        <button type="button" class="layui-btn layui-btn-sm layui-btn-primary corner-mark">
+                                            {$value['name']}<i class="layui-icon layui-icon-close-fill"></i>
+                                            <input type="hidden" class="uid_input select_uid" name="select_uid[]" value="{$value['id']}">
+                                        </button>
+                                        {/foreach}
+                                        {/if}
+
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item layui-hide">
+                                <div class="layui-input-block">
+                                    <button class="layui-btn" lay-submit lay-filter="submit" type="submit"
+                                            id="form_submit"><i class="iconfont"></i>提交
+                                    </button>
+                                    <!--                  <button class="layui-btn layui-btn-primary reset" type="button">重置</button>-->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="layui-form" id="show_uid" style="display: none;padding-top: 15px;">
+    <div class="layui-form-item">
+        <label class="layui-form-label">{$Think.lang.MemberSelection}</label>
+        <div class="layui-input-block">
+            <div class="layui-col-md12" id="ssqselect">
+                <div class="layui-inline layui-show-xs-block">
+                    <select lay-filter="selectMore" class="ssq-2" data-target="3" lay-verify="required" lay-search>
+                        <option value="">please select start time</option>
+                        {volist name="student_list" id="student"}
+                        <option value="{$student.id}">{$student.name}</option>
+                        {/volist}
+                    </select>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<!-- 配置文件 -->
+<script src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.config.js"></script>
+<!-- 编辑器源码文件 -->
+<script type="text/javascript" src="__YUN_PUBLIC_DIR__/static/plugin/ueditoross/ueditor.all.js"></script>
+<script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
+<script>
+    layui.config({
+        base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
+    }).extend({
+        index: 'lib/index' //主入口模块
+
+    }).use([ 'index', 'form', 'upload', 'laydate', 'jquery'], function () {
+        var $ = layui.$;
+        var table = layui.table,
+            form = layui.form,
+            upload = layui.upload,
+            element = layui.element;
+        var laydate = layui.laydate;
+        var upload_id = ''
+        document.getElementById('week').onchange = null;
+        form.render('select');
+        form.render();
+        laydate.render({
+            elem: '#day',
+            done: function(value){
+                if(value!="" && value.length>0){
+                    var today = new Date(value.substring(0,10));
+                    var weekdayNum = today.getDay();
+console.log(weekdayNum)
+                    var weekStr = '';
+                    switch (weekdayNum) {
+                        case 0: weekStr = 'Sunday';break;
+                        case 1: weekStr = 'Monday';break;
+                        case 2: weekStr = 'Tuesday';break;
+                        case 3: weekStr = 'Wednesday';break;
+                        case 4: weekStr = 'Thursday';break;
+                        case 5: weekStr = 'Friday';break;
+                        case 6: weekStr = 'Saturday';break;
+                    }
+                    $("#week").val(weekStr);
+                    $("#weekStr").val(weekStr);
+                    // $("#date1").val(start+"~"+end);
+                }else{
+                    $("#week").val('');
+                    $("#weekStr").val('');
+                }
+                form.render('select')
+                form.render();
+            }
+        });
+
+        // form.render('select', 'week', {
+        //     value: 'Sunday' // 这里的值应该对应你想要选中的option的value值
+        // });
+
+
+        //监听提交
+        form.on('submit(submit)', function (data) {
+            $.ajax({
+                url: "{:url('save')}",
+                type: 'post',
+                dataType: 'json',
+                data: $('form').serializeArray(),
+                success: function (res) {
+                    if (res.code === 0) {
+                        layer.msg(res.msg, {icon: 1, time: 2000}, function () {
+                            parent.location.reload();
+                        });
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('{$Think.lang.OperateFailed}');
+                }
+            });
+            return false;
+        });
+
+        // 选择课程分类, 后的js
+        form.on('select(CatId)', function(data){
+// console.log(data.value); //打印选中的值
+            $('#course_id').html('');
+            $.ajax({
+                url: "{:url('Pub/ajaxcoursebycat')}",
+                type: 'post',
+                dataType: 'json',
+                data: {"cat_id":data.value},
+                success: function (res) {
+                    if (res.code === 0) {
+                        let select_course_id = document.getElementById("course_id");
+                        //<option value="">{$Think.lang.PleaseSelect}</option>
+                        select_course_id.add(new Option("{$Think.lang.PleaseSelect}", ""));
+                        let option = null;
+                        for (let i = 0; i < res.data.length; i++) {
+                            option = new Option(res.data[i].name, res.data[i].id);
+                            select_course_id.add(option)
+                        }
+                        form.render('select')
+                        form.render();
+                    } else {
+                        layer.msg(res.msg);
+                    }
+                },
+                error: function () {
+                    layer.msg('{$Think.lang.OperateFailed}');
+                }
+            });
+        });
+
+        function getUid(){
+            var id = ''
+            $('#ssqselect').find("select[lay-filter='selectMore']").each(function(index ,item){
+                id = $(item).val()
+            })
+            return id
+        }
+
+        $(".add_uid").on('click',function () {
+            var index = layer.open({
+                type: 1,  //可传入的值有：0（信息框，默认）1（页面层）2（iframe层）3（加载层）4（tips层）
+                title: ['{$Think.lang.MemberAdd}', 'font-size:18px; color:orange;'],//数组第二项可以写任意css样式；如果你不想显示标题栏，你可以title: false
+                area: ["850px", "400px"],
+                content: $('#show_uid'),
+                btn: ['{$Think.lang.Confirm}','{$Think.lang.Cancel}'],
+                btnAlign: 'c',
+                yes: function (index, layero) {
+                    let choose_id = getUid();
+console.log(choose_id)
+                    let region_status = 1;
+                    $('.select_uid').each(function () {
+                        if($(this).val() == choose_id){
+                            region_status =0;
+                            return false;
+                        }
+                    });
+
+                    if (region_status == 0) {
+                        layer.msg('{$Think.lang.AlreadyAddedThisLesson}');
+                        return false;
+                    }
+
+                    // let week = $(".ssq-1 option:selected").text();
+                    let choose_name = $(".ssq-2 option:selected").text();
+                    // let region_text = week + '-' + timeStr;
+
+                    let html = '<button type="button" class="layui-btn layui-btn-sm layui-btn-primary corner-mark">\n' +
+                        ''+choose_name+'<i class="layui-icon layui-icon-close-fill"></i>\n' +
+                        '<input type="hidden" class="uid_input select_uid" name="select_uid[]" value="'+choose_id+'">\n' +
+                        '</button>'
+                    $('.region_container').append(html);
+                    layer.close(index);
+                }
+            });
+        });
+
+        $('.region_container').on('click', 'i', function () {
+            $(this).closest('button').remove()
+        })
+
+
+
+    });
+
+
+
+    $(document).ready(function (){
+//         $('#course_cat_id').change(function (){
+//             cat_id = ('#course_cat_id').val()
+// console.log(cat_id)
+            // $.ajax({
+            //     url: "{:url('pub/ajaxCourseByCat')}",
+            //     type: 'post',
+            //     dataType: 'json',
+            //     data: {"cat_id":},
+            //     success: function (res) {
+            //         if (res.code === 0) {
+            //             layer.msg(res.msg, {icon: 1, time: 2000}, function () {
+            //                 parent.location.reload();
+            //             });
+            //         } else {
+            //             layer.msg(res.msg);
+            //         }
+            //     },
+            //     error: function () {
+            //         layer.msg('{$Think.lang.OperateFailed}');
+            //     }
+            // });
+
+        // })
+    })
+
+</script>

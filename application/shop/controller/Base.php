@@ -29,6 +29,7 @@ class Base  extends Controller{
     ];
 
     protected $shop_id;
+    protected $lang;
 
     /**
      * 初始化方法
@@ -47,6 +48,7 @@ class Base  extends Controller{
         if($controller=='Index' && $action == 'index'){
             $this -> showNav();
         }
+        $this->lang = input('lang', 'zh-cn');
     }
 
     function authMenu(){
