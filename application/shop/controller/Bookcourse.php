@@ -160,9 +160,10 @@ class Bookcourse extends Base {
         $end_time = $detail_info['end_time'] ?? 0;
 
         $course_cat_id = $detail_info['course_cat_id'] ?? 0;
+        $op['doPage'] = false;
         $op['where'][] = ['category_id', '=', $course_cat_id];
         $course_list = (new HbhCourse())->getList($op)['list'];
-
+//pj($course_list);
         $course_name_list = array_column($course_list, null, 'id');
 
         $cat_list = (new HbhCourseCat())->getAllCourseCatList();

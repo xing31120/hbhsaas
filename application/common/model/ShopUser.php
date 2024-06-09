@@ -1,8 +1,9 @@
 <?php
 namespace app\common\model;
 use app\common\model\basic\Single;
+use app\common\model\basic\SingleSubData;
 
-class ShopUser extends Single{
+class ShopUser extends SingleSubData{
     public $mcName = 'shop_user_';
 
     function checkPsw($username, $psw) {
