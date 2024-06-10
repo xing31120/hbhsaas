@@ -6,12 +6,15 @@ use app\common\model\HbhBookCourse;
 use app\common\model\HbhCourse;
 use app\common\model\HbhUsers;
 
+
+// 通知家长上课
 class TaskNotice extends Base{
 
     function classNotice(){
         $book_course_model = new HbhBookCourse();
-        $day = date("Y-m-d");
-$day = '2024-05-27';
+        $today = date("Y-m-d");
+        $day = input('day', $today);
+//$day = '2024-05-27';
 
         $op['where'][] = ['notice_status', '=', HbhBookCourse::notice_status_false];
         $op['where'][] = ['day', '=', $day];
