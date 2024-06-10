@@ -34,23 +34,38 @@ class TaskNotice extends Base{
         foreach ($userList as $user) {
 //            $phone_code = $user['phone_code'];
 //            $phone = $user['phone'];
-            $mobile_arr[$user['id']] = $user;
-        }
-
-        $template_param_arr = [];
-        foreach ($list as $book_course) {
-            $user = $mobile_arr[$book_course['custom_uid']] ?? '';
             $res = (new HbhUsers())->checkPhone($user['phone']);
             if(!$res['result']){
                 continue;
             }
+            $mobile_arr[$user['id']] = $user;
+        }
+
+        $temp_mobile = [];
+        $template_param_arr = [];
+        foreach ($list as $book_course) {
+            $user = $mobile_arr[$book_course['custom_uid']] ?? '';
+            if(empty($user)){
+                continue;
+            }
+            $res = (new HbhUsers())->checkPhone($user['phone']);
+            if(!$res['result']){
+                continue;
+            }
+            if(in_array($user['id'], $temp_mobile)){
+                continue;
+            }
+            $temp_mobile[] = $user['id'];
+//$template_param['id'] = $book_course['id'] ?? '';
+//$template_param['custom_uid'] = $book_course['custom_uid'] ?? '';
+//$template_param['phone'] = $user['phone'];
             $template_param['start'] = $book_course['start_time'] ?? '';
             $template_param['end'] = $book_course['end_time'] ?? '';
             $template_param['course'] = $course_name_list[$book_course['course_id']] ?? '';
 
             $template_param_arr[] = $template_param;
         }
-
+//pj([$mobile_arr, $template_param_arr, $temp_mobile]);
         $return_msg = SendSmsClassNotice($mobile_arr, $template_param_arr);
         if($return_msg['result']){
             $up = $book_course_model->where($op['where'])->update(['notice_status' => HbhBookCourse::notice_status_true]);
