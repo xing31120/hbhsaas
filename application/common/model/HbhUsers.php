@@ -1,6 +1,7 @@
 <?php
 namespace app\common\model;
 use app\common\model\basic\SingleSubData;
+use app\common\service\workSendMessage\WorkSendMessageService;
 use think\facade\Lang;
 
 class HbhUsers extends SingleSubData {
@@ -13,6 +14,9 @@ class HbhUsers extends SingleSubData {
     const Status_Enable = 1;
     const is_unlimited_number_false = 0;    // 0:有限数量,
     const is_unlimited_number_true = 1;    // 1:无限数量,
+
+    const level_id_reg = 1;     //用户等级  1: 新注册用户
+    const level_id_user = 2;    //用户等级  2: 等级会员
 
 
     /**
@@ -128,6 +132,16 @@ class HbhUsers extends SingleSubData {
         }
         return successReturn(['data' => $res, 'msg' => 'success']);
 
+    }
+
+    public function sendExpiryDate($content_input){
+        $time = date("Y-m-d H:i:s");
+        $content = <<<EOF
+### <font color="warning">测试会员通知，请查看</font>
+> 时间：{$time}
+{$content_input}
+EOF;
+        (new WorkSendMessageService(env('SAASWORK.SAAS_EXPIRY_DATE_PUSH', '')))->sendMarkDown($content);
     }
 
 }
