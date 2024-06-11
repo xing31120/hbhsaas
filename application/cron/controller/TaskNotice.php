@@ -30,7 +30,7 @@ class TaskNotice extends Base{
         $course_list = (new HbhCourse())->whereIn('id', $course_id_arr)->select()->toArray();
         $course_name_list = array_column($course_list, 'name', 'id');
 
-        $mobile_arr = [];
+        $mobile_arr = $uid_arr = [];
         foreach ($userList as $user) {
 //            $phone_code = $user['phone_code'];
 //            $phone = $user['phone'];
@@ -38,13 +38,14 @@ class TaskNotice extends Base{
             if(!$res['result']){
                 continue;
             }
-            $mobile_arr[$user['id']] = $user;
+            $uid_arr[$user['id']] = $user;
+            $mobile_arr[] = $user['phone'];
         }
 
         $temp_mobile = [];
         $template_param_arr = [];
         foreach ($list as $book_course) {
-            $user = $mobile_arr[$book_course['custom_uid']] ?? '';
+            $user = $uid_arr[$book_course['custom_uid']] ?? '';
             if(empty($user)){
                 continue;
             }
@@ -66,6 +67,7 @@ class TaskNotice extends Base{
             $template_param_arr[] = $template_param;
         }
 //pj([$mobile_arr, $template_param_arr, $temp_mobile]);
+//pj([$mobile_arr, $template_param_arr]);
         $return_msg = SendSmsClassNotice($mobile_arr, $template_param_arr);
         if($return_msg['result']){
             $up = $book_course_model->where($op['where'])->update(['notice_status' => HbhBookCourse::notice_status_true]);
