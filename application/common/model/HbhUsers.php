@@ -137,7 +137,7 @@ class HbhUsers extends SingleSubData {
     public function sendExpiryDate($content_input){
         $time = date("Y-m-d H:i:s");
         $content = <<<EOF
-### <font color="warning">测试会员通知，请查看</font>
+### <font color="warning">会员到期+课时通知，请查看</font>
 > 时间：{$time}
 {$content_input}
 EOF;
