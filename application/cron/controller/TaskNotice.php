@@ -10,6 +10,17 @@ use app\common\model\HbhUsers;
 // 通知家长上课
 class TaskNotice extends Base{
 
+
+    function test(){
+        $mobile_arr = ['971585965288'];
+        $template_param_arr[] = [
+            "start" =>'13:30',
+            "end" =>'14:30',
+            'courge' => 'mathematics level 4',
+        ];
+        $return_msg = SendSmsClassNotice($mobile_arr, $template_param_arr);
+        pj($return_msg);
+    }
     function classNotice(){
         $book_course_model = new HbhBookCourse();
         $today = date("Y-m-d");
@@ -39,7 +50,7 @@ class TaskNotice extends Base{
                 continue;
             }
             $uid_arr[$user['id']] = $user;
-            $mobile_arr[] = $user['phone'];
+            $mobile_arr[] = $user['phone_code'] . $user['phone'];
         }
 
         $temp_mobile = [];
