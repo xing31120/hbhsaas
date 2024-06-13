@@ -49,6 +49,8 @@ return [
     'MemberAdd' =>'Add Member',
     'TeacherAdd' =>'Add Teacher',
     'Name' =>'Name',
+    'Age' =>'Age',
+    'Birthday' =>'Birthday',
     'Phone' =>'Phone',
     'CardNumber' =>'Card Number',
     'ExpiryDate' =>'Expiry Date',

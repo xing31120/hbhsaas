@@ -18,6 +18,9 @@ class HbhUsers extends SingleSubData {
     const level_id_reg = 1;     //用户等级  1: 新注册用户
     const level_id_user = 2;    //用户等级  2: 等级会员
 
+    //是否短信通知 10:通知, 0:不通知
+    const sms_notice_false = 0;    // 0:不通知
+    const sms_notice_true = 10;    // 10:通知,
 
     /**
      * 注册, 修改手机的手机号验证

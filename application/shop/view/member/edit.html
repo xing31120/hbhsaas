@@ -44,6 +44,12 @@
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.Birthday}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="text" name="birthday" value="{$info.birthday|default=''}" id="LAY-component-form-group-date2" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
                                     <label class="layui-form-label">{$Think.lang.Password}：</label>
                                     <div class="layui-input-inline">
                                         <input type="text" name="password" value=""  class="layui-input"  placeholder="">
@@ -58,7 +64,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">{$Think.lang.ExpiryDate}：</label>
                                     <div class="layui-input-inline">
-                                        <input type="text" name="expiry_date" value="{$info.expiry_date}" id="LAY-component-form-group-date2" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
+                                        <input type="text" name="expiry_date" value="{$info.expiry_date}" id="LAY-component-form-group-date" lay-verify="date" placeholder="yyyy-MM-dd" autocomplete="off" class="layui-input">
                                     </div>
                                 </div>
                                 <div class="layui-form-item">
@@ -79,6 +85,13 @@
                                     <div class="layui-input-inline">
                                         <input type="radio" name="level_id" lay-skin="primary" value="1" title="{$Think.lang.UserLevelNew}" {eq name="$info.level_id" value="1"}checked{/eq}>
                                         <input type="radio" name="level_id" lay-skin="primary" value="2" title="{$Think.lang.UserLevelStudent}" {eq name="$info.level_id" value="2"}checked{/eq}>
+                                    </div>
+                                </div>
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.SMSNotice}：</label>
+                                    <div class="layui-input-inline">
+                                        <input type="radio" name="sms_notice" lay-skin="primary" value="10" title="{$Think.lang.Notice}" {eq name="$info.sms_notice" value="10"}checked{/eq}>
+                                        <input type="radio" name="sms_notice" lay-skin="primary" value="0" title="{$Think.lang.NotNotice}" {eq name="$info.sms_notice" value="0"}checked{/eq}>
                                     </div>
                                 </div>
 
@@ -112,6 +125,9 @@
             , laydate = layui.laydate
             , form = layui.form;
 
+        laydate.render({
+            elem: '#LAY-component-form-group-date'
+        });
         laydate.render({
             elem: '#LAY-component-form-group-date2'
         });

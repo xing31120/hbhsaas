@@ -775,3 +775,17 @@ if (!function_exists('SendSmsClassNotice')) {
         }
     }
 }
+
+
+// php根据生日计算年龄  $birthDate = "1990-03-24";
+function calculateAge($birthDate) {
+    if(empty($birthDate)){
+        return 0;
+    }
+
+    $age = date("Y") - date("Y", strtotime($birthDate));
+    if (date("m") < date("m", strtotime($birthDate))) {
+        $age--;
+    }
+    return $age;
+}

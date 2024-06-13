@@ -35,6 +35,7 @@ class TaskNotice extends Base{
         $course_id_arr = array_column($list, 'course_id');
 
         $op_user['where'][] = ['id', 'in', $uid_arr];
+        $op_user['where'][] = ['sms_notice', '=', HbhUsers::sms_notice_true];
         $op_user['doPage'] = false;
         $userList = (new HbhUsers())->getList($op_user)['list'];
 

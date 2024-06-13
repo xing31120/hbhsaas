@@ -196,6 +196,7 @@ class Member extends Base {
 
         foreach ($list['list'] as &$item) {
             $item['course_name'] = $courseList[$item['course_id']]['name'] ?? '';
+            $item['age'] = calculateAge($item['birthday']);
         }
         $res = ['count'=>$list['count'],'data'=>$list['list']];
         return adminOut($res);
