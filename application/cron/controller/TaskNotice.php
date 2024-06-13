@@ -51,7 +51,7 @@ class TaskNotice extends Base{
                 continue;
             }
             $uid_arr[$user['id']] = $user;
-            $mobile_arr[] = $user['phone_code'] . $user['phone'];
+
         }
 
         $temp_mobile = [];
@@ -68,6 +68,7 @@ class TaskNotice extends Base{
             if(in_array($user['id'], $temp_mobile)){
                 continue;
             }
+            $mobile_arr[] = $user['phone_code'] . $user['phone'];
             $temp_mobile[] = $user['id'];
 //$template_param['id'] = $book_course['id'] ?? '';
 //$template_param['custom_uid'] = $book_course['custom_uid'] ?? '';

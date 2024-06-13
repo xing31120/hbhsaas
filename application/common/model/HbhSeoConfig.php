@@ -5,7 +5,7 @@ use app\common\model\basic\SingleSubData;
 class HbhSeoConfig extends SingleSubData {
     public $mcName = 'hbh_seo_config2_';
 //    public $selectTime = 600;
-    public $mcTimeOut = 6;
+    public $mcTimeOut = 600;
 
 
     function infoByPath($path, $field = ''){
