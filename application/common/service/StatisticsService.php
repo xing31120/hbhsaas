@@ -49,6 +49,7 @@ class StatisticsService{
         }
         //在读会员有限数量 $active_student
         $where_active = $where;
+        $where_active[] = ['level_id','=',HbhUsers::level_id_user];
         $where_active[] = ['expiry_date','>',date("Y-m-d")];
         $where_active[] = ['residue_quantity','>',0];
         $where_active[] = ['is_unlimited_number','=',HbhUsers::is_unlimited_number_false];
