@@ -98,8 +98,9 @@ class HbhUsers extends SingleSubData {
 
         // 非无限卡用户, 要验证次数
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_false){
-            $residue_quantity = $userInfo['residue_quantity'] ?? 0;
-            if($num > $residue_quantity){
+            $residue_quantity = $userInfo['residue_quantity'] ?? -99;
+//            if($num > $residue_quantity){
+            if($num - $residue_quantity < -5){
                 return errorReturn(Lang::get('InsufficientRemainingClassHours'));
             }
         }
