@@ -33,17 +33,18 @@ class TaskCustomerService extends Base{
         }
 
         $op_num['where'][] = function ($query) use ($num_config) {
-            $query->where('balance', '<=', $num_config)
-                ->whereOr('balance', '<', 0);
+            $query->where('residue_quantity', '<=', $num_config)
+                ->whereOr('residue_quantity', '<', 0);
         };
 
 //        $op_num['where'][] = ['balance', '<=', $num_config];
-//        $op_num['where'][] = ['balance', '<>', 0];
+        $op_num['where'][] = ['residue_quantity', '<>', 0];
         $op_num['where'][] = ['expiry_date', '>', $today];
         $op_num['where'][] = ['is_unlimited_number', '=', HbhUsers::is_unlimited_number_false];
         $op_num['where'][] = ['level_id', '=', HbhUsers::level_id_user];
         $op_num['doPage'] = false;
         $list = $model->getList($op_num)['list'];
+//pj($model->getLastSql());
         $list_num = array_column($list, null, 'id');
 //        $content_input .= '\r\n';
         foreach ($list_num as $item) {
