@@ -1,7 +1,7 @@
 :root {
   --theme-color         : #EB0029;
   // --theme-color       : #D3BA80;
-  // --theme-color       : #6B2AE6; 
+  // --theme-color       : #6B2AE6;
   --title-color         : #161921;
   --body-color          : #525960;
   --smoke-color         : #F5F5F5;
@@ -25,7 +25,7 @@
   --container-gutters   : 24px;
   --section-space       : 120px;
   --section-space-mobile: 80px;
-  --section-title-space : 60px;  
+  --section-title-space : 60px;
   --ripple-ani-duration : 5s;
 }
 
@@ -42,7 +42,7 @@ $light-color          : var(--light-color);
 $black-color          : var(--black-color);
 $black-color-2        : var(--black-color-2);
 $black-color-3        : var(--black-color-3);
-$dark-color           : var(--dark-color); 
+$dark-color           : var(--dark-color);
 $gray-color           : var(--gray-color);
 $yellow-color         : var(--yellow-color);
 $success-color        : var(--success-color);
@@ -61,13 +61,24 @@ $body-line-Height: 26px;
 $body-font-weight: 400;
 $p-line-Height   : 1.75;
 
-// Device Variation
+// Device Variation1
+//$hd: 1921px; // Large Device Than 1920
+//$xxl: 1500px; // Extra large Device
+//$ml: 1399px; // Medium Large Device
+//$xl: 1299px; // Medium Large Device
+//$lg: 1199px; // Large Device (Laptop)
+//$md: 999px; // Medium Device (Tablet)
+//$sm: 767px; // Small Device
+//$xs: 575px; // Extra Small Device
+//$vxs: 375px; // Extra Small Device
+
+// Device Variation2
 $hd: 1921px; // Large Device Than 1920
 $xxl: 1500px; // Extra large Device
 $ml: 1399px; // Medium Large Device
 $xl: 1299px; // Medium Large Device
-$lg: 1199px; // Large Device (Laptop)
-$md: 991px; // Medium Device (Tablet)
+$lg: 1299px; // Large Device (Laptop)
+$md: 1299px; // Medium Device (Tablet)
 $sm: 767px; // Small Device
 $xs: 575px; // Extra Small Device
 $vxs: 375px; // Extra Small Device
@@ -85,7 +96,7 @@ $space-mobile         : var(--section-space-mobile);
 $space-mobile-extra: calc(var(--section-space-mobile) - 30px);
 
 
-// BG Color Mapping 
+// BG Color Mapping
 $bgcolorMap  : ();
 $bgcolorMap  : map-merge((
   "theme"    : $theme-color,
@@ -99,7 +110,7 @@ $bgcolorMap  : map-merge((
 ), $bgcolorMap);
 
 
-// Overlay Color Mapping 
+// Overlay Color Mapping
 $overlaycolorMap : ();
 $overlaycolorMap : map-merge((
   "theme"        : $theme-color,
@@ -110,7 +121,7 @@ $overlaycolorMap : map-merge((
 ), $overlaycolorMap);
 
 
-// Text Color Mapping 
+// Text Color Mapping
 $textColorsMap : ();
 $textColorsMap : map-merge((
   "theme"      : $theme-color,
@@ -120,15 +131,15 @@ $textColorsMap : map-merge((
   "light"      : $light-color,
   "yellow"     : $yellow-color,
   "success"    : $success-color,
-  "error"      : $error-color), 
+  "error"      : $error-color),
 $textColorsMap);
 
 
-// Font Mapping 
+// Font Mapping
 $fontsMap    : ();
 $fontsMap    : map-merge((
   "icon"     : $icon-font,
   "title"    : $title-font,
   "body"     : $body-font,
-  "style"    : $style-font, 
+  "style"    : $style-font,
 ), $fontsMap);

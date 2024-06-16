@@ -159,6 +159,10 @@ Header Area
 .user-name:hover{
     color:var(--success-color);
 }
+@media (min-width: 1300px) {
+    .d-header-inline-block { display: inline-block !important; }
+    .d-header-none { display: none !important; }
+}
 </style>
 <header class="th-header header-layout3 header-absolute">
 <div class="sticky-wrapper">
@@ -172,7 +176,7 @@ Header Area
                     </div>
                 </div>
                 <div class="col-auto">
-                    <nav class="main-menu d-none d-lg-inline-block">
+                    <nav class="main-menu d-none d-header-inline-block">
                         <ul>
                             <li><a href="/">Home</a></li>
                             <li><a href="{:url('index/about')}">About</a></li>
@@ -226,7 +230,7 @@ Header Area
 
                         </ul>
                     </nav>
-                    <button type="button" class="th-menu-toggle style3 d-inline-block d-lg-none"><i class="far fa-bars"></i></button>
+                    <button type="button" class="th-menu-toggle style3 d-inline-block d-header-none"><i class="far fa-bars"></i></button>
                 </div>
                 <!--<div class="col-auto d-none d-xl-block">-->
                 <!--    <div class="header-button">-->
@@ -239,7 +243,6 @@ Header Area
                 <!--        {else/}-->
                 <!--         <li><a href="{:url('auth/login')}" class="th-btn blue-btn">Login Now</a> </ul>-->
                 <!--        {/if}-->
-
                 <!--    </div>-->
                 <!--</div>-->
             </div>
