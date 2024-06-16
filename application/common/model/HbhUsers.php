@@ -100,7 +100,7 @@ class HbhUsers extends SingleSubData {
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_false){
             $residue_quantity = $userInfo['residue_quantity'] ?? -99;
 //            if($num > $residue_quantity){
-            if($num - $residue_quantity < -5){
+            if( $residue_quantity - $num < -5){
                 return errorReturn(Lang::get('InsufficientRemainingClassHours'));
             }
         }
