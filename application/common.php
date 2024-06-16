@@ -747,6 +747,10 @@ if (!function_exists('SendSmsCode')) {
 if (!function_exists('SendSmsClassNotice')) {
     function SendSmsClassNotice($mobile_arr, $template_param_arr)
     {
+        if(config('app.app_debug')){
+            return successReturn(['msg' => 'debug success!']);
+        }
+//return successReturn(['msg' => 'send sms success!222222222222222']);
 //return successReturn(['msg' => 'send sms success!']);
         //$template_param_arr --> ${course}  ${start} ${end}.
         if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone!']);

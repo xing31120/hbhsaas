@@ -65,11 +65,11 @@ class TaskNotice extends Base{
             if(!$res['result']){
                 continue;
             }
-            if(in_array($user['id'], $temp_mobile)){
+            if(in_array($user['phone'], $temp_mobile)){
                 continue;
             }
             $mobile_arr[] = $user['phone_code'] . $user['phone'];
-            $temp_mobile[] = $user['id'];
+            $temp_mobile[] = $user['phone'];
 //$template_param['id'] = $book_course['id'] ?? '';
 //$template_param['custom_uid'] = $book_course['custom_uid'] ?? '';
 //$template_param['phone'] = $user['phone'];
