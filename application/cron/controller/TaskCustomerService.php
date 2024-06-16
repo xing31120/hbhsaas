@@ -32,9 +32,14 @@ class TaskCustomerService extends Base{
             $content_input .= "到期会员：{$item['name']} \r\n";
         }
 
+        $op_num['where'][] = function ($query) use ($num_config) {
+            $query->where('balance', '<=', $num_config)
+                ->whereOr('balance', '<', 0);
+        };
+
+//        $op_num['where'][] = ['balance', '<=', $num_config];
+//        $op_num['where'][] = ['balance', '<>', 0];
         $op_num['where'][] = ['expiry_date', '>', $today];
-        $op_num['where'][] = ['balance', '<=', $num_config];
-        $op_num['where'][] = ['balance', '<>', 0];
         $op_num['where'][] = ['is_unlimited_number', '=', HbhUsers::is_unlimited_number_false];
         $op_num['where'][] = ['level_id', '=', HbhUsers::level_id_user];
         $op_num['doPage'] = false;
