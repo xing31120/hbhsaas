@@ -45,6 +45,13 @@
                             <i class="fal fa-user"></i>
                         </div>
                         <div class="form-group col-md-6">
+                            <label>Verification Code *</label>
+                            <input type="text" class="form-control style-white" name="verify_code" id="verify_code">
+                            <button onclick="sendSms(this)" style="        width: 120px;
+    height: 46px;;position: absolute;right: 17px;
+    top: 29px;;border:none;   background-color: var(--theme-color);border-radius: 8px;color:white;padding: 10px 20px" id="time">Send SMS</button>
+                        </div>
+                        <div class="form-group col-md-6">
                             <label>Password *</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder=""
                                 require="">
@@ -85,52 +92,79 @@
 
 <script>
 
-    var formMessages_login = $(".form-messages_login");
-    var formMessages_reg = $(".form-messages_reg");
-    $('#login_submit2').on('click', function () {
-        // alert(111)
-        var login_name = $('#login_name').val();
-        var login_password = $('#login_password').val();
-        $.ajax({
-            "url": "{:url('auth/logincheck')}",
-            "data": { "login_name": login_name, "login_password": login_password },
-        }).done(function (rs) {
-            if (rs.result) {
-                window.location.href = rs.url;
-            } else {
-                formMessages_login.removeClass("success");
-                formMessages_login.addClass("error");
-                // Set the message text.
-                formMessages_login.text(rs.msg);
-            }
-        }).fail(function (rs) {
-            layer.msg('error');
-        });
+var formMessages_login = $(".form-messages_login");
+var formMessages_reg = $(".form-messages_reg");
+$('#login_submit2').on('click', function () {
+    // alert(111)
+    var login_name = $('#login_name').val();
+    var login_password = $('#login_password').val();
+    $.ajax({
+        "url": "{:url('auth/logincheck')}",
+        "data": { "login_name": login_name, "login_password": login_password },
+    }).done(function (rs) {
+        if (rs.result) {
+            window.location.href = rs.url;
+        } else {
+            formMessages_login.removeClass("success");
+            formMessages_login.addClass("error");
+            // Set the message text.
+            formMessages_login.text(rs.msg);
+        }
+    }).fail(function (rs) {
+        layer.msg('error');
     });
-    $('#register_submit').on('click', function () {
-        // alert(222)
-        var name = $('#name').val();
-        var phone = $('#phone').val();
-        var email = $('#email').val();
-        var address = $('#address').val();
-        var password = $('#password').val();
-        var confirm_password = $('#confirm_password').val();
-        $.ajax({
-            "url": "{:url('auth/register')}",
-            "data": { "name": name, "phone": phone, "email": email, "address": address, "password": password, "confirm_password": confirm_password },
-        }).done(function (rs) {
-            if (rs.result) {
-                window.location.href = rs.url;
-            } else {
-                formMessages_reg.removeClass("success");
-                formMessages_reg.addClass("error");
-                // Set the message text.
-                formMessages_reg.text(rs.msg);
-            }
-        }).fail(function (rs) {
-            layer.msg('error');
-        });
+});
+$('#register_submit').on('click', function () {
+    // alert(222)
+    var name = $('#name').val();
+    var phone = $('#phone').val();
+    var email = $('#email').val();
+    var address = $('#address').val();
+    var password = $('#password').val();
+    var confirm_password = $('#confirm_password').val();
+    $.ajax({
+        "url": "{:url('auth/register')}",
+        "data": { "name": name, "phone": phone, "email": email, "address": address, "password": password, "confirm_password": confirm_password },
+    }).done(function (rs) {
+        if (rs.result) {
+            window.location.href = rs.url;
+        } else {
+            formMessages_reg.removeClass("success");
+            formMessages_reg.addClass("error");
+            // Set the message text.
+            formMessages_reg.text(rs.msg);
+        }
+    }).fail(function (rs) {
+        layer.msg('error');
+    });
+});
+
+var time = 60;
+var isSend = false
+function sendSms (obj) {
+    if (isSend) return
+    let timer =	setInterval(function() {
+        time--;
+        isSend = true
+        document.querySelector("#time").innerHTML = " " + time + "秒";
+        if(time == 0) {
+            clearInterval(timer)
+            time = 60;
+            document.querySelector("#time").innerHTML = " Send SMS";
+            isSend = false
+        }
+
+    }, 1000);
+    var phone_code = $('#phone_code').val();
+    var phone = $('#phone').val();
+    $.ajax({
+        "url": "{:url('auth/loginSendSmsCode')}",
+        "data": { "phone_code": phone_code, "phone": phone},
+    }).done(function (rs) {
+        console.log(rs)
+    }).fail(function (rs) {
+        console.log(rs)
     });
 
-
+}
 </script>
