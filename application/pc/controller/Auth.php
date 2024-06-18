@@ -75,6 +75,7 @@ class Auth extends Base {
 
     function register() {
         $data = input();
+//pj($data);
         $res = (new HbhUsers())->checkPhone($data['phone']);
         if(!$res['result']){
             return errorReturn(['msg'=> $res['msg'], 'url' => url('auth/reg') ]);
@@ -86,9 +87,9 @@ class Auth extends Base {
         //2: 验证码登录
         $key = getSmsKey($mobile,2);
         $verify_code = Cache::get($key);
-        if ($data['verify_code'] != $verify_code){
-            return adminOutError(Lang::get('VerificationCodeError'));
-        }
+//        if ($data['verify_code'] != $verify_code){
+//            return adminOutError(Lang::get('VerificationCodeError'));
+//        }
 
 
         $where[] = function ($query) use ($data) {
