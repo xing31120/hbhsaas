@@ -6324,7 +6324,8 @@ a.text-theme:hover,
 }
 
 .header-layout3 .sticky-wrapper.sticky {
-  background: var(--title-color);
+  /*background: var(--title-color);*/
+  background: rgba(22, 25, 33, 0.3);
 }
 
 .header-layout3 .sticky-wrapper.sticky .logo-bg {
@@ -6360,7 +6361,7 @@ a.text-theme:hover,
 
 @media (max-width: 999px) {
   .header-layout3 .menu-area {
-    padding: 15px 0;
+    /*padding: 15px 0;*/
   }
 }
 
@@ -19375,9 +19376,9 @@ hr.style1 {
   .event-btn {
     margin-top: 20px;
     margin-top: 20px;
-    position: absolute;
-    right: 30px;
-    top: 0;
+    /*position: absolute;*/
+    /*right: 30px;*/
+    /*top: 0;*/
   }
 }
 

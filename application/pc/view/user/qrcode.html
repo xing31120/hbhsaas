@@ -23,6 +23,7 @@
         /*text-transform: uppercase;*/
         padding: 7px 19px;
         border-radius: 10px;
+        min-width: 120px;
     }
 
     .state-2 {
@@ -46,6 +47,7 @@
         text-transform: uppercase;
         padding: 8px 20px;
         border-radius: 10px;
+        min-width: 120px;
     }
           .select {
             background: var(--theme-color) !important;
@@ -96,7 +98,6 @@
                 <!--<input type="text" id="daySelect" class="demo-input" placeholder="请选择日期" readonly="readonly" />-->
                 <div style="flex:1"></div>
                 <button type="submit" style="width: 200px;margin-left:20px" class="th-btn" onclick="submit_search()">{$Think.lang.Search}</button>
-
             </div>
             <div style="display: none">
                 <input type="file" name="file" id="upload_attr">
