@@ -15,7 +15,7 @@ use think\facade\Session;
 class User extends Base {
 
     function index(){
-        pj(calculateAge(0));
+//        pj(calculateAge(0));
         $this->assign('fun_name', 'user_index');
         return $this->fetch();
     }

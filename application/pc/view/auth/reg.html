@@ -55,13 +55,13 @@
                             <label>Password *</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder=""
                                 require="">
-                            <i class="fa-solid fa-eye-slash"></i>
+                            <i class="fa-solid fa-eye-slash"  onclick="togglePassword(this)"></i>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Confirm Password *</label>
                             <input type="password" class="form-control" name="confirm_password" id="confirm_password"
                                 placeholder="" require="">
-                            <i class="fa-solid fa-eye-slash"></i>
+                            <i class="fa-solid fa-eye-slash"  onclick="togglePassword(this)"></i>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Address</label>
@@ -168,6 +168,21 @@ function sendSms (obj) {
     }).fail(function (rs) {
         console.log(rs)
     });
+
+}
+
+function togglePassword(obj) {
+    var passwordField = obj.previousElementSibling;
+    // const passwordField = $('#login_password');
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        obj.classList.remove("fa-eye-slash"); // 移除指定的class
+        obj.classList.add("fa-eye"); // 增加指定的class
+    } else {
+        passwordField.type = 'password';
+        obj.classList.add("fa-eye-slash"); // 移除指定的class
+        obj.classList.remove("fa-eye"); // 增加指定的class
+    }
 
 }
 </script>

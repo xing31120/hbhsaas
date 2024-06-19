@@ -372,14 +372,14 @@
                 <div style="flex:1;margin-right: 20px">
 
                      <label style="color: white;white-space:nowrap">{$Think.lang.Branch}</label>
-                <div style="display:flex;align-items:center;flex:1">
+                    <div style="display:flex;align-items:center;flex:1">
 
-                    <select id="shop_id">
-                        {foreach $campus_list as $sid => $value}
-                        <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>
-                        {/foreach}
-                    </select>
-                </div>
+                        <select id="shop_id">
+                            {foreach $campus_list as $sid => $value}
+                            <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>
+                            {/foreach}
+                        </select>
+                    </div>
                 </div>
               <div style="flex:1">
                    <label style="color: white;white-space:nowrap">{$Think.lang.CourseName}</label>
@@ -459,7 +459,31 @@
     <form method="post" id="mob_form" onsubmit="return false">
         <input type="text" name="today" id="today" value="{$today}">
         <!-- 课程分类下拉框 -->
+<!--        <div style="flex:1;margin-right: 20px">-->
+
+<!--            <label style="color: white;white-space:nowrap">{$Think.lang.Branch}</label>-->
+<!--            <div style="display:flex;align-items:center;flex:1">-->
+
+<!--                <select id="shop_id_mob">-->
+<!--                    {foreach $campus_list as $sid => $value}-->
+<!--                    <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>-->
+<!--                    {/foreach}-->
+<!--                </select>-->
+<!--            </div>-->
+<!--        </div>-->
+
         <div class="widget widget_categories th-comment-form">
+            <h3 class="widget_title">{$Think.lang.Branch}<span class="shape"></span></h3>
+            <select name="cat_id_mob" id="shop_id_mob" class="form-select nice-select">
+                {foreach $campus_list as $sid => $value}
+                <option value="{$sid}" {if $s_id == $sid } selected {/if}> {$value.name_en}</option>
+                {/foreach}
+            </select>
+        </div>
+
+
+
+        <div class="widget widget_categories th-comment-form" style="margin-top:10px;">
             <h3 class="widget_title">{$Think.lang.ClassifyName}<span class="shape"></span></h3>
             <select name="cat_id_mob" id="cat_id_mob" class="form-select nice-select">
                 {foreach $course_cat_list as $key=>$value}
@@ -473,7 +497,7 @@
             <div data-detailday="{$key}" class="date-item {if $today == $key } select-item {/if}">
                 <div class="date-title">{$val_mob.nd}</div>
                 <div class="date-label">{$val_mob.week}</div>
-                <div class="date-tips" data-detailcount="{$val_mob.count}">可约{$val_mob.count}节</div>
+                <div class="date-tips" data-detailcount="{$val_mob.count}">Can Schedule {$val_mob.count} Classes</div>
             </div>
             {/foreach}
         </div>
@@ -501,7 +525,7 @@
         </div>
         {/foreach}
         <div style="width: 100% ;text-align: center;padding: 20px;">
-            <div style="width: 100%;" class="th-btn" id="submit_mob" name="submit_mob">提交</div>
+            <div style="width: 100%;" class="th-btn" id="submit_mob" name="submit_mob">Submit</div>
         </div>
         <input type="hidden" name="card_number" id="card_number" value="0002349103">
         <input type="hidden" name="select_detail_ids_m" id="select_detail_ids_m" value="{$book_detail_id_str_mob}">
@@ -661,6 +685,11 @@
         //选择学校之后
         $("#shop_id").change(function () {
             shop_id = $("#shop_id").val();
+            window.location.href = '{:url("index")}?sid=' + shop_id;
+        })
+
+        $("#shop_id_mob").change(function () {
+            shop_id = $("#shop_id_mob").val();
             window.location.href = '{:url("index")}?sid=' + shop_id;
         })
 

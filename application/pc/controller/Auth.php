@@ -67,9 +67,9 @@ class Auth extends Base {
             Session::set('hbh_email', $result['email']);
             Session::set('hbh_role', $result['role']);
             Session::set('hbh_user', json_encode($result));
-            return successReturn(['msg'=> 'login success','data'=> $result, 'url' => '/index' ] );
+            return successReturn(['msg'=> 'login success','data'=> $result, 'url' => 'user/qrcode' ] );
         }
-        return errorReturn(['msg'=> 'login error','data'=> $result, 'url' =>  url('auth/login') ]);
+        return errorReturn(['msg'=> 'login error','data'=> $result, 'url' =>  url('user/qrcode') ]);
 
     }
 

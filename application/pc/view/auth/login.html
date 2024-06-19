@@ -112,11 +112,7 @@
     });
 
     function togglePassword(obj) {
-        // const element = document.getElementById("myElement"); // 获取要操作的元素
-        // element.classList.remove("myClass"); // 移除指定的class
-
-
-        const passwordField = document.getElementById('login_password');
+        var passwordField = obj.previousElementSibling;
         // const passwordField = $('#login_password');
         if (passwordField.type === 'password') {
             passwordField.type = 'text';
