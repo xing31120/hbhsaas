@@ -5,6 +5,7 @@
 
 }
 </style>
+
 <!--==============================
     Breadcumb
 ============================== -->
@@ -73,6 +74,16 @@ Event Area
                                     <strong>Phone: </strong>
                                     <span>(+971)585330846</span>
                                 </li>
+                                <li>
+                                    <i class="fa-light fa-phone"></i>
+                                    <strong>Program List: </strong>
+                                    <span><a href="#"  id="showImg">View</a></span>
+                                </li>
+                                <li>
+                                    <i class="fa-light fa-phone"></i>
+                                    <strong>Vote: </strong>
+                                    <span><a href="baidu.com" target="_blank" >View Link</a></span>
+                                </li>
                             </ul>
                         </div>
                     </div>
@@ -83,13 +94,30 @@ Event Area
                     </div> -->
                 </aside>
             </div>
-              <div class="page-img content">
-
-                        <img src="__YUN_PUBLIC_DIR__/static/assets/img/event/event_details_1.jpg" alt="Event Image">
-                    </div>
+            <div class="page-img content">
+                <img src="__YUN_PUBLIC_DIR__/static/assets/img/event/event_details_1.jpg" alt="Event Image">
+            </div>
         </div>
     </div>
 </section>
+<div class="modal fade" id="exampleModal" tabindex="999" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" style="max-width: 900px;width: 70%">
+        <div class="modal-content">
+            <img src="__YUN_PUBLIC_DIR__/static/assets/img/active/24-06-22.jpg">
+        </div>
+    </div>
+</div>
+
+
+<script>
+    $(document).ready(function () {
+        var myModal = new bootstrap.Modal(document.getElementById('exampleModal'), {keyboard: false})
+        $("#showImg").click(function () {
+            // 弹窗协议
+            myModal.show()
+        })
+    })
+</script>
 <!--==============================
 Footer Area
 ==============================-->
