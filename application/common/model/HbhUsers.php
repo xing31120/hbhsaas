@@ -10,6 +10,10 @@ class HbhUsers extends SingleSubData {
     public $mcTimeOut = 600;
     public $status = [1=> '正常', 4=>'已锁定/禁用'];
 
+    const role_student = 'student';
+    const role_teacher = 'teacher';
+    const role_admin = 'superadmin';
+
     const Status_Disabled = 4;  //用户禁用
     const Status_Enable = 1;
     const is_unlimited_number_false = 0;    // 0:有限数量,
