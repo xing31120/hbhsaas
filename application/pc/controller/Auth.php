@@ -61,13 +61,18 @@ class Auth extends Base {
 
 
         if ( $result ) {
+            $url = 'user/qrcode';
+            if($result['role'] == HbhUsers::role_teacher){
+                $url = 'teacher/bookCourse';
+            }
+
             Session::set('hbh_shop_id', $result['shop_id']);
             Session::set('hbh_uid', $result['id']);
             Session::set('hbh_name', $result['name']);
             Session::set('hbh_email', $result['email']);
             Session::set('hbh_role', $result['role']);
             Session::set('hbh_user', json_encode($result));
-            return successReturn(['msg'=> 'login success','data'=> $result, 'url' => 'user/qrcode' ] );
+            return successReturn(['msg'=> 'login success','data'=> $result, 'url' => $url ] );
         }
         return errorReturn(['msg'=> 'login error','data'=> $result, 'url' =>  url('user/qrcode') ]);
 
