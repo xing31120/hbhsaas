@@ -779,9 +779,9 @@ if (!function_exists('SendSmsClassNotice')) {
 if (!function_exists('SendSmsTeacherNotice')) {
     function SendSmsTeacherNotice($mobile_arr, $template_param_arr)
     {
-//        if(config('app.app_debug')){
-//            return successReturn(['msg' => 'debug success!']);
-//        }
+        if(config('app.app_debug')){
+            return successReturn(['msg' => 'debug success!','mobile_arr' => $mobile_arr,'template_param_arr' => $template_param_arr,]);
+        }
         if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone2!']);
         $sign = env('sms.alisms_sign_name');
 

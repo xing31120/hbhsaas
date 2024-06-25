@@ -49,7 +49,8 @@ class TaskTeacherNotice extends Base{
         $op_user['doPage'] = false;
         $reg_user_list = (new HbhUsers())->getList($op_user)['list'];
         $reg_user_list = array_column($reg_user_list, null, 'id');
-
+//pj(strlen(',BJPH2024067271,BJPH2024067270,BJPH2024067269,BJMAS2024067268,BJPH2024067267,BJPH2024067265,BJPH2024067262,BJPH2024067258,BJPH2024067257,BJPH2024067246,BJPH2024067208,BJPH2024067207,BJPH2024067206,BJPH2024067205,BJPH2024067204,BJPH2024067200,BJPH2024067194,BJPH2024067109,BJPH2024067103'));
+//pj([$list,$uid_arr, $reg_user_list]);
         // 教师用户数据
         $teacher_list = (new HbhUsers())->getAllTeacherList();
         $teacher_list = array_column($teacher_list, null, 'id');
@@ -70,7 +71,11 @@ class TaskTeacherNotice extends Base{
         $template_param_arr = [];
         foreach ($list as $book_course) {
             $teacher = $teacher_list[$book_course['teacher_uid']] ?? '';
+            $reg_user = $reg_user_list[$book_course['custom_uid']] ?? '';
             if(empty($teacher)){
+                continue;
+            }
+            if(empty($reg_user)){
                 continue;
             }
             $res = (new HbhUsers())->checkPhone($teacher['phone']);
