@@ -207,6 +207,7 @@
         laydate.render({
             elem: '#start_date',
             value: startDate,
+            trigger: 'click',
             done: function(value){
                 var end = $("#end_date").val()
                 console.log(value, end)
@@ -218,6 +219,7 @@
         laydate.render({
             elem: '#end_date',
             value: endDate,
+            trigger: 'click',
             done: function(value){
                 var start = $("#start_date").val()
                 console.log(start, value)
