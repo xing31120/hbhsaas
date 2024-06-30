@@ -152,5 +152,7 @@ return [
     'OperatorType' => '操作类型',
     'OperationContent' => '操作内容',
     'Page' => '页面',
+    'Value' => '值',
+    'Add' => '增加',
 
 ];

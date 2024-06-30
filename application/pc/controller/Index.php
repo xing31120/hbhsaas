@@ -4,6 +4,7 @@ namespace app\pc\controller;
 
 //use think\Request;
 use app\common\model\HbhContactForm;
+use app\common\model\HbhPageConfig;
 use app\common\model\HbhShop;
 use think\facade\Lang;
 use think\facade\Request;
@@ -11,6 +12,9 @@ use think\facade\Request;
 class Index extends Base {
 
     function index() {
+        $video_row =(new HbhPageConfig())->where("type_id", 1)->findOrEmpty();
+        $this->assign("video", $video_row['value']);
+//pj($video);
         return $this->fetch();
     }
 
