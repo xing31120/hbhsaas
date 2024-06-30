@@ -26,9 +26,9 @@
                         <div class="form-group col-md-6">
                             <label>Campus *</label>
                             <select name="shop_id" id="shop_id" lay-verify="required" lay-reqText="Please Select campus">
-                                {foreach $campus_list as $shop_id => $value}
+                            {foreach $campus_list as $shop_id => $value}
                                 <option value="{$shop_id}">{$value.name_en}</option>
-                                {/foreach}
+                            {/foreach}
                             </select>
                         </div>
                         <div class="form-group col-md-6">
@@ -62,13 +62,13 @@
                         <div class="form-group col-md-6">
                             <label>Password *</label>
                             <input type="password" class="form-control" name="password" id="password" placeholder=""
-                                   require="">
+                                require="">
                             <i class="fa-solid fa-eye-slash"  onclick="togglePassword(this)"></i>
                         </div>
                         <div class="form-group col-md-6">
                             <label>Confirm Password *</label>
                             <input type="password" class="form-control" name="confirm_password" id="confirm_password"
-                                   placeholder="" require="">
+                                placeholder="" require="">
                             <i class="fa-solid fa-eye-slash"  onclick="togglePassword(this)"></i>
                         </div>
                         <div class="form-group col-md-6">
@@ -85,7 +85,7 @@
                         <div class="form-group col-6">
                         </div>
                         <div class="form-group col-6 text-end">
-                            <!--                            <a class="read-more-btn" href="{:url('auth/login')}">Login</a>-->
+<!--                            <a class="read-more-btn" href="{:url('auth/login')}">Login</a>-->
                         </div>
                         <div class="form-btn col-12 text-center">
                             <button class="th-btn black-btn-2 w-100" id="register_submit">Register Now</button>
@@ -104,98 +104,98 @@
 
 <script>
 
-    var formMessages_login = $(".form-messages_login");
-    var formMessages_reg = $(".form-messages_reg");
-    $('#login_submit2').on('click', function () {
-        // alert(111)
-        var login_name = $('#login_name').val();
-        var login_password = $('#login_password').val();
-        $.ajax({
-            "url": "{:url('auth/logincheck')}",
-            "data": { "login_name": login_name, "login_password": login_password },
-        }).done(function (rs) {
-            if (rs.result) {
-                window.location.href = rs.url;
-            } else {
-                formMessages_login.removeClass("success");
-                formMessages_login.addClass("error");
-                // Set the message text.
-                formMessages_login.text(rs.msg);
-            }
-        }).fail(function (rs) {
-            layer.msg('error');
-        });
-    });
-    $('#register_submit').on('click', function () {
-        // alert(222)
-        var name = $('#name').val();
-        var phone_code = $('#phone_code').val();
-        var phone = $('#phone').val();
-        var verify_code = $('#verify_code').val();
-        var email = $('#email').val();
-        var address = $('#address').val();
-        var birthday = $('#birthday').val();
-        var password = $('#password').val();
-        var confirm_password = $('#confirm_password').val();
-        $.ajax({
-            "url": "{:url('auth/register')}",
-            "data": { "name": name, "phone": phone, "email": email, "address": address,"birthday": birthday,
-                "password": password, "confirm_password": confirm_password, "phone_code": phone_code, "verify_code": verify_code, },
-        }).done(function (rs) {
-            if (rs.result) {
-                window.location.href = rs.url;
-            } else {
-                formMessages_reg.removeClass("success");
-                formMessages_reg.addClass("error");
-                // Set the message text.
-                formMessages_reg.text(rs.msg);
-            }
-        }).fail(function (rs) {
-            layer.msg('error');
-        });
-    });
-
-    var time = 60;
-    var isSend = false
-    function sendSms (obj) {
-        if (isSend) return
-        let timer =	setInterval(function() {
-            time--;
-            isSend = true
-            document.querySelector("#time").innerHTML = " " + time + "秒";
-            if(time == 0) {
-                clearInterval(timer)
-                time = 60;
-                document.querySelector("#time").innerHTML = " Send SMS";
-                isSend = false
-            }
-
-        }, 1000);
-        var phone_code = $('#phone_code').val();
-        var phone = $('#phone').val();
-        $.ajax({
-            "url": "{:url('auth/loginSendSmsCode')}",
-            "data": { "phone_code": phone_code, "phone": phone},
-        }).done(function (rs) {
-            console.log(rs)
-        }).fail(function (rs) {
-            console.log(rs)
-        });
-
-    }
-
-    function togglePassword(obj) {
-        var passwordField = obj.previousElementSibling;
-        // const passwordField = $('#login_password');
-        if (passwordField.type === 'password') {
-            passwordField.type = 'text';
-            obj.classList.remove("fa-eye-slash"); // 移除指定的class
-            obj.classList.add("fa-eye"); // 增加指定的class
+var formMessages_login = $(".form-messages_login");
+var formMessages_reg = $(".form-messages_reg");
+$('#login_submit2').on('click', function () {
+    // alert(111)
+    var login_name = $('#login_name').val();
+    var login_password = $('#login_password').val();
+    $.ajax({
+        "url": "{:url('auth/logincheck')}",
+        "data": { "login_name": login_name, "login_password": login_password },
+    }).done(function (rs) {
+        if (rs.result) {
+            window.location.href = rs.url;
         } else {
-            passwordField.type = 'password';
-            obj.classList.add("fa-eye-slash"); // 移除指定的class
-            obj.classList.remove("fa-eye"); // 增加指定的class
+            formMessages_login.removeClass("success");
+            formMessages_login.addClass("error");
+            // Set the message text.
+            formMessages_login.text(rs.msg);
+        }
+    }).fail(function (rs) {
+        layer.msg('error');
+    });
+});
+$('#register_submit').on('click', function () {
+    // alert(222)
+    var name = $('#name').val();
+    var phone_code = $('#phone_code').val();
+    var phone = $('#phone').val();
+    var verify_code = $('#verify_code').val();
+    var email = $('#email').val();
+    var address = $('#address').val();
+    var birthday = $('#birthday').val();
+    var password = $('#password').val();
+    var confirm_password = $('#confirm_password').val();
+    $.ajax({
+        "url": "{:url('auth/register')}",
+        "data": { "name": name, "phone": phone, "email": email, "address": address,"birthday": birthday,
+            "password": password, "confirm_password": confirm_password, "phone_code": phone_code, "verify_code": verify_code, },
+    }).done(function (rs) {
+        if (rs.result) {
+            window.location.href = rs.url;
+        } else {
+            formMessages_reg.removeClass("success");
+            formMessages_reg.addClass("error");
+            // Set the message text.
+            formMessages_reg.text(rs.msg);
+        }
+    }).fail(function (rs) {
+        layer.msg('error');
+    });
+});
+
+var time = 60;
+var isSend = false
+function sendSms (obj) {
+    if (isSend) return
+    let timer =	setInterval(function() {
+        time--;
+        isSend = true
+        document.querySelector("#time").innerHTML = " " + time + "秒";
+        if(time == 0) {
+            clearInterval(timer)
+            time = 60;
+            document.querySelector("#time").innerHTML = " Send SMS";
+            isSend = false
         }
 
+    }, 1000);
+    var phone_code = $('#phone_code').val();
+    var phone = $('#phone').val();
+    $.ajax({
+        "url": "{:url('auth/loginSendSmsCode')}",
+        "data": { "phone_code": phone_code, "phone": phone},
+    }).done(function (rs) {
+        console.log(rs)
+    }).fail(function (rs) {
+        console.log(rs)
+    });
+
+}
+
+function togglePassword(obj) {
+    var passwordField = obj.previousElementSibling;
+    // const passwordField = $('#login_password');
+    if (passwordField.type === 'password') {
+        passwordField.type = 'text';
+        obj.classList.remove("fa-eye-slash"); // 移除指定的class
+        obj.classList.add("fa-eye"); // 增加指定的class
+    } else {
+        passwordField.type = 'password';
+        obj.classList.add("fa-eye-slash"); // 移除指定的class
+        obj.classList.remove("fa-eye"); // 增加指定的class
     }
+
+}
 </script>
