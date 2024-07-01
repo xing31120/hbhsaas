@@ -2,6 +2,25 @@
 <!--==============================
 Hero Area
 ==============================-->
+<link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/zeroModal.css">
+<script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
+<script>
+    function _escape() {
+        console.log(window.outerWidth)
+        zeroModal.show({
+            // title: 'hello world',
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/111.jpg" alt="" /> <div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 138px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 192px; right: 30px;">Buy</div><div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 246px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 300px; right: 30px;">Buy</div><div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 433px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 486px; right: 30px;">Buy</div><div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 540px; right: 30px;">Buy</div></div>',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            top: '20px',
+            height: '800px'
+        });
+    }
+</script>
 <div class="th-hero-wrapper hero-1" id="hero">
     <div class="hero-slider-1 number-dots th-carousel" data-fade="true" data-slide-show="1" data-md-slide-show="1" data-dots="true">
 
@@ -19,7 +38,7 @@ Hero Area
                     <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Donec sollicitudin molestie malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae. </p>
                     <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
                         <a href="{:url('index/contact')}" class="th-btn red-btn">Apply Now</a>
-                        <a href="{:url('index/about')}" class="th-btn style2">Learn More</a>
+                        <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
                     </div>
                 </div>
             </div>
@@ -39,7 +58,7 @@ Hero Area
                     <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Praesent sapien massa, convallis pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit. Vivamus. </p>
                     <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
                         <a href="{:url('index/contact')}" class="th-btn red-btn">Apply Now</a>
-                        <a href="{:url('index/about')}" class="th-btn style2">Learn More</a>
+                        <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
                     </div>
                 </div>
             </div>
@@ -59,7 +78,7 @@ Hero Area
                     <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Cras ultricies ligula sed magna dictum porta. Quisque. </p>
                     <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
                         <a href="{:url('index/contact')}" class="th-btn red-btn">Apply Now</a>
-                        <a href="{:url('index/about')}" class="th-btn style2">Learn More</a>
+                        <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
                     </div>
                 </div>
             </div>
@@ -89,12 +108,12 @@ About Area
                 </div>
                 <p class="sec-desc mt-n2 mb-35" style="text-transform: none">T.nt Dance Studio started from T.nt Street Dance Club of Nanjing University of Information Science and Technology, the club was founded on May 11, 2002, and has gone through 20 years so far. T.nt Dance Studio of Dubai is the first overseas branch of the club, which was established in May 2022. Its original meaning is "trouble no trouble", meaning "anything is possible". Unity, progress, modesty, not afraid of difficulties, dancing for the sake of dancing, this is our dance soul.</p>
                 <div class="btn-group style2">
-                    <a href="{:url('index/about')}" class="th-btn">LEARN MORE</a>
+                    <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
                 </div>
             </div>
         </div>
     </div>
-</div>
+</div>l
 
 <!--==============================
 Dance Technic Area

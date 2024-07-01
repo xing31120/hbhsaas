@@ -750,6 +750,9 @@ if (!function_exists('SendSmsClassNotice')) {
         if(config('app.app_debug')){
             return successReturn(['msg' => 'debug success!']);
         }
+//return successReturn(['msg' => 'send sms success!222222222222222']);
+//return successReturn(['msg' => 'send sms success!']);
+        //$template_param_arr --> ${course}  ${start} ${end}.
         if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone!']);
         $sign = env('sms.alisms_sign_name');
 
@@ -769,39 +772,7 @@ if (!function_exists('SendSmsClassNotice')) {
         $return_msg = $sms_service->sendBatchSms($sms_param);
 //pj($return_msg);
         if ($return_msg['Code'] == 'OK') {
-            return successReturn(['msg' => 'send sms success!']);
-        } else {
-            return errorReturn(json_encode($return_msg));
-        }
-    }
-}
-
-if (!function_exists('SendSmsTeacherNotice')) {
-    function SendSmsTeacherNotice($mobile_arr, $template_param_arr)
-    {
-        if(config('app.app_debug')){
-            return successReturn(['msg' => 'debug success!','mobile_arr' => $mobile_arr,'template_param_arr' => $template_param_arr,]);
-        }
-        if (empty($mobile_arr)) return errorReturn(['msg' => 'empty phone2!']);
-        $sign = env('sms.alisms_sign_name');
-
-        $sign_arr = [];
-        foreach ($mobile_arr as $item) {
-            $sign_arr[] = $sign;
-        }
-
-        $sms_param = [
-            'phoneNumberJson' => json_encode($mobile_arr),
-            'signNameJson' => json_encode($sign_arr),
-            'templateCode' => 'SMS_468360783',
-            'templateParamJson' => json_encode($template_param_arr),
-        ];
-//pj([ $sms_param]);
-//var_dump($sms_param);exit();
-        $sms_service = new \app\common\service\AliyunSmsService();
-        $return_msg = $sms_service->sendBatchSms($sms_param);
-//pj($return_msg);
-        if ($return_msg['Code'] == 'OK') {
+//            \think\facade\Cache::set($key, $code, 3600);
             return successReturn(['msg' => 'send sms success!']);
         } else {
             return errorReturn(json_encode($return_msg));

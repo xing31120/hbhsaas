@@ -103,7 +103,7 @@ Mobile Menu
                     <ul class="sub-menu">
                         {foreach $campus_list as $shop_id => $value}
                         <li class="menu-item-has-children">
-                            <a href="{:url($value['url'])}" style="text-transform: none">{$value.name_en}</a>
+                            <a href="{:url($value['url'])}">{$value.name_en}</a>
                             <ul class="sub-menu">
                                 {foreach $value.data as $shop_id => $campus}
                                 <li><a href="{$campus.url}">{$campus.campus_name_en}</a></li>
