@@ -126,10 +126,12 @@
             , form = layui.form;
 
         laydate.render({
-            elem: '#LAY-component-form-group-date'
+            elem: '#LAY-component-form-group-date',
+            trigger: 'click',
         });
         laydate.render({
-            elem: '#LAY-component-form-group-date2'
+            elem: '#LAY-component-form-group-date2',
+            trigger: 'click',
         });
 
         form.on('submit(submit)', function (data) {

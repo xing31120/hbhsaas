@@ -76,11 +76,13 @@ Hero Area
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
 <script>
     function _escape() {
+
         console.log(window.outerWidth)
         zeroModal.show({
             // title: 'hello world',
-            content: '<video id="video" width="450" height="800" muted controls="controls" x5-video-player-type="h5-page" webkit-playsinline="true" playsinline="true" x5-video-orientation="landscape|portrait" >\n' +
-                '    <source src="__YUN_PUBLIC_DIR__/static/assets/video/vido.mov" />\n' +
+            content: '<video id="video"  width="450" height="800" muted controls="controls" x5-video-player-type="h5-page"  webkit-playsinline="true" playsinline="true"   x5-video-orientation="landscape|portrait" >\n' +
+                // '    <source src="__YUN_PUBLIC_DIR__/static/assets/video/vido.mov" />\n' +
+                '    <source src="{$video}" />\n' +
                 '    您的浏览器不支持 HTML5 video 标签。\n' +
                 '</video>',
             // content: '<b>this is zeroModal</b>',

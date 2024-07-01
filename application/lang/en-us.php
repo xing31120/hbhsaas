@@ -149,5 +149,7 @@ return [
     'OperatorType' => 'Operator Type',
     'OperationContent' => 'Operation Content',
     'Page' => 'Page',
+    'Value' => 'Value',
+    'Add' => 'Add',
 
 ];
