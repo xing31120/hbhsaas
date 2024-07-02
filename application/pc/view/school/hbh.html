@@ -1,5 +1,52 @@
 {include file="public/header"/}
+<link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/zeroModal.css">
+<script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
+<script>
+    function _escape_kid() {
+        console.log(window.outerWidth)
+        zeroModal.show({
+            // title: 'hello world',
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/dso_kid.jpg" alt="" /> ' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 106px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 146px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 188px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 229px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 328px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 369px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 410px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 509px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 548px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 588px; right: 30px;">Buy</div></div>',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            top: '20px',
+            height: '800px'
+        });
+    }
 
+    function _escape_adult() {
+        console.log(window.outerWidth)
+        zeroModal.show({
+            // title: 'hello world',
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/dso_adult.jpg" alt="" /> ' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 96px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 137px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 178px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 296px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 337px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 378px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 496px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 536px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 12px;position: absolute;top: 576px; right: 30px;">Buy</div></div>',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            top: '20px',
+            height: '800px'
+        });
+    }
+</script>
 <!--==============================
 Hero Area
 ==============================-->
@@ -21,7 +68,8 @@ Hero Area
                     <div class="btn-group mt-35" data-ani="slideinleft" data-ani-delay="0.9s">
 <!--                        providing one-stop services for children's comprehensive development-->
                         <a href="{:url('index/contact')}" class="th-btn gold-btn-2">Apply Now</a>
-                        <a href="{:url('index/about')}" class="th-btn gold-btn-2">Learn More</a>
+                        <a href="javascript:_escape_kid()" class="th-btn gold-btn-2 text_transform_none">Pay On Line(Kid)</a>
+                        <a href="javascript:_escape_adult()" class="th-btn gold-btn-2 text_transform_none">Pay On Line(Adult)</a>
                     </div>
                 </div>
             </div>

@@ -5,14 +5,38 @@ Hero Area
 <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/zeroModal.css">
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
 <script>
-    function _escape() {
+    function _escape_kid() {
         console.log(window.outerWidth)
         zeroModal.show({
             // title: 'hello world',
-            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/111.jpg" alt="" /> <div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 138px; right: 30px;">Buy</div>' +
-                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 192px; right: 30px;">Buy</div><div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 246px; right: 30px;">Buy</div>' +
-                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 300px; right: 30px;">Buy</div><div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 433px; right: 30px;">Buy</div>' +
-                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 486px; right: 30px;">Buy</div><div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 540px; right: 30px;">Buy</div></div>',
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/tnt_kid.jpg" alt="" /> ' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 138px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 192px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 246px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 300px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 433px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 486px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 540px; right: 30px;">Buy</div></div>',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            top: '20px',
+            height: '800px'
+        });
+    }
+
+    function _escape_adult() {
+        console.log(window.outerWidth)
+        zeroModal.show({
+            // title: 'hello world',
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/tnt_adult.jpg" alt="" /> ' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 167px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 222px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 277px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 410px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 465px; right: 30px;">Buy</div>' +
+                // '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 486px; right: 30px;">Buy</div>' +
+                '<div class="th-btn red-btn" style="padding: 1px 3px; font-size: 14px;position: absolute;top: 518px; right: 30px;">Buy</div></div>',
             // content: '<b>this is zeroModal</b>',
             // content: 'this is zeroModal',
             width: window.outerWidth > 500 ? '450px' : '100%',
@@ -38,7 +62,8 @@ Hero Area
                     <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Donec sollicitudin molestie malesuada. Vestibulum ante ipsum primis in faucibus orci luctus et ultrices posuere cubilia Curae. </p>
                     <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
                         <a href="{:url('index/contact')}" class="th-btn red-btn">Apply Now</a>
-                        <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
+                        <a href="javascript:_escape_kid()" class="th-btn style2 text_transform_none">Pay On Line(Kid)</a>
+                        <a href="javascript:_escape_adult()" class="th-btn style2 text_transform_none">Pay On Line(Adult)</a>
                     </div>
                 </div>
             </div>
@@ -58,7 +83,8 @@ Hero Area
                     <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Praesent sapien massa, convallis pellentesque nec, egestas non nisi. Curabitur aliquet quam id dui posuere blandit. Vivamus. </p>
                     <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
                         <a href="{:url('index/contact')}" class="th-btn red-btn">Apply Now</a>
-                        <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
+                        <a href="javascript:_escape_kid()" class="th-btn style2 text_transform_none">Pay On Line(Kid)</a>
+                        <a href="javascript:_escape_adult()" class="th-btn style2 text_transform_none">Pay On Line(Adult)</a>
                     </div>
                 </div>
             </div>
@@ -78,7 +104,8 @@ Hero Area
                     <p class="hero-text" data-ani="slideinleft" data-ani-delay="0.7s">Curabitur arcu erat, accumsan id imperdiet et, porttitor at sem. Cras ultricies ligula sed magna dictum porta. Quisque. </p>
                     <div class="btn-group" data-ani="slideinleft" data-ani-delay="0.9s">
                         <a href="{:url('index/contact')}" class="th-btn red-btn">Apply Now</a>
-                        <a href="javascript:_escape()" class="th-btn style2">Pay On Line</a>
+                        <a href="javascript:_escape_kid()" class="th-btn style2 text_transform_none">Pay On Line(Kid)</a>
+                        <a href="javascript:_escape_adult()" class="th-btn style2 text_transform_none">Pay On Line(Adult)</a>
                     </div>
                 </div>
             </div>
