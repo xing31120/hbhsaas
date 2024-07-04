@@ -151,5 +151,25 @@ return [
     'Page' => 'Page',
     'Value' => 'Value',
     'Add' => 'Add',
+    //钱包
+    'CheckWalletError' => 'Check Wallet Error',
+    'CreateWalletError' => 'Create Wallet Error',
+    'BalanceIsNotEnough' => 'Balance Is Not Enough',
+    'UpdateWalletError' => 'Update Wallet Error',
+    'WrongFundType' => 'Wrong Fund Type',
+    'AddWalletDetailError' => 'Add Wallet Detail Error',
+    'PleaseEnterTheAmount' => 'Please Enter The Amount',
+    //钱包枚举
+    'Recharge' => 'Recharge',
+    'Balance' => 'Balance',
+    'BizTypeRecharge' => 'Recharge Order',
+    'BizTypeDeduction' => 'Deduction Order',
+    'BackendRecharge' => 'Backend Recharge',
+    'Deduction' => 'Deduction',
+    'Consume' => 'Consume',
+    'WithdrawalDeduction' => 'WithdrawalD Deduction',
+    'WithdrawalCancel' => 'Withdrawal Cancel',
+    'RefundIncome' => 'Refund Income',
+    'BalanceDisburse' => 'Balance Disburse',
 
 ];

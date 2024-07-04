@@ -154,5 +154,25 @@ return [
     'Page' => '页面',
     'Value' => '值',
     'Add' => '增加',
+    //钱包
+    'CheckWalletError' => '检测钱包错误',
+    'CreateWalletError' => '创建钱包错误',
+    'BalanceIsNotEnough' => '余额不足',
+    'UpdateWalletError' => '更新钱包错误',
+    'WrongFundType' => '资金类型错误',
+    'AddWalletDetailError' => '新增钱包明细失败',
+    'PleaseEnterTheAmount' => '请输入金额',
+    //钱包枚举
+    'Recharge' => '充值',
+    'Balance' => '余额',
+    'BizTypeRecharge' => '充值订单',
+    'BizTypeDeduction' => '消费订单',
+    'BackendRecharge' => '后台充值',
+    'Deduction' => '扣款',
+    'Consume' => '消费',
+    'WithdrawalDeduction' => '提现扣款',
+    'WithdrawalCancel' => '提现收入',
+    'RefundIncome' => '退款收入',
+    'BalanceDisburse' => '余额支出',
 
 ];

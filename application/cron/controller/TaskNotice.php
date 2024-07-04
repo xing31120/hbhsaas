@@ -36,6 +36,8 @@ class TaskNotice extends Base{
 
         $op_user['where'][] = ['id', 'in', $uid_arr];
         $op_user['where'][] = ['sms_notice', '=', HbhUsers::sms_notice_true];
+        $op_user['where'][] = ['expiry_date', '>', $today];
+        $op_user['where'][] = ['balance', '>', 0];
         $op_user['doPage'] = false;
         $userList = (new HbhUsers())->getList($op_user)['list'];
 
