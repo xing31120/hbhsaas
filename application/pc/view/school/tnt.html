@@ -43,6 +43,30 @@ Hero Area
             height: '800px'
         });
     }
+
+    function _escape_advanced_process() {
+        zeroModal.show({
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/course_advancement_process.jpg" alt="" /> ',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            top: '88%',
+            overlayClose: true,
+            height: '800px'
+        });
+    }
+
+    function _escape_graduation_requirement() {
+        zeroModal.show({
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/graduation_requirement.jpg" alt="" /> ',
+            // content: '<b>this is zeroModal</b>',
+            // content: 'this is zeroModal',
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            top: '120%',
+            overlayClose: true,
+            height: '800px'
+        });
+    }
 </script>
 <div class="th-hero-wrapper hero-1" id="hero">
     <div class="hero-slider-1 number-dots th-carousel" data-fade="true" data-slide-show="1" data-md-slide-show="1" data-dots="true">
@@ -134,7 +158,8 @@ About Area
                 </div>
                 <p class="sec-desc mt-n2 mb-35" style="text-transform: none">T.nt Dance Studio started from T.nt Street Dance Club of Nanjing University of Information Science and Technology, the club was founded on May 11, 2002, and has gone through 20 years so far. T.nt Dance Studio of Dubai is the first overseas branch of the club, which was established in May 2022. Its original meaning is "trouble no trouble", meaning "anything is possible". Unity, progress, modesty, not afraid of difficulties, dancing for the sake of dancing, this is our dance soul.</p>
                 <div class="btn-group style2">
-                    <a href="{:url('index/about')}" class="th-btn">LEARN MORE</a>
+<!--                    <a href="{:url('index/about')}" class="th-btn">Advanced Process</a>-->
+                    <a href="javascript:_escape_advanced_process()" class="th-btn">Advanced Process</a>
                 </div>
             </div>
         </div>
@@ -152,6 +177,10 @@ Dance Technic Area
                     <span class="sub-title style1  mt-n1">Our Dance Technic</span>
                     <h2 class="sec-title">It's the best reward you can give for a love that lasted 20 years.</h2>
                     The famous street dance club of hundreds of thousands of people, the common love of dance makes a group of lovely people together; And each other's persistence and efforts, and let the charm of dance infected more groups. It's the best reward you can give for a love that lasted 20 years.
+                    <div class="btn-group style2">
+                        <!--                    <a href="{:url('index/about')}" class="th-btn">Advanced Process</a>-->
+                        <a href="javascript:_escape_graduation_requirement()" class="th-btn">Graduation Requirement</a>
+                    </div>
                 </div>
 
             </div>
