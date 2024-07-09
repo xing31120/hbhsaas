@@ -82,6 +82,7 @@ return [
     'PhoneStart5' =>'Phone Number Starts With 5',  //手机号要以5开头
     'PhoneError' =>'Phone Error',
     'Number9NumberStartWith5' =>'9-Digit Number Starting With 5', //9-digit number starting with 5
+    'PleaseSelectYourBirthday' =>'Please Select Your Birthday',
     //Course
     'Branch' =>'Branch',
     'CourseSchedule' =>'Course Schedule',

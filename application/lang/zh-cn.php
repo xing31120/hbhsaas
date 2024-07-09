@@ -85,6 +85,7 @@ return [
     'PhoneStart5' =>'手机号要以5开头',  //The phone number should start with 5
     'PhoneError' =>'手机号错误',
     'Number9NumberStartWith5' =>'以5开头的9位数字', //9-digit number starting with 5
+    'PleaseSelectYourBirthday' =>'请选择生日',
     //课程
     'Branch' =>'分校',
     'CourseSchedule' =>'课程表',

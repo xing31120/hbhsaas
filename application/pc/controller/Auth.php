@@ -83,6 +83,10 @@ class Auth extends Base {
         if(!isset($data['phone']) || !isset($data['verify_code']) || !isset($data['phone_code'])){
             return adminOutError(Lang::get('ParameterError'));
         }
+        if(!isset($data['birthday']) || empty($data['birthday'])){
+            return adminOutError(Lang::get('PleaseSelectYourBirthday'));
+        }
+
         $mobile = $data['phone_code'] . $data['phone'];
         //2: 验证码登录
         $key = getSmsKey($mobile,2);

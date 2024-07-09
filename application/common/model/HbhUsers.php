@@ -90,9 +90,9 @@ class HbhUsers extends SingleSubData {
         if($userInfo['status'] == self::Status_Disabled){
             return errorReturn(Lang::get('UserDisabled'));
         }
-        // 会员是否过期
+        // 会员是否过期, -5验证保留改成-3，过期时间+7再验证
         $expiry_time = strtotime($userInfo['expiry_date'].' 00:00:00');
-        if(time() > $expiry_time){
+        if(time() + 86400 * 7 > $expiry_time ){
             return errorReturn(Lang::get('MembershipExpiration'));
         }
 
@@ -100,7 +100,7 @@ class HbhUsers extends SingleSubData {
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_false){
             $residue_quantity = $userInfo['residue_quantity'] ?? -99;
 //            if($num > $residue_quantity){
-            if( $residue_quantity - $num < -5){
+            if( $residue_quantity - $num < -3){
                 return errorReturn(Lang::get('InsufficientRemainingClassHours'));
             }
         }
