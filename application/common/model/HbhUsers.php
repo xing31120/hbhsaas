@@ -126,13 +126,22 @@ class HbhUsers extends SingleSubData {
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_true){
             return successReturn('reduce success');
         }
+        $beforeBalance = $userInfo['residue_quantity'] ?? 0;
         // 扣除额度,  后期改成扣除钱包
-        $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
+        $afterBalance = $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
         unset($userInfo['create_time']);
         unset($userInfo['update_time']);
         $res = $this->saveData($userInfo);
         if(!$res){
             return errorReturn(Lang::get('FailedToDeductUserBalance'));
+        }
+
+        //增加钱包日志
+        $resDetail = (new HbhUsersWalletDetail())->addDetail($uid, $num, HbhUsersWalletDetail::BALANCE_CONSUME,
+            HbhUsersWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
+            HbhUsersWalletDetail::bizTypeDeduction, HbhUsersWalletDetail::pay_passageway_balance);
+        if (!$resDetail['result']) {
+            return $resDetail;
         }
         return successReturn(['data' => $res, 'msg' => 'success']);
 

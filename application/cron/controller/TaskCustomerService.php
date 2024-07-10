@@ -7,7 +7,7 @@ use app\common\model\HbhCourse;
 use app\common\model\HbhUsers;
 
 
-// 通知家长上课
+// 企微课时剩余+到期提醒
 class TaskCustomerService extends Base{
 
     function classNotice(){

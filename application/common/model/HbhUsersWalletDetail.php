@@ -9,6 +9,11 @@ class HbhUsersWalletDetail extends SingleSubData {
 //    public $selectTime = 600;
     public $mcTimeOut = 600;
 
+
+    const wallet_type_class = 1;    //课时类型
+    const wallet_type_balance = 2;  //余额类型
+    const wallet_type_score = 3;    //积分类型
+
     const pay_passageway_recharge = 1;
     const pay_passageway_balance = 2;
 
@@ -111,7 +116,7 @@ class HbhUsersWalletDetail extends SingleSubData {
 
 
 
-    function addDetail($uid, $amount, $fundType, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizOrderSn='', $bizType=0, $payPassageway = 0){
+    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
         $admin_id = session('uid');
         $state = self::fundType[$fundType]['is_income'] ?? -1;
         if($state == -1){
@@ -130,6 +135,7 @@ class HbhUsersWalletDetail extends SingleSubData {
         $module = request()->module();
         $timeStr = date('Y-m-d H:i:s');
         $detail['user_id'] = $uid;
+        $detail['wallet_type'] = $walletType;
         $detail['fund_type'] = $fundType;
         $detail['before_amount'] = $beforeBalance;
         $detail['after_amount'] = $afterBalance;
@@ -169,7 +175,7 @@ class HbhUsersWalletDetail extends SingleSubData {
      * User: songX
      * Date: 2024/2/20 17:35:26
      */
-    function updateUserWalletAndDetail($uid, $fundType, $amount = null, $remark = '', $bizOrderSn='', $bizType=0, $payPassageway= 0){
+    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '', $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
         if($amount === null){
             return errorReturn(Lang::get('PleaseEnterTheAmount'));
         }
@@ -184,8 +190,8 @@ class HbhUsersWalletDetail extends SingleSubData {
         }
         $userFundAfter = $res['data'];
         $afterBalance = $userFundAfter['balance'] ?? 0;
-        $resDetail = $this->addDetail($uid, $amount, $fundType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $bizType, $payPassageway);
-        if (!$resDetail) {
+        $resDetail = $this->addDetail($uid, $amount, $fundType, $walletType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $bizType, $payPassageway);
+        if (!$resDetail['result']) {
             return $resDetail;
         }
 
