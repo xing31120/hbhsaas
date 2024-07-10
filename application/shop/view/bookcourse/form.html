@@ -89,7 +89,7 @@
 
                             <!-- status 0:待签到 10:签到完成 40: 取消预约,-->
                             <div class="layui-form-item">
-                                <label class="layui-form-label star">{$Think.lang.Week}：</label>
+                                <label class="layui-form-label star">{$Think.lang.CheckStatus}：</label>
                                 <div class="layui-input-inline">
                                     <select name="status" id="status" lay-filter="status" lay-verify="required" lay-reqText="Please Select Status" >
                                         <option value="0" {if isset($info['status']) && $info['status'] == 0} selected {/if}>{$Think.lang.Booked}</option>
@@ -100,7 +100,7 @@
                             </div>
                             <!-- is_pay 是否已扣费用 0: 未扣, 10:已经扣除,-->
                             <div class="layui-form-item">
-                                <label class="layui-form-label star">{$Think.lang.Week}：</label>
+                                <label class="layui-form-label star">{$Think.lang.PaymentStatus}：</label>
                                 <div class="layui-input-inline">
                                     <select name="is_pay" id="is_pay" lay-filter="is_pay" lay-verify="required" lay-reqText="Please Select Deduction Status" >
                                         <option value="0" {if isset($info['is_pay']) && $info['is_pay'] == 0} selected {/if}>{$Think.lang.NoDeducted}</option>

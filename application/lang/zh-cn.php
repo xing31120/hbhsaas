@@ -104,6 +104,8 @@ return [
     'ConsumptionOfClassHours' =>'消耗课时',
     'TotalClassHoursConsumed' =>'总消耗课时',
     'Week' => '星期',
+    'PaymentStatus' => '支付状态',
+    'CheckStatus' => '签到状态',
     //预约  Book Course
     'Booked' =>'已预约',
     'AddBooked' =>'新增预约',

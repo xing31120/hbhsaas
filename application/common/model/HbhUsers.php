@@ -137,9 +137,9 @@ class HbhUsers extends SingleSubData {
         }
 
         //增加钱包日志
-        $resDetail = (new HbhUsersWalletDetail())->addDetail($uid, $num, HbhUsersWalletDetail::BALANCE_CONSUME,
-            HbhUsersWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
-            HbhUsersWalletDetail::bizTypeDeduction, HbhUsersWalletDetail::pay_passageway_balance);
+        $resDetail = (new HbhUserWalletDetail())->addDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
+            HbhUserWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
+            HbhUserWalletDetail::bizTypeDeduction, HbhUserWalletDetail::pay_passageway_balance);
         if (!$resDetail['result']) {
             return $resDetail;
         }

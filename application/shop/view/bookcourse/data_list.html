@@ -261,9 +261,10 @@
                         btn: ['保存', '取消'],
                         btnAlign: 'c',
                         yes: function (index, layero) {
-                            layer.close(index);
+                            // layer.close(index);
                             let submit = layero.find('iframe').contents().find("#form_submit");
                             submit.click();
+                            layer.close(index);
                         }
                     });
                     // 弹层全屏, 如无需弹层全屏, 请注释layer.full();

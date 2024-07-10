@@ -4,8 +4,8 @@ use app\common\model\basic\SingleSubData;
 use app\common\service\workSendMessage\WorkSendMessageService;
 use think\facade\Lang;
 
-class HbhUsersWalletDetail extends SingleSubData {
-    public $mcName = 'hbh_users_wallet_detail_';
+class HbhUserWalletDetail extends SingleSubData {
+    public $mcName = 'hbh_user_wallet_detail_';
 //    public $selectTime = 600;
     public $mcTimeOut = 600;
 
@@ -118,11 +118,12 @@ class HbhUsersWalletDetail extends SingleSubData {
 
     function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
         $admin_id = session('uid');
+        $admin_id = $admin_id ?: 0;
         $state = self::fundType[$fundType]['is_income'] ?? -1;
         if($state == -1){
             return errorReturn(Lang::get('WrongFundType'));
         }
-        $walletResult = (new HbhUsersWallet())->getWalletInfo($uid);
+        $walletResult = (new HbhUserWallet())->getWalletInfo($uid);
         $userFund = $walletResult['data'];
         if (self::fundType[$fundType]['is_income'] == 1){
             //需要修改用户余额, 并且是收入类型的
@@ -181,10 +182,10 @@ class HbhUsersWalletDetail extends SingleSubData {
         }
 
         $afterBalance = 0;
-        $walletResult = (new HbhUsersWallet())->getWalletInfo($uid);
+        $walletResult = (new HbhUserWallet())->getWalletInfo($uid);
         $userFund = $walletResult['data'];
         $beforeBalance = $userFund['balance'] ?? 0;
-        $res = (new HbhUsersWallet())->updateUserWallet($uid, $fundType, $amount);
+        $res = (new HbhUserWallet())->updateUserWallet($uid, $fundType, $amount);
         if (!$res) {
             return $res;
         }
