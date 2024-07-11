@@ -48,13 +48,19 @@ class HbhUserWallet extends SingleSubData {
         if($row['result']){
             return $row;
         }
+        $userInfo = (new HbhUsers())->info($userId);
+        if(empty($userInfo)){
+            return errorReturn(Lang::get('UserError'));
+        }
+
+        //如果没有钱包, 创建钱包
         $module = request()->module();
         $date = date("Y-m-d H:i:s");
         $param = [
             'user_id'               => $userId,
-            'balance'               => 0,
+            'balance'               => $userInfo['residue_quantity'],
             'frozen_balance'        => 0,
-            'total_recharge_amount' => 0,
+            'total_recharge_amount' => $userInfo['residue_quantity'],
             'total_used_amount'     => 0,
             'status'                => self::STATUS_TRUE,
             'pay_password'          => self::PAY_PASSWORD_DEFAULT,
