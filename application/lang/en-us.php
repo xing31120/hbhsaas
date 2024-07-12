@@ -165,14 +165,18 @@ return [
     //钱包枚举
     'Recharge' => 'Recharge',
     'Balance' => 'Balance',
-    'BizTypeRecharge' => 'Recharge Order',
-    'BizTypeDeduction' => 'Deduction Order',
+    'BizType' => 'Biz Type',
+    'BizTypeRecharge' => 'Recharge Class Hour',
+    'BizTypeDeduction' => 'Deduction Class Hour',
     'BackendRecharge' => 'Backend Recharge',
     'Deduction' => 'Deduction',
     'Consume' => 'Consume',
-    'WithdrawalDeduction' => 'WithdrawalD Deduction',
+    'WithdrawalDeduction' => 'Withdrawal Deduction',
     'WithdrawalCancel' => 'Withdrawal Cancel',
     'RefundIncome' => 'Refund Income',
     'BalanceDisburse' => 'Balance Disburse',
+    'Before' => 'Before',
+    'After' => 'After',
+    'Value' => 'Value',
 
 ];

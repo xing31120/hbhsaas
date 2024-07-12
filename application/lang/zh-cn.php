@@ -168,8 +168,9 @@ return [
     //钱包枚举
     'Recharge' => '充值',
     'Balance' => '余额',
-    'BizTypeRecharge' => '充值订单',
-    'BizTypeDeduction' => '消费订单',
+    'BizType' => '业务类型',
+    'BizTypeRecharge' => '充值课时',
+    'BizTypeDeduction' => '消费课时',
     'BackendRecharge' => '后台充值',
     'Deduction' => '扣款',
     'Consume' => '消费',
@@ -177,5 +178,8 @@ return [
     'WithdrawalCancel' => '提现收入',
     'RefundIncome' => '退款收入',
     'BalanceDisburse' => '余额支出',
+    'Before' => '操作前',
+    'After' => '操作后',
+    'Value' => '数值',
 
 ];

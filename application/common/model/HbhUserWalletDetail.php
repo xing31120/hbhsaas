@@ -13,6 +13,19 @@ class HbhUserWalletDetail extends SingleSubData {
     const wallet_type_class = 1;    //课时类型
     const wallet_type_balance = 2;  //余额类型
     const wallet_type_score = 3;    //积分类型
+    const walletType = [
+        self::wallet_type_class => [
+            'value' => self::wallet_type_class,
+            'label' => 'Class Hour',
+            'label_cn' => '课时',
+        ],
+//        self::wallet_type_balance => [
+//            'value' => self::wallet_type_balance,
+//            'label' => 'Balance',
+//            'label_cn' => '余额',
+//        ],
+    ];
+
 
     const pay_passageway_recharge = 1;
     const pay_passageway_balance = 2;
@@ -31,18 +44,18 @@ class HbhUserWalletDetail extends SingleSubData {
         ],
     ];
 
-    const bizTypeRecharge = 10;     //充值订单
-    const bizTypeDeduction = 40;    //消费订单
+    const bizTypeRecharge = 10;     //充值课时
+    const bizTypeDeduction = 20;    //消费课时
     const bizType = [
         self::bizTypeRecharge => [
             'value' => self::bizTypeRecharge,
-            'label' => 'Recharge Order',
-            'label_cn' => '充值订单',
+            'label' => 'Recharge Class Hour',
+            'label_cn' => '充值课时',
         ],
         self::bizTypeDeduction => [
             'value' => self::bizTypeDeduction,
-            'label' => 'Deduction Order',
-            'label_cn' => '消费订单',
+            'label' => 'Deduction Class Hour',
+            'label_cn' => '消费课时',
         ],
     ];
 
