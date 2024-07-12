@@ -7,6 +7,7 @@ namespace app\pc\controller;
 use app\common\model\HbhBookCourse;
 use app\common\model\HbhCourse;
 use app\common\model\HbhUsers;
+use app\common\model\HbhUserWallet;
 use app\shop\controller\Course;
 use think\Db;
 use think\facade\Lang;
@@ -220,6 +221,12 @@ class User extends Base {
         $msg = "Your Scheduled {$course_name_string} ".Lang::get('SuccessSignIn');
         return successReturn(['data' => $res, 'msg' => $msg]);
 
+    }
+
+    function test(){
+//pj(117);
+        $rrr = (new HbhUserWallet())->getWalletInfo(117);
+pj($rrr);
     }
 
 }

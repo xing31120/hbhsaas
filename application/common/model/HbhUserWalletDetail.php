@@ -184,19 +184,19 @@ class HbhUserWalletDetail extends SingleSubData {
         $afterBalance = 0;
         $walletResult = (new HbhUserWallet())->getWalletInfo($uid);
         $userFund = $walletResult['data'];
-        $beforeBalance = $userFund['balance'] ?? 0;
+        $beforeBalance = $userFund['class_num'] ?? 0;
         $res = (new HbhUserWallet())->updateUserWallet($uid, $fundType, $amount);
         if (!$res) {
             return $res;
         }
         $userFundAfter = $res['data'];
-        $afterBalance = $userFundAfter['balance'] ?? 0;
+        $afterBalance = $userFundAfter['class_num'] ?? 0;
         $resDetail = $this->addDetail($uid, $amount, $fundType, $walletType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $bizType, $payPassageway);
         if (!$resDetail['result']) {
             return $resDetail;
         }
 
-        return successReturn('success');
+        return $res;
 
     }
 

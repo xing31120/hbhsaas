@@ -98,8 +98,13 @@ class HbhUsers extends SingleSubData {
 
         // 非无限卡用户, 要验证次数
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_false){
-            $residue_quantity = $userInfo['residue_quantity'] ?? -99;
-//            if($num > $residue_quantity){
+//            $residue_quantity = $userInfo['residue_quantity'] ?? -99;
+            $res_wallet = (new HbhUserWallet())->getWalletInfo($uid);
+            if(!$res_wallet['result']){
+                return $res_wallet;
+            }
+            $residue_quantity = $res_wallet['data']['class_num'];
+
             if( $residue_quantity - $num < -3){
                 return errorReturn(Lang::get('InsufficientRemainingClassHours'));
             }
@@ -126,9 +131,16 @@ class HbhUsers extends SingleSubData {
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_true){
             return successReturn('reduce success');
         }
-        $beforeBalance = $userInfo['residue_quantity'] ?? 0;
-        // 扣除额度,  后期改成扣除钱包
-        $afterBalance = $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
+//        $beforeBalance = $userInfo['residue_quantity'] ?? 0;
+        $res_wallet = (new HbhUserWallet())->getWalletInfo($uid);
+        if(!$res_wallet['result']){
+            return $res_wallet;
+        }
+        $beforeBalance = $res_wallet['data']['class_num'];
+
+
+        // 扣除user表额度, (1:sj后台统计要用, 2: 客服通知剩余课时也要用)
+        $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
         unset($userInfo['create_time']);
         unset($userInfo['update_time']);
         $res = $this->saveData($userInfo);
@@ -136,14 +148,19 @@ class HbhUsers extends SingleSubData {
             return errorReturn(Lang::get('FailedToDeductUserBalance'));
         }
 
-        //增加钱包日志
-        $resDetail = (new HbhUserWalletDetail())->addDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
-            HbhUserWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
-            HbhUserWalletDetail::bizTypeDeduction, HbhUserWalletDetail::pay_passageway_balance);
+        //扣除钱包课时, 增加明细表
+        $afterBalance = $res_wallet['data']['class_num'] - $num;
+        $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
+            HbhUserWalletDetail::wallet_type_class, '');
+
+//        //增加钱包日志
+//        $resDetail = (new HbhUserWalletDetail())->addDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
+//            HbhUserWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
+//            HbhUserWalletDetail::bizTypeDeduction, HbhUserWalletDetail::pay_passageway_balance);
         if (!$resDetail['result']) {
             return $resDetail;
         }
-        return successReturn(['data' => $res, 'msg' => 'success']);
+        return successReturn(['data' => $resDetail['data'], 'msg' => 'success']);
 
     }
 

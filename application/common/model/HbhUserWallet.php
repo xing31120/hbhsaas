@@ -22,18 +22,17 @@ class HbhUserWallet extends SingleSubData {
         }
         $row = null;
         if($id){
-            $row = self::where("id", $id)->findOrEmpty();
+            $row = self::where("id", $id)->findOrEmpty()->toArray();
         }
         if($userId){
-            $row = self::where("user_id", $userId)->findOrEmpty();
+            $row = self::where("user_id", $userId)->findOrEmpty()->toArray();
         }
-        if(!$row){
+        if(empty($row)){
             return errorReturn(Lang::get('CheckWalletError'));
         }
 
-        $r = $row->toArray();
-        unset($r['pay_password']);
-        return successReturn(['data' => $r]);
+        unset($row['pay_password']);
+        return successReturn(['data' => $row]);
     }
 
     public function createUserWallet($userId){
@@ -45,6 +44,7 @@ class HbhUserWallet extends SingleSubData {
 
     public function getWalletInfo($userId){
         $row = $this->checkWalletInfo($userId);
+//pj([111,$row]);
         if($row['result']){
             return $row;
         }
@@ -58,9 +58,11 @@ class HbhUserWallet extends SingleSubData {
         $date = date("Y-m-d H:i:s");
         $param = [
             'user_id'               => $userId,
-            'balance'               => $userInfo['residue_quantity'],
+            'balance'               => 0,
+            'class_num'             => $userInfo['residue_quantity'],
             'frozen_balance'        => 0,
-            'total_recharge_amount' => $userInfo['residue_quantity'],
+            'total_recharge_amount' => 0,
+            'total_recharge_class'  => $userInfo['residue_quantity'],
             'total_used_amount'     => 0,
             'status'                => self::STATUS_TRUE,
             'pay_password'          => self::PAY_PASSWORD_DEFAULT,
@@ -76,7 +78,7 @@ class HbhUserWallet extends SingleSubData {
     }
 
     /**
-     * Notes: 更新用户钱包余额
+     * Notes: 更新用户钱包-课时
      * @param $uid
      * @param float $amount 更新金额(正数), 根据$fundType决定 + 或者 -
      * @param $fundType
@@ -89,16 +91,16 @@ class HbhUserWallet extends SingleSubData {
         $userFund = $walletResult['data'];
 
         //是支出类型的, 需要扣余额, 判断余额是否足够
-        if (HbhUserWalletDetail::fundType[$fundType]['is_income'] == 0 && $amount > $userFund['balance']) {
+        if (HbhUserWalletDetail::fundType[$fundType]['is_income'] == 0 && $amount > $userFund['class_num']) {
             return errorReturn(Lang::get('BalanceIsNotEnough'));
         }
 
         if (HbhUserWalletDetail::fundType[$fundType]['is_income'] == 1){
             //需要修改用户余额, 并且是收入类型的
-            $userFund['balance'] = bcadd($userFund['balance'], $amount, 2);
+            $userFund['class_num'] = bcadd($userFund['class_num'], $amount, 2);
         } else {
             //需要修改用户余额, 是支出类型的, 需要扣余额,目前只有提现支出
-            $userFund['balance'] = bcsub($userFund['balance'], $amount, 2);
+            $userFund['class_num'] = bcsub($userFund['class_num'], $amount, 2);
         }
 
         //提现支出的, 需要增加冻结金额
@@ -124,9 +126,12 @@ class HbhUserWallet extends SingleSubData {
         }
 
         $userFund['updated_at'] = date('Y-m-d H:i:s');
+        $userFund['update_time'] = time();
         unset($userFund['created_at']);
+        unset($userFund['create_time']);
         //$updateUserFund  是否更新用户钱包余额, 有些方式是不需要更新用户钱包的, 例如在线支付直接消费的就不用调整钱包
         $updateUserFund = HbhUserWalletDetail::fundType[$fundType]['is_update_user_fund'] ?? 1;
+//pj($userFund);
         if ($updateUserFund) {
             $resUserFund = $this->where('id',$userFund['id'])->update($userFund);
             if (!$resUserFund) {
