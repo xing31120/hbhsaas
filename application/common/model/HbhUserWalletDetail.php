@@ -116,7 +116,7 @@ class HbhUserWalletDetail extends SingleSubData {
 
 
 
-    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
+    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizId='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
         $admin_id = session('uid');
         $admin_id = $admin_id ?: 0;
         $state = self::fundType[$fundType]['is_income'] ?? -1;
@@ -148,7 +148,7 @@ class HbhUserWalletDetail extends SingleSubData {
         $detail['user_wallet_id'] = $userFund['id'] ?? 0;
         $detail['pay_passageway'] = $payPassageway;
         $detail['biz_type'] = $bizType;
-        $detail['biz_order_sn'] = $bizOrderSn;
+        $detail['biz_id'] = $bizId;
         $detail['admin_id'] = $admin_id;
         $detail['shop_id'] = $module == 'shop' ? session('shop_id') : session('hbh_shop_id') ;
         $detail['created_at'] = $timeStr;

@@ -210,7 +210,7 @@ class User extends Base {
         foreach ($list as $info) {
             $info_course = (new HbhCourse())->info($info['course_id']);
             $pay_fee = $info_course['course_fees'] ?? 0;
-            $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+            $res = (new HbhUsers())->reduceWallet($uid, $info['id'], $pay_fee);
             if(!$res['result']){
                 Db::rollback();
                 return errorReturn($res);

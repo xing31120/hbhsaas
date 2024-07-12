@@ -251,7 +251,7 @@ class HbhBookCourse extends SingleSubData {
         }
         // 如果是未签到的用户, 要扣除余额
         $pay_fee = $info_course['course_fees'] ?? 0;
-        $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+        $res = (new HbhUsers())->reduceWallet($uid, $id, $pay_fee);
         if(!$res['result']){
             return errorReturn($res);
         }
