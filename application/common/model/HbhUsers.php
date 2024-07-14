@@ -131,12 +131,19 @@ class HbhUsers extends SingleSubData {
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_true){
             return successReturn('reduce success');
         }
-//        $beforeBalance = $userInfo['residue_quantity'] ?? 0;
         $res_wallet = (new HbhUserWallet())->getWalletInfo($uid);
         if(!$res_wallet['result']){
             return $res_wallet;
         }
-        $beforeBalance = $res_wallet['data']['class_num'];
+
+        $detail_info = (new HbhUserWalletDetail())
+            ->where('biz_id', $book_course_id)
+            ->where('biz_type', HbhUserWalletDetail::bizTypeDeduction)
+            ->findOrEmpty()->toArray();
+        if($detail_info){
+            return successReturn('Already Deducted');
+        }
+//        $beforeBalance = $res_wallet['data']['class_num'];
 
 
         // 扣除user表额度, (1:sj后台统计要用, 2: 客服通知剩余课时也要用)
