@@ -92,7 +92,7 @@ class HbhUsers extends SingleSubData {
         }
         // 会员是否过期, -5验证保留改成-3，过期时间+7再验证
         $expiry_time = strtotime($userInfo['expiry_date'].' 00:00:00');
-        if(time() + 86400 * 7 > $expiry_time ){
+        if(time()  > $expiry_time + 86400 * 7){
             return errorReturn(Lang::get('MembershipExpiration'));
         }
 
