@@ -4,6 +4,7 @@ namespace app\shop\controller;
 use app\common\model\HbhSjLog;
 use app\common\model\HbhTeacherClassTime;
 use app\common\model\HbhUsers;
+use app\common\model\HbhUserWalletDetail;
 use app\common\service\HbhUserService;
 use think\Db;
 use think\facade\Lang;
@@ -267,6 +268,57 @@ class Member extends Base {
         $data['login_name'] = $data['name'];
         $data['login_password'] = $data['password'];
         return adminOut($data);
+    }
+
+    public function editWallet(){
+        $data = input();
+//pj(111);
+        $id = $data['id'];
+        $userInfo = (new HbhUsers())->where('id', $id)->findOrEmpty()->toArray();
+        if ($this->request->isPost()) {
+            $this->add_log($userInfo, $data);
+//pj($data);
+            $num = $data['change_amount'] ?? 0;
+            if (empty($num)){
+                return errorReturn(Lang::get('ValueNum') . " error");
+            }
+
+            $remark = $data['remark'] ?? '';
+            if (empty($remark)){
+                return errorReturn(Lang::get('Remark') . " error");
+            }
+
+            $book_course_id = 0;
+            $fundType = HbhUserWalletDetail::ADMIN;
+
+            $bizType = HbhUserWalletDetail::bizTypeRecharge;
+            $num<0 && $bizType = HbhUserWalletDetail::bizTypeDeduction;
+
+            $controller = request()->controller();
+            $action = request()->action();
+            $action_all = $controller.'/'.$action ;
+
+            // 扣除user表额度, (1:sj后台统计要用, 2: 客服通知剩余课时也要用)
+            $userInfo['residue_quantity'] = $userInfo['residue_quantity'] + $num;
+            unset($userInfo['create_time']);
+            unset($userInfo['update_time']);
+            $res = (new HbhUsers())->saveData($userInfo);
+            if(!$res){
+                return errorReturn(Lang::get('FailedToDeductUserBalance'));
+            }
+
+            $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($id, $num, $fundType,
+                HbhUserWalletDetail::wallet_type_class, $remark, $book_course_id, $action_all,$bizType);
+            if (!$resDetail['result']) {
+                return $resDetail;
+            }
+            return successReturn(['data' => $resDetail['data'], 'msg' => 'success']);
+        }
+
+
+        $this->assign('info', $userInfo);
+        return $this->fetch();
+
     }
 
 }

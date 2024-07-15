@@ -53,6 +53,7 @@
       </script>
 
       <script type="text/html" id="barAction">
+        <a class="layui-btn layui-btn-xs" lay-event="editWallet" lay-data="{{d.id}}" data-controller="Tags" data-action="editWallet">{$Think.lang.EditWallet}</a>
         <a class="layui-btn layui-btn-xs" lay-event="edit" lay-data="{{d.id}}" data-controller="Tags" data-action="edit">{$Think.lang.Edit}</a>
         <a class="layui-btn layui-btn-danger layui-btn-xs" lay-event="del" data-controller="Tags" data-action="del" lay-data="{{d.id}}">{$Think.lang.Del}</a>
       </script>
@@ -89,18 +90,17 @@ layui.config({
       ,url: '{:url("Member/ajaxList","role=student&level_id=2")}'
       ,cellMinWidth: 80 //全局定义常规单元格的最小宽度，layui 2.2.1 新增
       ,cols: [[
-        {field:'id', width:80, type:'checkbox'}
-        ,{field:'id', width:80, title: 'ID', sort: true}
+        {field:'id', width:80, title: 'ID', sort: true}
         ,{field:'name', width:180, title: '{$Think.lang.Name}', sort: false}
-        ,{field:'email', width:220, title: 'Email', sort: false}
-        ,{field:'residue_quantity', width:150, title: '{$Think.lang.ResidueDegree}', sort: false}
-        ,{field:'phone', width:150, title: '{$Think.lang.Phone}', sort: false}
-        ,{field:'age', width:80, title: '{$Think.lang.Age}', sort: false}
-        ,{field:'card_number', width:150, title: '{$Think.lang.CardNumber}', sort: false}
-        ,{field:'expiry_date', width:150, title: '{$Think.lang.ExpiryDate}', sort: false}
+        ,{field:'email', width:240, title: 'Email', sort: false}
+        ,{field:'residue_quantity', width:100, title: '{$Think.lang.ResidueDegree}', sort: false}
+        ,{field:'phone', minwidth:150, title: '{$Think.lang.Phone}', sort: false}
+        ,{field:'age', minwidth:80, title: '{$Think.lang.Age}', sort: false}
+        ,{field:'card_number', minwidth:120, title: '{$Think.lang.CardNumber}', sort: false}
+        ,{field:'expiry_date', minwidth:120, title: '{$Think.lang.ExpiryDate}', sort: false}
         // ,{field:'status', width:80,title: '状态',templet:"#buttonTpl"}
         // ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
-        , {title: '{$Think.lang.Operate}', width: 120, toolbar: '#barAction', fixed: 'right',}
+        , {title: '{$Think.lang.Operate}', width: 220, toolbar: '#barAction', fixed: 'right',}
       ]]
       ,page: true
     });
@@ -164,6 +164,28 @@ layui.config({
       });
       layer.full(index);
     }
+
+  function setEditWallet(id){
+    //弹出即全屏
+    var index = layer.open({
+      type: 2,
+      title: '{$Think.lang.MemberEdit}',
+      content: '{:url("editWallet")}?id='+id,
+      shadeClose: true, // 点击遮罩层关闭
+      maxmin: true,
+      area: ['860px', '693px'],
+      btnAlign: 'c',
+      btn: ['{$Think.lang.Save}', '{$Think.lang.Cancel}'],
+      yes: function(index, layero){
+        // layer.close(index);
+        let submit = layero.find('iframe').contents().find("#form_submit");
+        submit.click();
+      }
+    });
+    // layer.full(index);
+  }
+
+
     //监听行工具事件
     table.on('tool(member-content-list)', function(obj){
       var params = obj.data;
@@ -171,6 +193,9 @@ layui.config({
       case 'edit':
           setEdit(obj.data.id);
           break;
+      case 'editWallet':
+        setEditWallet(obj.data.id);
+        break;
       case 'del':
           layer.confirm('{$Think.lang.AreYouSureDel}', function(index){
               //向服务端发送删除指令

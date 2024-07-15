@@ -61,13 +61,13 @@ class HbhUserWalletDetail extends SingleSubData {
 
     // fundType 类型详解
     const RECHARGE = 10;        //充值
-    const RECHARGE_ADMIN = 15;  //后台充值
     const DEDUCTION = 20;       //扣款
     const CONSUME = 30;         //消费支出
     const WITHDRAWAL_OUT = 40;  //提现支出
     const WITHDRAWAL_IN = 50;   //提现收入
     const REFUND = 60;          //退款收入
     const BALANCE_CONSUME = 70; //余额支出
+    const ADMIN = 90;  //后台操作
     const fundType = [
         self::RECHARGE => [
             'value' => self::RECHARGE,
@@ -76,10 +76,10 @@ class HbhUserWalletDetail extends SingleSubData {
             'is_income' => 1,
             'is_update_user_fund' => 1,
         ],
-        self::RECHARGE_ADMIN => [
-            'value' => self::RECHARGE_ADMIN,
-            'label' => 'Backend Recharge',
-            'label_cn'  => '后台充值',
+        self::ADMIN => [
+            'value' => self::ADMIN,
+            'label' => 'Backend Operation',
+            'label_cn'  => '后台操作',
             'is_income' => 1,
             'is_update_user_fund' => 1,
         ],
@@ -143,6 +143,11 @@ class HbhUserWalletDetail extends SingleSubData {
             'value' => 'User/signcheckuid',
             'label' => 'User QR Code',
             'label_cn'  => '用户扫码',
+        ],
+        'Member/editwallet' => [
+            'value' => 'Member/editwallet',
+            'label' => 'Backend Operation',
+            'label_cn'  => '管理员操作',
         ],
     ];
 

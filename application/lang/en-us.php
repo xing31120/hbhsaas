@@ -162,6 +162,8 @@ return [
     'WrongFundType' => 'Wrong Fund Type',
     'AddWalletDetailError' => 'Add Wallet Detail Error',
     'PleaseEnterTheAmount' => 'Please Enter The Amount',
+    'EditWallet' => 'Edit Wallet',
+    'WalletOperationInstructions' => 'Fill in a positive integer to increase the limit(e.g. 10) ,Fill in negative integer for deduction limit (e.g. -1)',
     //钱包枚举
     'Recharge' => 'Recharge',
     'Balance' => 'Balance',

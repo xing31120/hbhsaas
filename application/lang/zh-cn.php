@@ -165,6 +165,8 @@ return [
     'WrongFundType' => '资金类型错误',
     'AddWalletDetailError' => '新增钱包明细失败',
     'PleaseEnterTheAmount' => '请输入金额',
+    'EditWallet' => '钱包操作',
+    'WalletOperationInstructions' => '增加额度填正整数 (e.g. 10) ,扣除额度填写负整数 (e.g. -1)',
     //钱包枚举
     'Recharge' => '充值',
     'Balance' => '余额',
