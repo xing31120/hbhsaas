@@ -77,17 +77,22 @@ class Walletdetail extends Base {
         $op_user['doPage'] = false;
         $op_user['where'][] = ['id', 'in', $user_id_arr];
         $student_list = (new HbhUsers())->getList($op_user)['list'];
-//        $student_list = (new HbhUsers())->getAllStudentList();
         $student_list = array_column($student_list, null, 'id');
+
+        $actionArr = HbhUserWalletDetail::actionArray;
+        $lang = $_COOKIE['think_var'];
+        $lang_key = 'label';
+        if($lang == 'zh-cn'){
+            $lang_key = 'label_cn';
+        }
 //pj($student_list);
         foreach ($list['list'] as &$item) {
             $student_name = $student_list[$item['user_id']]['name'] ?? '';
             $phone = $student_list[$item['user_id']]['phone'] ?? '';
             $item['student_name'] = "{$student_name}({$phone})";
-            $item['biz_type_text'] = $item['biz_type'] == HbhUserWalletDetail::bizTypeRecharge ? Lang::get('BizTypeRecharge') :Lang::get('BizTypeDeduction');;
-//            $item['is_unlimited_number_text'] = $item['is_unlimited_number'] == HbhBookCourse::is_unlimited_number_true ? Lang::get('Unlimited') :Lang::get('Limited');;
-//            $item['status_text'] = HbhBookCourse::getStatusText($item['status']);
-//            $item['status_confirm_text'] = HbhBookCourse::getStatusConfirmText($item['status']);
+            $item['biz_type_text'] = $item['biz_type'] == HbhUserWalletDetail::bizTypeRecharge ? Lang::get('BizTypeRecharge') :Lang::get('BizTypeDeduction');
+            $item['action_text'] = $actionArr[$item['action']][$lang_key] ?? '';
+
         }
 
         $res = ['count'=>$list['count'],'data'=>$list['list']];

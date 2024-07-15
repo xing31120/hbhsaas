@@ -177,6 +177,7 @@ return [
     'BalanceDisburse' => 'Balance Disburse',
     'Before' => 'Before',
     'After' => 'After',
-    'Value' => 'Value',
+    'ValueNum' => 'Value',
+    'ActionText' => 'Operation Address',
 
 ];

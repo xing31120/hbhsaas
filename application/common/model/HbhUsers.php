@@ -118,10 +118,12 @@ class HbhUsers extends SingleSubData {
     /**
      * 扣除用户额度
      * @param int $uid
+     * @param int $book_course_id
      * @param int $num
+     * @param string $action
      * @return void
      */
-    function reduceWallet(int $uid,int $book_course_id, int $num = 0){
+    function reduceWallet(int $uid,int $book_course_id, int $num = 0, string $action = ''){
         $check_res = $this->checkResidueQuantity($uid, $num);
         if(!$check_res['result']){
             return $check_res;
@@ -159,7 +161,7 @@ class HbhUsers extends SingleSubData {
         $remark = "Deduct class hours based on appointment({$book_course_id})";
         $afterBalance = $res_wallet['data']['class_num'] - $num;
         $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
-            HbhUserWalletDetail::wallet_type_class, $remark, $book_course_id);
+            HbhUserWalletDetail::wallet_type_class, $remark, $book_course_id, $action);
 
 //        //增加钱包日志
 //        $resDetail = (new HbhUserWalletDetail())->addDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,

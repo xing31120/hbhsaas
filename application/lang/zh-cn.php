@@ -180,6 +180,7 @@ return [
     'BalanceDisburse' => '余额支出',
     'Before' => '操作前',
     'After' => '操作后',
-    'Value' => '数值',
+    'ValueNum' => '数值',
+    'ActionText' => '操作地址',
 
 ];

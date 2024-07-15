@@ -190,6 +190,7 @@ class Classdetail extends Base {
     }
 
     function SaveBooked(){
+
         $data = input();
         $id = $data['id'] ?? 0;
 
@@ -233,7 +234,10 @@ class Classdetail extends Base {
             $book_course_id = (new HbhBookCourse())->insertGetId($course_data);
         } else { //修改预约, 如果修改is_pay需要扣费
             $book_course_id = false;
-            $res = (new HbhBookCourse())->payByBoosCourseId($id, $data['is_pay']);
+            $controller = request()->controller();
+            $action = request()->action();
+            $action_all = $controller.'/'.$action ;
+            $res = (new HbhBookCourse())->payByBoosCourseId($id, $data['is_pay'],$action_all);
             if($res['result']){
                 $info = (new HbhClassTimeDetail())->info($id);
                 $this->add_log($info, $course_data);

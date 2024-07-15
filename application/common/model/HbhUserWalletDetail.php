@@ -128,8 +128,26 @@ class HbhUserWalletDetail extends SingleSubData {
     ];
 
 
+    const actionArray = [
+        'Classdetail/savebooked' => [
+            'value' => 'Classdetail/savebooked',
+            'label' => 'Backend Check-in',
+            'label_cn'  => '后台签到',
+        ],
+        'Teacher/ajaxconfirm' => [
+            'value' => 'Teacher/ajaxconfirm',
+            'label' => 'Teacher Check-in',
+            'label_cn'  => '教师确认',
+        ],
+        'User/signcheckuid' => [
+            'value' => 'User/signcheckuid',
+            'label' => 'User QR Code',
+            'label_cn'  => '用户扫码',
+        ],
+    ];
 
-    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizId='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
+
+    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizId='',$action='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
         $admin_id = session('uid');
         $admin_id = $admin_id ?: 0;
         $state = self::fundType[$fundType]['is_income'] ?? -1;
@@ -163,6 +181,7 @@ class HbhUserWalletDetail extends SingleSubData {
         $detail['biz_type'] = $bizType;
         $detail['biz_id'] = $bizId;
         $detail['admin_id'] = $admin_id;
+        $detail['action'] = $action;
         $detail['shop_id'] = $module == 'shop' ? session('shop_id') : session('hbh_shop_id') ;
         $detail['created_at'] = $timeStr;
         $detail['updated_at'] = $timeStr;
@@ -189,7 +208,7 @@ class HbhUserWalletDetail extends SingleSubData {
      * User: songX
      * Date: 2024/2/20 17:35:26
      */
-    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '', $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
+    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '', $bizOrderSn='', $action='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
         if($amount === null){
             return errorReturn(Lang::get('PleaseEnterTheAmount'));
         }
@@ -204,7 +223,7 @@ class HbhUserWalletDetail extends SingleSubData {
         }
         $userFundAfter = $res['data'];
         $afterBalance = $userFundAfter['class_num'] ?? 0;
-        $resDetail = $this->addDetail($uid, $amount, $fundType, $walletType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $bizType, $payPassageway);
+        $resDetail = $this->addDetail($uid, $amount, $fundType, $walletType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $action, $bizType, $payPassageway);
         if (!$resDetail['result']) {
             return $resDetail;
         }

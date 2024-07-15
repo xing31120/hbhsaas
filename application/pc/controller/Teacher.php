@@ -133,7 +133,10 @@ class Teacher extends Base {
 
         // 如果是未签到的用户, 要扣除余额
         $pay_fee = $info_course['course_fees'] ?? 0;
-        $res = (new HbhUsers())->reduceWallet($book_course_info['custom_uid'], $id, $pay_fee);
+        $controller = request()->controller();
+        $action = request()->action();
+        $action_all = $controller.'/'.$action ;
+        $res = (new HbhUsers())->reduceWallet($book_course_info['custom_uid'], $id, $pay_fee, $action_all);
         if(!$res['result']){
             Db::rollback();
             return adminOutError($res);
