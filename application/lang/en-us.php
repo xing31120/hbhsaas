@@ -179,5 +179,7 @@ return [
     'After' => 'After',
     'ValueNum' => 'Value',
     'ActionText' => 'Operation Address',
+    'DeductionTime' => 'Deduction Time',
+    'Remark' => 'Remark',
 
 ];

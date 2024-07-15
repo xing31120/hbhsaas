@@ -182,5 +182,7 @@ return [
     'After' => '操作后',
     'ValueNum' => '数值',
     'ActionText' => '操作地址',
+    'DeductionTime' => '扣费时间',
+    'Remark' => '备注说明',
 
 ];
