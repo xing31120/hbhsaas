@@ -297,21 +297,24 @@ class Member extends Base {
             $controller = request()->controller();
             $action = request()->action();
             $action_all = $controller.'/'.$action ;
-
+            Db::startTrans();
             // 扣除user表额度, (1:sj后台统计要用, 2: 客服通知剩余课时也要用)
             $userInfo['residue_quantity'] = $userInfo['residue_quantity'] + $num;
             unset($userInfo['create_time']);
             unset($userInfo['update_time']);
             $res = (new HbhUsers())->saveData($userInfo);
             if(!$res){
+                Db::rollback();
                 return errorReturn(Lang::get('FailedToDeductUserBalance'));
             }
 
             $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($id, $num, $fundType,
                 HbhUserWalletDetail::wallet_type_class, $remark, $book_course_id, $action_all,$bizType);
             if (!$resDetail['result']) {
+                Db::rollback();
                 return $resDetail;
             }
+            Db::commit();
             return successReturn(['data' => $resDetail['data'], 'msg' => 'success']);
         }
 
