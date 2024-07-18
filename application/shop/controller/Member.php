@@ -324,4 +324,16 @@ class Member extends Base {
 
     }
 
+
+    function ajaxSetShow(){
+        $data = input();
+        $update['is_call'] = $data['is_call'];
+        $bool = (new HbhUsers())->updateById($data['id'], $update);
+        if($bool){
+            $res['msg'] = Lang::get('OperateSuccess');
+        }else{
+            $res['msg'] = Lang::get('OperateFailed');
+        }
+        return adminOut($res);
+    }
 }
