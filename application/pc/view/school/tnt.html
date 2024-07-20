@@ -3,7 +3,13 @@
 Hero Area
 ==============================-->
 <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/zeroModal.css">
+<link rel="stylesheet" href="/static/assets/css/zeroModal.css">
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
+<style>
+    .zeromodal-container{
+        position: fixed !important;
+    }
+</style>
 <script>
     function _escape_kid() {
         console.log(window.outerWidth)
@@ -20,7 +26,7 @@ Hero Area
             // content: '<b>this is zeroModal</b>',
             // content: 'this is zeroModal',
             width: window.outerWidth > 500 ? '450px' : '100%',
-            top: '100px',
+            top: '10%',
             height: '800px'
         });
     }
@@ -39,18 +45,18 @@ Hero Area
             // content: '<b>this is zeroModal</b>',
             // content: 'this is zeroModal',
             width: window.outerWidth > 500 ? '450px' : '100%',
-            top: '100px',
+            top: '10%',
             height: '800px'
         });
     }
 
     function _escape_advanced_process() {
         zeroModal.show({
-            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/course_advancement_process.jpg" alt="" /> ',
+            content: '<img src="__YUN_PUBLIC_DIR__/static/assets/img/school/course_advancement_process.jpg" alt="" />',
             // content: '<b>this is zeroModal</b>',
             // content: 'this is zeroModal',
             width: window.outerWidth > 500 ? '450px' : '100%',
-            top: '88%',
+            top: '10%',
             overlayClose: true,
             height: '800px'
         });
@@ -58,11 +64,11 @@ Hero Area
 
     function _escape_graduation_requirement() {
         zeroModal.show({
-            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/graduation_requirement.jpg" alt="" /> ',
+            content: '<div style="position: relative;"><img src="__YUN_PUBLIC_DIR__/static/assets/img/school/graduation_requirement.jpg" alt="" /></div>',
             // content: '<b>this is zeroModal</b>',
             // content: 'this is zeroModal',
             width: window.outerWidth > 500 ? '450px' : '100%',
-            top: '120%',
+            top: '10%',
             overlayClose: true,
             height: '800px'
         });
