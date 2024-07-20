@@ -53,6 +53,7 @@ return [
     'Birthday' =>'Birthday',
     'Phone' =>'Phone',
     'CardNumber' =>'Card Number',
+    'FullNumber' =>'Full Number',
     'ExpiryDate' =>'Expiry Date',
     'TeacherEdit' =>'Teacher Edit',
     'LessonSelection' =>'Lesson Selection',

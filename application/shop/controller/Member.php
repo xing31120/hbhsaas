@@ -186,6 +186,10 @@ class Member extends Base {
             $op['where'][] = ['level_id','=', $data['level_id']];
         }
 
+        if(isset($data['is_unlimited_number']) && $data['is_unlimited_number'] >= 0 ){
+            $op['where'][] = ['is_unlimited_number','=', $data['is_unlimited_number']];
+        }
+
         $op['page'] = isset($data['page']) ? intval($data['page']) : 1;
         $op['doPage'] = true;
         $op['field'] = '*';

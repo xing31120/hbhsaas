@@ -53,6 +53,7 @@ return [
     'Birthday' =>'生日',
     'Phone' =>'电话',
     'CardNumber' =>'会员卡',
+    'FullNumber' =>'会员名',
     'ExpiryDate' =>'过期时间',
     'TeacherEdit' =>'教师编辑',
     'LessonSelection' =>'课时选择',

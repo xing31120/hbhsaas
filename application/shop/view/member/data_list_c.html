@@ -13,19 +13,30 @@
           </div>
         </div>
         <div class="layui-inline">
-          <label class="layui-form-label">Phone</label>
+          <label class="layui-form-label">{$Think.lang.Phone}</label>
           <div class="layui-input-inline">
             <input type="text" name="phone" placeholder="Phone" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-inline">
-          <label class="layui-form-label" style="width: 120px">Card Number</label>
+          <label class="layui-form-label">{$Think.lang.UnlimitedNumber}</label>
+          <div class="layui-input-inline">
+            <select name="is_unlimited_number" >
+              <option value="-1">{$Think.lang.PleaseSelect}</option>
+              <option value="0">{$Think.lang.Limited}</option>
+              <option value="1">{$Think.lang.Unlimited}</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="layui-inline">
+          <label class="layui-form-label" style="width: 120px">{$Think.lang.CardNumber}</label>
           <div class="layui-input-inline">
             <input type="text" name="card_number" placeholder="Card Number" autocomplete="off" class="layui-input">
           </div>
         </div>
         <div class="layui-inline">
-          <label class="layui-form-label">Full Name</label>
+          <label class="layui-form-label">{$Think.lang.FullNumber}</label>
           <div class="layui-input-inline">
             <input type="text" name="name" placeholder="name" autocomplete="off" class="layui-input">
           </div>
