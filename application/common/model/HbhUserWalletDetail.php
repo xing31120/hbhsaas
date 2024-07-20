@@ -4,8 +4,8 @@ use app\common\model\basic\SingleSubData;
 use app\common\service\workSendMessage\WorkSendMessageService;
 use think\facade\Lang;
 
-class HbhUsersWalletDetail extends SingleSubData {
-    public $mcName = 'hbh_users_wallet_detail_';
+class HbhUserWalletDetail extends SingleSubData {
+    public $mcName = 'hbh_user_wallet_detail_';
 //    public $selectTime = 600;
     public $mcTimeOut = 600;
 
@@ -13,6 +13,19 @@ class HbhUsersWalletDetail extends SingleSubData {
     const wallet_type_class = 1;    //课时类型
     const wallet_type_balance = 2;  //余额类型
     const wallet_type_score = 3;    //积分类型
+    const walletType = [
+        self::wallet_type_class => [
+            'value' => self::wallet_type_class,
+            'label' => 'Class Hour',
+            'label_cn' => '课时',
+        ],
+//        self::wallet_type_balance => [
+//            'value' => self::wallet_type_balance,
+//            'label' => 'Balance',
+//            'label_cn' => '余额',
+//        ],
+    ];
+
 
     const pay_passageway_recharge = 1;
     const pay_passageway_balance = 2;
@@ -31,30 +44,30 @@ class HbhUsersWalletDetail extends SingleSubData {
         ],
     ];
 
-    const bizTypeRecharge = 10;     //充值订单
-    const bizTypeDeduction = 40;    //消费订单
+    const bizTypeRecharge = 10;     //充值课时
+    const bizTypeDeduction = 20;    //消费课时
     const bizType = [
         self::bizTypeRecharge => [
             'value' => self::bizTypeRecharge,
-            'label' => 'Recharge Order',
-            'label_cn' => '充值订单',
+            'label' => 'Recharge Class Hour',
+            'label_cn' => '充值课时',
         ],
         self::bizTypeDeduction => [
             'value' => self::bizTypeDeduction,
-            'label' => 'Deduction Order',
-            'label_cn' => '消费订单',
+            'label' => 'Deduction Class Hour',
+            'label_cn' => '消费课时',
         ],
     ];
 
     // fundType 类型详解
     const RECHARGE = 10;        //充值
-    const RECHARGE_ADMIN = 15;  //后台充值
     const DEDUCTION = 20;       //扣款
     const CONSUME = 30;         //消费支出
     const WITHDRAWAL_OUT = 40;  //提现支出
     const WITHDRAWAL_IN = 50;   //提现收入
     const REFUND = 60;          //退款收入
     const BALANCE_CONSUME = 70; //余额支出
+    const ADMIN = 90;  //后台操作
     const fundType = [
         self::RECHARGE => [
             'value' => self::RECHARGE,
@@ -63,10 +76,10 @@ class HbhUsersWalletDetail extends SingleSubData {
             'is_income' => 1,
             'is_update_user_fund' => 1,
         ],
-        self::RECHARGE_ADMIN => [
-            'value' => self::RECHARGE_ADMIN,
-            'label' => 'Backend Recharge',
-            'label_cn'  => '后台充值',
+        self::ADMIN => [
+            'value' => self::ADMIN,
+            'label' => 'Backend Operation',
+            'label_cn'  => '后台操作',
             'is_income' => 1,
             'is_update_user_fund' => 1,
         ],
@@ -115,14 +128,38 @@ class HbhUsersWalletDetail extends SingleSubData {
     ];
 
 
+    const actionArray = [
+        'Classdetail/savebooked' => [
+            'value' => 'Classdetail/savebooked',
+            'label' => 'Backend Check-in',
+            'label_cn'  => '后台签到',
+        ],
+        'Teacher/ajaxconfirm' => [
+            'value' => 'Teacher/ajaxconfirm',
+            'label' => 'Teacher Check-in',
+            'label_cn'  => '教师确认',
+        ],
+        'User/signcheckuid' => [
+            'value' => 'User/signcheckuid',
+            'label' => 'User QR Code',
+            'label_cn'  => '用户扫码',
+        ],
+        'Member/editwallet' => [
+            'value' => 'Member/editwallet',
+            'label' => 'Backend Operation',
+            'label_cn'  => '管理员操作',
+        ],
+    ];
 
-    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
+
+    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizId='',$action='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
         $admin_id = session('uid');
+        $admin_id = $admin_id ?: 0;
         $state = self::fundType[$fundType]['is_income'] ?? -1;
         if($state == -1){
             return errorReturn(Lang::get('WrongFundType'));
         }
-        $walletResult = (new HbhUsersWallet())->getWalletInfo($uid);
+        $walletResult = (new HbhUserWallet())->getWalletInfo($uid);
         $userFund = $walletResult['data'];
         if (self::fundType[$fundType]['is_income'] == 1){
             //需要修改用户余额, 并且是收入类型的
@@ -147,8 +184,9 @@ class HbhUsersWalletDetail extends SingleSubData {
         $detail['user_wallet_id'] = $userFund['id'] ?? 0;
         $detail['pay_passageway'] = $payPassageway;
         $detail['biz_type'] = $bizType;
-        $detail['biz_order_sn'] = $bizOrderSn;
+        $detail['biz_id'] = $bizId;
         $detail['admin_id'] = $admin_id;
+        $detail['action'] = $action;
         $detail['shop_id'] = $module == 'shop' ? session('shop_id') : session('hbh_shop_id') ;
         $detail['created_at'] = $timeStr;
         $detail['updated_at'] = $timeStr;
@@ -175,27 +213,27 @@ class HbhUsersWalletDetail extends SingleSubData {
      * User: songX
      * Date: 2024/2/20 17:35:26
      */
-    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '', $bizOrderSn='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
+    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '', $bizOrderSn='', $action='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
         if($amount === null){
             return errorReturn(Lang::get('PleaseEnterTheAmount'));
         }
 
         $afterBalance = 0;
-        $walletResult = (new HbhUsersWallet())->getWalletInfo($uid);
+        $walletResult = (new HbhUserWallet())->getWalletInfo($uid);
         $userFund = $walletResult['data'];
-        $beforeBalance = $userFund['balance'] ?? 0;
-        $res = (new HbhUsersWallet())->updateUserWallet($uid, $fundType, $amount);
+        $beforeBalance = $userFund['class_num'] ?? 0;
+        $res = (new HbhUserWallet())->updateUserWallet($uid, $fundType, $amount);
         if (!$res) {
             return $res;
         }
         $userFundAfter = $res['data'];
-        $afterBalance = $userFundAfter['balance'] ?? 0;
-        $resDetail = $this->addDetail($uid, $amount, $fundType, $walletType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $bizType, $payPassageway);
+        $afterBalance = $userFundAfter['class_num'] ?? 0;
+        $resDetail = $this->addDetail($uid, $amount, $fundType, $walletType, $remark, $beforeBalance, $afterBalance, $bizOrderSn, $action, $bizType, $payPassageway);
         if (!$resDetail['result']) {
             return $resDetail;
         }
 
-        return successReturn('success');
+        return $res;
 
     }
 

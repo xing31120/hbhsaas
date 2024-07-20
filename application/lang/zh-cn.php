@@ -104,6 +104,8 @@ return [
     'ConsumptionOfClassHours' =>'消耗课时',
     'TotalClassHoursConsumed' =>'总消耗课时',
     'Week' => '星期',
+    'PaymentStatus' => '支付状态',
+    'CheckStatus' => '签到状态',
     //预约  Book Course
     'Booked' =>'已预约',
     'AddBooked' =>'新增预约',
@@ -163,11 +165,14 @@ return [
     'WrongFundType' => '资金类型错误',
     'AddWalletDetailError' => '新增钱包明细失败',
     'PleaseEnterTheAmount' => '请输入金额',
+    'EditWallet' => '钱包操作',
+    'WalletOperationInstructions' => '增加额度填正整数 (e.g. 10) ,扣除额度填写负整数 (e.g. -1)',
     //钱包枚举
     'Recharge' => '充值',
     'Balance' => '余额',
-    'BizTypeRecharge' => '充值订单',
-    'BizTypeDeduction' => '消费订单',
+    'BizType' => '业务类型',
+    'BizTypeRecharge' => '充值课时',
+    'BizTypeDeduction' => '消费课时',
     'BackendRecharge' => '后台充值',
     'Deduction' => '扣款',
     'Consume' => '消费',
@@ -175,5 +180,11 @@ return [
     'WithdrawalCancel' => '提现收入',
     'RefundIncome' => '退款收入',
     'BalanceDisburse' => '余额支出',
+    'Before' => '操作前',
+    'After' => '操作后',
+    'ValueNum' => '数值',
+    'ActionText' => '操作地址',
+    'DeductionTime' => '扣费时间',
+    'Remark' => '备注说明',
 
 ];

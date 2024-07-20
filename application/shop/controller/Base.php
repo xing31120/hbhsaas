@@ -19,7 +19,6 @@ class Base  extends Controller{
         'Common/login',//登录
         'Common/checklogin',//登录验证
         'Index/swagger',
-        'OrderProcess/ajaxlist',
     ];
 
     protected $returnData = [

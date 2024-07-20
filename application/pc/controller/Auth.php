@@ -58,7 +58,10 @@ class Auth extends Base {
         if ($result['status'] != 1){
             return errorReturn('account is disabled', -1);
         }
-
+        $url = 'user/qrcode';
+        if($result['role'] == 'teacher'){
+            $url = 'teacher/bookCourse';
+        }
 
         if ( $result ) {
             Session::set('hbh_shop_id', $result['shop_id']);
@@ -67,9 +70,9 @@ class Auth extends Base {
             Session::set('hbh_email', $result['email']);
             Session::set('hbh_role', $result['role']);
             Session::set('hbh_user', json_encode($result));
-            return successReturn(['msg'=> 'login success','data'=> $result, 'url' => 'user/qrcode' ] );
+            return successReturn(['msg'=> 'login success','data'=> $result, 'url' => $url ] );
         }
-        return errorReturn(['msg'=> 'login error','data'=> $result, 'url' =>  url('user/qrcode') ]);
+        return errorReturn(['msg'=> 'login error','data'=> $result]);
 
     }
 

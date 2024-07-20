@@ -92,14 +92,19 @@ class HbhUsers extends SingleSubData {
         }
         // 会员是否过期, -5验证保留改成-3，过期时间+7再验证
         $expiry_time = strtotime($userInfo['expiry_date'].' 00:00:00');
-        if(time() + 86400 * 7 > $expiry_time ){
+        if(time()  > $expiry_time + 86400 * 7){
             return errorReturn(Lang::get('MembershipExpiration'));
         }
 
         // 非无限卡用户, 要验证次数
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_false){
-            $residue_quantity = $userInfo['residue_quantity'] ?? -99;
-//            if($num > $residue_quantity){
+//            $residue_quantity = $userInfo['residue_quantity'] ?? -99;
+            $res_wallet = (new HbhUserWallet())->getWalletInfo($uid);
+            if(!$res_wallet['result']){
+                return $res_wallet;
+            }
+            $residue_quantity = $res_wallet['data']['class_num'];
+
             if( $residue_quantity - $num < -3){
                 return errorReturn(Lang::get('InsufficientRemainingClassHours'));
             }
@@ -113,10 +118,12 @@ class HbhUsers extends SingleSubData {
     /**
      * 扣除用户额度
      * @param int $uid
+     * @param int $book_course_id
      * @param int $num
+     * @param string $action
      * @return void
      */
-    function reduceWallet(int $uid, int $num = 0){
+    function reduceWallet(int $uid,int $book_course_id, int $num = 0, string $action = ''){
         $check_res = $this->checkResidueQuantity($uid, $num);
         if(!$check_res['result']){
             return $check_res;
@@ -126,9 +133,23 @@ class HbhUsers extends SingleSubData {
         if($userInfo['is_unlimited_number'] == self::is_unlimited_number_true){
             return successReturn('reduce success');
         }
-        $beforeBalance = $userInfo['residue_quantity'] ?? 0;
-        // 扣除额度,  后期改成扣除钱包
-        $afterBalance = $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
+        $res_wallet = (new HbhUserWallet())->getWalletInfo($uid);
+        if(!$res_wallet['result']){
+            return $res_wallet;
+        }
+
+        $detail_info = (new HbhUserWalletDetail())
+            ->where('biz_id', $book_course_id)
+            ->where('biz_type', HbhUserWalletDetail::bizTypeDeduction)
+            ->findOrEmpty()->toArray();
+        if($detail_info){
+            return successReturn('Already Deducted');
+        }
+//        $beforeBalance = $res_wallet['data']['class_num'];
+
+
+        // 扣除user表额度, (1:sj后台统计要用, 2: 客服通知剩余课时也要用)
+        $userInfo['residue_quantity'] = $userInfo['residue_quantity'] - $num;
         unset($userInfo['create_time']);
         unset($userInfo['update_time']);
         $res = $this->saveData($userInfo);
@@ -136,14 +157,20 @@ class HbhUsers extends SingleSubData {
             return errorReturn(Lang::get('FailedToDeductUserBalance'));
         }
 
-        //增加钱包日志
-        $resDetail = (new HbhUsersWalletDetail())->addDetail($uid, $num, HbhUsersWalletDetail::BALANCE_CONSUME,
-            HbhUsersWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
-            HbhUsersWalletDetail::bizTypeDeduction, HbhUsersWalletDetail::pay_passageway_balance);
+        //扣除钱包课时, 增加明细表
+        $remark = "Deduct class hours based on appointment({$book_course_id})";
+        $afterBalance = $res_wallet['data']['class_num'] - $num;
+        $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
+            HbhUserWalletDetail::wallet_type_class, $remark, $book_course_id, $action);
+
+//        //增加钱包日志
+//        $resDetail = (new HbhUserWalletDetail())->addDetail($uid, $num, HbhUserWalletDetail::BALANCE_CONSUME,
+//            HbhUserWalletDetail::wallet_type_class, '', $beforeBalance, $afterBalance, '',
+//            HbhUserWalletDetail::bizTypeDeduction, HbhUserWalletDetail::pay_passageway_balance);
         if (!$resDetail['result']) {
             return $resDetail;
         }
-        return successReturn(['data' => $res, 'msg' => 'success']);
+        return successReturn(['data' => $resDetail['data'], 'msg' => 'success']);
 
     }
 

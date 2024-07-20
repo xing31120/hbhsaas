@@ -3,7 +3,6 @@
     <div class="layui-row layui-col-space15">
         <div class="layui-col-md12">
             <div class="layui-card">
-                <!-- <div class="layui-card-header">商品设置</div> -->
                 <div class="layui-card-body" pad15>
 
                     <!-- <div class="layui-tab"> -->
@@ -14,13 +13,14 @@
                                 <!-- 检索 -->
                                 <div class="layui-form layui-card-header layuiadmin-card-header-auto">
                                     <div class="layui-form-item">
+
                                         <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.Course}</label>
+                                            <label class="layui-form-label">{$Think.lang.BizType}</label>
                                             <div class="layui-input-inline">
-                                                <select name="course_id"  lay-reqText="Please Select Category">
+                                                <select name="biz_type"  lay-reqText="Please Select Biz Type" lay-search>
                                                     <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    {foreach $course_list as $key=>$value}
-                                                    <option value="{$value.id}" >{$value.name}</option>
+                                                    {foreach $biz_type as $key=>$value}
+                                                    <option value="{$value.id}" >{$value.text}</option>
                                                     {/foreach}
                                                 </select>
                                             </div>
@@ -29,7 +29,7 @@
                                         <div class="layui-inline">
                                             <label class="layui-form-label">{$Think.lang.Student}</label>
                                             <div class="layui-input-inline">
-                                                <select name="custom_uid"  lay-reqText="Please Select Category" lay-search>
+                                                <select name="user_id"  lay-reqText="Please Select Category" lay-search>
                                                     <option value="">{$Think.lang.PleaseSelect}</option>
                                                     {foreach $student_list as $key=>$value}
                                                     <option value="{$value.id}" >{$value.name}</option>
@@ -39,43 +39,12 @@
                                         </div>
 
                                         <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.Teacher}</label>
-                                            <div class="layui-input-inline">
-                                                <select name="teacher_uid"  lay-reqText="Please Select Category">
-                                                    <option value="">{$Think.lang.PleaseSelect}</option>
-                                                    {foreach $teacher_list as $key=>$value}
-                                                    <option value="{$value.id}" >{$value.name}</option>
-                                                    {/foreach}
-                                                </select>
-                                            </div>
-                                        </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.UnlimitedNumber}</label>
-                                            <div class="layui-input-inline">
-                                                <select name="is_unlimited_number"  lay-reqText="Please Select Unlimited Number">
-                                                    <option value="-1">{$Think.lang.PleaseSelect}</option>
-                                                    <option value="0" >{$Think.lang.Limited}</option>
-                                                    <option value="1" >{$Think.lang.Unlimited}</option>
-                                                    {/foreach}
-                                                </select>
-                                            </div>
-                                        </div>
-
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.AppointmentTime}:</label>
+                                            <label class="layui-form-label">{$Think.lang.CreateTime}:</label>
                                             <div class="layui-input-inline">
                                                 <input type="text" class="layui-input" id="create_time" name="create_time"
-                                                       autocomplete="off" placeholder="时间" value="{$time|default=''}">
+                                                       autocomplete="off" placeholder="operation time" value="{$time|default=''}">
                                             </div>
                                         </div>
-                                        <div class="layui-inline">
-                                            <label class="layui-form-label">{$Think.lang.ClassTime}:</label>
-                                            <div class="layui-input-inline">
-                                                <input type="text" class="layui-input" id="day" name="day"
-                                                       autocomplete="off" placeholder="时间" value="{$time|default=''}">
-                                            </div>
-                                        </div>
-
 
                                         <div class="layui-inline" wid120>
                                             <button class="layui-btn layuiadmin-btn-forum-list" lay-submit
@@ -98,24 +67,6 @@
         </div>
     </div>
 </div>
-
-<script type="text/html" id="toolbarDemo">
-    <div class="layui-btn-container">
-        <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="Add Category">Add Category</button>
-    </div>
-</script>
-<script type="text/html" id="recommendTpl">
-    <input type="checkbox" lay-filter="isRecommendSwitch" name="is_recommend" value="{{d.id}}" lay-skin="switch"
-           lay-text="√|×" {{ d.is_recommend== 1 ? 'checked' : '' }}>
-</script>
-<script type="text/html" id="showTpl">
-    <input type="checkbox" lay-filter="isShowSwitch" name="status" value="{{d.id}}" lay-skin="switch" lay-text="{$Think.lang.SignedIn}|{$Think.lang.Booked}" {{
-           d.status== 10 ? 'checked' : '' }}>
-</script>
-<script type="text/html" id="importTpl">
-    <input type="checkbox" lay-filter="isImportSwitch" name="is_import" value="{{d.id}}" lay-skin="switch"
-           lay-text="√|×" {{ d.is_import== 1 ? 'checked' : '' }}>
-</script>
 
 
 <script type="text/html" id="barAction">
@@ -158,61 +109,18 @@
             //     , layEvent: 'LAYTABLE_TIPS'
             //     , icon: 'layui-icon-tips'
             // }]
-            , title: 'Course List'
+            , title: 'Detail List'
             , cols: [[
-                // {type: 'checkbox'},
-                {field: 'id', title: 'ID', unresize: true, sort: true, width: 100},
-                // {
-                //     field: 'user_picture', title: '头像', width: 90, templet: function (res) {
-                //         return '<img src="' + res.user_picture + '" width="60" height="60" onClick="bigImg()">'
-                //     }
-                // },
-                {field: 'teacher_name', title: '{$Think.lang.Teacher}', minWidth: 120,},
-                {field: 'course_name', title: '{$Think.lang.Course}', minWidth: 220,},
+                {field: 'id', title: 'ID', unresize: true, sort: true, width: 60},
                 {field: 'student_name', title: '{$Think.lang.Student}', minWidth: 220,},
-                // {field: 'week', title: '星期几', minWidth: 120,},
-                {field: 'day', title: '{$Think.lang.Day}', minWidth: 120,},
-                {field: 'status_text', title: '{$Think.lang.Status}', minWidth: 80, templet: function (res) {
-                    if(res.status == 0){
-                        return res.status_text;
-                    }else if(res.status == 10){
-                        return "<font color='blue'>"+res.status_text+"</font>";
-                    }else{
-                        return "<font color='red'>"+res.status_text+"</font>";
-                    }
-                }},
-                {field: 'is_pay_text', title: '{$Think.lang.DeductionStatus}', width: 100,templet: function (res) {
-                    if(res.is_pay == 10){
-                        return "<font color='blue'>"+res.is_pay_text+"</font>";
-                    }else{
-                        return "<font color='red'>"+res.is_pay_text+"</font>";
-                    }
-                }},
-                {field: 'is_unlimited_number_text', title: '{$Think.lang.UnlimitedNumber}', width: 80,templet: function (res) {
-                        if(res.is_unlimited_number == 0){
-                            return "<font color='blue'>"+res.is_unlimited_number_text+"</font>";
-                        }else{
-                            return "<font color='red'>"+res.is_unlimited_number_text+"</font>";
-                        }
-                    }},
-                // {field: 'status_text', title: '{$Think.lang.Status}', templet: '#showTpl', width: 100,},
-                {field: 'start_time', title: '{$Think.lang.StartTime}', minWidth: 40,},
-                {field: 'end_time', title: '{$Think.lang.EndTime}', minWidth: 40,},
-                // {field: 'description', title: 'Description', minWidth: 120,},
-                // {field: 'user_level_name', title: '会员等级', width: 100,},
-                // {field: 'user_name', title: '姓名', minWidth: 120,},
-                // {
-                //     field: 'full_region', title: '所在区域', minWidth: 250, templet: function (res) {
-                //         let html = '';
-                //         for (let i = 0; i < res.full_region.length; i++) {
-                //             html += '<div class="table-two-line">' + res.full_region[i] + '</div>'
-                //         }
-                //         return html;
-                //     }
-                // },
-                // {field: 'is_multi_region', title: '是否多区域', width: 100,},
-                {field: 'create_time', title: '{$Think.lang.AppointmentTime}', width: 160,},
-                {title: '{$Think.lang.Open}', toolbar: '#barAction', width: 120, fixed: 'right'}
+                {field: 'before_amount', unresize: true,title: '{$Think.lang.Before}', width: 80,},
+                {field: 'change_amount', unresize: true,title: '{$Think.lang.ValueNum}', width: 80,},
+                {field: 'after_amount', unresize: true,title: '{$Think.lang.After}', width: 80,},
+                {field: 'biz_type_text', title: '{$Think.lang.BizType}', minWidth: 160,},
+                {field: 'action_text', title: '{$Think.lang.ActionText}', minWidth: 160,},
+                {field: 'remark', title: '{$Think.lang.Remark}', minWidth: 400,},
+                {field: 'create_time', title: '{$Think.lang.DeductionTime}', width: 160,},
+                // {title: '{$Think.lang.Open}', toolbar: '#barAction', width: 120, fixed: 'right'}
             ]]
             , page: true
         });

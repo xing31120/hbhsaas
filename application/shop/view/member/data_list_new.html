@@ -70,7 +70,10 @@
     <button class="layui-btn layui-btn-sm" lay-event="add" lay-text="{$Think.lang.MemberAdd}">{$Think.lang.MemberAdd}</button>
   </div>
 </script>
-
+<script type="text/html" id="showTpl">
+  <input type="checkbox" lay-filter="isShowSwitch" name="is_call" value="{{d.id}}" lay-skin="switch" lay-text="{$Think.lang.IsCallEnd}|{$Think.lang.IsCallWait}" {{
+         d.is_call== 1 ? 'checked' : '' }}>
+</script>
 <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
 <script>
 layui.config({
@@ -98,6 +101,7 @@ layui.config({
         ,{field:'phone', width:150, title: '{$Think.lang.Phone}', sort: false}
         ,{field:'card_number', width:150, title: '{$Think.lang.CardNumber}', sort: false}
         ,{field:'expiry_date', width:150, title: '{$Think.lang.ExpiryDate}', sort: false}
+       ,{field: 'is_call', title: '{$Think.lang.IsCall}', templet: '#showTpl', minWidth: 150,}
         // ,{field:'status', width:80,title: '状态',templet:"#buttonTpl"}
         // ,{fixed: 'right', title:'操作', toolbar: '#barDemo', width:150}
         , {title: '{$Think.lang.Operate}', width: 120, toolbar: '#barAction', fixed: 'right',}
@@ -166,36 +170,49 @@ layui.config({
     }
     //监听行工具事件
     table.on('tool(member-content-list)', function(obj){
-      var params = obj.data;
-      switch (obj.event) {
-      case 'edit':
-          setEdit(obj.data.id);
-          break;
-      case 'del':
-          layer.confirm('{$Think.lang.AreYouSureDel}', function(index){
-              //向服务端发送删除指令
-              $.ajax({
-                  "url":"{:url('del')}",
-                  "data":{"id":obj.data.id},
-              }).done(function (rs) {
-                  layer.msg(rs.msg);
-                  layer.msg(rs.msg);
-                  if(rs.code==0){
-                    obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
-                    layer.close(index);
-                    table.reload('member-content-list');
-                  }
-              }).fail(function (rs) {
-                  layer.msg(rs.msg);
-              });
-          });
-          break;
-      };
-
-      });
-
+        var params = obj.data;
+        switch (obj.event) {
+        case 'edit':
+            setEdit(obj.data.id);
+            break;
+        case 'del':
+            layer.confirm('{$Think.lang.AreYouSureDel}', function(index){
+                //向服务端发送删除指令
+                $.ajax({
+                    "url":"{:url('del')}",
+                    "data":{"id":obj.data.id},
+                }).done(function (rs) {
+                    layer.msg(rs.msg);
+                    layer.msg(rs.msg);
+                    if(rs.code==0){
+                      obj.del(); //删除对应行（tr）的DOM结构，并更新缓存
+                      layer.close(index);
+                      table.reload('member-content-list');
+                    }
+                }).fail(function (rs) {
+                    layer.msg(rs.msg);
+                });
+            });
+            break;
+        };
 
     });
+
+    form.on('switch(isShowSwitch)', function (obj) {
+        let status = 0;
+        if (obj.elem.checked) {
+            status = 1;
+        }
+        $.ajax({
+            "url": "{:url('ajaxSetShow')}",
+            "data": {"id": obj.value, "is_call": status},
+        }).done(function (rs) {
+            layer.msg(rs.msg);
+        }).fail(function (rs) {
+            layer.msg('操作失败');
+        });
+    });
+});
 
 layui.use('laydate', function () {
     var laydate = layui.laydate;

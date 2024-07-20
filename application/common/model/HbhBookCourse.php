@@ -226,7 +226,7 @@ class HbhBookCourse extends SingleSubData {
      * @param $is_pay
      * @return array
      */
-    function payByBoosCourseId($id, $is_pay = self::is_pay_false){
+    function payByBoosCourseId($id, $is_pay = self::is_pay_false, $action=''){
         $info = $this->info($id);
         $uid = $info['custom_uid'] ?? 0;
         $info_course = (new HbhCourse())->info($info['course_id']);
@@ -251,7 +251,7 @@ class HbhBookCourse extends SingleSubData {
         }
         // 如果是未签到的用户, 要扣除余额
         $pay_fee = $info_course['course_fees'] ?? 0;
-        $res = (new HbhUsers())->reduceWallet($uid, $pay_fee);
+        $res = (new HbhUsers())->reduceWallet($uid, $id, $pay_fee, $action);
         if(!$res['result']){
             return errorReturn($res);
         }
