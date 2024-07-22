@@ -234,9 +234,9 @@ class HbhBookCourse extends SingleSubData {
         if(empty($userInfo)){
             return errorReturn(Lang::get('UserNotFound'));
         }
-//        if($is_pay == HbhBookCourse::is_pay_false) {
-//            return successReturn(Lang::get('OperateSuccess'.'aa')); //. json_encode($course_data)
-//        }
+        if($is_pay == HbhBookCourse::is_pay_false) {
+            return successReturn(Lang::get('OperateSuccess'.'aa')); //. json_encode($course_data)
+        }
         //已经付费了, 不扣除额度
         if($info['is_pay'] == HbhBookCourse::is_pay_true) {
             return successReturn(Lang::get('OperateSuccess').'bb'); //. json_encode($course_data)
