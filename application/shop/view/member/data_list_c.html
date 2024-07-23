@@ -38,7 +38,13 @@
         <div class="layui-inline">
           <label class="layui-form-label">{$Think.lang.FullNumber}</label>
           <div class="layui-input-inline">
-            <input type="text" name="name" placeholder="name" autocomplete="off" class="layui-input">
+<!--            <input type="text" name="name" placeholder="name" autocomplete="off" class="layui-input">-->
+            <select name="id"  lay-reqText="Please Select User" lay-search>
+              <option value="">{$Think.lang.PleaseSelect}</option>
+              {foreach $student_list as $key=>$value}
+              <option value="{$value.id}" >{$value.name}</option>
+              {/foreach}
+            </select>
           </div>
         </div>
         <div class="layui-inline">

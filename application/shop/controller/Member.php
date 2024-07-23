@@ -151,6 +151,8 @@ class Member extends Base {
     //数据列表
     public function dataListC(){
         $this->title = '会员信息';
+        $student_list = (new HbhUsers())->getAllStudentList();
+        $this->assign('student_list', $student_list);
         return $this->fetch();
     }
     public function dataListNew(){
@@ -169,6 +171,9 @@ class Member extends Base {
 //pj($data);
         $limit = 10;//每页显示的数量
         $op['where'][] = ['role','=',$data['role']];
+        if(isset($data['id']) && !empty($data['id']) ){
+            $op['where'][] = ['id','=', $data['id']];
+        }
         if(isset($data['email']) && $data['email'] != ''){
             $op['where'][] = ['email','like',"%{$data['email']}%"];
         }
