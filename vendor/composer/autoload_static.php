@@ -82,6 +82,7 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
             'Psr\\Log\\' => 8,
             'Psr\\Http\\Message\\' => 17,
             'PhpAmqpLib\\' => 11,
+            'PayBy\\' => 6,
             'ParagonIE\\ConstantTime\\' => 23,
             'PHPMailer\\PHPMailer\\' => 20,
         ),
@@ -228,6 +229,10 @@ class ComposerStaticInit008936e47d53bd8fd9050ab0882cf01d
         'PhpAmqpLib\\' => 
         array (
             0 => __DIR__ . '/..' . '/php-amqplib/php-amqplib/PhpAmqpLib',
+        ),
+        'PayBy\\' => 
+        array (
+            0 => __DIR__ . '/..' . '/payby/payby-php/lib',
         ),
         'ParagonIE\\ConstantTime\\' => 
         array (

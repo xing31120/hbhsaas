@@ -3,7 +3,7 @@
         'name' => 'topthink/think',
         'pretty_version' => 'dev-main',
         'version' => 'dev-main',
-        'reference' => 'ab374d005da4bd1589cb425f5ca5ef4cc81cc467',
+        'reference' => '13d751047193f40e3dba999b12e5f038f772f0ca',
         'type' => 'project',
         'install_path' => __DIR__ . '/../../',
         'aliases' => array(),
@@ -1294,6 +1294,15 @@
             'aliases' => array(),
             'dev_requirement' => false,
         ),
+        'payby/payby-php' => array(
+            'pretty_version' => '1.0.1',
+            'version' => '1.0.1.0',
+            'reference' => 'b46e6085b863d2767681e9633fbba1b709032c50',
+            'type' => 'library',
+            'install_path' => __DIR__ . '/../payby/payby-php',
+            'aliases' => array(),
+            'dev_requirement' => false,
+        ),
         'php-amqplib/php-amqplib' => array(
             'pretty_version' => 'v2.12.3',
             'version' => '2.12.3.0',
@@ -1465,7 +1474,7 @@
         'topthink/think' => array(
             'pretty_version' => 'dev-main',
             'version' => 'dev-main',
-            'reference' => 'ab374d005da4bd1589cb425f5ca5ef4cc81cc467',
+            'reference' => '13d751047193f40e3dba999b12e5f038f772f0ca',
             'type' => 'project',
             'install_path' => __DIR__ . '/../../',
             'aliases' => array(),
