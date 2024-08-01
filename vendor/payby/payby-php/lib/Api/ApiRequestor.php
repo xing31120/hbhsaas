@@ -380,6 +380,7 @@ class ApiRequestor
                 throw new Error\Api('Private key file not found at: ' . PayBy::$privateKeyPath);
             }
             PayBy::$privateKey = file_get_contents(PayBy::$privateKeyPath);
+            PayBy::$privateKey = openssl_get_privatekey(PayBy::$privateKey);
         }
         return PayBy::$privateKey;
     }

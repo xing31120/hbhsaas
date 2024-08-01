@@ -25,10 +25,10 @@ class Order extends Base{
 
     public function __construct(){
         parent::__construct();
-        $allInPayClient = new AllInPayClient();
-        $config = $allInPayClient->getConfig();
-        $this->accountSetNo = $config['account_set_no'];
-        $this->escrowUserId = $config['escrow_user_id'];
+//        $allInPayClient = new AllInPayClient();
+//        $config = $allInPayClient->getConfig();
+//        $this->accountSetNo = $config['account_set_no'];
+//        $this->escrowUserId = $config['escrow_user_id'];
 
         $params = input();
         if( empty($params['bizUid']) ){
@@ -37,160 +37,57 @@ class Order extends Base{
     }
 
 
-    //确认支付（后台+短信验证码确认)
-    function payByBackSMS(){
-        $data = input();
-        $orderEntryService =new OrderEntryService();
-
-        $appUid         = $this->appUid;    //默认1000
-        $payerBizUid    = $data['bizUid']; //付款人biz_uid
-        $payerId        = $appUid . $payerBizUid;
-        $consumerIp     = $data['consumerIp'] ?? Request::ip();
-        $verificationCode = $data['verificationCode'] ?? '';
-
-        $param['bizOrderNo'] = $data['bizOrderNo'] ?? '';
-        $param['tradeNo'] = $data['tradeNo'] ?? '';
-        $param['bizUserId'] = $payerId;;
-        $param['consumerIp'] = $consumerIp;
-        $param['verificationCode'] = $verificationCode;
-
-        return $orderEntryService->payByBackSMS($appUid, $param);
-    }
-
-    //确认支付（前台+短信验证码确认)
-    function payBySMS(){
-        $data = input();
-        $orderEntryService =new OrderEntryService();
-        if( empty($data["bizUid"]) || empty($data["bizOrderNo"]) ){
-            return errorReturn('参数错误',SysEnums::ApiParamMissing);
-        }
-
-        $appUid         = $this->appUid;    //默认1000
-        $payerBizUid    = $data['bizUid']; //付款人biz_uid
-        $payerId        = $appUid . $payerBizUid;
-        $consumerIp     = $data["consumerIp"] ?? '';
-
-        $param['bizOrderNo'] = $data['bizOrderNo'] ?? '';
-        $param['bizUserId'] = $payerId;;
-        $param['consumerIp'] = $consumerIp;
-
-        return $orderEntryService->payBySMS($appUid, $param);
-    }
-
-    function depositApply(){
-        $data = input();
-
-        $orderEntryService =new OrderEntryService();
-//var_dump($data);exit;
-        $appUid         = $this->appUid;    //默认1000
-        $payerBizUid    = $data['bizUid']; //付款人biz_uid
-        $payerId        = $appUid . $payerBizUid;
-        $escrowUserId   = isset($data['escrowUserId']) ? $appUid.$data['escrowUserId'] : $this->escrowUserId; //收款的中间账户
-        $payMethodKey   = $data['payMethodKey'] ?: 'QUICKPAY_VSP';   //支付方式  QUICKPAY_VSP 快捷支付
-        $tradeCode      = 3001; //代收消费金
-        $accountSetNo   = $this->accountSetNo;
-
-        $param['bizOrderNo'] = $data['bizOrderNo'] ?: "SX".date("YmdHis");   //代收订单号
-        $param['bizUserId'] = $payerId;;
-//        $param["tradeCode"] = 3001;
-        $param["amount"]        = $data['amount'];
-        $param["frontUrl"]      = $data['bizFrontUrl'] ?? '';
-        $param["backUrl"]       = $this->domain .'AllinPay/notifyDepositApply';
-        $param["bizFrontUrl"]   = $data['bizFrontUrl'] ?? '';
-        $param["bizBackUrl"]    = $data['bizBackUrl']  ?? '';
-        $param['extendInfo']    = $appUid;
-        $param['escrowUserId']  = $escrowUserId;
-        $param["showUserName"]  = $data['showUserName']  ?? '';
-        $param["showOrderNo"]  = $data['showOrderNo']  ?? '';
-
-        //收银宝子商户号, 需要走线下流程申请  测试环境目前有3个 //56039305714Z6HU   56039305714Z6HV     56039305714Z6J3
-        $payMethod = $this->payMethod($payMethodKey, $data);
-        return $orderEntryService->depositApply($appUid, $param, $payMethod);
-    }
-
-    //托管代收订单
-    function agentCollectApply(){
-        $data = input();
-
-        $orderEntryService =new OrderEntryService();
-
-        $appUid         = $this->appUid;    //默认1000
-        $payerBizUid    = $data['bizUid']; //付款人biz_uid
-        $payerId        = $appUid . $payerBizUid;
-        $escrowUserId   = isset($data['escrowUserId']) ? $appUid.$data['escrowUserId'] : $this->escrowUserId; //收款的中间账户
-        $payMethodKey   = $data['payMethodKey'] ?? 'QUICKPAY_VSP';   //支付方式  QUICKPAY_VSP 快捷支付
-        $tradeCode      = 3001; //代收消费金
-        $accountSetNo   = $this->accountSetNo;
-
-        $param['bizOrderNo']    = $data['bizOrderNo'] ?? "SX".date("YmdHis");   //代收订单号
-        $param['payerId']       = $payerId;;
-        $param["tradeCode"]     = 3001;
-        $param["amount"]        = $data['amount'];
-        $param["frontUrl"]      = $data['bizFrontUrl'] ?? '';
-        $param["backUrl"]       = $this->domain .'AllinPay/notifyDepositApply';
-        $param["bizFrontUrl"]   = $data['bizFrontUrl'] ?? '';
-        $param["bizBackUrl"]    = $data['bizBackUrl']  ?? '';
-        $param["validateType"]  = $data['validateType']  ?? 0;
-        $param['extendInfo']    = $appUid;
-        $param["showUserName"]  = $data['showUserName']  ?? '';
-        $param["showOrderNo"]   = $data['showOrderNo']  ?? '';
-        $param['escrowUserId']  = $escrowUserId;
-//var_dump($param);exit;
-        //收银宝子商户号, 需要走线下流程申请  测试环境目前有3个 //56039305714Z6HU   56039305714Z6HV     56039305714Z6J3
-        $payMethod = $this->payMethod($payMethodKey, $data);
-//var_dump($param);exit;
-//echo json_encode($payMethod);exit;
-        return $orderEntryService->agentCollectApply($appUid, $param, $payMethod);
-    }
-
     //单条托管代付
-    function signalAgentPay(){
-        $data = input();
+    function notifyPay(){
+        $input = input();
 
-        $orderProcessService = new OrderProcessService();
+        $randString = getRandomString(4);
+        $data['merchantOrderNo']  = $input['acquireOrder ']['merchantOrderNo '] ?: "PAY".date("YmdHis").$randString;  //分账订单号
 
-        $tradeCode      = 4001; //代付消费金
-        $accountSetNo   = $this->accountSetNo;
-        $appUid         = $this->appUid;    //默认1000
-
-        $escrowUserId   = isset($data['escrowUserId']) ? $appUid.$data['escrowUserId'] : $this->escrowUserId; //收款的中间账户
-        $bizOrderProcessNo  = $data['bizOrderNo'] ?: "PRS".date("YmdHis");  //分账订单号
-        $amount             = $data['amount'];      //分账总金额
-//        $collectPayList = json_decode(html_entity_decode($data['collectPayList']), true);
-//        $splitRuleList  = json_decode(html_entity_decode($data['splitRuleList']), true);
-        $collectPayList = is_array($data['collectPayList']) ? $data['collectPayList'] : json_decode(html_entity_decode($data['collectPayList']), true);
-        $splitRuleList = is_array($data['splitRuleList']) ? $data['splitRuleList'] : json_decode(html_entity_decode($data['splitRuleList']), true);
-        foreach ($splitRuleList as &$row){
-            if($row['bizUserId'] == -1){
-                $row['bizUserId'] = '#yunBizUserId_B2C#';
-                $row['accountSetNo'] = '100001';
-            }
-            elseif($row['bizUserId'] == -10){
-                $row['bizUserId'] = -10;
-            }
-            else{
-                $row['bizUserId'] = $appUid.$row['bizUserId'];
-            }
-            $row['fee'] = 0;
-        }
-//var_dump($splitRuleList);exit;
-
-
-        $param["collectPayList"] = $collectPayList;
-        $param["splitRuleList"] = $splitRuleList;
-        $param['bizOrderNo'] = $bizOrderProcessNo;
-        $param["tradeCode"] = $tradeCode;
-        $param["amount"] = $amount;
-        $param["fee"] = $data['fee']?? 0;
-        $param["backUrl"] = $this->domain .'AllinPay/notifyAgentPay';
-        $param["bizBackUrl"]    = $data['bizBackUrl']  ?? '';
-        $param['extendInfo'] = $appUid;
-        $param['extendParams'] = $data['extendParams'];
-        //代收的收款人的账户和账户集编号
-        $param["bizUserId"] = $escrowUserId;
-        $param["accountSetNo"] = $this->accountSetNo;
-
-        return $orderProcessService->signalAgentPay($appUid, $param, $collectPayList, $splitRuleList);
+//        $orderProcessService = new OrderProcessService();
+//
+//        $tradeCode      = 4001; //代付消费金
+//        $accountSetNo   = $this->accountSetNo;
+//        $appUid         = $this->appUid;    //默认1000
+//
+//        $escrowUserId   = isset($data['escrowUserId']) ? $appUid.$data['escrowUserId'] : $this->escrowUserId; //收款的中间账户
+//        $bizOrderProcessNo  = $data['bizOrderNo'] ?: "PRS".date("YmdHis");  //分账订单号
+//        $amount             = $data['amount'];      //分账总金额
+////        $collectPayList = json_decode(html_entity_decode($data['collectPayList']), true);
+////        $splitRuleList  = json_decode(html_entity_decode($data['splitRuleList']), true);
+//        $collectPayList = is_array($data['collectPayList']) ? $data['collectPayList'] : json_decode(html_entity_decode($data['collectPayList']), true);
+//        $splitRuleList = is_array($data['splitRuleList']) ? $data['splitRuleList'] : json_decode(html_entity_decode($data['splitRuleList']), true);
+//        foreach ($splitRuleList as &$row){
+//            if($row['bizUserId'] == -1){
+//                $row['bizUserId'] = '#yunBizUserId_B2C#';
+//                $row['accountSetNo'] = '100001';
+//            }
+//            elseif($row['bizUserId'] == -10){
+//                $row['bizUserId'] = -10;
+//            }
+//            else{
+//                $row['bizUserId'] = $appUid.$row['bizUserId'];
+//            }
+//            $row['fee'] = 0;
+//        }
+////var_dump($splitRuleList);exit;
+//
+//
+//        $param["collectPayList"] = $collectPayList;
+//        $param["splitRuleList"] = $splitRuleList;
+//        $param['bizOrderNo'] = $bizOrderProcessNo;
+//        $param["tradeCode"] = $tradeCode;
+//        $param["amount"] = $amount;
+//        $param["fee"] = $data['fee']?? 0;
+//        $param["backUrl"] = $this->domain .'AllinPay/notifyAgentPay';
+//        $param["bizBackUrl"]    = $data['bizBackUrl']  ?? '';
+//        $param['extendInfo'] = $appUid;
+//        $param['extendParams'] = $data['extendParams'];
+//        //代收的收款人的账户和账户集编号
+//        $param["bizUserId"] = $escrowUserId;
+//        $param["accountSetNo"] = $this->accountSetNo;
+//
+//        return $orderProcessService->signalAgentPay($appUid, $param, $collectPayList, $splitRuleList);
 
     }
 
@@ -230,34 +127,6 @@ class Order extends Base{
         }
 
         return $orderRefundService->refund($appUid, $param);
-    }
-
-    //提现
-    function withdraw(){
-        $data = input();
-        $orderWithdrawService = new OrderWithdrawService();
-
-        $appUid         = $this->appUid;
-        $bizUid         = $data['bizUid']; //付款人biz_uid
-        $bizUserId      = $appUid . $bizUid;
-
-        $param['bizUid']        = $data['bizUid'];
-        $param['bizOrderNo']    = $data['bizOrderNo'] ?? "TX".date("YmdHis");   //提现订单号
-        $param['bizUserId']     = $bizUserId;
-        $param['accountSetNo']  = $this->accountSetNo;
-        $param["amount"]        = $data['amount']  ?? 0;
-        $param["fee"]           = $data['fee']  ?? 0;
-        $param["backUrl"]       = $this->domain .'AllinPay/notifyWithdraw';
-        $param["bizBackUrl"]    = $data['bizBackUrl']  ?? '';
-        $param["bankCardNo"]    = $data['bankCardNo']  ?? '';
-        $param["bankCardPro"]   = $data['bankCardPro']  ?? 0;
-        $param['withdrawType']  = $data['withdrawType'] ?? '0';
-        $param["source"]        = $data['source']  ?? 1;
-        $param['extendInfo']    = $appUid;
-        $param['validateType']  = 0;    //0:无验证 1:短信 2:支付密码
-        $param['extendParams'] = $data['extendParams'] ?? '';
-
-        return $orderWithdrawService->withdraw($appUid, $param);
     }
 
     //查询订单状态
