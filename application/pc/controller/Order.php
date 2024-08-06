@@ -71,6 +71,7 @@ class Order extends Base {
 
         $tokenUrl = $rrr['body']['interActionParams']['tokenUrl'] ?? '';
         if(empty($tokenUrl)){
+pj(['tokenUrl' => $tokenUrl,'data' => $order_data, 'rrr' => $rrr], 0);
             $this->error("error");
         }
 
