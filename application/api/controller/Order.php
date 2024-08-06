@@ -16,7 +16,9 @@ use think\facade\Config;
 use app\api\controller\Base;
 use think\Db;
 use think\facade\Env;
+use think\facade\Log;
 use think\facade\Request;
+use think\facade\Hook;
 
 class Order extends Base{
 
@@ -30,17 +32,20 @@ class Order extends Base{
 //        $this->accountSetNo = $config['account_set_no'];
 //        $this->escrowUserId = $config['escrow_user_id'];
 
-        $params = input();
-        if( empty($params['bizUid']) ){
-            return apiOutError('参数错误',SysEnums::ApiParamMissing);
-        }
+//        $params = input();
+//        if( empty($params['bizUid']) ){
+//            return apiOutError('参数错误',SysEnums::ApiParamMissing);
+//        }
     }
 
 
-    //单条托管代付
+    //支付回调
     function notifyPay(){
         $input = input();
-
+        Hook::listen('app_init', $input);
+$str = "notifyPay--------";
+Log::notice($str);
+pj($input);
         $randString = getRandomString(4);
         $data['merchantOrderNo']  = $input['acquireOrder ']['merchantOrderNo '] ?: "PAY".date("YmdHis").$randString;  //分账订单号
 

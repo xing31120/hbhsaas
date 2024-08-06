@@ -4,6 +4,9 @@
 namespace app\cron\controller;
 
 
+use think\facade\Config;
+use think\facade\Env;
+
 class Tasktest extends Base{
 
     function aaa(){
@@ -11,6 +14,7 @@ class Tasktest extends Base{
     }
 
     function order(){
+        $user_id = 123;
         $partner_id = "200010213685";
         \PayBy\PayBy::$caBundle=__DIR__ . '/cert/cacert.pem';
         \PayBy\PayBy::setPartnerId($partner_id);
@@ -22,12 +26,15 @@ class Tasktest extends Base{
 //pj(1111);
         $input = input();
         //订单号
+
+
+        $domain_api = 'http://' . Env::get('route.domain_api').'.' . Env::get('route.domain_top');
+        $domain_pc = 'http://' . Env::get('route.domain_pc').'.' . Env::get('route.domain_top');
+//pj($domain);
         $randString = getRandomString(4);
         $order_no  =  "PAY".date("YmdHis").$randString;
         $subject = 'subject_1';
-        $amount = 0.3;
-
-
+        $amount = 3;
         $data = [
             "merchantOrderNo" => $order_no,
             "subject" => $subject,
@@ -35,11 +42,13 @@ class Tasktest extends Base{
                 'currency' => 'AED',
                 'amount' => $amount,
             ],
-            "paySceneCode" => "DYNQR",
-            "notifyUrl" => "/order/notifyPay",
-            "accessoryContent" => "aaaa_4",
+            "notifyUrl" => $domain_api."/order/notifyPay",
+            "paySceneCode" => "PAYPAGE",
+            "redirectUrl " => $domain_pc."DYNQR",
+            "customerId  " => $user_id,
+//            "accessoryContent" => "aaaa_4",
         ];
         $rrr = \PayBy\Api\Order::placeOrder($data);
-pj([$rrr, $data, ]);
+pj(["data" => $data ,'result' => $rrr ]);
     }
 }

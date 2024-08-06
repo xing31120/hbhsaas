@@ -14,7 +14,7 @@ use think\Request;
 use think\exception\HttpResponseException;
 use think\facade\Config;
 
-class Base  extends Controller{ 
+class Base  extends Controller{
 
     // 缓存key值
     const USER_LOGIN_NAME = 'api_uid_';
@@ -51,7 +51,7 @@ class Base  extends Controller{
 //            //sign 认证
 //            $request = $this->signAuth($request->param(),$controller,$action);
 //        }
-        $request = $this->signAuth($request->param(),$controller,$action);
+//        $request = $this->signAuth($request->param(),$controller,$action);
     }
 
     public function signAuth($request,$controller,$action){
@@ -73,7 +73,7 @@ class Base  extends Controller{
                 // echo $sign;//测试用
                 $result = errorReturn('sign验证失败',SysEnums::AffairError, $sign);
                 abort(response($result,200,[],'json'));
-            }        
+            }
         }
         return $request;
     }
