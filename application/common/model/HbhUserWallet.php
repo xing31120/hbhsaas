@@ -42,6 +42,7 @@ class HbhUserWallet extends SingleSubData {
 
     }
 
+    // 获取用户钱包
     public function getWalletInfo($userId){
         $row = $this->checkWalletInfo($userId);
 //pj([111,$row]);

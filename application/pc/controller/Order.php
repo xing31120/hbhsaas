@@ -3,7 +3,7 @@ namespace app\pc\controller;
 
 
 
-use app\common\model\HbhOrder;
+use app\common\model\HbhOrderPay;
 use app\common\model\HbhProduct;
 use app\common\model\HbhUsers;
 use think\Db;
@@ -59,7 +59,7 @@ class Order extends Base {
 
         $order_data['shop_id']  = $shop_id;
         $order_data['order_sn']  = $order_sn;
-        $order_data['order_status']  = HbhOrder::order_status_wait;
+        $order_data['order_status']  = HbhOrderPay::order_status_wait;
         $order_data['user_id']  = $user_id;
         $order_data['product_id']  = $product_id;
         $order_data['pay_channel']  = 'PAYPAGE';
@@ -67,7 +67,7 @@ class Order extends Base {
         $order_data['total_amount']  = $amount;
         $order_data['pay_time'] = $order_data['create_time'] = $order_data['update_time'] = time();
 
-        $order_data['id'] = (new HbhOrder())->insert($order_data);
+        $order_data['id'] = (new HbhOrderPay())->insert($order_data);
 
         $tokenUrl = $rrr['body']['interActionParams']['tokenUrl'] ?? '';
         if(empty($tokenUrl)){

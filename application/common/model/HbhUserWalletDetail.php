@@ -27,15 +27,15 @@ class HbhUserWalletDetail extends SingleSubData {
     ];
 
 
-    const pay_passageway_recharge = 1;
-    const pay_passageway_balance = 2;
+    const pay_passageway_online = 1;  //充值
+    const pay_passageway_balance = 2;   //余额
 
 
     const fundPassageway = [
-        self::pay_passageway_recharge => [
-            'value' => self::pay_passageway_recharge,
-            'label' => 'Recharge',
-            'label_cn' => '充值',
+        self::pay_passageway_online => [
+            'value' => self::pay_passageway_online,
+            'label' => 'Online',
+            'label_cn' => '线上',
         ],
         self::pay_passageway_balance => [
             'value' => self::pay_passageway_balance,
@@ -152,7 +152,8 @@ class HbhUserWalletDetail extends SingleSubData {
     ];
 
 
-    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '', $beforeBalance = 0, $afterBalance = 0, $bizId='',$action='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
+    function addDetail($uid, $amount, $fundType,$walletType=self::wallet_type_class, $remark = '',
+        $beforeBalance = 0, $afterBalance = 0, $bizId='',$action='', $bizType=self::bizTypeDeduction, $payPassageway = self::pay_passageway_balance){
         $admin_id = session('uid');
         $admin_id = $admin_id ?: 0;
         $state = self::fundType[$fundType]['is_income'] ?? -1;
@@ -203,8 +204,9 @@ class HbhUserWalletDetail extends SingleSubData {
     /**
      * Notes: 更新用户钱包和钱包明细
      * @param $uid
-     * @param $fundType
-     * @param null $amount
+     * @param float $amount
+     * @param int $fundType
+     * @param int $walletType
      * @param string $remark
      * @param string $bizOrderSn
      * @param int $bizType
@@ -213,7 +215,8 @@ class HbhUserWalletDetail extends SingleSubData {
      * User: songX
      * Date: 2024/2/20 17:35:26
      */
-    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '', $bizOrderSn='', $action='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
+    function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '',
+        $bizOrderSn='', $action='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
         if($amount === null){
             return errorReturn(Lang::get('PleaseEnterTheAmount'));
         }

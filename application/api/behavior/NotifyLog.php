@@ -26,6 +26,8 @@ class NotifyLog{
         $notifyData['notify_data'] = json_encode($data);
         $shopUid = 0;
         $notifyData['shop_id'] = $shopUid;
+        $notifyData['created_at'] = date("Y-m-d H:i:s");
+        $notifyData['updated_at'] = date("Y-m-d H:i:s");
 
         $payNotifyLog = new HbhNotifyLog($notifyData);
         $rs = $payNotifyLog->saveData($notifyData);

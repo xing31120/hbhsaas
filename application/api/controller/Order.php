@@ -3,6 +3,8 @@
 
 namespace app\api\controller;
 
+use app\common\model\HbhNotifyLog;
+use app\common\model\HbhOrderPay;
 use app\common\model\OrderEntry;
 use app\common\service\AllInPay\AllInPayClient;
 use app\common\service\AllInPay\AllInPayOrderService;
@@ -19,6 +21,7 @@ use think\facade\Env;
 use think\facade\Log;
 use think\facade\Request;
 use think\facade\Hook;
+use think\facade\Session;
 
 class Order extends Base{
 
@@ -27,73 +30,42 @@ class Order extends Base{
 
     public function __construct(){
         parent::__construct();
-//        $allInPayClient = new AllInPayClient();
-//        $config = $allInPayClient->getConfig();
-//        $this->accountSetNo = $config['account_set_no'];
-//        $this->escrowUserId = $config['escrow_user_id'];
-
-//        $params = input();
-//        if( empty($params['bizUid']) ){
-//            return apiOutError('参数错误',SysEnums::ApiParamMissing);
-//        }
     }
 
 
+    function notifyCheck(){
+        $yunClient = new AllInPayClient();
+        $data = input();
+        Hook::listen('app_init', $data);
+
+$row = HbhNotifyLog::get(42)->toArray();
+$data = json_decode($row['notify_data'], true);
+//echo json_encode($data);exit;
+
+        $data = $data['acquireOrder'] ?? [];
+        return $data;
+    }
+
     //支付回调
     function notifyPay(){
-        $input = input();
-        Hook::listen('app_init', $input);
-$str = "notifyPay--------";
-Log::notice($str);
-pj($input);
-        $randString = getRandomString(4);
-        $data['merchantOrderNo']  = $input['acquireOrder ']['merchantOrderNo '] ?: "PAY".date("YmdHis").$randString;  //分账订单号
-
-//        $orderProcessService = new OrderProcessService();
-//
-//        $tradeCode      = 4001; //代付消费金
-//        $accountSetNo   = $this->accountSetNo;
-//        $appUid         = $this->appUid;    //默认1000
-//
-//        $escrowUserId   = isset($data['escrowUserId']) ? $appUid.$data['escrowUserId'] : $this->escrowUserId; //收款的中间账户
-//        $bizOrderProcessNo  = $data['bizOrderNo'] ?: "PRS".date("YmdHis");  //分账订单号
-//        $amount             = $data['amount'];      //分账总金额
-////        $collectPayList = json_decode(html_entity_decode($data['collectPayList']), true);
-////        $splitRuleList  = json_decode(html_entity_decode($data['splitRuleList']), true);
-//        $collectPayList = is_array($data['collectPayList']) ? $data['collectPayList'] : json_decode(html_entity_decode($data['collectPayList']), true);
-//        $splitRuleList = is_array($data['splitRuleList']) ? $data['splitRuleList'] : json_decode(html_entity_decode($data['splitRuleList']), true);
-//        foreach ($splitRuleList as &$row){
-//            if($row['bizUserId'] == -1){
-//                $row['bizUserId'] = '#yunBizUserId_B2C#';
-//                $row['accountSetNo'] = '100001';
-//            }
-//            elseif($row['bizUserId'] == -10){
-//                $row['bizUserId'] = -10;
-//            }
-//            else{
-//                $row['bizUserId'] = $appUid.$row['bizUserId'];
-//            }
-//            $row['fee'] = 0;
-//        }
-////var_dump($splitRuleList);exit;
-//
-//
-//        $param["collectPayList"] = $collectPayList;
-//        $param["splitRuleList"] = $splitRuleList;
-//        $param['bizOrderNo'] = $bizOrderProcessNo;
-//        $param["tradeCode"] = $tradeCode;
-//        $param["amount"] = $amount;
-//        $param["fee"] = $data['fee']?? 0;
-//        $param["backUrl"] = $this->domain .'AllinPay/notifyAgentPay';
-//        $param["bizBackUrl"]    = $data['bizBackUrl']  ?? '';
-//        $param['extendInfo'] = $appUid;
-//        $param['extendParams'] = $data['extendParams'];
-//        //代收的收款人的账户和账户集编号
-//        $param["bizUserId"] = $escrowUserId;
-//        $param["accountSetNo"] = $this->accountSetNo;
-//
-//        return $orderProcessService->signalAgentPay($appUid, $param, $collectPayList, $splitRuleList);
-
+        $data = $this->notifyCheck();
+//pj($data);
+        if(empty($data)){
+            exit('error1');
+        }
+        Db::startTrans();
+        $reserved = $data['reserved'] ?? 'sid_1';
+        $sid = substr($reserved, 4, 5);
+//pj($sid);
+        Session::set('hbh_shop_id', intval($sid));
+        $order_model = new HbhOrderPay();
+        $res = $order_model->payComplete($data['merchantOrderNo'], $data['orderNo']);
+        if(!$res['result'])  {
+            Db::rollback();
+            exit($res['msg']);
+        }
+        Db::commit();
+        exit('success');
     }
 
     //退款
