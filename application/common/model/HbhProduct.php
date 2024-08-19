@@ -7,7 +7,7 @@ class HbhProduct extends SingleSubData {
     public $mcName = 'hbh_product_';
 //    public $selectTime = 600;
 //    public $mcTimeOut = 600;
-    public $mcOpen = false;
+    public $mcOpen = true;
 
 
 }

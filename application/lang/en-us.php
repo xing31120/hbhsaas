@@ -184,5 +184,9 @@ return [
     'ActionText' => 'Operation Address',
     'DeductionTime' => 'Deduction Time',
     'Remark' => 'Remark',
+    //商品 Product
+    'ProductName' =>'Product Name',
+    'ClassNum' =>'Class Num',
+    'Amount' =>'Amount',
 
 ];
