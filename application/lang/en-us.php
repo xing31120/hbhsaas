@@ -188,5 +188,11 @@ return [
     'ProductName' =>'Product Name',
     'ClassNum' =>'Class Num',
     'Amount' =>'Amount',
+    //订单 Order
+    'OrderSn' =>'Order No',
+    'OrderStatus' =>'Order Status',
+    'OrderStatusUnpaid' =>'Unpaid',
+    'OrderStatusPaid' =>'Paid',
+    'PayTime' =>'Pay Time',
 
 ];

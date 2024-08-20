@@ -9,5 +9,13 @@ class HbhProduct extends SingleSubData {
 //    public $mcTimeOut = 600;
     public $mcOpen = true;
 
-
+    function getAllProductList($shop_id = ''){
+        $shop_id && $op['where'][] = ['shop_id','=', $shop_id];
+        $op['where'][] = ['status','=', 1];
+        $op['doPage'] = false;
+        $op['field'] = '*';
+        $op['order'] = 'id desc';
+        $list = $this->getList($op);
+        return $list['list'];
+    }
 }

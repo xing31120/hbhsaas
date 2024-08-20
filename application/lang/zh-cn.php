@@ -191,4 +191,12 @@ return [
     'ProductName' =>'商品名称',
     'ClassNum' =>'课时',
     'Amount' =>'金额',
+    //订单 Order
+    'OrderSn' =>'订单号',
+    'OrderStatus' =>'订单状态',
+    'OrderStatusUnpaid' =>'未付款',
+    'OrderStatusPaid' =>'已付款',
+    'PayTime' =>'付款时间',
+
+
 ];

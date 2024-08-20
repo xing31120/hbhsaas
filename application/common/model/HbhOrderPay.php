@@ -9,6 +9,7 @@ class HbhOrderPay extends SingleSubData {
 //    public $selectTime = 600;
 //    public $mcTimeOut = 600;
     public $mcOpen = false;
+    public $selectTime = 0;
 
     const order_status_wait = 10;   //待付款
     const order_status_pay = 20;    //付款完成
