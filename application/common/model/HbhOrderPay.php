@@ -76,7 +76,6 @@ class HbhOrderPay extends SingleSubData {
         $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($info['user_id'], $class_num, HbhUserWalletDetail::RECHARGE,
             HbhUserWalletDetail::wallet_type_class, $remark, $info['id'], $action_all,$bizType, $payPassageway);
         if (!$resDetail['result']) {
-            Db::rollback();
             return $resDetail;
         }
 

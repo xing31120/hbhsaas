@@ -3,6 +3,7 @@ namespace app\pc\controller;
 
 
 
+use app\common\model\HbhOrder;
 use app\common\model\HbhOrderPay;
 use app\common\model\HbhProduct;
 use app\common\model\HbhUsers;
@@ -35,12 +36,39 @@ class Order extends Base {
         $domain_api = 'http://' . Env::get('route.domain_api').'.' . Env::get('route.domain_top');
         $domain_pc = 'http://' . Env::get('route.domain_pc').'.' . Env::get('route.domain_top');
 //pj($domain);
-        $randString = getRandomString(4);
-        $order_sn  =  "PAY".date("YmdHis").$randString;
-        $subject = $product_info['product_name'] ?? '';
         $amount = $product_info['amount'] ?? 0;
+
+        //插入订单表
+        $randString = getRandomString(4);
+        $order_sn  =  "MA".date("YmdHis").$randString;
+        $order['shop_id']  = $shop_id;
+        $order['order_sn']  = $order_sn;
+        $order['order_status']  = HbhOrderPay::order_status_wait;
+        $order['user_id']  = $user_id;
+        $order['product_id']  = $product_id;
+        $order['remarks']  = "";
+        $order['total_amount']  = $amount;
+        $order['pay_time'] = $order['create_time'] = $order['update_time'] = time();
+        $order['id'] = (new HbhOrder())->insert($order);
+
+        //插入支付订单
+        $randString = getRandomString(4);
+        $order_sn_pay  =  "PAY".date("YmdHis").$randString;
+        $subject = $product_info['product_name'] ?? '';
+        $order_data['shop_id']  = $shop_id;
+        $order_data['order_sn']  = $order_sn_pay;
+        $order_data['order_status']  = HbhOrderPay::order_status_wait;
+        $order_data['user_id']  = $user_id;
+        $order_data['product_id']  = $product_id;
+        $order_data['pay_channel']  = 'PAYPAGE';
+        $order_data['remarks']  = "sid_".$shop_id;
+        $order_data['total_amount']  = $amount;
+        $order_data['pay_time'] = $order_data['create_time'] = $order_data['update_time'] = time();
+        $order_data['order_id']  = $order['id'];
+        $order_data['id'] = (new HbhOrderPay())->insert($order_data);
+
         $data = [
-            "merchantOrderNo" => $order_sn,
+            "merchantOrderNo" => $order_sn_pay,
             "subject" => $subject,
             'totalAmount' => [
                 'currency' => 'AED',
@@ -57,21 +85,11 @@ class Order extends Base {
 
         $rrr = \PayBy\Api\Order::placeOrder($data);
 
-        $order_data['shop_id']  = $shop_id;
-        $order_data['order_sn']  = $order_sn;
-        $order_data['order_status']  = HbhOrderPay::order_status_wait;
-        $order_data['user_id']  = $user_id;
-        $order_data['product_id']  = $product_id;
-        $order_data['pay_channel']  = 'PAYPAGE';
-        $order_data['remarks']  = "sid_".$shop_id;
-        $order_data['total_amount']  = $amount;
-        $order_data['pay_time'] = $order_data['create_time'] = $order_data['update_time'] = time();
 
-        $order_data['id'] = (new HbhOrderPay())->insert($order_data);
 
         $tokenUrl = $rrr['body']['interActionParams']['tokenUrl'] ?? '';
         if(empty($tokenUrl)){
-pj(['tokenUrl' => $tokenUrl,'data' => $order_data, 'rrr' => $rrr], 0);
+//pj(['tokenUrl' => $tokenUrl,'data' => $order_data, 'rrr' => $rrr], 0);
             $this->error("error");
         }
 

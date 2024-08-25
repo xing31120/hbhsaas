@@ -2,6 +2,7 @@
 namespace app\common\model;
 use app\common\model\basic\Single;
 use app\common\model\basic\SingleSubData;
+use think\Db;
 
 class HbhOrder extends SingleSubData {
     public $mcName = 'hbh_order_';
@@ -15,55 +16,47 @@ class HbhOrder extends SingleSubData {
     const order_status_cancel = 40; //订单取消
 
 
-    function infoByBizOrderNo($payOrderNO){
-        if (empty($payOrderNO)) {
+    function infoByBizOrderNo($orderNO){
+        if (empty($orderNO)) {
             return false;
         }
 
-        $where[] = ['biz_order_no','=',$payOrderNO];
+        $where[] = ['order_sn','=',$orderNO];
         $rs = $this->where($where)->find();
         if(empty($rs)){
             return false;
         }
-        //设置缓存
-//        if($this->mcOpen){
-//            $time = $this->mcTimeOut > 0 ? $this->mcTimeOut : 0;
-//            cache($mcKey, $rs, $time);
-//        }
         return $rs->toArray();
 
     }
 
     /**
-     * 异步支付完成
-     * @param $pay_order_no string 业务系统订单号
-     * @param $allinpayPayNo string 收银宝相关支付渠道单号
-     * @param $orderNo string 通商云订单号
+     * 支付完成
+     * @param $order_no string 业务系统订单号
      * @return array
      */
-    function allInPayComplete($appUid, $pay_order_no, $allinpayPayNo,$orderNo = ''){
-        $beforeStatus = self::WAIT_PAY;
-        $upEntryStatus = self::ALL_IN_PAY_COMPLETE;
-        $info = $this->infoByBizOrderNo($appUid, $biz_order_no);
-        if(empty($info) || $info['order_entry_status'] != $beforeStatus){
-            return errorReturn('查询订单失败!');
+    function orderComplete($order_no){
+        $beforeStatus = self::order_status_wait;
+        $upStatus = self::order_status_pay;
+        // 查询支付订单
+        $info = $this->infoByBizOrderNo( $order_no);
+        if(empty($info) || $info['order_status'] != $beforeStatus){
+            return errorReturn('search order error!');
         }
-        $data['id'] = $info['id'];
-        $info['order_entry_status'] = $data['order_entry_status'] = $upEntryStatus;
-        $info['allinpay_pay_no'] = $data['allinpay_pay_no'] = $allinpayPayNo;
-        if(!empty($orderNo)){
-            $data['allinpay_order_no'] = $orderNo;
-        }
-        $upResult = $this->where('id','=',$info['id'])->update($data);
-        if(!$upResult){
-            return errorReturn('更新订单失败!');
+        // 查询订单商品
+        $product_info = (new HbhProduct())->info($info['product_id']);
+        $class_num = $product_info['class_num'] ?? -99;
+        if($class_num == -99){
+            return errorReturn('search product error!');
         }
 
-        if($info['order_type'] == self::orderType['recharge']){
-            $resPlusUserFund = model('Users')->plusUserFund($appUid, $info['biz_uid'], $info['amount']);
-            if(!$resPlusUserFund){
-                return errorReturn('更新用户余额失败!');
-            }
+
+        // 更新支付订单状态
+        $data['id'] = $info['id'];
+        $info['order_status'] = $data['order_status'] = $upStatus;
+        $upResult = $this->updateById($info['id'], $data);
+        if(!$upResult){
+            return errorReturn('update order error!');
         }
 
         return successReturn(['data' => $info]);
