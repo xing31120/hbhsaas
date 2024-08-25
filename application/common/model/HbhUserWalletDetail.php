@@ -217,6 +217,13 @@ class HbhUserWalletDetail extends SingleSubData {
      */
     function updateUserWalletAndDetail($uid, $amount, $fundType, $walletType=self::wallet_type_class, $remark = '',
         $bizOrderSn='', $action='', $bizType=self::bizTypeDeduction, $payPassageway= self::pay_passageway_balance){
+
+        $cache_key = "updateUserWalletAndDetail_".$uid;
+        $cache_val = cache($cache_key);
+        if($cache_val){
+            return errorReturn('Too Frequent Operation');
+        }
+
         if($amount === null){
             return errorReturn(Lang::get('PleaseEnterTheAmount'));
         }
@@ -236,6 +243,7 @@ class HbhUserWalletDetail extends SingleSubData {
             return $resDetail;
         }
 
+        cache($cache_key, 1, 3);
         return $res;
 
     }
