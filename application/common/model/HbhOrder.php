@@ -16,7 +16,7 @@ class HbhOrder extends SingleSubData {
     const order_status_cancel = 40; //订单取消
 
 
-    function infoByBizOrderNo($orderNO){
+    function infoByNo($orderNO){
         if (empty($orderNO)) {
             return false;
         }
