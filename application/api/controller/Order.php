@@ -38,8 +38,8 @@ class Order extends Base{
         $data = input();
         Hook::listen('app_init', $data);
 
-$row = HbhNotifyLog::get(68)->toArray();
-$data = json_decode($row['notify_data'], true);
+//$row = HbhNotifyLog::get(68)->toArray();
+//$data = json_decode($row['notify_data'], true);
 //echo json_encode($data);exit;
 
         $data = $data['acquireOrder'] ?? [];
