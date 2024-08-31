@@ -166,7 +166,7 @@ class Bookcourse extends Base {
 //pj($course_list);
         $course_name_list = array_column($course_list, null, 'id');
 
-        $cat_list = (new HbhCourseCat())->getAllCourseCatList();
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
 
         $teacher_list = (new HbhUsers())->getAllTeacherList();
         $teacher_name_list = array_column($teacher_list, 'name', 'id');

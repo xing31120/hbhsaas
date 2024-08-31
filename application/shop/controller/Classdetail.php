@@ -22,7 +22,7 @@ class Classdetail extends Base {
         $teacher_list = (new HbhUsers())->getAllTeacherList();
         $this->assign('teacher_list', $teacher_list);
 
-        $cat_list = (new HbhCourseCat())->getAllCourseCatList();
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
         $this->assign('cat_list', $cat_list);
 
         return $this->fetch();
@@ -62,7 +62,7 @@ class Classdetail extends Base {
         $course_list = (new HbhCourse())->getAllCourseList();
         $course_name_list = array_column($course_list, null, 'id');
 
-        $cat_list = (new HbhCourseCat())->getAllCourseCatList();
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
         $cat_list = array_column($cat_list, 'name', 'id');
 
         $teacher_list = (new HbhUsers())->getAllTeacherList();
@@ -123,7 +123,7 @@ class Classdetail extends Base {
 
         $course_name_list = array_column($course_list, null, 'id');
 
-        $cat_list = (new HbhCourseCat())->getAllCourseCatList();
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
 
         $teacher_list = (new HbhUsers())->getAllTeacherList();
         $teacher_name_list = array_column($teacher_list, 'name', 'id');
@@ -161,7 +161,7 @@ class Classdetail extends Base {
 
         $course_name_list = array_column($course_list, null, 'id');
 
-        $cat_list = (new HbhCourseCat())->getAllCourseCatList();
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
 
         $teacher_list = (new HbhUsers())->getAllTeacherList();
         $teacher_name_list = array_column($teacher_list, 'name', 'id');

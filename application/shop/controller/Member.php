@@ -1,6 +1,7 @@
 <?php
 namespace app\shop\controller;
 
+use app\common\model\HbhCourseCat;
 use app\common\model\HbhSjLog;
 use app\common\model\HbhTeacherClassTime;
 use app\common\model\HbhUsers;
@@ -112,17 +113,12 @@ class Member extends Base {
         $classTimeList = model('HbhClassTime')->getAllList();
         $classTimeList = array_column($classTimeList, null, 'id');
 
-//        $teacherClassTimeList = model('HbhTeacherClassTime')->getAllList($info['id']);
-//        foreach ($teacherClassTimeList as &$item) {
-//            $class_time_row = $classTimeList[$item['class_time_id']] ?? '';
-//            $item['time_str'] = '';
-//            if(!empty($class_time_row)){
-//                $item['time_str'] = $class_time_row['start_time']."-".$class_time_row['end_time'];
-//            }
-//        }
-//        $info['teacher_class_time'] = $teacherClassTimeList;
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
+        $cat_list = array_column($cat_list, null, 'id');
+
 
         $this->assign('course', $courseList);
+        $this->assign('cat_list', $cat_list);
         $this->assign('classTimeList', $classTimeList);
         $this->assign('info', $info);
         return $this->fetch();
@@ -204,9 +200,13 @@ class Member extends Base {
         $courseList = model('HbhCourse')->getAllCourseList($this->shop_id);
         $courseList = array_column($courseList, null, 'id');
 
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
+        $cat_list = array_column($cat_list, null, 'id');
+
         foreach ($list['list'] as &$item) {
             $item['course_name'] = $courseList[$item['course_id']]['name'] ?? '';
             $item['age'] = calculateAge($item['birthday']);
+            $item['cat_name'] = $cat_list[$item['category_id']]['name'] ?? '';
         }
         $res = ['count'=>$list['count'],'data'=>$list['list']];
         return adminOut($res);

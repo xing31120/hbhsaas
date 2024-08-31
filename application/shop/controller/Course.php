@@ -2,6 +2,7 @@
 namespace app\shop\controller;
 
 use app\common\model\HbhCourse;
+use app\common\model\HbhCourseCat;
 use app\common\model\HbhSjLog;
 use think\Db;
 use think\facade\Lang;
@@ -36,12 +37,17 @@ class Course extends Base {
     public function ajaxList(){
         $data = input();
         $limit = 10;//每页显示的数量
+        $cat_list = (new HbhCourseCat())->getAllCourseCatList($this->shop_id);
+        $cat_list = array_column($cat_list, null, 'id');
 
         $op['where'] = $this->setWhere($data);
         $op['page'] = isset($data['page']) ? intval($data['page']) : 1;
         $op['limit'] = $data['limit'] ?? $limit;
         $op['order'] = 'id desc';
         $list = model('HbhCourse')->getList($op);
+        foreach ($list['list'] as &$item) {
+            $item['cat_name'] = $cat_list[$item['category_id']]['name'] ?? '';
+        }
 
         $res = ['count'=>$list['count'],'data'=>$list['list']];
         return adminOut($res);

@@ -20,6 +20,19 @@
                                         <input type="name" name="name" value="{$info.name}"  class="layui-input"   placeholder="">
                                     </div>
                                 </div>
+
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label star">{$Think.lang.SchoolCoverPicture}：</label>
+                                    <div class="layui-input-inline">
+                                        <img {if empty($info.img_url)} class="zzsp_none" {/if} src="{if !empty($info.img_url)}{$info.img_url}{/if}" id="img_url" style="height: 100px">
+                                        <button type="button" class="layui-btn" id="upload-normal-img">
+                                            <i class="layui-icon">&#xe67c;</i>Upload Image
+                                        </button>
+                                        <div class="layui-form-mid layui-word-aux">Suggest uploading 750 * 560 size images</div>
+                                        <input type="hidden" name="img_url" value="{$info.img_url|default=''}" lay-verify="required"  lay-reqText="Please Upload Image"/>
+                                    </div>
+                                </div>
+
                                 <div class="layui-form-item">
                                     <label class="layui-form-label">Email：</label>
                                     <div class="layui-input-inline">
@@ -58,7 +71,24 @@
                                     </div>
                                 </div>
 
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label">{$Think.lang.ClassifyName}：</label>
+                                    <div class="layui-input-inline">
+                                        <select name="category_id" lay-verify="required" lay-reqText="Please Select Category">
+                                            <option value="">{$Think.lang.PleaseSelect}</option>
+                                            {foreach $cat_list as $key=>$value}
+                                            <option value="{$value.id}" {if !empty($info['category_id']) && $info['category_id'] == $value['id']} selected {/if}>{$value.name}</option>
+                                            {/foreach}
+                                        </select>
+                                    </div>
+                                </div>
 
+                                <div class="layui-form-item">
+                                    <label class="layui-form-label star">{$Think.lang.Description}：</label>
+                                    <div class="layui-input-inline">
+                                        <textarea name="description"  autocomplete="off" class="layui-textarea">{$info.description ?? ''}</textarea>
+                                    </div>
+                                </div>
 
 
                                 <div class="layui-form-item">
@@ -116,11 +146,28 @@
         base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
     }).extend({
         index: 'lib/index' //主入口模块
-    }).use(['index', 'form', 'laydate'], function () {
-        var $ = layui.$
-            , admin = layui.admin
-            , element = layui.element
-            , form = layui.form;
+    }).use(['index', 'form', 'laydate','upload'], function () {
+        var $ = layui.$,
+            admin = layui.admin,
+            element = layui.element,
+            upload = layui.upload,
+            form = layui.form;
+
+        //上传
+        upload.render({
+            elem: '#upload-normal-img'
+            ,url: '{:url("Tools/upload")}' //改成您自己的上传接口
+            ,accept: 'images'
+            ,size: 2048
+            ,done: function(res){
+                layer.msg('上传成功');
+                $("#img_url").attr("src",res.data.src).show();
+                $("input[name = img_url]").val(res.data.src);
+            },
+            error: function () {
+                layer.msg('上传失败');
+            }
+        });
 
         function getClassTime(){
             var arr = []

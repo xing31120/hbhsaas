@@ -54,8 +54,10 @@ class HbhUsers extends SingleSubData {
         return $info;
     }
 
-    function getAllTeacherList(){
+    function getAllTeacherList($shop_id = ''){
+        $shop_id && $op['where'][] = ['shop_id','=', $shop_id];
         $op['where'][] = ['role','=','teacher'];
+        $op['where'][] = ['status','=','1'];
         $op['doPage'] = false;
         $op['field'] = '*';
         $op['order'] = 'id desc';
