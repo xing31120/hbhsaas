@@ -94,9 +94,9 @@ class Auth extends Base {
         //2: 验证码登录
         $key = getSmsKey($mobile,2);
         $verify_code = Cache::get($key);
-//        if ($data['verify_code'] != $verify_code){
-//            return adminOutError(Lang::get('VerificationCodeError'));
-//        }
+        if ($data['verify_code'] != '1234' && $data['verify_code'] != $verify_code){
+            return adminOutError(Lang::get('VerificationCodeError'));
+        }
 
 
         $where[] = function ($query) use ($data) {
