@@ -74,7 +74,7 @@ class User extends Base {
         //查询当天前后14天, 总共28天的分组统计数据
         $time = time();
         $model= new HbhBookCourse();
-        $start_time = date("Y-m-d", $time - 86400 * 15);
+        $start_time = date("Y-m-d", $time - 86400 * 180);
         $end_time = date("Y-m-d", $time + 86400 * 15);
         $where[] = ['day', '>', $start_time];
         $where[] = ['day', '<', $end_time];
