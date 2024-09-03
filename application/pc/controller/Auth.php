@@ -134,7 +134,7 @@ class Auth extends Base {
         $data['card_number'] = $data['serial_num'] = $card;
         $data['expiry_date'] = date("Y-m-d", $time + 30 * 86400);
         $data['residue_quantity'] = 1;
-        $data['class_details'] = $data['second_class'] = $data['third_class'] = '';
+        $data['class_details'] = $data['second_class'] = $data['third_class'] = $data['description'] ='';
 //pj($data);
         HbhUsers::create($data);
 
