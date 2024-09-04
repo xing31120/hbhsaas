@@ -269,7 +269,7 @@ class Member extends Base {
         $data['address'] = '';
         $data['card_number'] = $data['serial_num'] = $card;
 //        $data['expiry_date'] = date("Y-m-d");
-        $data['class_details'] = $data['second_class'] = $data['third_class'] = '';
+        $data['class_details'] = $data['second_class'] = $data['third_class'] = $data['description'] = '';
 //pj($data);
         HbhUsers::create($data);
         $this->add_log([], $data, HbhSjLog::type_add);
