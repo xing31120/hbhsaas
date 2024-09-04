@@ -49,7 +49,8 @@ class HbhUserWallet extends SingleSubData {
         if($row['result']){
             return $row;
         }
-        $userInfo = (new HbhUsers())->info($userId);
+//        $userInfo = (new HbhUsers())->info($userId);
+        $userInfo = (new HbhUsers())->where('id', $userId)->findOrEmpty()->toArray();
         if(empty($userInfo)){
             return errorReturn(Lang::get('UserError'));
         }
