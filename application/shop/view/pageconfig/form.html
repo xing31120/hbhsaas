@@ -35,23 +35,18 @@
                                     </select>
                                 </div>
                             </div>
-<!--                            <div class="layui-form-item">-->
-<!--                                <label class="layui-form-label star">{$Think.lang.PageNameZh}：</label>-->
-<!--                                <div class="layui-input-inline">-->
-<!--                                    <input type="text" name="name_zh" value="{$info.name_zh|default=''}" class="layui-input" lay-verify="required" lay-reqText="{$Think.lang.PageNameZh} Required" placeholder="Entry {$Think.lang.PageNameZh}">-->
-<!--                                </div>-->
-<!--                            </div>-->
-<!--                            <div class="layui-form-item">-->
-<!--                                <label class="layui-form-label star">{$Think.lang.PageNameEn}：</label>-->
-<!--                                <div class="layui-input-inline">-->
-<!--                                    <input type="text" name="name_en" value="{$info.name_en|default=''}" class="layui-input"  lay-reqText="{$Think.lang.PageNameEn} Required" placeholder="Entry {$Think.lang.PageNameEn}">-->
-<!--                                </div>-->
-<!--                            </div>-->
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.Value}：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="value" value="{$info.value|default=''}"
-                                           class="layui-input"  lay-reqText="{$Think.lang.PagePath} Required" placeholder="Entry {$Think.lang.PagePath}">
+                                    <img {if empty($info.value)} class="zzsp_none" {/if} src="{if !empty($info.value)}{$info.value}{/if}" id="img_url" style="height: 100px">
+                                    <button type="button" class="layui-btn" id="upload-normal-img">
+                                        <i class="layui-icon">&#xe67c;</i>Upload Image
+                                    </button>
+                                    <div class="layui-form-mid layui-word-aux">Suggest uploading 750 * 560 size images</div>
+                                    <input type="hidden" name="value" value="{$info.value|default=''}" lay-verify="required"  lay-reqText="Please Upload Image"/>
+
+
+<!--                                    <input type="text" name="value" value="{$info.value|default=''}" class="layui-input"  lay-reqText="{$Think.lang.PagePath} Required" placeholder="Entry {$Think.lang.PagePath}">-->
                                 </div>
                             </div>
 
@@ -101,7 +96,23 @@
         });
 
 
-//监听提交
+        //上传
+        upload.render({
+            elem: '#upload-normal-img'
+            ,url: '{:url("Tools/upload")}' //改成您自己的上传接口
+            ,accept: 'images'
+            ,size: 2048
+            ,done: function(res){
+                layer.msg('上传成功');
+                $("#img_url").attr("src",res.data.src).show();
+                $("input[name = value]").val(res.data.src);
+            },
+            error: function () {
+                layer.msg('上传失败');
+            }
+        });
+
+        //监听提交
         form.on('submit(submit)', function (data) {
             $.ajax({
                 url: "{:url('save')}",
