@@ -57,6 +57,8 @@ class Order extends Base {
         $list = (new HbhOrderPay())->getList($op);
 
         $cat_list = (new HbhProductCategory())->getAllProductCatList($this->shop_id);
+        $cat_list =  array_column($cat_list, null,'id');
+//pj($cat_list);
         $product_list = (new HbhProduct())->getAllProductList($this->shop_id);
         $product_list =  array_column($product_list, null,'id');
         foreach ($list['list'] as &$item) {
