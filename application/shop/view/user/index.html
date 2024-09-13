@@ -13,20 +13,20 @@
                         <input class="layui-input" name="keywords" id="keywords" value="{:input('keywords')}" autocomplete="on" placeholder="请输入用户名">
                     </div>
                     <button class="layui-btn search-btn" data-type="reload"><i class="iconfont">&#xe679;</i> 查询</button>
-                    {eq name="$Think.session.uid" value="1"}
+                    {elt name="$Think.session.uid" value="5"}
                     <div class="layui-inline">
                         <a href="{:url('add')}" class="layui-btn larry-btn-dark"><i class="iconfont">&#xe692;</i> 添加用户</a>
                     </div>
-                    {/eq}
+                    {/elt}
                 </div>
             </script>
 
             {// 行内工具栏}
             <script type="text/html" id="barTool">
-                {eq name="$Think.session.uid" value="1"}
+                {elt name="$Think.session.uid" value="5"}
                 <a href="{:url('edit')}?id={{ d.id }}" class="layui-btn layui-btn-xs">编辑</a>
                 <a href='javascript:;' onclick="del('{{d.id}}')"  class="layui-btn layui-btn-danger layui-btn-xs">删除</a>
-                {/eq}
+                {/elt}
             </script>
 
             {// 状态}
