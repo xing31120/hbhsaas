@@ -1,6 +1,28 @@
 {include file="public/header"/}
 <link rel="stylesheet" href="__YUN_PUBLIC_DIR__/static/assets/css/zeroModal.css">
 <script src="__YUN_PUBLIC_DIR__/static/assets/js/zeroModal.min.js"></script>
+
+<style>
+.th-team  .hidden-text{
+    display:-webkit-box;
+    -webkit-line-clamp:5;
+    -webkit-box-orient:vertical;
+    overflow:hidden;
+}
+</style>
+<script>
+
+$(document).ready(function() {
+    $('.hidden-text').click(function() {
+        val = $(this).css('overflow');
+        if(val == 'hidden'){
+            $(this).css('overflow', 'visible');
+        }else{
+            $(this).css('overflow', 'hidden');
+        }
+    });
+});
+</script>
 <script>
     function _escape_kid() {
         console.log(window.outerWidth)
@@ -536,7 +558,7 @@ Team Area
                     </div>
                     <div class="team-content">
                         <h3 class="team-title box-title"><a href="#">{$value.name}</a></h3>
-                        <span class="team-desig">{$value.description}</span>
+                        <p class="team-desig hidden-text couple-card_text">{$value.description}</p>
                     </div>
                 </div>
             </div>
