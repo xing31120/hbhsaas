@@ -13,17 +13,35 @@
 <script>
 
 $(document).ready(function() {
-    $('.hidden-text').click(function() {
-        val = $(this).css('overflow');
-        if(val == 'hidden'){
-            $(this).css('overflow', 'visible');
-        }else{
-            $(this).css('overflow', 'hidden');
-        }
-    });
+
+
+    // $('.hidden-text').click(function() {
+    //     click_teacher($(this))
+    // });
+
+    // $('.hidden-text').click(function() {
+        // val = $(this).css('overflow');
+        // if(val == 'hidden'){
+        //     $(this).css('overflow', 'visible');
+        // }else{
+        //     $(this).css('overflow', 'hidden');
+        // }
+    // });
+
 });
 </script>
 <script>
+
+    function click_teacher(obj){
+        description = obj.innerHTML
+        console.log(description)
+        zeroModal.show({
+            content: description,
+            width: window.outerWidth > 500 ? '450px' : '100%',
+            // top: '100px',
+            // height: '800px'
+        });
+    }
     function _escape_kid() {
         console.log(window.outerWidth)
         zeroModal.show({
@@ -558,7 +576,7 @@ Team Area
                     </div>
                     <div class="team-content">
                         <h3 class="team-title box-title"><a href="#">{$value.name}</a></h3>
-                        <p class="team-desig hidden-text couple-card_text">{$value.description}</p>
+                        <p class="team-desig hidden-text couple-card_text" onclick="click_teacher(this)">{$value.description}</p>
                     </div>
                 </div>
             </div>
