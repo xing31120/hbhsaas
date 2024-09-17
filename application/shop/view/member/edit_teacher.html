@@ -86,7 +86,7 @@
                                 <div class="layui-form-item">
                                     <label class="layui-form-label star">{$Think.lang.Description}：</label>
                                     <div class="layui-input-inline">
-                                        <textarea name="description"  autocomplete="off" class="layui-textarea">{$info.description ?? ''}</textarea>
+                                        <textarea id="description" name="description" style="width: 320px;height: auto" autocomplete="off" class="layui-textarea">{$info.description ?? ''}</textarea>
                                     </div>
                                 </div>
 
@@ -142,6 +142,15 @@
 <!-- 配置文件 -->
 <script src="__YUN_PUBLIC_DIR__/static/layuiadmin/layui/layui.js"></script>
 <script>
+    let textarea = document.querySelector('textarea');
+    textarea.addEventListener('input', function() {
+        this.style.height = 'auto';
+        this.style.height = (this.scrollHeight) + 'px';
+    });
+    var event = new Event('input');
+    var inputElement = document.getElementById('description');
+    inputElement.dispatchEvent(event);
+
     layui.config({
         base: '__YUN_PUBLIC_DIR__/static/layuiadmin/' //静态资源所在路径
     }).extend({
