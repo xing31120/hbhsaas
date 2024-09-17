@@ -192,6 +192,7 @@ return [
     'ClassNum' =>'课时',
     'Amount' =>'金额',
     'AddProduct' =>'新增商品',
+    'ExpiredDays' =>'过期天数',
     //订单 Order
     'OrderSn' =>'订单号',
     'OrderStatus' =>'订单状态',

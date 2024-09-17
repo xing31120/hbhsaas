@@ -189,6 +189,7 @@ return [
     'ClassNum' =>'Class Num',
     'Amount' =>'Amount',
     'AddProduct' =>'Add Product',
+    'ExpiredDays' =>'Expired Days',
     //订单 Order
     'OrderSn' =>'Order No',
     'OrderStatus' =>'Order Status',

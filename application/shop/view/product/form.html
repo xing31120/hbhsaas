@@ -50,8 +50,17 @@
                             <div class="layui-form-item">
                                 <label class="layui-form-label star">{$Think.lang.ClassNum}：</label>
                                 <div class="layui-input-inline">
-                                    <input type="text" name="class_num" value="{$info.class_num|default=''}"
-                                           class="layui-input"  lay-reqText="Course Fees Required" placeholder="Entry Class Num">
+                                    {$info.class_num|default=''}
+<!--                                    <input type="text" name="class_num" value="{$info.class_num|default=''}" readonly-->
+<!--                                           class="layui-input"  lay-reqText="Course Fees Required" placeholder="Entry Class Num">-->
+                                </div>
+                            </div>
+
+                            <div class="layui-form-item">
+                                <label class="layui-form-label star">{$Think.lang.ExpiredDays}：</label>
+                                <div class="layui-input-inline">
+                                    <input type="text" name="time_num" value="{$info.time_num|default=''}"
+                                           class="layui-input"  lay-reqText="Total People Required" placeholder="Entry Expired Days">
                                 </div>
                             </div>
 
