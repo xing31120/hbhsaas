@@ -52,6 +52,8 @@ class Product extends Base {
         $list = (new HbhProduct())->getList($op);
 
         $cat_list = (new HbhProductCategory())->getAllProductCatList($this->shop_id);
+        $cat_list = array_column($cat_list, null, 'id');
+//pj($cat_list);
         foreach ($list['list'] as &$item) {
             $item['cat_name'] = $cat_list[$item['product_category_id']]['name'] ?? '';
         }
