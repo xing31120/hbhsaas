@@ -54,6 +54,7 @@ class HbhOrderPay extends SingleSubData {
         // 查询订单商品
         $product_info = (new HbhProduct())->info($info['product_id']);
         $class_num = $product_info['class_num'] ?? -99;
+        $time_num = $product_info['time_num'] ?? 0;
         if($class_num == -99){
             return errorReturn('search product error!');
         }
@@ -83,7 +84,14 @@ class HbhOrderPay extends SingleSubData {
 
         //更新用户余额
         $userInfo = (new HbhUsers())->where('id', $info['user_id'])->findOrEmpty()->toArray();
+        $old_residue_quantity = $userInfo['residue_quantity'];
         $userInfo['residue_quantity'] = $userInfo['residue_quantity'] + $class_num;
+        $time = time();
+        $userInfo['expiry_date'] = date("Y-m-d", $time + $time_num * 86400);
+        if($class_num == -999){
+            $userInfo['residue_quantity'] = 0;
+            $userInfo['is_unlimited_number'] = 1;
+        }
         unset($userInfo['create_time']);
         unset($userInfo['update_time']);
         $res = (new HbhUsers())->saveData($userInfo);
@@ -92,13 +100,27 @@ class HbhOrderPay extends SingleSubData {
             return errorReturn(Lang::get('FailedToDeductUserBalance'));
         }
 
-        //更新用户钱包, 增加钱包日志
-        $remark = "Online Recharge ({$class_num})";
         $action_all = 'Order/notifyPay' ;
-        $bizType = HbhUserWalletDetail::bizTypeRecharge;
         $payPassageway = HbhUserWalletDetail::pay_passageway_online;
-        $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail($info['user_id'], $class_num, HbhUserWalletDetail::RECHARGE,
-            HbhUserWalletDetail::wallet_type_class, $remark, $info['id'], $action_all,$bizType, $payPassageway);
+        //更新用户钱包, 增加钱包日志
+        if($class_num == -999){ //购买无限会员, 清空之前的课时
+            $remark = "Online Recharge Unrestricted Members Clear Remaining Class Hours {$old_residue_quantity}, Extend Expiration Time  By {$time_num} Days";
+            $bizType = HbhUserWalletDetail::bizTypeRechargeClear;
+            $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail(
+                $info['user_id'], -$old_residue_quantity, HbhUserWalletDetail::DEDUCTION,
+                HbhUserWalletDetail::wallet_type_class, $remark, $info['id'], $action_all,$bizType, $payPassageway
+            );
+        }else{  //购买普通的课时
+            $remark = "Online Recharge ({$class_num})";
+            $bizType = HbhUserWalletDetail::bizTypeRecharge;
+            $resDetail = (new HbhUserWalletDetail())->updateUserWalletAndDetail(
+                $info['user_id'], $class_num, HbhUserWalletDetail::RECHARGE,
+                HbhUserWalletDetail::wallet_type_class, $remark, $info['id'], $action_all,$bizType, $payPassageway
+            );
+
+        }
+
+
         if (!$resDetail['result']) {
             return $resDetail;
         }

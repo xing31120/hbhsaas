@@ -188,6 +188,7 @@ return [
     'ProductName' =>'Product Name',
     'ClassNum' =>'Class Num',
     'Amount' =>'Amount',
+    'AddProduct' =>'Add Product',
     //订单 Order
     'OrderSn' =>'Order No',
     'OrderStatus' =>'Order Status',

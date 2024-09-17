@@ -45,12 +45,18 @@ class HbhUserWalletDetail extends SingleSubData {
     ];
 
     const bizTypeRecharge = 10;     //充值课时
+    const bizTypeRechargeClear = 15;//充值课时
     const bizTypeDeduction = 20;    //消费课时
     const bizType = [
         self::bizTypeRecharge => [
             'value' => self::bizTypeRecharge,
             'label' => 'Recharge Class Hour',
             'label_cn' => '充值课时',
+        ],
+        self::bizTypeRechargeClear => [
+            'value' => self::bizTypeRechargeClear,
+            'label' => 'Unrestricted Members',
+            'label_cn' => '充值不限会员',
         ],
         self::bizTypeDeduction => [
             'value' => self::bizTypeDeduction,
