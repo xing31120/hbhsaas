@@ -189,6 +189,7 @@ return [
     'Remark' => '备注说明',
     //商品 Product
     'ProductName' =>'商品名称',
+    'ProductCat' =>'商品分类',
     'ClassNum' =>'课时',
     'Amount' =>'金额',
     'AddProduct' =>'新增商品',

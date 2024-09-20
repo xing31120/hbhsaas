@@ -186,6 +186,7 @@ return [
     'Remark' => 'Remark',
     //商品 Product
     'ProductName' =>'Product Name',
+    'ProductCat' =>'Product Category',
     'ClassNum' =>'Class Num',
     'Amount' =>'Amount',
     'AddProduct' =>'Add Product',

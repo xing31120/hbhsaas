@@ -21,9 +21,9 @@ class BookCourse extends Base {
         // 可预约几天后的课程; 目前是7天后+当天总的8天
         $config_before_day = config('extend.time_before');
         $config_before_day = 7;
-        if(empty($this->hbh_user)){
-            $this->redirect('auth/login');
-        }
+//        if(empty($this->hbh_user)){
+//            $this->redirect('auth/login');
+//        }
 
         // 默认第一个 课程分类
         $cat_first = (new HbhCourseCat())
@@ -203,7 +203,7 @@ class BookCourse extends Base {
     // pc预约课程
     function ajaxSubmit(){
         if(empty($this->hbh_user)){
-            return errorReturn('Please Login');
+            return errorReturn(['msg' => 'Please Login', 'code'=> \app\common\tools\SysEnums::NotLogged, 'url' => url('auth/login')]);
         }
 //        $data = input();
         $detail_ids = input('select_detail_ids', '');

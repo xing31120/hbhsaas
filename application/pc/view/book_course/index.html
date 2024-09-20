@@ -741,6 +741,10 @@
                 success: function (res) {
                     myModal.hide()
                     alert(res.msg);
+                    if(res.code == 10001){
+                        window.location.href = res.url;
+                    }
+                    alert(res.msg);
                 },
                 error: function () {
                     layer.msg('error！！！');
