@@ -187,10 +187,13 @@ return [
     //商品 Product
     'ProductName' =>'Product Name',
     'ProductCat' =>'Product Category',
+    'ProductTag' =>'Product Tag',
+    'TagName' =>'Tag Name',
     'ClassNum' =>'Class Num',
     'Amount' =>'Amount',
     'AddProduct' =>'Add Product',
     'ExpiredDays' =>'Expired Days',
+    'MaxNum' =>'MaxNum',
     //订单 Order
     'OrderSn' =>'Order No',
     'OrderStatus' =>'Order Status',

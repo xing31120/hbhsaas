@@ -190,10 +190,13 @@ return [
     //商品 Product
     'ProductName' =>'商品名称',
     'ProductCat' =>'商品分类',
+    'ProductTag' =>'商品标签',
+    'TagName' =>'标签名称',
     'ClassNum' =>'课时',
     'Amount' =>'金额',
     'AddProduct' =>'新增商品',
     'ExpiredDays' =>'过期天数',
+    'MaxNum' =>'最大数量',
     //订单 Order
     'OrderSn' =>'订单号',
     'OrderStatus' =>'订单状态',
